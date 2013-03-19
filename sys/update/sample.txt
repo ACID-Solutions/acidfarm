@@ -1,0 +1,79 @@
+//ADDING FOLDER
+
+<?php 
+
+$path_to_add = array('/files','/files/users','/files/photo');
+foreach ($path_to_add as $pta) {
+	$pa_path = SITE_PATH.$pta;
+	if (!file_exists($pa_path)) {
+		mkdir($pa_path);
+	}
+}
+
+
+//ADDING PAGE
+
+<?php
+
+$keys = array(array('ident'=>'ia','title'=>'ta','content'=>''),array('ident'=>'ib','title'=>'tb','content'=>''));
+foreach ($keys as $elt) {
+	$page = new Page();
+	$page->initVars(array('ident'=>$elt['ident'],'title'=>$elt['title'],'content'=>$elt['content'],'adate'=>date('Y-m-d H:i:s'),'active'=>1));
+	$page->dbAdd();
+}
+
+
+//INSTALL PAYMENT
+<?php 
+
+include(SITE_PATH.'sys/modules/payment/install.php');
+
+AcidDB::exec('COMMIT;');
+
+
+//INSTALL NEWSLETTER
+<?php 
+
+include(SITE_PATH.'sys/modules/newsletter/install.php');
+
+AcidDB::exec('COMMIT;');
+
+
+
+//ADDING NEWSLETTER CAMPAGNE
+
+<?php
+
+$res = AcidDb::query("SELECT MAX(id_campagne) as last FROM ".Acid::mod('AcidNLCampagne')->tbl())->fetch(PDO::FETCH_ASSOC);
+$next = ((int) $res['last']) + 1;
+
+$campagne = new AcidNLCampagne();
+$campagne->initVars(
+		array(
+				'id_campagne'=>$next,
+				'name'=>'Newsletter',
+				'from_name'=>Acid::get('admin:name'),
+				'from_mail'=>Acid::get('admin:email'),
+				'def_title'=>'Newsletter#__ID__',
+				'wave_nb'=>9,
+				'wave_nb'=>3,
+				'speed_max'=>false,
+				'private'=>false
+		)
+);
+$campagne->dbAdd();
+
+
+//RE-ENCODING
+
+<?php
+$req = AcidDB::query('show tables')->fetchAll(PDO::FETCH_ASSOC);
+$tblname = '';
+foreach ($req as $key => $value) {
+    AcidDB::exec('ALTER TABLE '.$value['Tables_in_'.Acid::get('db:base')].' DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci;COMMIT; ALTER TABLE '.$value['Tables_in_'.Acid::get('db:base')].' CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;');
+}
+?>
+
+// REMPLACEMENT DE CHAINES
+$res ="UPDATE acid_page SET content = REPLACE(content, 'mysearch', 'myreplace') WHERE content LIKE '%mysearch%'";
+AcidDB::exec($req);

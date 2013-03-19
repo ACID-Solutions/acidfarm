@@ -1,0 +1,267 @@
+<?php
+
+/**
+ * AcidFarm - Yet Another Framework
+ * 
+ * Requires PHP version 5.3
+ *
+ * @author    ACID-Solutions <contact@acid-solutions.fr>
+ * @category  AcidFarm
+ * @package   Config
+ * @version   0.1
+ * @since     Version 0.1
+ * @copyright 2011 ACID-Solutions SARL
+ * @license   http://www.acidfarm.net/license
+ * @link      http://www.acidfarm.net
+ */
+
+
+// Maintenance
+$acid['maintenance']            = false;
+$acid['maintenance_desc']		= 'Site en maintenance...';
+
+// Core
+$acid['core']['module']['path'] = SITE_PATH.'sys/modules/core.php';
+
+// Site info
+$acid['site']['name']           = 'ACID Farm';
+$acid['site']['email']          = 'mail@domain.tld';
+$acid['admin']['name']          = 'Dev';
+$acid['admin']['email']         = 'mail@domain.tld';
+$acid['admin']['contact']       = '';
+$acid['admin']['website']       = '';
+
+// Database
+$acid['db']['type']             = 'mysql';
+$acid['db']['host']             = 'localhost';
+$acid['db']['port']             = '3306';
+$acid['db']['user']             = 'acidfarm';
+$acid['db']['pass']             = 'acidfarm';
+$acid['db']['base']             = 'acidfarm';
+$acid['db']['prefix']           = 'af_'; 
+
+
+// Meta tags
+$acid['title']['left']          = '';
+$acid['title']['right']         = '';
+$acid['meta']['publisher']      = 'ACID-Solutions';
+$acid['meta']['robots']         = '';
+$acid['meta']['revisit-after']  = '';
+$acid['meta']['author']         = '';
+$acid['meta']['description']    = '';
+$acid['meta']['keywords']       = array();
+$acid['meta']['generator']      = 'AcidFarm';
+
+
+// Reserved keys/paths
+$acid['keys']['page']           = '';
+$acid['keys']['admin']          = 'siteadmin';
+$acid['keys']['theme']			= 'theme';
+$acid['keys']['static']			= 'static';
+
+//Templates acid
+$acid['tpl']['path']          = 'tpl/';
+
+// Theme
+$acid['def_theme']	            = 'default';
+$acid['theme']					= 'default';
+
+
+// URLs
+$acid['url']['scheme']          = 'http://';						// Protocol (http or https)
+$acid['url']['domain']          = 'dev.acid-solutions.fr';			// subdmain and domain
+$acid['url']['folder']          = '/base_acidfarm/';						// Always end with a "/" (slash)
+$acid['url']['system']          = $acid['url']['scheme'].$acid['url']['domain'].$acid['url']['folder'];
+$acid['url']['img']             = $acid['url']['folder'] . $acid['keys']['theme'] . '/'.$acid['theme'].'/img/';
+
+$acid['url']['folder_lang'] 	= $acid['url']['folder'];
+$acid['url']['system_lang'] 	= $acid['url']['system'];
+
+
+// User
+$acid['lvl']['visitor'] = 0;
+$acid['lvl']['robot'] = 1;
+$acid['lvl']['unvalid'] = 2;
+$acid['lvl']['registred'] = 3;
+$acid['lvl']['member'] = 4;
+$acid['lvl']['vip'] = 5;
+$acid['lvl']['modo'] = 7;
+$acid['lvl']['admin'] = 9;
+$acid['lvl']['dev'] = 10;
+
+$acid['lvl_def'] = $acid['lvl']['admin'];
+
+
+$acid['user']['levels'] = array(
+                                    $acid['lvl']['visitor']   => 'Visiteur',
+                                    $acid['lvl']['robot']     => 'Robot',
+                                    $acid['lvl']['unvalid']   => 'Invalide',
+                                    $acid['lvl']['registred'] => 'Enregistré',
+                                    $acid['lvl']['member']    => 'Membre',
+                                    $acid['lvl']['vip']       => 'VIP',
+                                    $acid['lvl']['modo']      => 'Modérateur',
+                                    $acid['lvl']['admin']     => 'Administrateur',
+                                    $acid['lvl']['dev']       => 'Développeur'
+                                );
+
+// Permissions                                
+$acid['permission']	 			= array();                               
+$acid['permission_groups']	 	= array('id_user','id_group','level');  
+$acid['permission_active']		= true;
+                                
+// Lang
+$acid['lang']['default']        = 'fr';
+$acid['lang']['available']      = array('fr');
+$acid['lang']['current']      	= $acid['lang']['default'];
+
+
+$acid['lang']['use_nav_0'] 		= false;
+
+// User account
+$acid['user']['page']           = $acid['url']['folder_lang'] . 'account';
+
+
+// Hash
+$acid['hash']['type']           = 'md5';
+$acid['hash']['salt']           = '00000';
+
+
+// Cookies
+$acid['cookie']['expire']       = 1296000;                   // Délais d'expiration en secondes (1296000 = 15jours)
+$acid['cookie']['path']         = $acid['url']['folder'];    // Dossier pour lequel le cookie est accessible
+$acid['cookie']['domain']       = $acid['url']['domain'];    // Domaine pour lequel le cookie est accessible
+$acid['cookie']['secure']       = false;                     // Client en utilisation HTTPS (à coder coté serveur)
+$acid['cookie']['httponly']     = true;                      // Protection le vol de session par script client
+
+
+// Sessions
+$acid['session']['enable']      = isset($acid['session']['enable']) ? 
+								  $acid['session']['enable'] : true;  // Enable/Disable session
+$acid['session']['name']        = 'session';                           // Cookie name
+$acid['session']['table']       = $acid['db']['prefix'] . 'session';   // Cookie name
+$acid['session']['expire']      = 14440;                               // Expire date in seconds
+$acid['session']['secure']      = false;                               // HTTPS only
+$acid['session']['httponly']    = true;                                // Only HTTP, no javascript
+$acid['session']['check_ip']    = false;                               // Check IP
+$acid['session']['check_ua']    = true;                                // Check User Agent
+
+
+// Emails
+$acid['email']['method']        = 'mail';         // Could be "smtp" or "mail" (ie. php mail() function)
+$acid['email']['smtp']['host']  = 'localhost';    // If smtp
+$acid['email']['smtp']['user']  = '';             // If smtp
+$acid['email']['smtp']['pass']  = '';             // If smtp
+
+
+// File system
+$acid['path']['uploads']        = 'upload/';
+$acid['path']['files']          = 'files/';
+$acid['path']['tmp']         	= 'files/tmp/';
+
+// Browser
+$acid['browser']['acl']			= $acid['lvl']['admin'];
+
+// Default out scheme
+$acid['out']					= 'default';
+
+// Information pages
+$acid['info']['base']           = $acid['url']['folder'] . (empty($acid['keys']['page']) ? '' : $acid['keys']['page'] . '/' );
+$acid['info']['baninfo']        = 'baninfo';
+$acid['info']['sitemap']        = 'sitemap';
+
+//Config
+$acid['post']['ajax']['key']	= 'ajax';
+
+// Logs
+$acid['log']['enable']          = true;
+$acid['log']['level']           = 1;
+$acid['log']['path']            = SITE_PATH . 'logs/';
+$acid['log']['filename']        = 'acidfarm';
+$acid['log']['filename_date']   = 'Y-m-d';
+$acid['log']['date_format']     = 'Y-m-d H:i:s';
+$acid['log']['keys']			= '*'; // '*' OR array('ACID','DEBUG','SQL','SESSION','INFO','URL','USER','DEPRECATED','HACK','ERROR')
+$acid['log']['type'] 			= 'single'; // single / daily 
+$acid['log']['custom']			= '';
+$acid['log']['colorize']		= array();
+
+
+// Updates and Upgrade
+$acid['upgrade']['types']					= array('update','upgrade');
+$acid['upgrade']['path']['update'] 			= SITE_PATH.'sys/update/';
+$acid['upgrade']['path']['upgrade']			= SITE_PATH.'sys/upgrade/';
+$acid['upgrade']['db']['sample_prefix']		= array('acid_','af_');
+
+$acid['upgrade']['mode']			= 'off'; // dev / prod / off
+$acid['upgrade']['exclued']			= array('files'=>array(),'folders'=>array('.svn'));
+
+//PHP error logs
+$acid['debug']                  = true;
+$acid['phplog']['enable']       = true;
+$acid['phplog']['filename']     = 'php_errors';
+$acid['phplog']['path']		    = SITE_PATH . 'logs/';
+$acid['phplog']['type']		    = 'single'; // single / daily 
+$acid['error_report']['debug']	= E_ALL & ~E_STRICT;
+$acid['error_report']['prod']	= 0;
+
+// Files
+$acid['files']['file_mode']     = 0644;
+$acid['files']['ext'][0]        = array('jpg','jpeg','png','gif');                              // 0 Images avec miniatures
+$acid['files']['ext'][1]        = array('bmp','psd','eps','tiff');                              // 1 Images
+$acid['files']['ext'][2]        = array('mp3','wav','mpc','ogg','wma');                         // 2 Son
+$acid['files']['ext'][3]        = array('avi','mpg','mpeg','wmv','flv');                        // 3 Vidéo 
+$acid['files']['ext'][4]        = array('pdf');                                                 // 4 PDF
+$acid['files']['ext'][5]        = array('txt','doc','odt','rtf');                               // 5 Documents texte
+$acid['files']['ext'][6]        = array('xls','ods');                                           // 6 Feuilles de caculs
+$acid['files']['ext'][7]        = array('zip','rar','ace','tar.gz','bzip','gz','bzip2','tgz');	// 7 Archives
+
+$acid['files']['icons']         = array(0=>'image.png',1=>'image.png',2=>'musique.png',3=>'video.png',
+                                        4=>'pdf.png',5=>'txt.png',6=>'calc.png',7=>'archive.png');
+
+$acid['ext']['files'] 			= array('jpg','jpeg','png','gif','bmp','psd','eps','tiff',
+										'mp3','wav','mpc','ogg','wma','avi','mpg','mpeg','wmv','flv',
+										'pdf','txt','doc','odt','rtf','xls','ods',
+										'zip','rar','ace','tar.gz','bzip','gz','bzip2','tgz');
+
+$acid['ext']['images'] 			= array('jpg','jpeg','png','gif','bmp','psd','eps','tiff');
+
+
+// Pagination
+$acid['pagination']['max_nav_pages'] = 5;
+
+
+// DB Counter/Timer
+$acid['timer']['db']['global'] = array();
+$acid['timer']['db']['current']['start'] = 0;
+$acid['timer']['db']['current']['stop'] = 0;
+$acid['timer']['db']['opened'] = 0;
+$acid['counter']['db'] = 0;
+
+// DB CONNEXIONS Counter/Timer
+$acid['timer']['db-connect']['global'] = array();
+$acid['timer']['db-connect']['current']['start'] = 0;
+$acid['timer']['db-connect']['current']['stop'] = 0;
+$acid['timer']['db-connect']['opened'] = 0;
+$acid['counter']['db-connect'] = 0;
+
+// TPL Counter/Timer
+$acid['timer']['tpl']['global'] = array();
+$acid['timer']['tpl']['current']['start'] = 0;
+$acid['timer']['tpl']['current']['stop'] = 0;
+$acid['timer']['tpl']['opened'] = 0;
+$acid['counter']['tpl'] = 0;
+
+// Plupload
+$acid['plupload']['chunk_size'] = 2;	// En Mo
+$acid['plupload']['max_size'] = 500;	// En Mo
+$acid['plupload']['session_time'] = 4 * 60 * 60;	// Temps d'execution max de transfert en secondes (4H par défaut)
+$acid['plupload']['file_tmp_age'] = 24 * 60 * 60;	// Temps de vie des fichiers temporaires en secondes (24H par défaut)
+$acid['plupload']['show_upload'] = false;	// Affiche le bouton pour upload le fichier
+$acid['plupload']['autosubmit'] = true;	// Soumet (par défaut) le formulaire admin après l'envoie de tous les fichiers
+$acid['plupload']['runtimes'] = array('html5', 'flash');	// Définie les runtimes pour le plugin plupload
+
+// Css
+$acid['css']['dynamic']['active'] = false;		//generate css file referring to php file
+$acid['css']['dynamic']['files'] = array(); 	//path to php file
+$acid['css']['dynamic']['mode'] = 'default';	//debug (always), default (if not exists)
+
+?>

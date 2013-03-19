@@ -1,0 +1,1 @@
+<a <?php if($v['popup']) { echo 'onclick="window.open(this.href); return false;"'; } ?> href="<?php echo $v['url']; ?>" title="<?php echo $v['url']; ?>"><?php echo $v['text']; ?></a>

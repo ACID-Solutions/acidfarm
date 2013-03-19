@@ -1,0 +1,34 @@
+#admin_form { width:600px; margin:100px auto; font-family:arial;  }
+
+#admin_form form table{ width:375px; margin:auto; }
+#admin_form form table input{ float:right; }
+#admin_form form table input[type=text],#admin_form form table input[type=password] { width:160px; height:20px; border:1px solid #5F5F5F; }
+
+#admin_form form table td.label { font-size:18px; color:#96BE12; font-weight:normal; width:215px; padding:5px 0px;}
+#admin_form form table td.admin_log_msg{ font-size:12px; padding-bottom:10px; text-align:center; }
+#admin_form .title{ 
+	font-size:13px; color:#96BE12; font-weight:bold; height:75px; line-height:95px;  padding-top:10px;  margin:30px 0px;
+	background-image:url('../img/admin/gradient-top.png'); background-position:bottom center; background-repeat:no-repeat;
+}
+
+#admin_form .bottom{ 
+	font-size:9px; color:#D1D1D1; padding-top:25px; font-family:arial; font-weight:normal; font-style:italic;  margin:30px 0px; margin-top:0px; text-align:center;
+	background-image:url('../img/admin/gradient-bottom.png'); background-position:top center; background-repeat:no-repeat;
+}
+#admin_form .bottom a{ color:#D1D1D1; }
+
+
+#admin_form .title img{ float:right; }
+
+#admin_form .subform_div{ font-size:9px; height:10px; line-height:10px; color:#D1D1D1; margin-bottom:5px; margin-top:15px; }
+#admin_form .subform_div a{  color:#919191;    }
+
+#admin_form  .admin_alert_content{ font-size:12px; color:#919191; text-align:center; margin:5px 0px; }
+
+.adminbtn_connexion  { 
+	width:85px; height:21px;  padding:0px; font-size:10px; color:#FFFFFF; border:0px solid #FFFFFF; cursor:pointer; margin:10px auto; padding-bottom:2px;
+	background-color:#96BE12; background-image:url('../img/admin/bouton.png'); background-repeat:no-repeat; background-position:top left;  
+ }
+ 
+.adminbtn_connexion:hover { background-color:#707072; }
+

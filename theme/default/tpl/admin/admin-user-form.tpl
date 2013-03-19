@@ -1,0 +1,2 @@
+<h3><?php echo Acid::trad('admin_config_title_pass'); ?></h3> <?php echo User::printPasswordChange(); ?> 
+<h3><?php echo Acid::trad('admin_config_title_email'); ?></h3> <?php echo User::printAdminEmailChange(); ?> 

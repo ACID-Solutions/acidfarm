@@ -1,0 +1,210 @@
+/******************************************
+ * BWIN
+ ******************************************/
+.bwin {
+z-index: 1005;
+}
+
+.bwin_bg {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top:0;
+	background-color: #000;
+	opacity: 0.4;
+	z-index: 1000;
+}
+ 
+.bwin_content  {
+	padding:30px;
+}
+
+
+.bwin_cadre{
+	position: absolute;
+	left: 50%;
+	margin-left: -400px;
+	width: 800px;
+	font-size: 8pt;
+	background-color: #FFFFFF;
+	opacity: 1;
+	
+	color: #000;
+	border: 0px solid  #333333;
+	z-index: 1010;
+	background-position:top center;
+	height:300px;
+ }
+
+.bwin_title { padding:10px; }
+
+.bwin_close {position:absolute; top:10px; margin-left:760px; width:13px; height:13px;}
+ 
+.bwin_loading{text-align:center; margin-top:100px;}
+
+/******************************************
+ * Dialog
+ ******************************************/
+#dialog {
+	font-family:helvetica;
+}
+
+#dialog_bg {
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top:0;
+	background-color: #000;
+	opacity: 0.4;
+	z-index: 1000;
+}
+
+#dialog_box {
+	position: absolute;
+	left: 50%;
+	margin-left: -250px;
+	width: 500px;
+	font-size: 8pt;
+	background-color: #FFFFFF;
+	opacity: 1;
+	color: #000;
+	border: solid 1px #333333;
+	z-index: 1010;
+}
+
+#dialog_box a {
+	text-decoration: underline;
+}
+
+#dialog_btnok a {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+#dialog_btnok a:hover {
+	color: #FFFFFF;
+	text-decoration: underline;
+}
+
+#dialog_titre {
+	font-weight: bold;
+	color: #FFFFFF;
+	padding: 4px;
+	/*border-bottom: solid 1px #FFFFFF;*/
+	background-color: #333333;
+	font-size:10pt;
+}
+
+
+#dialog_content {
+	padding:10px;
+	font-size:8pt;
+}
+
+
+#dialog_btnok { /*border-top: solid 1px #FFFFFF;*/
+	background-color: #333333;
+	padding: 4px;
+	text-align: center;
+}
+
+#dialog_btnok a {
+	color: #FFFFFF;
+	font-weight: bold;
+	border: solid 1px #FFFFFF;
+	padding: 1px;
+}
+
+#dialog_btnok a:hover {
+	background-color: #AAA;
+}
+
+.dialog_classic {
+	padding: 4px;
+	background-image: url('../img/picto_classic.png');
+	background-repeat: no-repeat;
+	background-position: right bottom;
+	min-height: 22px;
+}
+
+.dialog_valid {
+	padding: 4px;
+	background-image: url('../img/picto_valid.png');
+	background-repeat: no-repeat;
+	background-position: right bottom;
+	min-height: 22px;
+}
+
+.dialog_error {
+	padding: 2px;
+	background-image: url('../img/picto_error.png');
+	background-repeat: no-repeat;
+	background-position: right bottom;
+	/*min-height: 22px;*/
+	font-size:8pt;
+}
+
+
+/******************************************
+ * Dialog Banner
+ ******************************************/
+#dialog_banner {
+	font-family:helvetica;
+	position: fixed;
+	top:0;
+	width:100%;	
+	text-align:center;
+}
+
+#dialog_banner_bg {
+	position: absolute;
+	width: 100%;
+	height:100%;
+	background-color: #000;
+	opacity: 0.4;
+	z-index: 995;	
+	cursor:pointer;
+}
+
+#dialog_banner_box {
+	position:relative;
+	margin:auto;
+	width: 500px;
+	font-size: 8pt;
+	background-color: #FFFFFF;
+	opacity: 1;
+	color: #000;
+	border: solid 1px #333333;
+	z-index: 999;
+	cursor:pointer;
+}
+
+
+
+
+
+#dialog_banner_titre {
+	font-weight: bold;
+	color: #FFFFFF;
+	padding: 4px;
+	/*border-bottom: solid 1px #FFFFFF;*/
+	background-color: #333333;
+	font-size:10pt;
+}
+
+#dialog_banner_toggle {
+	float:right; display:block; text-decoration:none;
+}
+
+#dialog_banner_toggle a:active, #dialog_banner_toggle a:hover, 
+#dialog_banner_toggle a:link, #dialog_banner_toggle a:visited 
+{color:#FFFFFF;}
+
+#dialog_banner_toggle_inner { width:20px; text-align:center;}
+
+#dialog_banner_content {
+	padding:10px;
+	font-size:8pt;
+}
+
+
