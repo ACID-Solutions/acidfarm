@@ -18,6 +18,14 @@
  * Régénère les fichiers liés au module Photos
  */
 
-include pathinfo(__FILE__,PATHINFO_DIRNAME ).'/../glue.php';
+$opt = getopt('c::');
+if (isset($opt['c'])) {
 
-Photo::regenAll();
+	$acid_custom_log = '[SCRIPT]';
+	include pathinfo(__FILE__,PATHINFO_DIRNAME ).'/../glue.php';	
+	Photo::regenAll();
+
+}else{
+	echo "Pour effectuer l'opération, merci d'ajouter l'argument -c  à la commande actuelle." . "\n"  ;
+	exit();
+}

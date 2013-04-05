@@ -83,7 +83,7 @@ class AcidMail {
 			
 			
 			foreach ($attached as $name=>$elt) {
-				$mail->AddAttachment($elt,$name);
+				$mail->AddAttachment($elt,utf8_decode($name));
 			}
 			
 			if (!empty($functions)) {

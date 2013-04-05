@@ -168,6 +168,18 @@ class User extends AcidUser {
 	}	
 	
 	/**
+	 * Préparation du module pour les différents affichage/formulaires
+	 * @param string $do Vue en cours
+	 * @param array $conf Configuration
+	 */
+	public function printAdminConfigure($do='default',$conf=array()) {
+		if ($sess_form = AcidSession::tmpGet(self::preKey($do))) {
+			unset($sess_form['password']);
+			AcidSession::tmpSet(self::preKey($do),$sess_form);
+		}
+	}
+	
+	/**
 	 * Formulaire HTML de changement d'email
 	 * @return string
 	 */

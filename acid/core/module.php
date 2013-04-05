@@ -3592,10 +3592,14 @@ abstract class AcidModuleCore {
 	public function printAdminForm($do) {
 		$this->printAdminConfigure($do);
 		
-		if ($sess_form = AcidSession::tmpGet(static::preKey($do))) {
-			$this->initVars($sess_form);
+		if ($sess_form = AcidSession::tmpGet(self::preKey($do))) {
+			$sess_id = isset($sess_form[$this->tblId()]) ? $sess_form[$this->tblId()] : 0;
+			if ($sess_id==$this->getId()) {
+				$this->initVars($sess_form);
+				AcidSession::tmpKill(self::preKey($do));
+			}
 		}
-				
+
 		$lang_keys = isset($this->config['multilingual']['keys']) ? $this->config['multilingual']['keys'] : $this->getMultiLingualKeys();
 
 		$images_keys = array_keys($this->getVarsImages());

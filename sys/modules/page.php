@@ -124,6 +124,7 @@ class Page extends AcidPage {
 				AcidSession::tmpKill('active_pages');
 				return parent::postUpdate($vals,$dialog);
 			}
+			AcidSession::tmpSet(static::preKey('update'),$vals,100);
 			AcidDialog::add('banner',Acid::trad('admin_page_update_canceled'));
 		}
 	}
@@ -146,6 +147,7 @@ class Page extends AcidPage {
 			}
 			return $res;
 		} else {
+			AcidSession::tmpSet(static::preKey('add'),$vals,100);
 			AcidDialog::add('banner',Acid::trad('admin_page_update_canceled'));
 		}
 	}

@@ -101,7 +101,7 @@ class AcidTime {
 		$t['day'] = 60*60*24;
 		$t['hour'] = 60*60;
 		$t['minute'] = 60;
-		$t['second'] = 60;
+		$t['second'] = 1;
 	
 			
 	

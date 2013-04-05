@@ -18,6 +18,16 @@
  * Régénère les fichiers liés au module PhotosHome
  */
 
-include pathinfo(__FILE__,PATHINFO_DIRNAME ).'/../glue.php';
+$opt = getopt('c::');
+if (isset($opt['c'])) {
 
-PhotoHome::regenAll();
+	$acid_custom_log = '[SCRIPT]';
+	include pathinfo(__FILE__,PATHINFO_DIRNAME ).'/../glue.php';
+	
+	PhotoHome::regenAll();
+	
+}else{
+	echo "Pour effectuer l'opération, merci d'ajouter l'argument -c  à la commande actuelle." . "\n"  ;
+	exit();
+}
+	

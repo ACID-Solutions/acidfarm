@@ -22,7 +22,7 @@ include pathinfo(__FILE__,PATHINFO_DIRNAME ).'/../glue.php';
 
 
 //Getting PARAMS
-$opt = getopt('t:d:f:p:');
+$opt = getopt('t:d:f:p:h::',array('help::'));
 
 $table = isset($_GET['tbl']) ? $_GET['tbl'] : null;
 if (isset($opt['t'])) {
@@ -48,6 +48,17 @@ $dir = isset($_GET['dir']) ? $_GET['dir'] : 'sys/script/class/';
 if (isset($opt['w'])) {
 	$dir = $opt['w'];
 }
+
+
+if (isset($opt['h'])||isset($opt['help'])||(!isset($opt['t']))) {
+	echo "-t [all|nom de la table] : table(s) à traiter (obligatoire)" . "\n" ;
+	echo "-d [nom de la classe] : nom de la classe de destination (optionnel)" . "\n" ;
+	echo "-p [prefixe des tables] : prefixe associé aux tables SQL (optionnel)" . "\n" ;
+	echo "-f [nom fichier] =nom de la table : nom du fichier de classe (optionnel)" . "\n" ;
+	echo "-w [chemin du dossier] ='sys/script/class/' : chemin vers le dossier de destination des fichiers de classe depuis SITE_PATH (optionnel)" . "\n" ;
+	exit();
+}
+
 
 $dir = SITE_PATH.$dir;
 if (!is_dir($dir)) {
