@@ -268,7 +268,95 @@ abstract class AcidUser extends AcidModule {
 	 * Traitement des formulaires
 	 * *****************************/
 	
+	/**
+	 * Retourne un tableau de champs autorisés à l'inscription
+	 * @return multitype:
+	 */
+	public static function exeUserCreateKeys() {
+		//$mod = self::build();
+		//$exclued = array('id_user','id_group','user_salt','username','password','email','level','date_creation','date_activation','ip');
+		//return array_diff($mod->getKeys(),$exclued);
+		return array();
+	}
 	
+	
+	/**
+	 * Inscription d'un compte utilisateur
+	 * @param array $vals
+	 * @param array $post
+	 * @param array $files
+	 */
+	public static function exeUserCreate($vals=null,$post=null,$files=null) {
+		$post = $post===null ? $_POST : $post;
+		$files = $files===null ? $_FILES : $files;
+		$vals = $vals===null ? $post : $vals;
+	
+		$login = Acid::sessExist('connexion:login') ? Acid::sessGet('connexion:login') : (isset($vals['username']) ? $vals['username'] : '');
+		$email = Acid::sessExist('connexion:email') ? Acid::sessGet('connexion:email') : (isset($vals['email']) ? $vals['email'] : '');
+		$user_salt = Acid::sessExist('connexion:user_salt') ? Acid::sessGet('connexion:user_salt') : (isset($vals['user_salt']) ? $vals['user_salt'] : '');
+		$pass = Acid::sessExist('connexion:pass') ? Acid::sessGet('connexion:pass') : (isset($vals['password']) ? $vals['password'] : '');
+	
+		$my_user = new User();
+		$my_user->initVars( array(
+				'username'=>$login,
+				'user_salt'=>$user_salt,
+				'password'=>static::getHashedPassword($pass,$user_salt),
+				'email'=>$email,
+				'level'=>Acid::get('lvl:unvalid'),
+				'date_creation'=>AcidVarDatetime::now(),
+				'ip_inscription'=>$_SERVER['REMOTE_ADDR']
+		));
+	
+		if ($vals) {
+			if ($initkeys = static::exeUserCreateKeys()) {
+				$init = $vals;
+				foreach ($init as $ikey=>$ival) {
+					if (!in_array($ikey,$initkeys)) {
+						unset($init[$ikey]);
+					}
+				}
+				$my_user->initVars($init);
+			}
+		}
+	
+		$my_user->dbAdd();
+	
+		User::newInscription($login,$email,$pass);
+	
+		Acid::sessSet('connexion',array());
+		$my_user->sessionMake();
+	
+		AcidDialog::add('info',Acid::trad('user_valid_mail_sent'));
+			
+		self::exeUserAction($vals,$my_user);
+	
+	}
+	
+	/**
+	 * Traitement d'actions post inscription
+	 * @param object $user
+	 */
+	public static function exeUserAction($vals=null,$user=null) {
+		$user = $user===null ? User::curUser() : $user;
+		$vals = $vals===null ? $_POST : $vals;
+	
+		if (Acid::sessGet('useraction:waitlogin')) {
+			if (Acid::sessExist('useraction:function:name') && is_callable(Acid::sessGet('useraction:function:name'))) {
+				$name = Acid::sessGet('useraction:function:name');
+				$args = Acid::sessGet('useraction:function:args') ? Acid::sessGet('useraction:function:args') : array();
+				foreach ($args as $karg => $arg) {
+					if ($arg == '__USER__') {
+						$args[$karg] = $user;
+					}elseif($arg == '__VALS__') {
+						$args[$karg] = $vals;
+					}
+				}
+				call_user_func_array($name,$args);
+				Acid::sessKill('useraction');
+			}
+		}
+	}
+		
 	/**
 	 * Traite les différentes procédures d'administration d'un utilisateur depuis un formulaire.
 	 */
@@ -324,7 +412,6 @@ abstract class AcidUser extends AcidModule {
 							AcidDialog::add('error',Acid::trad('user_ask_choose_pass'));
 						}
 						
-						
 						// Vérification de l'email
 						if (!empty($sess['connexion']['email'])) {
 							$my_email = new AcidVarEmail();
@@ -348,27 +435,12 @@ abstract class AcidUser extends AcidModule {
 							AcidDialog::add('error',Acid::trad('user_ask_set_mail'));
 						}
 						
-						
+						//Si tout est valide
 						if ($user_valid && $pass_valid && $email_valid) {
-							$my_user = new User();
-							$my_user->initVars( array(
-															'username'=>$sess['connexion']['login'],
-															'user_salt'=>$sess['connexion']['user_salt'],
-															'password'=>static::getHashedPassword($sess['connexion']['pass'],$sess['connexion']['user_salt']),
-															'email'=>$sess['connexion']['email'],
-															'level'=>Acid::get('lvl:unvalid'),
-															'ip_inscription'=>$_SERVER['REMOTE_ADDR']
-													));
-							$my_user->dbAdd();
-							User::newInscription($sess['connexion']['login'],$sess['connexion']['email'],$sess['connexion']['pass']);
-							$sess['connexion'] = array();
-							$my_user->sessionMake();
-							AcidDialog::add('info',Acid::trad('user_valid_mail_sent'));
-							if (isset($sess['useraction']['waitlogin']) && $sess['useraction']['waitlogin'] == true) {
-								if (isset($sess['useraction']['function']) && function_exists($sess['useraction']['function'])) {
-									$sess['useraction']['function']();
-								}
-							}
+							
+							//Création de l'utilisateur
+							static::exeUserCreate();
+							
 						}
 					}
 				break;
