@@ -717,7 +717,7 @@ abstract class AcidUser extends AcidModule {
 	 * @param boolean $print_error true pour ajouter un dialogue en cas d'erreur
 	 * @return boolean
 	 */
-	public static function login($login,$pass,$session_make=false,$autolog=false,$print_error=true) {
+	public static function login($login,$pass,$session_make=false,$autolog=false,$print_error=true,$hashed_password=false) {
 		
 		$comp = new User();
 		
@@ -726,7 +726,8 @@ abstract class AcidUser extends AcidModule {
 		
 		foreach($identifiants as $ident) {
 			if ($comp->dbInitSearch(array($ident=>$login))) {
-				if ($comp->get('password') == User::getHashedPassword($pass,$comp->get('user_salt'))) {
+				$the_password = $hashed_password ?  $pass : User::getHashedPassword($pass,$comp->get('user_salt'));
+				if ($comp->get('password') == $the_password) {
 					// Vérification de la date de validité du compte (00-00-0000 => illimité)
 					if ( ($comp->get('date_deactivation') == '0000-00-00 00:00:00') || (strtotime($comp->get('date_deactivation')) > time()) ) {
 						
