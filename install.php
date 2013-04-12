@@ -155,18 +155,18 @@ if (!file_exists($dir_path)) {
 \$acid['url']['folder_lang']     = \$acid['url']['folder'];
 
 // COOKIES
-//\$acid['cookie']['path']          = \$acid['url']['folder']; // Dossier pour lequel le cookie est accessible ' 
-//\$acid['cookie']['domain']          = \$acid['url']['domain']; // Domaine pour lequel le cookie est accessible '
+//\$acid['cookie']['path']          = \$acid['url']['folder']; // Dossier pour lequel le cookie est accessible 
+//\$acid['cookie']['domain']          = \$acid['url']['domain']; // Domaine pour lequel le cookie est accessible 
 
 // Salt
 \$acid['hash']['salt']           = '$salt';
 
 // Debug
 // ALL : '*'
-// DEFINED : array('START','ACID','DEBUG','SQL','SESSION','INFO','URL','USER','DEPRECATED','ROUTER','PERMISSION','HACK','ERROR','PAYPAL','MAINTENANCE','FILE')'
-// PROD DEBUG : array('START','SQL','SESSION','INFO','URL','USER','DEPRECATED','ROUTER','PERMISSION','HACK','ERROR','PAYPAL','MAINTENANCE','FILE')'
-//\$acid['log']['keys']          	= array('URL','DEPRECATED','HACK','ERROR'); '
-//\$acid['log']['type']          	= 'daily'; // single / daily '
+// DEFINED : array('START','ACID','DEBUG','SQL','SESSION','INFO','URL','USER','DEPRECATED','ROUTER','PERMISSION','HACK','ERROR','PAYPAL','MAINTENANCE','FILE')
+// PROD DEBUG : array('START','SQL','SESSION','INFO','URL','USER','DEPRECATED','ROUTER','PERMISSION','HACK','ERROR','PAYPAL','MAINTENANCE','FILE')
+//\$acid['log']['keys']          	= array('URL','DEPRECATED','HACK','ERROR'); 
+//\$acid['log']['type']          	= 'daily'; // single / daily 
 //\$acid['log']['colorize']         = array();
 //\$acid['debug']		         	= false;
 //\$acid['error_report']['debug']	= E_ALL & ~E_STRICT;
