@@ -105,6 +105,13 @@ if (!file_exists($dir_path)) {
 		$domain 		= addslashes($action['domain']);
 		$folder 		= addslashes($action['folder']);
 		
+		$devmode		= addslashes($action['devmode']);
+		$upg_mode		= $devmode=='prod' ? 'prod' : 'dev';
+		$lprod_quote	= $devmode=='prod' ? '' : '//';
+		$lpp_quote		= $devmode=='preprod' ? '' : '//';
+		$ldev_quote		= $devmode=='dev' ? '' : '//';
+		$cssdyn_mode	= $devmode=='dev' ? 'debug' : 'default';
+		
 		$hoster 		= addslashes($action['hoster']);
 		
 		$dbtype 		= addslashes($action['db_type']);
@@ -163,21 +170,22 @@ if (!file_exists($dir_path)) {
 
 // Debug
 // ALL : '*'
-// DEFINED : array('START','ACID','DEBUG','SQL','SESSION','INFO','URL','USER','DEPRECATED','ROUTER','PERMISSION','HACK','ERROR','PAYPAL','MAINTENANCE','FILE')
-// PROD DEBUG : array('START','SQL','SESSION','INFO','URL','USER','DEPRECATED','ROUTER','PERMISSION','HACK','ERROR','PAYPAL','MAINTENANCE','FILE')
-//\$acid['log']['keys']          	= array('URL','DEPRECATED','HACK','ERROR'); 
-//\$acid['log']['type']          	= 'daily'; // single / daily 
+// DEFINED : array('START','ACID','DEBUG','SQL','SESSION','INFO','URL','USER','DEPRECATED','ROUTER','PERMISSION','HACK','ERROR','PAYPAL','PAYMENT','MAINTENANCE','FILE')
+// PROD DEBUG : array('START','SQL','SESSION','INFO','URL','USER','DEPRECATED','ROUTER','PERMISSION','HACK','ERROR','PAYPAL','PAYMENT','MAINTENANCE','FILE')
+$lpp_quote\$acid['log']['keys']          	= array('START','SQL','SESSION','INFO','URL','USER','DEPRECATED','ROUTER','PERMISSION','HACK','ERROR','PAYPAL','PAYMENT','MAINTENANCE','FILE'); //Preprod
+$lprod_quote\$acid['log']['keys']          	= array('URL','DEPRECATED','HACK','ERROR','PAYMENT'); //Prod
+$lprod_quote\$acid['log']['type']          	= 'daily'; // single / daily 
 //\$acid['log']['colorize']         = array();
-//\$acid['debug']		         	= false;
-//\$acid['error_report']['debug']	= E_ALL & ~E_STRICT;
-//\$acid['error_report']['prod']	= 0;
+$lprod_quote\$acid['debug']		         	= false;
+$lprod_quote\$acid['error_report']['debug']	= E_ALL & ~E_STRICT;
+$lprod_quote\$acid['error_report']['prod']	= 0;
 				
 // Maintenance
 \$acid['maintenance']           	= false;
 //\$acid['maintenance_desc']		= 'Site en maintenance...';
 
 // Upgrade
-\$acid['upgrade']['mode']        = 'dev'; // dev / prod / off
+\$acid['upgrade']['mode']        = '$upg_mode'; // dev / prod / off
 
 // Plupload
 \$acid['plupload']['chunk_size'] = 2;	// En Mo
@@ -190,7 +198,7 @@ if (!file_exists($dir_path)) {
 
 // Css
 \$acid['css']['dynamic']['active'] = false;	//generate css file referring to php file
-\$acid['css']['dynamic']['mode'] = 'default';	//debug (always), default (if not exists)
+\$acid['css']['dynamic']['mode'] = '$cssdyn_mode';	//debug (always), default (if not exists)
 
 EOT;
 
@@ -292,6 +300,8 @@ HTACC;
 		
 		$scheme = empty($_SERVER['HTTPS']) ? 'http' : 'https';
 		
+		$prod_selected = strpos($_SERVER['HTTP_HOST'],'www.')===0 ? ' selected="selected" ' : '';
+		
 		$form = <<< FORM
 <form action="#" method="post">
 	<div><pre>
@@ -314,7 +324,9 @@ HTACC;
 	<h2>User Profile</h2>
 	User name : <input type="text" name="user_name" value="admin" /><br /> 
 	User password : <input type="password" name="user_pass" value="admin" /><br />
-	User mail : <input type="text" name="user_mail" value="" /><br /> 
+	User mail : <input type="text" name="user_mail" value="" /><br /> 	
+	<h2>Configuration</h2>
+	Server Mode : <select name="devmode"><option value="dev">Dev</option><option value="preprod">Preprod</option><option value="prod"{$prod_selected}>Prod</option></select>
 	<h2>Housing</h2>
 	<select name="hoster">
 		<option value="0">Hoster</option>
