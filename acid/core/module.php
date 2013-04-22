@@ -2786,18 +2786,34 @@ abstract class AcidModuleCore {
 	/**
 	* Retourne une portion HTML representant les onglets de l'administration AcidFarm
 	*
-	* @param array $onglets La configuration des onglets
+	* @param array $onglets Les onglets
+	* @param array $config Tableau de configuration pour les onglets
 	* 
 	* @return string
 	*/
-	 public function printAdminOnglets($onglets=array()) {
+	 public function printAdminOnglets($onglets=array(), $config=array()) {
+
+	 	$tpl = isset($config['tpl']) ? $config['tpl'] : 'admin/admin-body-onglets.tpl';
 
 		if (empty($onglets)) {
 			$no_onglets = (($onglets===null) || ($onglets===false));
 			$onglets = $no_onglets ?  array() : $this->getOnglets() ;
 		}
-		
-		return Acid::tpl('admin/admin-body-onglets.tpl',array('onglets'=>$onglets),$this);
+
+		$vars = array();
+		$vars['onglets'] = array();
+
+		foreach($onglets as $url_onglet => $conf_onglet) {
+			$_onglet = new stdClass();
+			$_onglet->url = !is_numeric($url_onglet) ? $url_onglet : $conf_onglet['url'];
+			$_onglet->name = is_array($conf_onglet) ? $conf_onglet['name'] : $conf_onglet;
+			$_onglet->selector = is_array($conf_onglet) ? (isset($conf_onglet['selector']) ? $conf_onglet['selector'] : $url): $url_onglet;
+			$_onglet->isSelected = $this->isSelectedOnglet($_onglet->selector);
+
+			$vars['onglets'][] = $_onglet;
+		}
+
+		return Acid::tpl($tpl,$vars,$this);
 	 }
 	
 	/**
