@@ -1,5 +1,5 @@
-<section id="page">
-	<header class="block_content" id="page_head">
+<section id="page" class="block_content">
+	<header id="page_head">
 		<h1><a href="<?php echo $o->url(); ?>"><?php echo $o->hscTrad('title');?></a></h1>		
 	</header> 
 	<div id="page_content" >
