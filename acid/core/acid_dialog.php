@@ -80,7 +80,7 @@ class AcidDialog {
 	 *
 	 * @return string
 	 */
-	public static function getDialog($blacklister=array()) {
+	public static function getDialog($blacklister=array(),$tag='div') {
 		self::initDialog();
 		$sess = AcidSession::getInstance();
 		$dialog = &$sess->data['dialog'];
@@ -89,9 +89,9 @@ class AcidDialog {
 		if ($dialog) {
 			while ($info = array_shift($dialog)){
 				if (!in_array($info['type'],$blacklister)) {
-					$output .=	'<p class="dialog_'.$info['type'].'">' .
+					$output .=	'<'.$tag.' class="dialog_'.$info['type'].'">' .
 					$info['str'] .
-	            				'</p>' . "\n";
+	            				'</'.$tag.'>' . "\n";
 				}
 			}
 		}
