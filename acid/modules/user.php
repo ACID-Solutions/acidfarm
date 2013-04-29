@@ -329,7 +329,8 @@ abstract class AcidUser extends AcidModule {
 		AcidDialog::add('info',Acid::trad('user_valid_mail_sent'));
 			
 		self::exeUserAction($vals,$my_user);
-	
+		
+		return  $my_user;
 	}
 	
 	/**
@@ -351,8 +352,10 @@ abstract class AcidUser extends AcidModule {
 						$args[$karg] = $vals;
 					}
 				}
-				call_user_func_array($name,$args);
+				$res_action = call_user_func_array($name,$args);
 				Acid::sessKill('useraction');
+				
+				return $res_action;
 			}
 		}
 	}
