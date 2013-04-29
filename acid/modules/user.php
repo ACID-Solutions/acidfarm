@@ -162,7 +162,7 @@ abstract class AcidUser extends AcidModule {
 	 * @return bool
 	 */
 	public static function isUser($id_user) {
-		$cur_id = self::curValue('id_user');
+		$cur_id = static::curValue('id_user');
 	    return ($cur_id &&  ($cur_id == $id_user));
 	}	
 	
@@ -302,7 +302,7 @@ abstract class AcidUser extends AcidModule {
 				'user_salt'=>$user_salt,
 				'password'=>static::getHashedPassword($pass,$user_salt),
 				'email'=>$email,
-				'level'=>self::getLevelNextInscription(),
+				'level'=>static::getLevelNextInscription(),
 				'date_creation'=>AcidVarDatetime::now(),
 				'ip_inscription'=>$_SERVER['REMOTE_ADDR']
 		));
@@ -328,7 +328,7 @@ abstract class AcidUser extends AcidModule {
 	
 		AcidDialog::add('info',Acid::trad('user_valid_mail_sent'));
 			
-		self::exeUserAction($vals,$my_user);
+		static::exeUserAction($vals,$my_user);
 		
 		return  $my_user;
 	}
@@ -406,10 +406,10 @@ abstract class AcidUser extends AcidModule {
 						
 						// Vérification du pass
 						if (!empty($sess['connexion']['pass'])) {
-							if (strlen($sess['connexion']['pass']) >= self::passwordMinNumber()) {
+							if (strlen($sess['connexion']['pass']) >= static::passwordMinNumber()) {
 								$pass_valid = true;
 							} else {
-								AcidDialog::add('error',Acid::trad('user_error_pass_nbc',array('__NUM__'=>self::passwordMinNumber())));
+								AcidDialog::add('error',Acid::trad('user_error_pass_nbc',array('__NUM__'=>static::passwordMinNumber())));
 							}
 						}else{
 							AcidDialog::add('error',Acid::trad('user_ask_choose_pass'));
@@ -454,7 +454,7 @@ abstract class AcidUser extends AcidModule {
 				
 				case 'change_email' : 
 					
-					if (User::curLevel(self::getLevelBeforeActivation()) && isset($_POST['email'])) {
+					if (User::curLevel(static::getLevelBeforeActivation()) && isset($_POST['email'])) {
 						$email_valid = false;
 						if (!empty($_POST['email'])) {
 							if ($_POST['email'] != $sess['user']['email']) {
@@ -493,7 +493,7 @@ abstract class AcidUser extends AcidModule {
 				
 				
 				case 'send_mail_confirmation' : 
-					if (User::curLevel() === self::getLevelBeforeActivation()) {
+					if (User::curLevel() === static::getLevelBeforeActivation()) {
 						User::newInscription($sess['user']['username'],$sess['user']['email'],false);
 						AcidDialog::add('info',Acid::trad('user_mail_sent',array('__MAIL__'=>$sess['user']['email'])));
 					}
@@ -503,7 +503,7 @@ abstract class AcidUser extends AcidModule {
 				case 'change_password' : 
 					if (isset($_POST['old_pass']) && isset($_POST['new_pass']) && isset($_POST['confirmation'])) {
 						if (static::getHashedPassword($_POST['old_pass'],$sess['user']['user_salt']) === $sess['user']['password']) {
-							if (strlen($_POST['new_pass']) >= self::passwordMinNumber()) {
+							if (strlen($_POST['new_pass']) >= static::passwordMinNumber()) {
 								if ($_POST['new_pass'] == $_POST['confirmation']) {
 									$my_user = new User($sess['user']['id_user']);
 									$my_user->initVars(array('password'=>static::getHashedPassword($_POST['new_pass'],$my_user->get('user_salt'))));
@@ -515,7 +515,7 @@ abstract class AcidUser extends AcidModule {
 									AcidDialog::add('error',Acid::trad('user_error_pass_dismatch'));
 								}
 							}else{
-								AcidDialog::add('error',Acid::trad('user_error_pass_nbc',array('__NUM__'=>self::passwordMinNumber())));
+								AcidDialog::add('error',Acid::trad('user_error_pass_nbc',array('__NUM__'=>static::passwordMinNumber())));
 							}
 						}else{
 							AcidDialog::add('error',Acid::trad('user_error_bad_cur_password'));
@@ -534,7 +534,7 @@ abstract class AcidUser extends AcidModule {
 					}
 					
 					if (isset($_GET['pass_oublie']) && isset($_GET['code']) && isset($_POST['pass']) && isset($_POST['confirmation'])) {
-						if (strlen($_POST['pass']) >= self::passwordMinNumber()) {
+						if (strlen($_POST['pass']) >= static::passwordMinNumber()) {
 							if ($_POST['pass'] === $_POST['confirmation']) {
 								
 								if ($rep = $user->dbList(array(array('email','=',$_GET['pass_oublie'])))) {
@@ -547,7 +547,7 @@ abstract class AcidUser extends AcidModule {
 										$my_user->initVars(array('password'=>static::getHashedPassword($_POST['pass'],$my_user->get('user_salt'))));
 										$updates = array('password');
 										AcidDialog::add('success',Acid::trad('user_password_change_success'));
-										if ($my_user->get('level') === self::getLevelBeforeActivation()) {
+										if ($my_user->get('level') === static::getLevelBeforeActivation()) {
 											$my_user->initVars(array('level'=>$my_user->getLevelNextActivation(),'date_activation'=>date('Y-m-d H:i:s')));
 											array_push($updates,'level','date_activation');
 											AcidDialog::add('success',Acid::trad('user_valid_mail_success'));
@@ -573,7 +573,7 @@ abstract class AcidUser extends AcidModule {
 								AcidDialog::add('error', Acid::trad('user_error_pass_dismatch'));
 							}
 						}else{
-							AcidDialog::add('error',Acid::trad('user_error_pass_nbc',array('__NUM__'=>self::passwordMinNumber())));
+							AcidDialog::add('error',Acid::trad('user_error_pass_nbc',array('__NUM__'=>static::passwordMinNumber())));
 						}
 					}
 					
@@ -854,7 +854,7 @@ abstract class AcidUser extends AcidModule {
 		
 		if ($res = $this->dbList(array(array('email','=',$email)))) {
 			$tab = $res[0];
-		    if ($tab['level'] == self::getLevelBeforeActivation()) {
+		    if ($tab['level'] == static::getLevelBeforeActivation()) {
 				if (Acid::hash(Acid::get('hash:salt').$tab['email']) === $code) {
 					
 					$my_user = new User();
@@ -900,7 +900,7 @@ abstract class AcidUser extends AcidModule {
 	 * @return int
 	 */
 	public static function getLevelNextInscription() {
-		return self::getLevelBeforeActivation();
+		return static::getLevelBeforeActivation();
 	}
 	
 	/**
@@ -910,7 +910,7 @@ abstract class AcidUser extends AcidModule {
 	 */
 	public function printEmailValidation() {
 		$valid_user = '';
-		if (User::curLevel() ===  self::getLevelBeforeActivation()) {	
+		if (User::curLevel() ===  static::getLevelBeforeActivation()) {	
 			$valid_user = Acid::tpl('modules/user/validation.tpl',array(),$this);
 		}
 	
@@ -1063,7 +1063,7 @@ abstract class AcidUser extends AcidModule {
 				$my_user = new User();
 				$my_user->initVars($tab);
 				$my_user->initVars(array('email'=>$new_email));
-				if ($tab['level'] == self::getLevelBeforeActivation()) {
+				if ($tab['level'] == $this->getLevelBeforeActivation()) {
 					$my_user->initVars(array('level'=>$this->getLevelNextActivation(),'date_activation'=>date('Y-m-d H:i:s')));
 				}
 				$my_user->dbUpdate(array('level','email'));
@@ -1287,7 +1287,7 @@ abstract class AcidUser extends AcidModule {
 	public function sessionMake($id=null,$connexion_auto=false) {
 		parent::sessionMake($id);
 		
-		if (User::curLevel(self::getLevelBeforeActivation())) {
+		if (User::curLevel($this->getLevelBeforeActivation())) {
 			$this->setCookie($connexion_auto);
 	    }
 	}
