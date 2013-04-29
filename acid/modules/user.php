@@ -302,7 +302,7 @@ abstract class AcidUser extends AcidModule {
 				'user_salt'=>$user_salt,
 				'password'=>static::getHashedPassword($pass,$user_salt),
 				'email'=>$email,
-				'level'=>Acid::get('lvl:unvalid'),
+				'level'=>self::getLevelNextInscription(),
 				'date_creation'=>AcidVarDatetime::now(),
 				'ip_inscription'=>$_SERVER['REMOTE_ADDR']
 		));
@@ -454,7 +454,7 @@ abstract class AcidUser extends AcidModule {
 				
 				case 'change_email' : 
 					
-					if (User::curLevel(Acid::get('lvl:unvalid')) && isset($_POST['email'])) {
+					if (User::curLevel(self::getLevelBeforeActivation()) && isset($_POST['email'])) {
 						$email_valid = false;
 						if (!empty($_POST['email'])) {
 							if ($_POST['email'] != $sess['user']['email']) {
@@ -493,7 +493,7 @@ abstract class AcidUser extends AcidModule {
 				
 				
 				case 'send_mail_confirmation' : 
-					if (User::curLevel() === Acid::get('lvl:unvalid')) {
+					if (User::curLevel() === self::getLevelBeforeActivation()) {
 						User::newInscription($sess['user']['username'],$sess['user']['email'],false);
 						AcidDialog::add('info',Acid::trad('user_mail_sent',array('__MAIL__'=>$sess['user']['email'])));
 					}
@@ -547,7 +547,7 @@ abstract class AcidUser extends AcidModule {
 										$my_user->initVars(array('password'=>static::getHashedPassword($_POST['pass'],$my_user->get('user_salt'))));
 										$updates = array('password');
 										AcidDialog::add('success',Acid::trad('user_password_change_success'));
-										if ($my_user->get('level') === Acid::get('lvl:unvalid')) {
+										if ($my_user->get('level') === self::getLevelBeforeActivation()) {
 											$my_user->initVars(array('level'=>$my_user->getLevelNextActivation(),'date_activation'=>date('Y-m-d H:i:s')));
 											array_push($updates,'level','date_activation');
 											AcidDialog::add('success',Acid::trad('user_valid_mail_success'));
@@ -854,7 +854,7 @@ abstract class AcidUser extends AcidModule {
 		
 		if ($res = $this->dbList(array(array('email','=',$email)))) {
 			$tab = $res[0];
-		    if ($tab['level'] == Acid::get('lvl:unvalid')) {
+		    if ($tab['level'] == self::getLevelBeforeActivation()) {
 				if (Acid::hash(Acid::get('hash:salt').$tab['email']) === $code) {
 					
 					$my_user = new User();
@@ -881,15 +881,27 @@ abstract class AcidUser extends AcidModule {
 	
 	/**
 	 * Retourne le niveau de membre relatif à un compte activé.
-	 *
-	 *
 	 * @return int
 	 */
 	public static function getLevelNextActivation() {
-	    //return $GLOBALS['acid']['lvl']['registred'];
 	    return Acid::get('lvl:member');
 	}
+
+	/**
+	 * Retourne le niveau de membre relatif à un compte non activé.
+	 * @return int
+	 */
+	public static function getLevelBeforeActivation() {
+		return Acid::get('lvl:unvalid');
+	}
 	
+	/**
+	 * Retourne le niveau de membre relatif à un compte dès l'inscription.
+	 * @return int
+	 */
+	public static function getLevelNextInscription() {
+		return self::getLevelBeforeActivation();
+	}
 	
 	/**
 	 * Retourne un e-mail de validation.
@@ -898,7 +910,7 @@ abstract class AcidUser extends AcidModule {
 	 */
 	public function printEmailValidation() {
 		$valid_user = '';
-		if (User::curLevel() === Acid::get('lvl:unvalid')) {	
+		if (User::curLevel() ===  self::getLevelBeforeActivation()) {	
 			$valid_user = Acid::tpl('modules/user/validation.tpl',array(),$this);
 		}
 	
@@ -1051,7 +1063,7 @@ abstract class AcidUser extends AcidModule {
 				$my_user = new User();
 				$my_user->initVars($tab);
 				$my_user->initVars(array('email'=>$new_email));
-				if ($tab['level'] == Acid::get('lvl:unvalid')) {
+				if ($tab['level'] == self::getLevelBeforeActivation()) {
 					$my_user->initVars(array('level'=>$this->getLevelNextActivation(),'date_activation'=>date('Y-m-d H:i:s')));
 				}
 				$my_user->dbUpdate(array('level','email'));
@@ -1252,12 +1264,12 @@ abstract class AcidUser extends AcidModule {
 		
 		//if ($unvalid = self::printEmailValidation()) return $unvalid;
 		
-		if (User::curLevel(Acid::get('lvl:registred'))) {
-		    return User::userPage();
+		if (User::curLevel(User::getLevelNextActivation())) {
+			return User::userPage();
 		}
-		
-		elseif (User::curLevel() === User::getLevelNextActivation()) {
-		    return Acid::mod('User')->printEmailValidation();
+	
+		elseif (User::curLevel() === User::getLevelBeforeActivation()) {
+			return Acid::mod('User')->printEmailValidation();
 		}
 		
 		else {
@@ -1275,7 +1287,7 @@ abstract class AcidUser extends AcidModule {
 	public function sessionMake($id=null,$connexion_auto=false) {
 		parent::sessionMake($id);
 		
-		if (User::curLevel($GLOBALS['acid']['lvl']['unvalid'])) {
+		if (User::curLevel(self::getLevelBeforeActivation())) {
 			$this->setCookie($connexion_auto);
 	    }
 	}
