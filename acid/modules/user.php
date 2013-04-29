@@ -321,12 +321,14 @@ abstract class AcidUser extends AcidModule {
 	
 		$my_user->dbAdd();
 	
-		User::newInscription($login,$email,$pass);
+		User::newInscription($login,$email,$pass,$my_user);
 	
 		Acid::sessSet('connexion',array());
 		$my_user->sessionMake();
 	
-		AcidDialog::add('info',Acid::trad('user_valid_mail_sent'));
+		if (!User::curLevel(static::getLevelNextActivation())) {
+			AcidDialog::add('info',Acid::trad('user_valid_mail_sent'));
+		}
 			
 		static::exeUserAction($vals,$my_user);
 		
@@ -494,7 +496,7 @@ abstract class AcidUser extends AcidModule {
 				
 				case 'send_mail_confirmation' : 
 					if (User::curLevel() === static::getLevelBeforeActivation()) {
-						User::newInscription($sess['user']['username'],$sess['user']['email'],false);
+						User::newInscription($sess['user']['username'],$sess['user']['email'],false,null,true);
 						AcidDialog::add('info',Acid::trad('user_mail_sent',array('__MAIL__'=>$sess['user']['email'])));
 					}
 				break;
@@ -599,22 +601,27 @@ abstract class AcidUser extends AcidModule {
 	 * @param string $email
 	 * @param string $pass
 	 */
-	public static function newInscription($user,$email,$pass) {
+	public static function newInscription($user,$email,$pass,$usermod=null,$need_validation=null) {
 		Acid::load('tools/mail.php');
-		
+		$usermod = $usermod===null ? static::build() : $usermod;
 		$new = false;
 		
 		$new = ($pass != false);
 		$subject = 'Inscription à ' . Acid::get('site:name');
 		$link = Acid::get('url:scheme').Acid::get('url:domain').Acid::get('user:page').'?valid_email='.$email.'&code='.Acid::hash(Acid::get('hash:salt').$email);
-		$vars = array('username'=>$user,'pass'=>$pass,'email'=>$email,'link'=>$link);
+		
+		if ($need_validation===null) {
+			$need_validation = $usermod->getId() ? ($usermod->get('level') < static::getLevelNextActivation()) : (static::getLevelNextInscription() < static::getLevelNextActivation());
+		}
+		
+		$vars = array('username'=>$user,'pass'=>$pass,'email'=>$email,'link'=>$link,'need_validation'=>$need_validation);
 		$body = Acid::tpl('modules/user/mail/user-new-inscription.tpl',$vars,Acid::mod(get_called_class()));
 		
 		AcidMail::send(Acid::get('site:name'),Acid::get('site:email'),$email,$subject,$body);
 		
 		if ($new) {
 			$subject = 'Nouvel Utilisateur '.' : ' . $user;
-			$body = Acid::tpl('modules/user/mail/admin-new-inscription.tpl',$vars,Acid::mod(get_called_class()));
+			$body = Acid::tpl('modules/user/mail/admin-new-inscription.tpl',$vars,$usermod);
 			AcidMail::send(Acid::get('site:name'),Acid::get('site:email'),Acid::get('admin:email'),$subject,$body);
 		}
 				
@@ -1011,10 +1018,7 @@ abstract class AcidUser extends AcidModule {
 		}
 	}
 	
-	
 
-		
-	
 	/**
 	 * Formulaire admin de mise à jour du module.
 	 *
