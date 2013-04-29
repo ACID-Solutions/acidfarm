@@ -46,26 +46,19 @@ if (isset($_SERVER['HTTP_USER_AGENT'])) {
 //$output .= Debug::templateTools();
 
 
-/*$output .=  $this->getDialog() . "\n" .
-            $this->getBwin() . "\n" .
-            
-            '<div id="site" class="'.$site_class.'">' . "\n" . 
-            '   <div id="header">' . $this->getHeader() . '</div>' . "\n" .
-            '   <div id="content">' . "\n" .
-            $this->output . 
-            '   </div>' . "\n" .
-            '   <div id="footer">'.$this->getFooter() .'</div>'. "\n" .
-            '</div>' . "\n" .
-            '';*/
-            
-$output .=  $this->getDialog() . "\n" .
-            $this->getBwin() . "\n" .
-            '<'.$bhead.' id="header" >'."\n".
-                $this->getHeader()."\n".
-            '</'.$bhead.'>'."\n".
-            '<div id="content">' . "\n" .
-                $this->output . 
-            '</div>' . "\n" .
-            '<'.$bfoot.' id="footer">'."\n".
-                $this->getFooter() ."\n".
-            '</'.$bfoot.'>'. "\n" .'';
+$output .=  <<<OUTPUT
+
+{$this->getDialog()}
+{$this->getBwin()}
+
+<$bhead id="header" >
+    {$this->getHeader()}
+</$bhead>
+<div id="content">
+    {$this->output}
+</div>
+<$bfoot id="footer">
+    {$this->getFooter()}
+</$bfoot>
+
+OUTPUT;
