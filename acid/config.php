@@ -60,7 +60,8 @@ $acid['keys']['theme']			= 'theme';
 $acid['keys']['static']			= 'static';
 
 //Templates acid
-$acid['tpl']['path']          = 'tpl/';
+$acid['tpl']['path']          	  = 'tpl/';
+$acid['tpl']['html']['version']	  = 5;
 
 // Theme
 $acid['def_theme']	            = 'default';

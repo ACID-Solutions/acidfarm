@@ -28,6 +28,11 @@ class AcidForm {
 	 */
 	
 	/**
+	 * @var float version html
+	 */
+	private $_html=5;
+	
+	/**
 	 * @var string méthode du formulaire (post, get)
 	 */
 	private $_method; 
@@ -71,11 +76,21 @@ class AcidForm {
 	 * 
 	 * @param string $method Type de formulaire. (Get/Post)
 	 * @param string $action Cible du formulaire.
+	 * @param float $version version html.
 	 * 
 	 */
-	function __construct ($method, $action) {
+	function __construct ($method, $action, $version=null) {
 		$this->_method = $method;
 		$this->_action = $action;
+		
+		if ($version===null) {
+			if (Acid::get('tpl:html:version')) {
+				$this->_html = Acid::get('tpl:html:version');
+			}
+		}else{
+			$this->_html = $version;
+		}
+		
 	}
 	
 	/**
@@ -752,7 +767,8 @@ class AcidForm {
 			}
 		}			
 		
-		return 	'<form method="'.$this->_method.'" action="'.$this->_action.'"'.$enctype.self::getParams($this->_form_params).'>' . "\n" . 
+		$action_attr = (($this->_action==='') && ($this->_html>=5)) ? '' : 'action="'.$this->_action.'"';
+		return 	'<form method="'.$this->_method.'" '.$action_attr.$enctype.self::getParams($this->_form_params).'>' . "\n" . 
 				'	<div>' . "\n" . 
 						$output . 
 				'	</div>' . "\n" . 
