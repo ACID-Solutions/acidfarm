@@ -711,6 +711,9 @@ class AcidForm {
 		
 		$enctype = $this->_file_transfer ? ' enctype="multipart/form-data"' : '';
 		
+		$bcontainer = isset($this->_form_params['body_container']) ? $this->_form_params['body_container'] : 'span';
+		unset($this->_form_params['body_container']);
+		
 		$output = '';
 		$table = false;
 		foreach($this->_components as $name => $elts) {
@@ -718,9 +721,14 @@ class AcidForm {
 				case 'field' :	
 				case 'free_text' : 
 					
-					$attrs = empty($elts['body_attrs']) ? '' : self::getParams($elts['body_attrs']);
-					$attrs_start = $table ? '' : '<span '.$attrs.'>';
-					$attrs_stop = $table ? '' : '</span>';
+					$b_attr = empty($elts['body_attrs']) ? array() : $elts['body_attrs'];
+					$container = empty($b_attr['body_container']) ? $bcontainer : $b_attr['body_container'];
+					unset($b_attr['body_container']);
+					
+					$attrs = $b_attr ? self::getParams($b_attr) : '';
+					
+					$attrs_start = $table ? '' : ($container ? '<'.$container.' '.$attrs.'>' : '');
+					$attrs_stop = $table ? '' : ($container ? '</'.$container.'>' : '');
 					
 					$output .= $table ? 
 								'			<tr '.$attrs.'>' . "\n" . 
