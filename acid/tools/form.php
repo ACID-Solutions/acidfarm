@@ -722,7 +722,7 @@ class AcidForm {
 				case 'free_text' : 
 					
 					$b_attr = empty($elts['body_attrs']) ? array() : $elts['body_attrs'];
-					$container = empty($b_attr['body_container']) ? $bcontainer : $b_attr['body_container'];
+					$container = !isset($b_attr['body_container']) ? $bcontainer : $b_attr['body_container'];
 					unset($b_attr['body_container']);
 					
 					$attrs = $b_attr ? self::getParams($b_attr) : '';
