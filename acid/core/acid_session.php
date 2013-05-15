@@ -228,8 +228,8 @@ class AcidSession {
 	public static function dbAdd() {
 		$s = self::getInstance();
 		if ($s->id) {
-			AcidDB::exec(	"INSERT INTO " . Acid::get('session:table') . " (id,id_user,expire,user_ip,user_agent,data) ".
-            				"VALUES ('".addslashes($s->id)."','".addslashes($s->expire)."','".$s->id_user."',".
+			AcidDB::exec(	"INSERT INTO " . Acid::get('session:table') . " (id,expire,id_user,user_ip,user_agent,data) ".
+            				"VALUES ('".addslashes($s->id)."','".addslashes($s->expire)."','".addslashes($s->id_user)."',".
             						"'".addslashes($s->user_ip)."','".addslashes($s->user_agent)."','[]')");
 		}
 	}
