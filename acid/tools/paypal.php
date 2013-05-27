@@ -502,15 +502,18 @@ class AcidPaypal {
                 						// process payment
                 					
                 						//print_r($keyarray);
-                						$message .= ("<p><h3>Thank you for your purchase!</h3></p>");
+                						$message .= ("<p><h3>Merci pour votre commande!</h3></p>");
                 					
-                						$message .= ("<b>Payment Details</b><br>\n");
-                						$message .= ("<p><b>Name:</b> ".$firstname." ".$lastname."</p>\n");
-                						$message .= ("<p><b>Item:</b> ".$item_name."</p>\n");
-                						$message .= ("<p><b>Amount:</b> ".$payment_amount." ".$payment_currency."</p>\n");
-                						$message .= 'Your transaction has been completed, and a receipt for your purchase has been emailed to you.
-                                                                <br>You may log into your account at
-                                                                <a href="'.$this->paypal_domain.'">'.$this->paypal_domain.'</a> to view details of this transaction.<br>';
+                						$message .= ("<b>Details du paiement</b><br>\n");
+                						$message .= ("<p><b>Identifiant transaction :</b> ".$txn_id."</p>\n");
+                						$message .= ("<p><b>Numéro de commande :</b> ".$item_number."</p>\n");
+                						$message .= ("<p><b>Intitulé de la commande :</b> ".$item_name."</p>\n");
+                						$message .= ("<p><b>Montant :</b> ".$payment_amount." ".$payment_currency."</p>\n");
+                						$message .= ("<p><b>Client :</b> ".$firstname." ".$lastname." (".$payer_email.")</p>\n");
+                						$message .= 'Votre commande a bien été effectuée. ' . "\n" .
+                									'Vous recevrez prochainement un confirmation par email. ' . "\n" .
+                                                    'Rendez-vous sur <a href="'.$this->paypal_domain.'">'.$this->paypal_domain.'</a> '. "\n" .
+                                                    'pour consulter le détail de votre commande.<br>';
                 					
                 						$this->log_results('SUCCESS : ' . implode("\n",$keyarray));
                 						$func_success = true;
