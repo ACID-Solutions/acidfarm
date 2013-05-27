@@ -26,7 +26,7 @@
  *		'PDT_CODE',
  *		function () { AcidDialog::add('info','Operation has succeeded'); Acid::log('PAYPAL','paiement success'); },
  *		function () { AcidDialog::add('info','Operation has failed');  Acid::log('PAYPAL','paiement fail'); }
- *		//,function ($tx) {  $my_array = Transactions::getList(); return !in_array($tx,$my_array); }
+ *		//,function ($tx_data) {  $my_array = Transactions::getList(); return !in_array($tx_data['txn_id'],$my_array); }
  *   );
  *	
  *	//PRINT PAYPAL BTN									   
@@ -53,12 +53,19 @@ class AcidPaypal {
 		
 		const PAYMENT_SUFFIX = '/cgi-bin/webscr';
 		
-        const IMG_PAY = 'https://www.paypalobjects.com/WEBSCR-640-20110429-1/fr_FR/FR/i/btn/btn_paynow_LG.gif';
+		const IMG_PAY = 'https://www.paypalobjects.com/fr_XC/i/btn/btn_paynow_LG.gif';
+		const IMG_DONATE = 'https://www.paypalobjects.com/fr_XC/i/btn/btn_donate_LG.gif';
+		const IMG_PAY_CC = 'https://www.paypalobjects.com/fr_XC/i/btn/btn_paynowCC_LG.gif';
+		const IMG_DONATE_CC = 'https://www.paypalobjects.com/fr_XC/i/btn/btn_donateCC_LG.gif';
+		const IMG_PAYPAL = 'https://www.paypalobjects.com/fr_XC/i/btn/x-click-but5.gif';
+		
+		/*
+		const IMG_PAY = 'https://www.paypalobjects.com/WEBSCR-640-20110429-1/fr_FR/FR/i/btn/btn_paynow_LG.gif';
         const IMG_DONATE = 'https://www.paypalobjects.com/WEBSCR-640-20110429-1/fr_FR/FR/i/btn/btn_donate_LG.gif';
         const IMG_PAY_CC = 'https://www.paypalobjects.com/WEBSCR-640-20110429-1/fr_FR/FR/i/btn/btn_paynowCC_LG.gif';
         const IMG_DONATE_CC = 'https://www.paypalobjects.com/WEBSCR-640-20110429-1/fr_FR/FR/i/btn/btn_donateCC_LG.gif';
         const IMG_PAYPAL = 'https://www.paypal.com/fr_FR/FR/i/btn/x-click-but5.gif';
-
+		*/
 		
         /**
          * @var string email du compte
@@ -200,6 +207,7 @@ class AcidPaypal {
 				foreach ($array as $k => $val) {
 					$this->form_config[$k] = $val; 
 				}
+			
         }
 		
         /**
@@ -241,12 +249,12 @@ class AcidPaypal {
         public function callBtn($alias) {
         	if (isset($this->btns_id[$alias])) {
             	return '
-                                <form action="'.$this->paypal_domain.'/cgi-bin/webscr" method="post">
-                                <input type="hidden" name="cmd" value="_s-xclick">
-                                <input type="hidden" name="hosted_button_id" value="'.$this->btns_id[$alias]['code'].'">
-                                <input type="image" src="'.$this->btns_id[$alias]['img'].'" border="0" name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !">
-                                <img alt="" border="0" src="https://www.paypalobjects.com/WEBSCR-640-20110429-1/fr_FR/i/scr/pixel.gif" width="1" height="1">
-                                </form>
+					<form action="'.$this->paypal_domain.'/cgi-bin/webscr" method="post">
+					<input type="hidden" name="cmd" value="_s-xclick">
+					<input type="hidden" name="hosted_button_id" value="'.$this->btns_id[$alias]['code'].'">
+					<input type="image" src="'.$this->btns_id[$alias]['img'].'" border="0" name="submit" alt="PayPal - la solution de paiement en ligne la plus simple et la plus sécurisée !">
+					<img alt="" border="0" src="https://www.paypalobjects.com/WEBSCR-640-20110429-1/fr_FR/i/scr/pixel.gif" width="1" height="1">
+					</form>
             	';
         	}
         }
@@ -380,9 +388,9 @@ class AcidPaypal {
          * Execute le processus PDT
          * @return mixed
          */
-        public function execute() {
+        public function execute($data=null) {
         //      if (!empty($_SESSION['get'])) {
-                        if( $this->validate_pdt()) {
+                        if( $this->validate_pdt($data)) {
                                 return $this->exeSuccess();
                         }else{
                                 return $this->exeFail();
@@ -400,161 +408,153 @@ class AcidPaypal {
  
         /**
          * Valide le traitement pdt et retourne si true en cas de succès
+         * Probablement deprecated depuis
+         * @param array $data les valeurs à traiter ($_POST si null) 
          * @return boolean
          */
-  		protected function validate_pdt() {
-                $func_success = false;
-                $message = '';
-                $keyarray = array();
-
-                if (isset($_GET['tx'])) {
-                        // read the post from PayPal system and add 'cmd'
-                        $req = 'cmd=_notify-synch';
-
-                        $tx_token = $_GET['tx'];
-
-                        $auth_token = $this->pdt_id;
-
-                        $req .= "&tx=$tx_token&at=$auth_token";
-
-                        $header = '';
-
-                        // post back to PayPal system to validate
-                        $header .= "POST /cgi-bin/webscr HTTP/1.0\r\n";
-                        $header .= "Content-Type: application/x-www-form-urlencoded\r\n";
-                        $header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
-                        
-                     
-                        $fp = fsockopen ($this->pdtUrl(), 80, $errno, $errstr, 30); //'www.paypal.com'
-                        // If possible, securely post back to paypal using HTTPS
-                        // Your PHP server will need to be SSL enabled
-                        // $fp = fsockopen ('ssl://www.paypal.com', 443, $errno, $errstr, 30);
-
-                        $post_content = $header . $req;
-                        $this->log_results($post_content);
-
-                        if (!$fp) {
-                                $this->log_results('HTTP ERROR');
-                        } else {
-                        fputs ($fp, $post_content);
-                        // read the body data
-                        $res = '';
-                        $headerdone = false;
-                        while (!feof($fp)) {
-                        $line = fgets ($fp, 1024);
-                        if (strcmp($line, "\r\n") == 0) {
-                        // read the header
-                        $headerdone = true;
-                        }
-                        else if ($headerdone)
-                        {
-                        // header has been read. now read the contents
-                        $res .= $line;
-                        }
-                        }
-  						
-                        // parse the data
-                        $lines = explode("\n", $res);
-                        $keyarray = array();
-                        if (strcmp ($lines[0], "SUCCESS") == 0) {
-                        for ($i=1; $i<count($lines);$i++){
-                                if (isset($lines[$i])) {
-                                        list($key,$val) = explode("=", $lines[$i]);
-                                        $keyarray[urldecode($key)] = urldecode($val);
-                                }
-                        }
-
-                        //INFOS
-                        $firstname = $keyarray['first_name'];
-                        $lastname = $keyarray['last_name'];
-                        $itemname = $keyarray['item_name'];
-                        $amount = $keyarray['mc_gross'];
-                        $devise = $keyarray['mc_currency'];
-
-
-                        $secured_status = true;
-                        $missmatch = array();
-
-                        // check the payment_status is Completed
-                        if ($keyarray['payment_status']!='Completed') {
-                                $secured_status = false;
-                                $missmatch[] = 'payment_status';
-                        }
-                        // check that txn_id has not been previously processed
-                        if ($keyarray['txn_id']!=$tx_token) {
-                                $secured_status = false;
-                                $missmatch[] = 'txn_id';
-                        }
-
-                        if ($this->pdt_function !==null) {
-                                        $fun = $this->pdt_function;
-                                        $secured_func = $fun($keyarray);
-
-                                        if (!$secured_func) {
-                                                $secured_status = false;
-                                                $missmatch[] = 'pdt_function';
-                                        }
-                        }
-
-                        // check that receiver_email is your Primary PayPal email
-                        if ($keyarray['receiver_email']!=$this->email_id) {
-                                $secured_status = false;
-                                $missmatch[] = 'receiver_email';
-                        }
-						
-                        // check that payment_amount/payment_currency are correct
-
-
-                                if ($secured_status) {
-                                        // process payment
-
-                                        //print_r($keyarray);
-                                        $message .= ("<p><h3>Thank you for your purchase!</h3></p>");
-
-                                        $message .= ("<b>Payment Details</b><br>\n");
-                                        $message .= ("<p><b>Name:</b> $firstname $lastname</p>\n");
-                                        $message .= ("<p><b>Item:</b> $itemname</p>\n");
-                                        $message .= ("<p><b>Amount:</b> $amount $devise</p>\n");
-                                        $message .= 'Your transaction has been completed, and a receipt for your purchase has been emailed to you.
+  		protected function validate_pdt($data=null) {
+            $func_success = false;
+            $message = '';
+            $keyarray = $data===null ? $_POST : $data;
+				
+            if (!empty($keyarray['txn_id'])) { 
+                
+	        	try {
+	                                
+                	//permet de traiter le retour ipn de paypal
+                	// lire la publication du système PayPal et ajouter 'cmd'
+                	$req = 'cmd=_notify-validate';
+                
+                	foreach($_POST as $key => $value) {
+                		$value = urlencode(stripslashes($value));
+                		$req .= "&amp;amp;amp;amp;amp;$key=$value";
+                	}
+                
+                	$header = '';
+                	
+                	// renvoyer au système PayPal pour validation
+                	$header .="POST /cgi-bin/webscr HTTP/1.1\r\n";
+					$header .="Content-Type: application/x-www-form-urlencoded\r\n";
+					$header .="Host: ".$this->pdtUrl()."\r\n";
+					$header .="Connection: close\r\n";
+					
+					Acid::log('PAYPAL',' launching' . "\n" . $header );
+					
+					$fp = fsockopen($this->pdtUrl(), 80, $errno, $errstr, 30);
+                
+                	// affecter les variables publiées aux variables locales
+					$firstname = $keyarray['first_name'];
+					$lastname = $keyarray['last_name'];
+                	$item_name = $keyarray['item_name'];
+                	$item_number = $keyarray['item_number'];
+                	$payment_status = $keyarray['payment_status'];
+                	$payment_amount = $keyarray['mc_gross'];
+                	$payment_currency = $keyarray['mc_currency'];
+                	$txn_id = $keyarray['txn_id'];
+                	$receiver_email = $keyarray['receiver_email'];
+                	$payer_email = $keyarray['payer_email'];
+                	$idMembre = $keyarray['custom']; //Ce champ est permis lors de la création du bouton paypal, a vous de le remplir automatiquement
+                
+                	if(!$fp) { //Paypal incontactable
+                
+                		throw new Exception('Impossible de contacter Paypal (fsockopen)');
+                		exit();
+                	}
+                	else {
+                
+                		fputs ($fp, $header . $req);
+                		
+                		$line = 0;
+                	
+  
+                		while (!feof($fp)) {
+                			$res = fgets ($fp, 1024);
+                			
+                			Acid::log('PAYPAL','line '.$line.' : '.$res);
+                			
+                			// C'est ici que vous devrez traiter la commande (enregistrement bdd etc..)
+                			if(strcmp($res, "VERIFIED") == 0 || strcmp($res, "HTTP/1.1 200 OK")) {
+                
+                				// vérifier que payment_status est Terminé
+                				if($payment_status == 'COMPLETED' || $payment_status == 'Completed') {
+                						
+                					$secured_status = true;
+                					$missmatch = array();
+                					
+                					//Procéssus PDT personnalisé
+                					if ($this->pdt_function !==null) {
+                						$fun = $this->pdt_function;
+                						$secured_func = $fun($keyarray);
+                					
+                						if (!$secured_func) {
+                							$secured_status = false;
+                							$missmatch[] = 'pdt_function';
+                						}
+                					}
+                					
+                					// le receiver est bien le bon
+                					if ($keyarray['receiver_email']!=$this->email_id) {
+                						$secured_status = false;
+                						$missmatch[] = 'receiver_email';
+                					}
+                					
+                					if ($secured_status) {
+                						// process payment
+                					
+                						//print_r($keyarray);
+                						$message .= ("<p><h3>Thank you for your purchase!</h3></p>");
+                					
+                						$message .= ("<b>Payment Details</b><br>\n");
+                						$message .= ("<p><b>Name:</b> ".$firstname." ".$lastname."</p>\n");
+                						$message .= ("<p><b>Item:</b> ".$item_name."</p>\n");
+                						$message .= ("<p><b>Amount:</b> ".$payment_amount." ".$payment_currency."</p>\n");
+                						$message .= 'Your transaction has been completed, and a receipt for your purchase has been emailed to you.
                                                                 <br>You may log into your account at
-                                                                <a href="https://www.paypal.com">www.paypal.com</a> to view details of this transaction.<br>';
+                                                                <a href="'.$this->paypal_domain.'">'.$this->paypal_domain.'</a> to view details of this transaction.<br>';
+                					
+                						$this->log_results('SUCCESS : ' . implode("\n",$keyarray));
+                						$func_success = true;
+                						
+                					
+                					}else{
+                						$this->log_results('SECURED FAIL : ' . implode(",",$missmatch) . "=>" . implode(",",$keyarray));
+                						$message .= 'Authentification erronée';
+                					}
+                					
+                					
+                					
+                					break;
+                					
+                				}
+                				else {
+                					throw new Exception('Erreur Paypal : payment_status vaut '.$payment_status);
+                				}
+                			}
+                			elseif((strcmp ($res, "INVALIDE") == 0) || (strcmp ($res, "INVALID") == 0)) {
+                				throw new Exception('Paiement paypal invalide');
+                			}
+                			
+                			$line++;
+                		}
+                		
+                		Acid::log('PAYMENT','process exit');
+                		fclose($fp);
+                	}
+	                
+	            }
+	            catch (Exception $exception) {
+	               	//Traiter votre exception comme vous le voulez (LOG, affichage, ...)
+	               	$this->log_results('FAIL : ' . $exception);
+	               	$message .= $exception;
+	               	fclose($fp);
+	            }
 
-                                        $this->log_results('SUCCESS : ' . implode("\n",$keyarray));
-                                        $func_success = true;
-
-                                }else{
-                                        $this->log_results('SECURED FAIL : ' . implode("\n",$missmatch) . "\n\n" . implode("\n",$keyarray));
-                                        $message .= 'Authentification erronée';
-                                }
-
-                        }
-                        else if (strcmp ($lines[0], "FAIL") == 0) {
-                                // log for manual investigation
-                                $note = 'unknown';
-                                if (isset($lines[1])) {
-                                        switch ($lines[1]) {
-                                                case 'Error: 4003' :
-                                                        $note = 'session expirée';
-                                                break;
-
-                                                case 'Error: 4002' :
-                                                        $note = 'transaction erronée';
-                                                break;
-                                        }
-                                }
-
-                                $this->log_results('FAIL : ' . $res . ' - ' . $note);
-                                $message .= $res  ;
-                        }
-
-                        }
-
-                        fclose ($fp);
-
-                        $this->pdt_data = $keyarray;
-                        $this->pdt_dialog =     utf8_encode($message) . "\n" ;
-                }
-                return $func_success;
+               	$this->pdt_data = $keyarray;
+               	$this->pdt_dialog =     utf8_encode($message) . "\n" ;
+                
+            }
+                
+            return $func_success;
         }
 
         /**
@@ -562,11 +562,14 @@ class AcidPaypal {
          * @return string
          */
         protected function getPrivateForm() {
-                $nom_article = isset($this->form_config['item_name']) ? $this->form_config['item_name'] : null;
+        		$nom_article = isset($this->form_config['item_name']) ? $this->form_config['item_name'] : null;
+                $id_article = isset($this->form_config['item_number']) ? $this->form_config['item_number'] : null;    
+                $charset = isset($this->form_config['charset']) ? $this->form_config['charset'] : 'UTF-8';
                 $prix = isset($this->form_config['amount']) ? $this->form_config['amount'] : null;
                 $no_shipping = empty($this->form_config['no_shipping']) ? false : true;
                 $url_ok = isset($this->form_config['return']) ? $this->form_config['return'] : null;
                 $url_erreur = isset($this->form_config['cancel_return']) ? $this->form_config['cancel_return'] : null;
+                $url_ipn = isset($this->form_config['notify_url']) ? $this->form_config['notify_url'] : null;
                 $no_note = empty($this->form_config['no_note']) ? false : true;
                 $devise = isset($this->form_config['currency_code']) ? $this->form_config['currency_code'] : 'EUR';
                 $bn = isset($this->form_config['bn']) ? $this->form_config['bn'] : 'PP-BuyNowBF';
@@ -578,15 +581,18 @@ class AcidPaypal {
 				$default_price = ($prix===null ? '' : "<input type=\"hidden\" name=\"amount\" value=\"".$prix."\">\n");
 				$display_price = ($amount_type == 'text') ?  "<input type=\"text\" name=\"amount\" value=\"".$prix."\">\n" : $default_price;
 				
-				
+
 				
                 $inputs =
                 "<input type=\"hidden\" name=\"business\" value=\"".$this->email_id."\">\n"
+           		.($charset===null ? '' : "<input type=\"hidden\" name=\"charset\" value=\"".$charset."\">\n")
                 .($nom_article===null ? '' : "<input type=\"hidden\" name=\"item_name\" value=\"".$nom_article."\">\n")
+                .($id_article===null ? '' : "<input type=\"hidden\" name=\"item_number\" value=\"".$id_article."\">\n")
                 .$display_price
                 .( empty($no_shipping) ? '' : "<input type=\"hidden\" name=\"no_shipping\" value=\"1\">\n")
                 .($url_ok===null ? '' : "<input type=\"hidden\" name=\"return\" value=\"".$url_ok."\">\n")
                 .($url_erreur===null ? '' : "<input type=\"hidden\" name=\"cancel_return\" value=\"".$url_erreur."\">\n")
+                .($url_ipn===null ? '' : "<input type=\"hidden\" name=\"notify_url\" value=\"".$url_ipn."\">\n")
                 .( empty($no_note) ? '' : "<input type=\"hidden\" name=\"no_note\" value=\"1\">\n")
                 .($devise===null ? '' : "<input type=\"hidden\" name=\"currency_code\" value=\"".$devise."\">\n")
                 ."<input type=\"hidden\" name=\"lc\" value=\"".$lc."\">\n"
@@ -610,6 +616,7 @@ class AcidPaypal {
                         $form = $this->form_html;
                 }else{
                         $form = $this->getStandardForm();
+                 
                 }
 
                 return $form;
