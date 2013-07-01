@@ -86,14 +86,29 @@ class AcidMail {
 				$mail->AddAttachment($elt,utf8_decode($name));
 			}
 			
-			if (!empty($functions)) {
-				foreach ($functions as $func => $args) {
-					switch ($key) {
-						default :
-							call_user_func_array(array($mail, $func),$args);
-						break;
+	   		if (!empty($functions)) {
+				$keys = array_keys($functions);
+				
+				if (is_numeric($keys[0])) {
+					
+					foreach ($functions as $functab) {
+						
+						call_user_func_array(array($mail, $functab['func']),$functab['args']);
+						
 					}
+					
+				}else{
+
+					foreach ($functions as $func => $args) {
+						switch ($func) {
+							default :
+								call_user_func_array(array($mail, $func),$args);
+							break;
+						}
+					}
+					
 				}
+				
 			}
 			
 			$mail->Send();
