@@ -80,7 +80,7 @@
 					// On ajoute les liens pour ajouter et upload le fichier
 					Plupload.instance[ident_key]['parent'].append('<div id="container_plupload_'+ident_key+'" >');
 					Plupload.instance[ident_key]['parent'].append('<div style="float:left; margin-right:10px;" class="plupload_status" id="filelist_plupload_'+ident_key+'"></div>');
-					Plupload.instance[ident_key]['parent'].append('<div style="float:left;" class="plupload_buttons"><a id="pickfiles_plupload_'+ident_key+'" href="#">[Sélectionner un fichier]</a><a id="uploadfiles_plupload_'+ident_key+'" href="#">[Envoyer le fichier]</a></div>');
+					Plupload.instance[ident_key]['parent'].append('<div style="float:left;" class="plupload_buttons"><a id="pickfiles_plupload_'+ident_key+'" href="#"><span>Choisir un fichier</span></a><a id="uploadfiles_plupload_'+ident_key+'" href="#"><span>Envoyer le fichier</span></a></div>');
 					Plupload.instance[ident_key]['parent'].append('<div class="clear"></div>');
 					Plupload.instance[ident_key]['parent'].append('</div>');
 
@@ -129,8 +129,7 @@
 	
 					//Positionnement initial des objets Flash 
 					$('#pickfiles_plupload_'+ident_key).bind('click', function() {
-						$('#container_plupload_'+ident_key+' .plupload.flash').css('top', '0px').css('left', '0px');
-						$('#container_plupload_'+ident_key+' .plupload.html5').css('top', '0px').css('left', '0px');
+						Plupload.uploader[ident_key].refresh();						
 					});
 	
 					/**
@@ -168,9 +167,39 @@
 					* Methode appelée lors du Refresh
 					*/
 					Plupload.uploader[ident_key].bind('Refresh', function(up, params) {
-						$('#container_plupload_'+ident_key+' .plupload.flash').css('top', '0px').css('left', '0px');
-						$('#container_plupload_'+ident_key+' .plupload.html5').css('top', '0px').css('left', '0px');
 
+						setTimeout(function () {
+
+							var cont = $('#container_plupload_'+ident_key);
+							var ref = Plupload.instance[ident_key]['form'].find('.plupload_buttons');
+							var pick = $('#pickfiles_plupload_'+ident_key);
+							
+							var flash = Plupload.instance[ident_key]['form'].find('.plupload.flash')
+							var html5 = Plupload.instance[ident_key]['form'].find('.plupload.html5')
+							
+						
+							cont.css('position','absolute');
+							cont.css('left',ref.position().left+'px');
+							cont.css('top',ref.position().top+'px');
+							cont.width(ref.width());
+							cont.height(ref.height());
+							
+							
+							//flash.css('background-color', 'green');
+							flash.width(pick.width());
+							flash.css('top',  pick.position().top+'px');
+							flash.css('left', pick.position().left+'px');
+
+				
+							//html5.css('background-color', 'purple');
+							html5.width(pick.width());
+							html5.height(pick.height());
+							html5.css('top', 0+'px');
+							html5.css('left', 0+'px');
+					
+							
+						},500);
+						
 						Plupload.callback(ident_key,'Refresh',arguments);
 								
 					});
@@ -210,7 +239,7 @@
 						// On ajoute à la liste le fichier
 						Plupload.list[ident_key] = 1;
 	
-						up.refresh(); // Reposition Flash/Silverlight
+						Plupload.uploader[ident_key].refresh(); // Reposition Flash/Silverlight
 
 						Plupload.callback(ident_key,'FilesAdded',arguments);
 					});
