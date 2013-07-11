@@ -76,22 +76,24 @@ $acid['includes']['AcidBash']      = $acid['folder'].'/tools/bash.php';
  * @param string $class_name nom de la classe
  * @return boolean
  */
-function __autoload($class_name) {
+function AcidAutoLoader($class_name) {
 	$path = null;
-	
+
 	if (isset($GLOBALS['acid']['includes'][$class_name])) {
 		$file_path  = $GLOBALS['acid']['includes'][$class_name];
-		
+
 		Acid::log('acid','Autoload::'.$class_name.' - ' . $file_path);
-		
+
 		include (SITE_PATH . $file_path);
-		
+
 	}else{
 		trigger_error($class_name . ' path must be defined in $acid[\'includes\'][\''.$class_name.'\']', E_USER_ERROR);
 	}
-	
+
 	return false;
 }
+$GLOBALS['acid'] = $acid;
+spl_autoload_register('AcidAutoLoader');
 
 
 
