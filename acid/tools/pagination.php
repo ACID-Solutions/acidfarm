@@ -49,6 +49,17 @@ class AcidPagination
 		return $page;
 	}
 	
+	/**
+	 * Retourne une chaine SQL à placer après LIMIT
+	 *
+	 * @param int $page
+	 * @param int $nb_elts_page
+	 *
+	 * @return string
+	 */
+	public static function getLimitSQL($page,$nb_elts_per_page) {
+		return ($page-1)*$nb_elts_per_page.', '.$nb_elts_per_page;
+	}
 	
 	/**
 	 * Retourne un navigateur de pagination.
