@@ -77,6 +77,10 @@ if (!empty($acid_page_type)) {
 	
 }
 
+if (!empty($acid_custom_log)) {
+	Acid::set('log:custom', $acid_custom_log);
+}
+
 //Chargement de la configuration Bdd du site
 $site_config = new SiteConfig();
 $site_config->getInstance();
