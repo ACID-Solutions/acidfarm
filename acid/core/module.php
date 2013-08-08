@@ -3875,7 +3875,7 @@ abstract class AcidModuleCore {
 	 * @param bool $printed utilise getPrined pour l'affichage des valeurs (attention, printAdminConfigureCSV ré-initialise $this->config)
 	 * @return AcidCSV
 	 */
-	public function exportCSV($filter='',$fields=array('username','level'),$config=null,$label=false,$printed=true) {
+	public function exportCSV($filter='',$fields=array(),$config=null,$label=false,$printed=true) {
 	
 		$this->printAdminConfigureCSV();
 	
