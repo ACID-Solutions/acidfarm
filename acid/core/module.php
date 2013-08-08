@@ -3901,7 +3901,7 @@ abstract class AcidModuleCore {
 				if ($printed) {
 					foreach ($this->getKeys() as $key) {
 						if ((!$fields) || in_array($key,$fields)) {
-							$line[] = $mod->getPrinted($key,$elt);
+							$line[] = $this->getPrinted($key,$elt);
 						}else{
 							$line[] = '';
 						}
