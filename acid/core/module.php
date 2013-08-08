@@ -3498,6 +3498,24 @@ abstract class AcidModuleCore {
 	
 	
 	/**
+	 * Préparation du module pour le retour CSV
+	 */
+	public function printAdminConfigureCSV() {
+		$this->config['print'] = array();
+		if ($bools = $this->getVarsByType(array('AcidVarBool'))) {
+			foreach ($bools as $key =>$var) {
+				$this->config['print'][$key] = array('type'=>'bool');
+			}
+		}
+	
+		if ($list = $this->getVarsByType(array('AcidVarList','AcidVarRadio'))) {
+			foreach ($list as $key =>$var) {
+				$this->config['print'][$key] = array('type'=>'tab','tab'=>$var->getElts());
+			}
+		}
+	}
+	
+	/**
 	* Retourne le formulaire d\'ajout de l'objet après initialisation
 	*
 	* @return string
@@ -3846,6 +3864,71 @@ abstract class AcidModuleCore {
 		
 		return $form->html();
 	}
+	
+	
+	/**
+	 * Retourne un AcidCSV correspondant au module
+	 * @param mixed $filter filtre à appliquer sue le dbList
+	 * @param array $fields les champs à mettre dans le CSV
+	 * @param array $config la configuration array(delimiter,enclosure,espace)
+	 * @param bool $label utilise getLabel pour le nom des colonnes
+	 * @param bool $printed utilise getPrined pour l'affichage des valeurs (attention, printAdminConfigureCSV ré-initialise $this->config)
+	 * @return AcidCSV
+	 */
+	public function exportCSV($filter='',$fields=array('username','level'),$config=null,$label=false,$printed=true) {
+	
+		$this->printAdminConfigureCSV();
+	
+		$csv = new AcidCSV();
+	
+		if ($config) {
+			$csv->setConfig(
+					isset($config[0])? $config[0]:null, //delimiter
+					isset($config[1])? $config[1]:null, //enclosure
+					isset($config[2])? $config[2]:null //espace
+			);
+		}
+	
+		$csv->setHead($csv->getInitHead($this->getKeys(),$fields));
+		$head = $csv->getHead();
+		$res = static::dbList($filter);
+		if ($res) {
+			$tab = array();
+			foreach ($res as $elt) {
+				$mod = self::build($elt);
+				$line = array();
+	
+				if ($printed) {
+					foreach ($this->getKeys() as $key) {
+						if ((!$fields) || in_array($key,$fields)) {
+							$line[] = $mod->getPrinted($key,$elt);
+						}else{
+							$line[] = '';
+						}
+					}
+				}else{
+					$line = array_values($mod->getVals());
+				}
+	
+				$tab[] = $csv->getInitRow($line,$head);
+			}
+	
+			$csv->setRows($tab);
+				
+		}
+	
+		if ($label) {
+			$hkeys = array();
+			foreach ($head as $key => $num) {
+				$hkeys[$this->getLabel($key)] = $num;
+			}
+			$csv->setHead($hkeys);
+		}
+	
+	
+		return $csv;
+	}
+	
 	
 	/**
 	* Retourne la pré-configuration d'affichage associée à la clé en entrée

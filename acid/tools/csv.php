@@ -141,6 +141,23 @@ class AcidCSV {
 	}
 	
 	/**
+	 * Change l'entete du CSV
+	 * @param array $tab
+	 */
+	public function setHead($tab) {
+		$this->head = $tab;
+	}
+	
+	
+	/**
+	 * Changes les lignes du CSV
+	 * @param array $tab
+	 */
+	public function setRows($tab) {
+		$this->rows = $tab;
+	}
+	
+	/**
 	 * Cherche la présence d'un élément dans un tableau et retourne son indice si c'est le cas, sinon retourne false
 	 * Si sensible est à true, alors on est sensible à la casse
 	 * @param string $needle
@@ -549,6 +566,20 @@ class AcidCSV {
 	 */
 	public function getVals() {
 		return $this->rows;
+	}
+	
+	/**
+	 * Retourne les lignes du CSV
+	 */
+	public function getRows() {
+		return $this->rows;
+	}
+	
+	/**
+	 * Retourne l'entete du CSV
+	 */
+	public function getHead() {
+		return $this->head;
 	}
 	
 	/**
