@@ -12,7 +12,7 @@
 				}
 				
 				$th_attr = isset($th['attr']) ? $th['attr'] : array();
-				$th_attr['class'] = isset($th_attr['class']) ? $th_attr['class'].' head_'.$kh : 'head_'.$kh;
+				$th_attr['class'] = isset($th_attr['class']) ? $th_attr['class'].' head_'.str_replace('.','_',$kh) : 'head_'.str_replace('.','_',$kh);
 				echo $o->getAdminTh($th_content,$th_attr,$v['config']) . "\n" ;
 			}
 			?>

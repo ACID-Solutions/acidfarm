@@ -2732,7 +2732,7 @@ abstract class AcidModuleCore {
 				//on remplit les colonnes
 				$line='';
 				foreach ($l_tab as $k => $td) {
-					$line .= $this->getAdminTd($td,array('class'=>'col_'.$k),$conf) . "\n" ; 
+					$line .= $this->getAdminTd($td,array('class'=>str_replace('.','_','col_'.$k)),$conf) . "\n" ; 
 				}
 				
 				//on prépare la ligne
