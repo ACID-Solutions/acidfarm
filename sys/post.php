@@ -15,6 +15,7 @@
  * @link      http://www.acidfarm.net
  */
 
+Acid::log('postinfo', $_SERVER['SERVER_PROTOCOL']. ' ' . $_SERVER['REQUEST_METHOD'] . ' ' . $_SERVER['REQUEST_URI'] . (!empty($_SERVER['HTTP_REFERER']) ? (' from ' . $_SERVER['HTTP_REFERER'] ) : '') . ' : ' . json_encode($_POST));
 
 if (isset($_POST['do'])) {
 	

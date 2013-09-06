@@ -147,8 +147,8 @@ if (!file_exists($dir_path)) {
 \$acid['db']['prefix']           = '$dbpref';
 
 // Emails
-//\$acid['email']['method']          	= 'smtp';
-//\$acid['email']['smtp']['host']		= 'localhost'; // If smtp'
+$lprod_quote\$acid['email']['method']          	= 'smtp';
+$lprod_quote\$acid['email']['smtp']['host']		= 'localhost'; // If smtp'
 
 // SESSION
 \$acid['session']['table']	     = \$acid['db']['prefix'] . 'session';
@@ -170,10 +170,10 @@ if (!file_exists($dir_path)) {
 
 // Debug
 // ALL : '*'
-// DEFINED : array('START','ACID','DEBUG','SQL','SESSION','INFO','URL','USER','DEPRECATED','ROUTER','PERMISSION','HACK','ERROR','PAYPAL','PAYMENT','MAINTENANCE','FILE')
+// DEFINED : array('START','ACID','DEBUG','SQL','SESSION','INFO','POSTINFO','URL','USER','DEPRECATED','ROUTER','PERMISSION','HACK','ERROR','PAYPAL','PAYMENT','MAINTENANCE','FILE')
 // PROD DEBUG : array('START','SQL','SESSION','INFO','URL','USER','DEPRECATED','ROUTER','PERMISSION','HACK','ERROR','PAYPAL','PAYMENT','MAINTENANCE','FILE')
-$lpp_quote\$acid['log']['keys']          	= array('START','SQL','SESSION','INFO','URL','USER','DEPRECATED','ROUTER','PERMISSION','HACK','ERROR','PAYPAL','PAYMENT','MAINTENANCE','FILE'); //Preprod
-$lprod_quote\$acid['log']['keys']          	= array('URL','DEPRECATED','HACK','ERROR','PAYMENT'); //Prod
+$lpp_quote\$acid['log']['keys']          	= array('START','SQL','SESSION','INFO','POSTINFO','URL','USER','DEPRECATED','ROUTER','PERMISSION','HACK','ERROR','PAYPAL','PAYMENT','MAINTENANCE','FILE'); //Preprod
+$lprod_quote\$acid['log']['keys']          	= array('INFO','POSTINFO','URL','DEPRECATED','HACK','ERROR','PAYMENT','MAINTENANCE','FILE'); //Prod
 $lprod_quote\$acid['log']['type']          	= 'daily'; // single / daily 
 //\$acid['log']['colorize']         = array();
 $lprod_quote\$acid['debug']		         	= false;
