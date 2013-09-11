@@ -15,7 +15,16 @@
  * @link      http://www.acidfarm.net
  */
 
-Acid::log('postinfo', $_SERVER['SERVER_PROTOCOL']. ' ' . $_SERVER['REQUEST_METHOD'] . ' ' . $_SERVER['REQUEST_URI'] . (!empty($_SERVER['HTTP_REFERER']) ? (' from ' . $_SERVER['HTTP_REFERER'] ) : '') . ' : ' . json_encode($_POST));
+$logpost = $_POST;
+if ((isset($logpost['do']) && (in_array($logpost['do'], array('login')))) || (isset($logpost['connexion_do'])) ) {
+	foreach (array() as $keylog) {
+		if (isset($logpost[$keylog])) {
+			$logpost[$keylog] = '******';
+		}
+	}
+}
+
+Acid::log('postinfo', $_SERVER['SERVER_PROTOCOL']. ' ' . $_SERVER['REQUEST_METHOD'] . ' ' . $_SERVER['REQUEST_URI'] . (!empty($_SERVER['HTTP_REFERER']) ? (' from ' . $_SERVER['HTTP_REFERER'] ) : '') . ' : ' . json_encode($logpost));
 
 if (isset($_POST['do'])) {
 	
