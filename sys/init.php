@@ -215,9 +215,10 @@ if (Acid::get('include:mode')=='full_stack') {
 		}
 	}
 	
-	//Intégratuion des fichiers de traduction
+	//Intégration des fichiers de traduction
 	$acid_lang_path =  ACID_PATH . 'langs/'.Acid::get('lang:current').'.php';
 	$site_lang_path =  SITE_PATH . 'sys/langs/'.Acid::get('lang:current').'.php';
+	$mod_lang_path  =  SITE_PATH . 'sys/langs/module_'.Acid::get('lang:current').'.php';
 	
 	if ( file_exists($acid_lang_path) ) {
 		require($acid_lang_path);
@@ -225,6 +226,10 @@ if (Acid::get('include:mode')=='full_stack') {
 
 	if ( file_exists($site_lang_path) ) {
 		require($site_lang_path);
+	}
+	
+	if ( file_exists($mod_lang_path) ) {
+		require($mod_lang_path);
 	}
 
 }
