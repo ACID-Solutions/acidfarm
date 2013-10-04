@@ -71,6 +71,18 @@
 			//after each step 
 			easing_max_width : 90000,
 			easing_init_width : <?php echo count($v['elts']); ?>*carousel_init_width,
+
+			onBefore: function (carousel, o, i, s) {
+			    var JCcontainerID = carousel.clip.context.id;
+			    var src = $('.jcarousel-item-'+carousel.first).find('img').attr('src'); 
+			    $('#' + JCcontainerID).parent().css('background-image',"url("+src+")");
+			    $('#' + JCcontainerID).fadeOut();
+			},
+			onAfter: function mycarousel_fadeIn(carousel) {
+		        var JCcontainerID = carousel.clip.context.id;
+		        $('#' + JCcontainerID).fadeIn();
+		    },
+				    
 			outCallback : function() { 
 				var w = jQuery('#mycarousel').width();
 				if (w > pCarousel.easing_max_width) { 
@@ -92,6 +104,10 @@
 			itemLastOutCallback : pCarousel.outCallback,
 			easing: 'linear',
 			animation: pCarousel.animationSpeed, 
+			itemLoadCallback: {
+				onBeforeAnimation : pCarousel.onBefore,
+				onAfterAnimation : pCarousel.onAfter
+			},
 			buttonPrevHTML: null,
 			buttonNextHTML: null
 		});
