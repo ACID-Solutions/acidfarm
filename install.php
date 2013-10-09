@@ -109,6 +109,9 @@ if (!file_exists($dir_path)) {
 		$upg_mode		= $devmode=='prod' ? 'prod' : 'dev';
 		$lprod_quote	= $devmode=='prod' ? '' : '//';
 		$lpp_quote		= $devmode=='preprod' ? '' : '//';
+		$lpp_plus_quote  = in_array($devmode,array('preprod','prod')) ? '':'//';
+		$lpp_less_quote  = in_array($devmode,array('preprod','dev')) ? '':'//';
+		
 		$ldev_quote		= $devmode=='dev' ? '' : '//';
 		$cssdyn_mode	= $devmode=='dev' ? 'debug' : 'default';
 		
@@ -147,8 +150,8 @@ if (!file_exists($dir_path)) {
 \$acid['db']['prefix']           = '$dbpref';
 
 // Emails
-$lprod_quote\$acid['email']['method']          	= 'smtp';
-$lprod_quote\$acid['email']['smtp']['host']		= 'localhost'; // If smtp'
+$lpp_plus_quote\$acid['email']['method']          	= 'smtp';
+$lpp_plus_quote\$acid['email']['smtp']['host']		= 'localhost'; // If smtp'
 
 // SESSION
 \$acid['session']['table']	     = \$acid['db']['prefix'] . 'session';
