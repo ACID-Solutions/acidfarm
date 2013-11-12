@@ -1226,12 +1226,16 @@ class AcidVarFile extends AcidVarString {
 	 * Retourne true si l'exention renseignée en entrée est interprétée comme valide, retourne false sinon.
 	 *
 	 * @param string $ext
-	 * @param array $t_exts tableau d'extensions, par défaut $this->config['ext']
+	 * @param array $t_exts tableau d'extensions, par défaut $this->config['ext'], si false alors on accepte tout
 	 * @return bool
 	 */
 	public  function isAValidExt($ext,$t_exts=null) {	
 		if ($t_exts === null || !is_array($t_exts)) {
 			$t_exts = $this->config['ext'];
+		}
+		
+		if($t_exts === false){
+			return true;
 		}
 		
 		return (in_array($ext,$t_exts));
