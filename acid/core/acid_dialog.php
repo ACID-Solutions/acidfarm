@@ -77,6 +77,7 @@ class AcidDialog {
 	 * Récupère les éléments de dialogue en session mis en forme.
 	 *
 	 * @param array $blacklister liste des types de dialogue à exclure 
+	 * @param array $tag conteneur HTML
 	 *
 	 * @return string
 	 */

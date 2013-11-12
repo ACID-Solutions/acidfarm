@@ -337,6 +337,7 @@ abstract class AcidUser extends AcidModule {
 	
 	/**
 	 * Traitement d'actions post inscription
+	 * @param array $vals
 	 * @param object $user
 	 */
 	public static function exeUserAction($vals=null,$user=null) {
@@ -597,9 +598,11 @@ abstract class AcidUser extends AcidModule {
 	/**
 	 * Gère l'envoi du mail d'inscription d'un utilisateur.
 	 * 
-	 * @param string $user
-	 * @param string $email
-	 * @param string $pass
+	 * @param string $user username
+	 * @param string $email email
+	 * @param string $pass password
+	 * @param string $usermod objet user
+	 * @param string $need_validation validation email requise ?
 	 */
 	public static function newInscription($user,$email,$pass,$usermod=null,$need_validation=null) {
 		Acid::load('tools/mail.php');
@@ -725,6 +728,7 @@ abstract class AcidUser extends AcidModule {
 	 * @param boolean $session_make True si on créer une session.
 	 * @param boolean $autolog True si on active l'auto-connexion.
 	 * @param boolean $print_error true pour ajouter un dialogue en cas d'erreur
+	 * @param boolean $hashed_password true si le mdp fourni est déjà haché
 	 * @return boolean
 	 */
 	public static function login($login,$pass,$session_make=false,$autolog=false,$print_error=true,$hashed_password=false) {

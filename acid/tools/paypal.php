@@ -386,6 +386,7 @@ class AcidPaypal {
 
         /**
          * Execute le processus PDT
+         * @param array $data données à traiter
          * @return mixed
          */
         public function execute($data=null) {

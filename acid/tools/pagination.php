@@ -53,7 +53,7 @@ class AcidPagination
 	 * Retourne une chaine SQL à placer après LIMIT
 	 *
 	 * @param int $page
-	 * @param int $nb_elts_page
+	 * @param int $nb_elts_per_page
 	 *
 	 * @return string
 	 */
