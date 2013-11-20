@@ -3336,6 +3336,18 @@ abstract class AcidModuleCore {
 	}
 	
 	/**
+	 * Retourne la classe css personnalisée de la ligne du tableau
+	 *
+	 * @param array $elt Element à traiter
+	 * @param array $conf Configuration
+	 *
+	 * @return string
+	 */
+	public function genAdminListLineCustomClass($elt,$conf=array()) {
+		return '';
+	}
+	
+	/**
 	* Formate pour le listing d'administration du module les éléments en entrée sous forme d'une chaîne de caractères mise en forme.
 	* 
 	* @param array $elts Eléments à traiter
@@ -3354,11 +3366,16 @@ abstract class AcidModuleCore {
 			//les resultats
 			$td_tab = array();
 			$assoc_td_tab = array();
+			$custom_class = array();
 			foreach ($elts as $elt) {
 				$assoc_td_tab[] = isset($elt[$this->tblId()]) ? $elt[$this->tblId()] : 0;
+				$custom_class[] = $this->genAdminListLineCustomClass($elt,$conf);
+				
 				$td_tab[] = $this->genAdminListLine($th_tab,$elt,$conf); 
 			}
+			
 			$conf['assoc_rows_id'] = $assoc_td_tab;
+			$conf['assoc_rows_classes'] = isset($conf['assoc_rows_classes']) ? $conf['assoc_rows_classes'] : $custom_class;
 			
 			//si les boutons d'actions sont activés
 			$disable_action = isset($conf['disable_actions']) ? $conf['disable_actions'] : $this->getDisableAction();

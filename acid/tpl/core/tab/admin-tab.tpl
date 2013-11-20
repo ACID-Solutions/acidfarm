@@ -31,6 +31,10 @@
 						$class .= ' list_'.$o->checkTbl().'_'.$v['config']['assoc_rows_id'][$k];
 					}
 					
+					if (!empty($v['config']['assoc_rows_classes'][$k])) {
+						$class .= ' '.$v['config']['assoc_rows_classes'][$k];
+					}
+					
 					//on l'affiche
 					echo $o->getAdminTr($line,$class,array(),$v['config']) ;
 					$num++;
