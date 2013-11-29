@@ -1,18 +1,18 @@
 # eclipse
-.settings
-.buildpath
-.project
+/.settings
+/.buildpath
+/.project
 
 # acidfarm
-sys/server.php
-sys/stats.tpl
-sys/update/cur_version.txt
-sys/upgrade/cur_version.txt
+/sys/server.php
+/sys/stats.tpl
+/sys/update/cur_version.txt
+/sys/upgrade/cur_version.txt
 
 # acidfarm folders
-logs/
-upload/
-files/
+/logs/
+/upload/
+/files/
 
 # acifarm htaccess
-.htaccess
+/.htaccess
