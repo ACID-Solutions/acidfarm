@@ -50,8 +50,12 @@ class AcidMail {
 			if ( Acid::get('email:method') === 'smtp') {
 			    $mail->IsSMTP();									// set mailer to use SMTP
 			    $mail->Host = Acid::get('email:smtp:host');  		// specify main and backup server
-			    $mail->Username = Acid::get('email:smtp:user');
-			    $mail->Password = Acid::get('email:smtp:pass');
+			    
+			    if (Acid::get('email:smtp:user')) {
+			    	$mail->SMTPAuth = true;
+			    	$mail->Username = Acid::get('email:smtp:user');
+			    	$mail->Password = Acid::get('email:smtp:pass');
+			    }
 			}
 			
 			$mail->From = $from_email;
