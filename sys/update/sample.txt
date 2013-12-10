@@ -77,3 +77,44 @@ foreach ($req as $key => $value) {
 // REMPLACEMENT DE CHAINES
 $res ="UPDATE acid_page SET content = REPLACE(content, 'mysearch', 'myreplace') WHERE content LIKE '%mysearch%'";
 AcidDB::exec($req);
+
+
+//SRC REPORT
+<?php
+
+$path_to_add = array('/files');
+foreach ($path_to_add as $pta) {
+	$pa_path = SITE_PATH.$pta;
+	if (!file_exists($pa_path)) {
+		mkdir($pa_path);
+	}
+}
+
+function recurse_copy($src,$dst) {
+	if ($dir = opendir($src)) {
+		@mkdir($dst);
+		while(false !== ( $file = readdir($dir)) ) {
+			if (( $file != '.' ) && ( $file != '..' )) {
+				if ( is_dir($src . '/' . $file) ) {
+					recurse_copy($src . '/' . $file,$dst . '/' . $file);
+				}
+				else {
+					copy($src . '/' . $file,$dst . '/' . $file);
+				}
+			}
+		}
+		closedir($dir);
+	}
+}
+
+$path_to_cp = array('files/home','files/actu');
+$path_init = __DIR__.'/src/';
+foreach ($path_to_cp as $my_path) {
+	if (file_exists($path_init.$my_path)) {
+		if(!file_exists(SITE_PATH.$my_path)){
+			recurse_copy($path_init.$my_path, SITE_PATH.$my_path);
+		}
+	}else{
+		mkdir(SITE_PATH.$my_path);
+	}
+}
