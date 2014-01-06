@@ -33,6 +33,11 @@ class AcidRss {
 	protected $title;
 	
 	/**
+	 * @var string img
+	 */
+	protected $img;
+	
+	/**
 	 * @var string lien
 	 */
 	protected $alink;
@@ -60,11 +65,13 @@ class AcidRss {
 	 * @param string $title
 	 * @param string $alink
 	 * @param string $description
+	 * @param string $img
 	 */
-	public function __construct($title,$alink,$description) {
+	public function __construct($title,$alink,$description, $img=null) {
 		$this->title = $title;
 		$this->alink = $alink;
 		$this->description = $description;
+		$this->img = $img;
 		$this->encoding = 'UTF-8';
 		$this->days_in_letters = array();
 	}
@@ -184,11 +191,26 @@ class AcidRss {
 	public function printRss() {
 
 		//header('Content-Type: text/xml; charset='.$this->encoding);
-
-		$output =	'<rss version="2.0">' . "\n" .
+		
+		if($this->img){
+			$img = 
+				'<image>
+					<url>'.$this->img.'</url>
+					<link>'.$this->alink.'</link>
+					<title>'.$this->title.'</title>
+				</image>' . "\n";
+		}
+		else{
+			$img='';
+		}
+		
+		
+		$output =	'<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">' . "\n" .
 					'	<channel>' . "\n" . 
+					'		<atom:link href="'.Acid::get('url:system').'rss'.'" rel="self" type="application/rss+xml" />' . "\n" .
 					'		<title>'.$this->title.'</title>' . "\n" . 
-					'		<link>'.$this->alink.'</link>' . "\n" . 
+					'		<link>'.$this->alink.'</link>' . "\n" .
+					$img.
 					'		<description>'.$this->description.'</description>' . "\n\n" . 
 			
 		$this->content .
