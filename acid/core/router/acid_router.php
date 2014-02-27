@@ -85,6 +85,7 @@ class AcidRouter implements Acid_Router_Interface{
      * Lance une détection d'URI
      */
     public static function run(){
+    	
         Acid::log('ROUTER', 'START RUN...');
         $_server = $_SERVER["SERVER_NAME"];
         $_uri_total= parse_url($_SERVER["REQUEST_URI"],PHP_URL_PATH);
@@ -93,15 +94,17 @@ class AcidRouter implements Acid_Router_Interface{
         $formated_path = substr($_uri_total, 1, strlen($_uri_total)-1);
         $formated_path = explode(AcidRouter::URI_DELIMITER, $formated_path);
         $root_keys = false;
+        $indexstep = strpos(self::getInstance()->_folder,AcidRouter::URI_DELIMITER)!==false ? (count(explode(AcidRouter::URI_DELIMITER, self::getInstance()->_folder)) - 2) : 0;
+
         if(Acid::get('lang:use_nav_0')){
         	
         	if(self::getInstance()->_folder!=''&&self::getInstance()->_folder!='/'){
-                self::getInstance()->_currentLang = $formated_path[1];
+                self::getInstance()->_currentLang = $formated_path[$indexstep];
             }else{
             	self::getInstance()->_currentLang = $formated_path[0];
             }
             
-            if(isset($formated_path[1]) && in_array($formated_path[1], Acid::get('root_keys','acidconf'))){
+            if(isset($formated_path[$indexstep]) && in_array($formated_path[$indexstep], Acid::get('root_keys','acidconf'))){
                 self::getInstance()->_currentLang = '';
                 $root_keys = true;
             }
@@ -111,7 +114,7 @@ class AcidRouter implements Acid_Router_Interface{
         }
         
         $_uri = substr($_uri_total, (strlen(self::getInstance()->_folder)+strlen(self::getInstance()->_currentLang)));
-        $_uri = ($root_keys)? $formated_path[1] : $_uri;
+        $_uri = ($root_keys)? $formated_path[$indexstep] : $_uri;
         try{
             if(isset(self::getInstance()->_routes)&&count(self::getInstance()->_routes)>0){
                 self::getInstance()->route($_uri);
