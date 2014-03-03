@@ -652,8 +652,9 @@ class AcidForm {
 	 */
 	public function addFile ($label, $name, $max_file_size, $params=array(), $start='', $stop='', $body_attrs=array()) {
 		$this->_file_transfer = true;
-		$this->addComponent('field',$name.'_max_file_size','',self::hidden('MAX_FILE_SIZE',$max_file_size),'','',$body_attrs);
-		$this->addComponent('field',$name,$label,self::file($name,$params),$start,$stop);
+		$body_attrs_mfs = isset($body_attrs['MAX_FILE_SIZE']) ? $body_attrs['MAX_FILE_SIZE'] : $body_attrs;
+		$this->addComponent('field',$name.'_max_file_size','',self::hidden('MAX_FILE_SIZE',$max_file_size),'','',$body_attrs_mfs);
+		$this->addComponent('field',$name,$label,self::file($name,$params),$start,$stop,$body_attrs);
 	}
 	
 	/**
