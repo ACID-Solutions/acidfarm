@@ -268,6 +268,25 @@ class Conf {
 		return  self::setMetaKeys($value,true);
 	}
 
+	/**
+	 * Définit le meta image ,permettant aux applications tierces de connaitre l'image associée à la page (réseaux sociaux)
+	 * @param string $value valeur
+	 * @param string $add_mode si vrai, ajoute $value à la valeur actuelle
+	 */
+	public static function setMetaImage($value, $add_mode=false) {
+		if ($add_mode && Conf::exist('seo:page_image')) {
+			Conf::add('seo:page_image', $value);
+		}else{
+			Conf::set('seo:page_image', $value);
+		}
+	}
+	
+	/**
+	 * Retourne le meta image
+	 */
+	public static function getMetaImage() {
+		return Conf::exist('seo:page_image') ? Conf::get('seo:page_image') : '';
+	}
 	
 	// Content
 	/**

@@ -62,6 +62,15 @@ if (Conf::getMetaKeys() && is_array(Conf::getMetaKeys())) {
 	Acid::set('meta:keywords',Conf::getMetaKeys());
 }
 
+if (Conf::getMetaImage()) {
+	$template->addInHead(
+			'<link rel="image_src" type="image/jpeg" href="'.Conf::getMetaImage().'" />' . "\n" .
+			'<meta property="og:image" content="'.Conf::getMetaImage().'" />' . "\n"
+	);
+}
+
+
+
 $template->add(Conf::getContent());
 $template->printPage();
 
