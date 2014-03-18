@@ -162,7 +162,8 @@ class AcidRss {
 	 * @param string $pubDate        	
 	 *
 	 */
-	public function add($title, $link, $guid, $description, $pubDate, $img=null, $media=null) {
+	public function add($title, $link, $guid, $description, $pubDate, $img=null, $media_mode=null) {
+		
 		if(file_exists($img)){
 			$size = filesize($img);
 			$type = exif_imagetype($img);
