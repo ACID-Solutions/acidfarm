@@ -7,3 +7,11 @@
 <!--  <input type="submit" name="upload" value="upload" /> -->
 </div>
 </form>
+
+
+<form class="multi_upload_form" action="" method="post" enctype="multipart/form-data" id="<?php echo $v['key']; ?>_multi_upload_file" style="display:inline;">
+<div>
+	<input type="hidden" name="<?php echo $v['key']; ?>_do" value="multi_add" />
+	<input type="hidden" name="path" value="<?php echo $v['dst_dir']; ?>" />
+</div>
+</form>

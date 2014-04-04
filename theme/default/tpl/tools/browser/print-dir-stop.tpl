@@ -1,0 +1,1 @@
+<?php echo Acid::tpl('tools/browser/plupload-browser.tpl',$v,$o); ?>

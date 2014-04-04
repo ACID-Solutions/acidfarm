@@ -5,7 +5,7 @@
 		<div class="fsb_path">
 			<?php  echo $v['print_path']; ?>
 		</div>
-		
+
 		<div class="fsb_actions">
 			<div class="fsb_belt_file_action_eng">
 				<?php  echo $v['new_dir_form']; ?>
@@ -23,31 +23,34 @@
 			</div>
 		</div>
 		<div class="clear"></div>
+		<div class="fsb_plugin" style="position:relative;"><?php echo Acid::tpl('tools/browser/print-dir-plugin.tpl',$v,$o); ?></div>
 	</div>
-	
+
 	<hr />
-	
+
 	<div class="fsb_forms">
 		<?php  echo $v['remove_form']; ?>
 		<?php  echo $v['change_form']; ?>
-	</div> 
+	</div>
 
-	<?php 	
+	<?php
 		foreach ($v['dirs'] as $dir) {
 			echo  $o->printEltDir($dir) . "\n";
 		}
-		
+
 		foreach ($v['links'] as $link) {
 			echo  $o->printEltLink($link,$v['base_path'].$link['name']) . "\n";
 		}
-		
+
 		foreach ($v['files'] as $file) {
 			echo $o->printEltFile($file,$v['base_path'].$file['name']) . "\n";
 		}
 	?>
-	
-	
+
+
 	<div class="clear"></div>
-</div> 
+</div>
 
 <?php echo $v['js']; ?>
+
+<?php echo Acid::tpl('tools/browser/print-dir-stop.tpl',$v,$o); ?>

@@ -2,7 +2,7 @@
 
 /**
  * AcidFarm - Yet Another Framework
- * 
+ *
  * Requires PHP version 5.3
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
@@ -67,7 +67,7 @@ $acidconf['site_keys'] = array('news','gallery','search','contact');
 
 $acid['def_theme'] = $acid['theme'] = 'default';
 
-$acidconf['photo']['limit'] = 12; 
+$acidconf['photo']['limit'] = 12;
 $acidconf['photo_home']['limit'] = null;
 
 
@@ -93,13 +93,13 @@ $acidconf['meta']['keywords'][$acid['lang']['default']] 		= array(
 																//''=>array('',''),
 															);
 
-								
-//--description								
+
+//--description
 $acidconf['meta']['description'][$acid['lang']['default']]		= array(
 																//''=>"",
 															);
 
-								
+
 //--title
 $acidconf['meta']['title'][$acid['lang']['default']]			= array(
 																'news'=>"News",
