@@ -212,7 +212,7 @@ class MyTemplate extends AcidTemplate {
 
 		$this->addCSS(Acid::get('url:css').'dialog.css');
 
-		$this->addJS(Acid::get('url:folder').'js/jquery-1.4.4.min.js');
+		$this->addJS(Acid::get('url:folder').'js/jquery-1.7.1.min.js');
 		$this->addJS(Acid::get('url:folder').'js/jquery.textchange.min.js');
 
 		$this->addJS(Acid::get('url:folder').'js/acid.js');

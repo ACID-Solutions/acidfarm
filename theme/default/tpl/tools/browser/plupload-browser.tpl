@@ -52,7 +52,6 @@ var BrowserPlupload = {
 
 					'FilesRemoved' : function(up, files) {
 						BrowserPlupload.queue[ident] = BrowserPlupload.queue[ident] - files.length;
-						alert(BrowserPlupload.queue[ident]);
 					},
 
 					'FileUploaded' : function(up, file) {
@@ -84,11 +83,10 @@ var BrowserPlupload = {
 
 						tab['ajax'] = 1;
 
-
-
+						var url_to_send = form.attr('action') ? form.attr('action') : window.location;
 						$.ajax({
 							type: "POST",
-							url: form.attr('action'),
+							url: url_to_send,
 							data: tab,
 							success: function(data) {
 								json = $.parseJSON(data);
