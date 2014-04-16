@@ -2,7 +2,7 @@
 
 /**
  * AcidFarm - Yet Another Framework
- * 
+ *
  * Requires PHP version 5.3
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
@@ -27,15 +27,15 @@ abstract class AcidModuleCore {
 	* @var object les différents champs sous forme d'AcidVar
 	*/
 	protected $vars = array();
-	
+
 	/**
 	* @var array tableau de configuration du module
 	*/
 	protected $config = array();
-	
+
 	const TBL_NAME = null;
 	const TBL_PRIMARY = null;
-	
+
 	/**
 	* Constructeur du module Acidfarm
 	* Si un identifiant est renseigné en entrée depuis $init_id, on initialise l'objet en fonction des valeurs stockées en base de données.
@@ -45,15 +45,15 @@ abstract class AcidModuleCore {
 	* @return bool
 	*/
 	public function __construct($init_id=null) {
-			
+
 		if (is_array($init_id)) {
 			$this->initVars($init_id,true);
 		}else{
 			$this->dbInit($init_id);
 		}
-		
+
 	}
-		
+
 	/**
 	* Appel static
 	* @param unknown_type $chrMethod
@@ -61,12 +61,12 @@ abstract class AcidModuleCore {
 	* @return mixed
 	*/
 	final public static function __callStatic( $chrMethod, $arrArguments ) {
-		 static::checkTbl(); 
+		 static::checkTbl();
 		 return call_user_func_array($chrMethod,$arrArguments);
 	 }
-	
+
 	//abstract public static function className();
-	
+
 	/**
 	  * Verifie que le module dispose bien d'une constante TBL_NAME et retourne le nom de la table SQL dont il fait référence
 	  * @return boolean|string
@@ -79,7 +79,7 @@ abstract class AcidModuleCore {
 			return static::TBL_NAME;
 		}
 	 }
-	 
+
 	/**
 	* Retourne le nom de la table SQL associé au module.
 	*
@@ -91,7 +91,7 @@ abstract class AcidModuleCore {
 			return Acid::get('db:prefix') .$tbl_name;
 		}
 	}
-	
+
 	/**
 	* Contrôle puis retourne le nom de la table SQL associé au module sans préfixe.
 	*
@@ -106,34 +106,34 @@ abstract class AcidModuleCore {
 			return static::TBL_PRIMARY;
 		}
 	 }
-	
+
 	/**
 	* Retourne le nom du champs identifiant en base de données.
 	*
 	*
 	* @return string
 	*/
-	
+
 	public static function tblId() {
 		return static::checkTblId();
 	}
-	
+
 	/**
 	* Retourne la classe courante.
 	*
 	*
 	* @return string
 	*/
-	
+
 	public static function getClass() {
 		return get_called_class();
 	}
-	
+
 	/**
 	* Retourne un nouvel objet module
 	*
 	* @param mixed $elts initialisateur de module
-	* 
+	*
 	* @return string
 	*/
 	public static function build($elts=null) {
@@ -146,7 +146,7 @@ abstract class AcidModuleCore {
 		}
 		return $mod;
 	}
-	
+
 	/**
 	* Retourne le module en session
 	*
@@ -158,12 +158,12 @@ abstract class AcidModuleCore {
 		$my_module = static::build($sess);
 		return $my_module;
 	}
-	
+
 	/**
 	* Sauvegarde le module en session
 	*
 	* @param $values tableau contenant les nouvelles valeurs du module
-	* 
+	*
 	* @return string
 	*/
 	public static function currentChange($values=array()) {
@@ -182,11 +182,11 @@ abstract class AcidModuleCore {
 		$sess = AcidSession::get(static::checkTbl());
 		return isset($sess[$key]) ?  $sess[$key] : $def;
 	}
-	
+
 	/**
 	* Compare l'id soumis avec celui en session
 	*
-	* @param int $id 
+	* @param int $id
 	*
 	* @return string
 	*/
@@ -194,10 +194,10 @@ abstract class AcidModuleCore {
 		$cur_id = self::curValue(static::tblId());
 		return ($cur_id &&  ($cur_id == $id));
 	}
-	
+
 	/**
 	* Retourne le nom de la table en base de données.
-	* 
+	*
 	* @param string $next suffixe à intégrer à la valeur de retour
 	*
 	* @return string
@@ -205,12 +205,52 @@ abstract class AcidModuleCore {
 	public static function preKey($next='') {
 		return static::TBL_NAME.'_'.$next;
 	}
-	
+
+
+	/**
+	 * Retourne le nom d'un champ avec le suffixe de langue s'il existe
+	 *
+	 * @param string $key la clé
+	 * @param string $lang la langue à utiliser
+	 *
+	 * @return string
+	 */
+	public function langKey($key,$lang=null) {
+		$lang = $lang===null ? Acid::get('lang:current') : $lang;
+		$lang = $lang=='default' ? Acid::get('lang:default') : $lang;
+		$check_key = $key.'_'.$lang;
+		return isset($this->vars[$check_key]) ? $check_key : $key;
+	}
+
+	/**
+	 * Retourne le nom d'un champ avec le suffixe de langue s'il existe
+	 *
+	 * @param string $key la clé
+	 * @param string $langs les langues à utiliser
+	 *
+	 * @return string
+	 */
+	public function langKeyDecline($key,$langs=null) {
+		$langs= $langs===null ? Acid::get('lang:available') : $langs;
+
+		$tab = array();
+		foreach ($langs as $lang) {
+
+			$check_key = $key.'_'.$lang;
+			if (isset($this->vars[$check_key])) {
+				$tab[] = $check_key;
+			}
+
+		}
+
+		return $tab ? $tab : array($key);
+	}
+
 	/**
 	* Attribut une valeur aux paramètre de l'objet s'ils sont renseignés dans le tableau en entrée
 	* Retourne un tableau reccueillant les paramètres réellement modifiés lors de la procédure
 	* Si $eraseIfUndefined est à true, alors les champs non renseignés dans le tableau en entrée seront initialisés à leur valeur par défaut.
-	* 
+	*
 	* @param array $tab ([paramètre] => [valeurs])
 	* @param bool $eraseIfUndefined
 	* @param bool $allow_tbl_pref
@@ -225,7 +265,7 @@ abstract class AcidModuleCore {
 					$var->setDef();
 				}
 			}
-			
+
 			//without prefix
 			foreach ($this->vars as $key => $var) {
 				if (isset($tab[$key])) {
@@ -235,7 +275,7 @@ abstract class AcidModuleCore {
 					}
 				}
 			}
-			
+
 			//with prefix
 			if ($allow_tbl_pref) {
 				foreach ($this->getKeys(true) as $pkey) {
@@ -248,7 +288,7 @@ abstract class AcidModuleCore {
 					}
 				}
 			}
-			
+
 		} else {
 			trigger_error('Acid : an array is expected for AcidModule::initVars', E_USER_WARNING);
 		}
@@ -293,7 +333,7 @@ abstract class AcidModuleCore {
 			return $val;
 		}
 	}
-	
+
 	/**
 	* Retourne la valeur du paramétre renseigné en entrée.
 	* @param string $key Nom du paramétre.
@@ -307,7 +347,7 @@ abstract class AcidModuleCore {
 			trigger_error('' . get_called_class() . '::get("' . htmlspecialchars($key) . '") val "' . htmlspecialchars($key) . '" doesn\'t exists !', E_USER_WARNING);
 		}
 	}
-	
+
 	/**
 	* Retourne la valeur associée à la clé renségnée et relative à la langue courante.
 	* @param string $key Nom du paramétre.
@@ -315,7 +355,7 @@ abstract class AcidModuleCore {
 	* @return mixed
 	*/
 	public function trad($key) {
-		
+
 		$trad_key = $key.'_'.Acid::get('lang:current');
 		if (isset($this->vars[$trad_key])) {
 			return $this->get($trad_key);
@@ -325,36 +365,36 @@ abstract class AcidModuleCore {
 				return $this->get($trad_key);
 			}
 		}
-		
+
 		return $this->get($key);
 	}
-		
+
 	/**
-	* Retourne la valeur associée à la clé en entrée tronquée  
+	* Retourne la valeur associée à la clé en entrée tronquée
 	* @param string $key Nom du paramétre.
 	* @param string length Longueur max de la chaîne.
 	* @param string end Fin de la chaîne.
-	* @param boolean $trad si true, alors split la valeur traduite 
-	* 
+	* @param boolean $trad si true, alors split la valeur traduite
+	*
 	* @return string
 	*/
 	public function split($key,$length=100,$end='...',$trad=false) {
 		$val = $trad ? $this->trad($key) : $this->get($key);
 		return AcidVarString::split($val,$length,$end);
 	}
-	
+
 	/**
-	* Retourne la valeur traduite dans la langue courante associée à la clé en entrée tronquée  
+	* Retourne la valeur traduite dans la langue courante associée à la clé en entrée tronquée
 	* @param string $key Nom du paramétre.
 	* @param string $length Longueur max de la chaîne.
 	* @param string $end Fin de la chaîne.
-	* 
+	*
 	* @return Ambigous <string, string, mixed>
 	*/
 	public function splitTrad($key,$length=100,$end='...') {
 		return $this->split($key,$length,$end,true);
 	}
-	
+
 	/**
 	* Alias : htmlspecialchars de la fonction getTrad($key)
 	* @param string $key Nom du paramétre.
@@ -364,7 +404,7 @@ abstract class AcidModuleCore {
 	public function hscTrad($key) {
 		return htmlspecialchars($this->trad($key));
 	}
-	
+
 	/**
 	* Retourne un tableau accueillant le nom de chaque paramétre de l'objet.
 	*
@@ -379,7 +419,7 @@ abstract class AcidModuleCore {
 		}
 		return $keys;
 	}
-	
+
 	/**
 	* Retourne un tableau de clés reconnues comme clés de traduction
 	* @return multitype:unknown
@@ -389,20 +429,20 @@ abstract class AcidModuleCore {
 		foreach ($this->vars as $key => $var) {
 			$l = explode('_',$key);
 			$l = count($l) ? $l[count($l)-1] : false;
-			
+
 			if ($l) {
 				if (in_array($l,Acid::get('lang:available'))) {
 					$keys[] = $key;
 				}
 			}
 		}
-		
+
 		return $keys;
 	}
-	
+
 	/**
 	* Retourne un tableau accueillant les différentes valeurs du paramétre multi-valeurs (select, radio) renseigné en entrée.
-	* 
+	*
 	* @param string $key Nom du paramétre.
 	*
 	* @return mixed
@@ -416,7 +456,7 @@ abstract class AcidModuleCore {
 			trigger_error('Acid : ' . htmlspecialchars($key) . ' does not exist', E_USER_WARNING);
 		}
 	}
-	
+
 	/**
 	*  Retourne le formulaire associé à la clé en entrée.
 	* @param string $key Nom du paramétre.
@@ -424,35 +464,35 @@ abstract class AcidModuleCore {
 	* @param array $attr attributs
 	* @param string $start préfixe
 	* @param string $stop suffixe
-	* 
+	*
 	* @return mixed
 	*/
 	public function getVarForm($key,$print=true,$attr=array(),$start='',$stop='') {
 		if (isset($this->vars[$key])) {
 				$name = !empty($attr['name']) ? $attr['name']:$key;
-				
+
 				$form = new AcidForm('','');
 				return $this->vars[$key]->getForm($form,$name,$print,$attr,$start,$stop);
 		} else {
 			trigger_error('Acid : ' . htmlspecialchars($key) . ' does not exist', E_USER_WARNING);
 		}
 	}
-	
+
 	/**
      * Retourne le type de form associé à la clé en entrée.
-     * 
+     *
      * @param string $key Nom du paramétre.
      *
      * @return string
      */
     public function getVarFormType($key) {
         if (isset($this->vars[$key])) {
-                return $this->vars[$key]->getFormValOf('type');         
+                return $this->vars[$key]->getFormValOf('type');
         } else {
             trigger_error('Acid : ' . htmlspecialchars($key) . ' does not exist', E_USER_WARNING);
         }
     }
-    
+
 	/**
 	* Retourne la valeur de l'identifiant de l'objet.
 	*
@@ -464,7 +504,7 @@ abstract class AcidModuleCore {
 
 	/**
 	* Retourne la valeur du paramétre renseigné en entrée, aprés l'avoir soumise à la fonction htmlspecialchars.
-	* 
+	*
 	* @param string $key
 	*
 	* @return string
@@ -477,7 +517,7 @@ abstract class AcidModuleCore {
 
 	/**
 	* Retourne l'étiquette du paramétre renseigné en entrée.
-	* 
+	*
 	* @param string $key
 	*
 	* @return string
@@ -487,15 +527,15 @@ abstract class AcidModuleCore {
 		if (isset($this->vars[$key])) {
 			$def_label = $this->vars[$key]->getLabel();
 		}
-		
+
 		if (isset($this->config['admin']['head'][$key])){
-			
+
 			if (is_array($this->config['admin']['head'][$key])) {
 				return isset($this->config['admin']['head'][$key]['label']) ? $this->config['admin']['head'][$key]['label'] : $def_label;
 			}
-			
+
 			return $this->config['admin']['head'][$key];
-			
+
 		}else{
 			return $def_label;
 		}
@@ -521,11 +561,11 @@ abstract class AcidModuleCore {
 	*/
 	public function dbInit($id) {
 		if ($id) {
-			
+
 			$req =	"SELECT * " .
 					"FROM ".static::tbl()." " .
 					"WHERE `".static::tblId()."`='".((int)$id)."';";
-			 
+
 			if ($res = AcidDB::query($req)->fetch(PDO::FETCH_ASSOC)) {
 				$this->initVars($res, true);
 				return true;
@@ -533,7 +573,7 @@ abstract class AcidModuleCore {
 				$this->cleanVars();
 				return false;
 			}
-		
+
 		}
 	}
 
@@ -544,7 +584,7 @@ abstract class AcidModuleCore {
 	* @return int | bool
 	*/
 	public function dbAdd() {
-		 
+
 		$keys = $values = '';
 		$assoc = array();
 		foreach ($this->vars as $key => $var) {
@@ -556,21 +596,21 @@ abstract class AcidModuleCore {
 			}
 			$keys .= '`'.$key . '`,';
 		}
-		 
+
 		$req =	"INSERT INTO ".static::tbl()." " .
 				"(".substr($keys,0,-1).") " .
 				"VALUES(".substr($values,0,-1).");";
-		 
+
 		$sth = AcidDB::prepare($req,array(),true);
-		
+
 		$log = $sth->queryString;
 		foreach($assoc as $k => $v) {
 			$log = str_replace($k, "'$v'", $log);
 		}
-			
+
 		// Log contenant les valeurs bindées
 		Acid::log('sql', 'DB values : ' . $log);
-		
+
 		if ($sth->execute($assoc)) {
 			$id = AcidDB::lastInsertId();
 			if ($this->vars[static::tblId()]->setVal($id)) {
@@ -591,13 +631,13 @@ abstract class AcidModuleCore {
 	* @return bool
 	*/
 	public function dbUpdate($updates) {
-		 
+
 		if ($updates === 'all') {
 			$updates = $this->getKeys();
 		} else {
 			$updates = (array) $updates;
 		}
-		 
+
 		$sets = '';
 		$assoc = array();
 		foreach ($updates as $key) {
@@ -607,22 +647,22 @@ abstract class AcidModuleCore {
 			}
 		}
 		$sets = substr($sets,0,-1);
-		 
+
 		if (!empty($sets)) {
 			$req =	"UPDATE " . static::tbl() . " " .
     				"SET ".$sets." " .
     				"WHERE ".static::tblId()."='".$this->getId()."';";
 
 			$sth = AcidDB::prepare($req,array(),true);
-			
+
 			$log = $sth->queryString;
 			foreach($assoc as $k => $v) {
 				$log = str_replace($k, "'$v'", $log);
 			}
-			
+
 			// Log contenant les valeurs bindées
 			Acid::log('sql', 'DB values : ' . $log);
-			
+
 			if ($sth->execute($assoc)) {
 				return $this->getId();
 			}
@@ -634,38 +674,38 @@ abstract class AcidModuleCore {
 
 	/**
 	* Supprime l'enregistrement de l'objet d'identifiant $id de la base de données.
-	* 
+	*
 	* @param mixed $id
 	*/
 	public function dbRemove($id=null) {
-		
+
 		if ($id === null) {
 			$id = $this->getId();
 		}
-		
+
 		$req = "DELETE FROM ".static::tbl()." WHERE ".static::tblId()."='".((int)$id)."';";
-		if (AcidDB::exec($req)) {				
+		if (AcidDB::exec($req)) {
 			return $id;
 		}
-		
+
 	}
-	
+
 	/**
-	* Retourne le champ SQL entré prefixé du nom de table associé au module 
+	* Retourne le champ SQL entré prefixé du nom de table associé au module
 	* @param string $value
 	* @param string $prefix si défini, la valeur sera utilisée comme préfixe
 	* @return string|unknown
 	*/
 	public static function dbPref($value,$prefix=null) {
 		$prefix = $prefix===null ? static::tbl() : $prefix;
-		
+
 		if ($prefix!='') {
 			return $prefix.'.'.$value;
 		}
-		
+
 		return $value;
 	}
-	
+
 	/**
 	* Supprime le nom de table du nom de champs SQL saisi en entré
 	* @param string $key nom du champs SQL
@@ -675,10 +715,10 @@ abstract class AcidModuleCore {
 		if (strpos($key,self::dbPref(''))!==false) {
 			return substr($key,strlen(self::dbPref('')));
 		}
-	
+
 		return $key;
 	}
-	
+
 	/**
 	* Retourne le module associé au nom de champs SQL saisi en entré si un résultat est trouvé
 	* @param string $key nom du champs
@@ -688,11 +728,11 @@ abstract class AcidModuleCore {
 	public static function dbPrefSearchModule($key,$mods=null) {
 		$mods = ($mods===null) ? array(self::getCLass()) : $mods;
 		$current = self::build();
-	
+
 		if (in_array($key,$current->getKeys())) {
 			return $current;
 		}
-	
+
 		$module_found = false;
 		foreach ($mods as $module) {
 			if (!$module_found) {
@@ -701,45 +741,45 @@ abstract class AcidModuleCore {
 				$module_found = in_array($check,$m->getKeys()) ? $m : false;
 			}
 		}
-	
+
 		return $module_found;
 	}
-		
+
 	/**
-	* Génère une portion de code SQL (portion WHERE) en fonction des paramêtres en entrée 
+	* Génère une portion de code SQL (portion WHERE) en fonction des paramêtres en entrée
 	* @param mixed $filter [ code SQL | array(array('field1','operator','value'),array('field2','operator2','value2'),'codeSQL3') ]
 	* @param string $combo opérateur à utiliser pour lier les différents filtres
 	* @param boolean $add_aquote si true, ajoute les antiquote au nom des champs
 	* @return string
 	*/
-	public static function dbGenerateFilter($filter,$combo='AND',$add_aquote=true) {		
+	public static function dbGenerateFilter($filter,$combo='AND',$add_aquote=true) {
 		$filter_string = '';
-		
+
 		if (!is_array($filter)) {
 			$filter_string = $filter;
 		} else {
 			foreach ($filter as $f_val) {
 				if (is_array($f_val) && count($f_val) >= 3) {
-		
+
 					list($key,$method,$value) = $f_val;
 					$start = isset($f_val[3]) ? $f_val[3] : '';
 					$stop = isset($f_val[4]) ? $f_val[4] : '';
 					if (strtolower($method) === 'in' || strtolower($method) === 'not in') {
-		
+
 						$in_vals = array();
 						if (count($value)) {
 							foreach ($value as $val) {
 								$in_vals[] = "'".addslashes($val)."'";
 							}
 						}
-		
+
 						if (count($in_vals)) {
 							$akey = $add_aquote ? "`".$key."`" : $key;
 							$filter_string .= $akey." ".$method." (".implode(',',$in_vals).") ".$combo." ";
 						}else{
 							$filter_string .= ((strtolower($method) === 'in') ? " 0 " : " 1 ").$combo." ";
 						}
-		
+
 					} else {
 						$akey = $add_aquote ? "`".$key."`" : $key;
 						$filter_string .= $akey." ".$method." '".($start!==null?$start:'').addslashes($value).($stop!==null?$stop:'')."' ".$combo." ";
@@ -753,20 +793,20 @@ abstract class AcidModuleCore {
 			$filter_string = substr($filter_string,0,-strlen($combo)-1);
 
 		}
-		
+
 		$filter_string = empty($filter_string) ? '' : "WHERE " . $filter_string . " ";
-		
+
 		return $filter_string;
 	}
-	
+
 	/**
-	* Génère une portion de code SQL (portion ORDER BY) en fonction des paramêtres en entrée 
+	* Génère une portion de code SQL (portion ORDER BY) en fonction des paramêtres en entrée
 	* @param mixed $order [SQL CODE | array('field1'=>'ASC|DESC','field2'=>'ASC|DESC')]
 	* @return string
 	*/
 	public static function dbGenerateOrder($order) {
 		$order_string = '';
-		
+
 		if (!is_array($order)){
 			$order_string = $order;
 		} else {
@@ -782,20 +822,20 @@ abstract class AcidModuleCore {
 			}
 			$order_string = substr($order_string,0,-2);
 		}
-		
+
 		$order_string = empty($order_string) ? '' : "ORDER BY " . $order_string . " ";
-		
+
 		return $order_string;
 	}
-	
+
 	/**
-	* Génère une portion de code SQL (portion LIMIT ) en fonction des paramêtres en entrée 
+	* Génère une portion de code SQL (portion LIMIT ) en fonction des paramêtres en entrée
 	* @param string $limit la limite
 	* @return string
 	*/
 	public static function dbGenerateLimit($limit) {
 		$limit_string = "";
-		
+
 		if (!empty($limit)) {
 			if (strpos($limit,',') !== false) {
 				list ($offset,$max) = explode(',',$limit);
@@ -806,18 +846,18 @@ abstract class AcidModuleCore {
 			}
 			$limit_string = " LIMIT " . $limit_string;
 		}
-			
+
 		return $limit_string;
 	}
-	
+
 	/**
-	* Génère une portion de code SQL (portion GROUP BY ) en fonction des paramêtres en entrée 
+	* Génère une portion de code SQL (portion GROUP BY ) en fonction des paramêtres en entrée
 	* @param array $fields liste des champss
 	* @return string
 	*/
 	public static function dbGenerateGroupBy($fields=array()) {
 		$group_by_string = "";
-	
+
 		if (!empty($fields)) {
 			if (is_array($fields)) {
 				$group_by_string = 'GROUP BY '.implode(',',$fields);
@@ -825,60 +865,60 @@ abstract class AcidModuleCore {
 				$group_by_string = 'GROUP BY '.$fields;
 			}
 		}
-			
+
 		return $group_by_string;
 	}
-	
+
 	/**
-	* Génère une portion de code SQL (portion SELECT ) en fonction des paramêtres en entrée 
+	* Génère une portion de code SQL (portion SELECT ) en fonction des paramêtres en entrée
 	* @param mixed $select [SQL Code | array(array(key,func,pref,as),array(key2,func2,pref2,as2))]
 	* @return string
 	*/
 	public static function dbGenerateSelect($select='') {
 		$select_string = "";
-	
+
 		if (!empty($select)) {
 			if (is_array($select)) {
 				$select_tab = array();
 				foreach ($select as $sel) {
-					
+
 					if (is_array($sel)) {
 						$key = isset($sel[0]) ? $sel[0] : '';
 						$func = isset($sel[1]) ? $sel[1] : false;
 						$prefix = isset($sel[2]) ? $sel[2] : '';
 						$prefix = ($prefix===true) ? static::tbl() : $prefix;
 						$as = isset($sel[3]) ? $sel[3] : '';
-						
+
 					}else{
 						$key = $sel;
 						$prefix =  '';
 						$as =  '';
 						$func = false;
 					}
-					
+
 					$func = $func===true ? 'COUNT' : $func;
-					
+
 					if ($key) {
 						$as_str = $as ? " AS '".$as."'" : '';
 						$key_str = $func ? $func.'('.static::dbPref($key,$prefix).')' : ''.static::dbPref($key,$prefix).'';
 						$select_tab[] = $key_str.$as_str;
 					}
 				}
-				
+
 				if ($select_tab) {
 					$select_string =  'SELECT '.implode(', ',$select_tab);
 				}
-				
+
 			}else{
 				$select_string = 'SELECT '.$select;
 			}
 		}else{
 			$select_string = 'SELECT *';
 		}
-			
+
 		return $select_string;
 	}
-	
+
 	/**
 	* Generère un filtre FROM
 	*
@@ -891,9 +931,9 @@ abstract class AcidModuleCore {
 	public static function dbGenerateFrom($tables=array(),$join='LEFT JOIN',$first_as='') {
 		$first_tbl = static::tbl();
 		$first_prefix = $first_as ? $first_as : $first_tbl;
-		
+
 		$from_string = 'FROM `'.$first_tbl.'`'.($first_as ? ' AS '.$first_as : '');
-		
+
 		if (!empty($tables)) {
 			if (is_array($tables)) {
 				$from_table = array();
@@ -901,14 +941,14 @@ abstract class AcidModuleCore {
 					if (is_array($data)) {
 						$as = '';
 						$tbl = isset($data[0]) ? $data[0] : '';
-						
+
 						if (is_array($tbl)) {
 							$as = isset($tbl[1]) ? $tbl[1] : '';
 							$tbl = isset($tbl[0]) ? $tbl[0] : '';
 						}
-						
+
 						$prefix = $as ? $as : $tbl;
-						
+
 						$on = isset($data[1]) ? $data[1] : '';
 						if (is_array($on)) {
 							if ($on) {
@@ -916,7 +956,7 @@ abstract class AcidModuleCore {
 								foreach ($on as $exp) {
 									if (is_array($exp)) {
 										if (count($exp)>1) {
-											$a = $exp[0];	
+											$a = $exp[0];
 											$b = $exp[1];
 											$join_table[] = static::dbPref($a,$first_prefix).' = '.static::dbPref($b,$prefix);
 										}else{
@@ -929,14 +969,14 @@ abstract class AcidModuleCore {
 								$on = implode(' AND ',$join_table);
 							}
 						}
-						
-						
+
+
 						$from_table[] = $join.' `'.$tbl.'`'.($as ? ' AS '.$as : '').($on ? ' ON '.$on : '');
-						
+
 					}else{
 						$from_table[] = $join.' '.$data;
 					}
-					
+
 				}
 
 				$from_string .= ' '.implode(' ',$from_table);
@@ -944,14 +984,14 @@ abstract class AcidModuleCore {
 				trigger_error('dbGenerateFrom() : $tables must be an array',E_USER_ERROR);
 			}
 		}
-			
+
 		return $from_string;
 	}
-	
+
 	/**
 	* Retourne tous les éléments de la table SQL associée à l'objet en fonction de la configuration renseignée par les paramètress en entrée
 	* Si $count a la valeur true, retourne seulement le nombre d'élements.
-	* 
+	*
 	* @param mixed $select Commandes SQL de selection, array(array([Champs],[Fonction],[Prefixe],[Alias]))
 	* @param {array | string} $filter Commandes SQL de filtrage, array(arrays([Champs],[Opérateurs],[Valeurs]))
 	* @param {array | string} $order Commandes d'indexation SQL, array(arrays( [Champs]=>{true : DESC | false : ASC} ))
@@ -959,16 +999,16 @@ abstract class AcidModuleCore {
 	* @param bool $count Valeur par défaut : false ( ASC )
 	* @param string $combo Opérateur logique associant les éléments de $filter Valeur par défaut 'AND'
 	* @param mixed $group_by Commandes SQL de group by
-	* 
+	*
 	* @return array | int
 	*/
 	public static function dbSelList($select='', $filter='', $order='', $limit='', $count=false, $combo='AND',$group_by='') {
-		
+
 		// Building WHERE query
 		$filter_string = static::dbGenerateFilter($filter,$combo);
 		$filter_group_by = static::dbGenerateGroupBy($group_by);
 		$filter_group_by = $filter_group_by ? ' '.$filter_group_by : $filter_group_by;
-		
+
 		// Return COUNT()
 		if ($count) {
 			$req = 	static::dbGenerateSelect(array(array('*',true,false,'nb')))." " .static::dbGenerateFrom()." " . $filter_string . $filter_group_by;
@@ -987,13 +1027,13 @@ abstract class AcidModuleCore {
 			// Building LIMIT query
 			$limit_string = static::dbGenerateLimit($limit);
 			$limit_string = $limit_string ? ' '.$limit_string : $limit_string;
-			
+
 			$req = 	static::dbGenerateSelect($select)." " .static::dbGenerateFrom()." ". $filter_string . $filter_group_by .  $order_string . $limit_string;
 			return AcidDB::query($req)->fetchAll(PDO::FETCH_ASSOC);
 		}
 	}
-	
-	
+
+
 	/**
 	* Retourne tous les éléments de la table SQL associée à l'objet en fonction de la configuration renseignée par les paramètress en entrée
 	* Si $count a la valeur true, retourne seulement le nombre d'élements.
@@ -1010,7 +1050,7 @@ abstract class AcidModuleCore {
 	public static function dbList($filter='', $order='', $limit='', $count=false, $combo='AND',$group_by='') {
 		return static::dbSelList('',$filter, $order, $limit, $count, $combo ,$group_by);
 	}
-	
+
 	/**
 	* Retourne tous les éléments de la table SQL associée à l'objet en fonction de la configuration renseignée par les paramètress en entrée
 	* Si $count a la valeur true, retourne seulement le nombre d'élements.
@@ -1021,31 +1061,31 @@ abstract class AcidModuleCore {
 	* @param bool $count Valeur par défaut : false ( ASC )
 	* @param string $combo Opérateur logique associant les éléments de $filter Valeur par défaut 'AND'
 	* @param mixed $group_by Commandes SQL de group by
-	* 
+	*
 	* @return array | int
 	*/
 	public static function dbListMods($mods=array(),$filter='', $order='', $limit='', $count=false, $combo='AND',$group_by='') {
-	
+
 		// Building WHERE query
 		$filter_string = static::dbGenerateFilter($filter,$combo,false);
 		$filter_group_by = static::dbGenerateGroupBy($group_by);
 		$filter_group_by = $filter_group_by ? ' '.$filter_group_by : $filter_group_by;
-		
+
 		$select = array();
 		$from = array();
-		
+
 		if ($mods) {
-			
+
 			$mods_tab[static::getClass()] = false;
 			foreach ($mods as $k=>$m) {
 				$mods_tab[$k] = $m;
 			}
-			
+
 			foreach ($mods_tab as $module => $keys) {
 				foreach (Acid::mod($module)->getKeys() as $key) {
 					$select[] = array($key,false,Acid::mod($module)->tbl(),Acid::mod($module)->dbPref($key));
 				}
-				
+
 				if ($keys) {
 					$my_from = array();
 					$my_from[] = Acid::mod($module)->tbl();
@@ -1054,34 +1094,34 @@ abstract class AcidModuleCore {
 				}
 			}
 		}
-	
+
 		// Return COUNT()
 		if ($count) {
 			$req = 	static::dbGenerateSelect(array(array('*',true,false,'nb')))." " .static::dbGenerateFrom($from)." " . $filter_string . " " . $filter_group_by ;
 			$res = AcidDB::query($req)->fetch(PDO::FETCH_ASSOC);
 			return (int)$res['nb'];
-	
-	
+
+
 			// Return array()
 		} else {
-	
+
 			// Building ORDER BY query
 			$order_string = static::dbGenerateOrder($order);
 			$order_string = $order_string ? ' '.$order_string : $order_string;
-	
-	
+
+
 			// Building LIMIT query
 			$limit_string = static::dbGenerateLimit($limit);
 			$limit_string = $limit_string ? ' '.$limit_string : $limit_string;
-				
+
 			$req = 	static::dbGenerateSelect($select)." " .static::dbGenerateFrom($from)." ". $filter_string . $filter_group_by . $order_string . $limit_string;
 			//return $req;
 			return AcidDB::query($req)->fetchAll(PDO::FETCH_ASSOC);
 		}
 	}
-	
+
 	/**
-	* Generère une portion de code SQL (DELETE FROM) en fonction des paramètres en entrée 
+	* Generère une portion de code SQL (DELETE FROM) en fonction des paramètres en entrée
 	* @param mixed $filter Commandes SQL de filtrage, array(arrays([Champs],[Opérateurs],[Valeurs]))
 	* @param mixed $combo Opérateur logique associant les éléments de $filter Valeur par défaut 'AND'
 	* @return number
@@ -1090,15 +1130,15 @@ abstract class AcidModuleCore {
 		$filter = ($filter===true) ? 1 : $filter;
 		$filter = ($filter===false) ? 0 : $filter;
 		$req = '';
-		
+
 		$filter_string = static::dbGenerateFilter($filter,$combo);
 		if ($filter_string) {
 			$req = 	"DELETE " .static::dbGenerateFrom()." ". $filter_string;
 		}
-		
+
 		return AcidDB::exec($req);
 	}
-	
+
 	/**
 	* Retourne le nombre d'élements de la table SQL associée à l'objet en fonction de la configuration renseignée par les paramètress en entrée.
 	*
@@ -1115,7 +1155,7 @@ abstract class AcidModuleCore {
 	* Joint plusieures tables
 	* Retourne tous les éléments de la table SQL associée à l'objet en fonction de la configuration renseignée par les paramètresss en entrée
 	* Si $count a la valeur true, retourne seulement le nombre d'élements.
-	* 
+	*
 	* @param array $mod_elts Liste des champs prélevés array( string{ [nom table] | [nom table/alias] } => string|array [champs prélevés] )
 	* @param array $mod_rel Liste des relations array( string [alias table] => array( [alias1]=>[champ1],[alias2]=>[champs2] ) )
 	* @param {array | string} $filter Commandes SQL de filtrage, array(arrays([Champs],[Opérateurs],[Valeurs]))
@@ -1220,18 +1260,18 @@ abstract class AcidModuleCore {
 					$start = isset($f_val[4]) ? $f_val[4] : '';
 					$stop = isset($f_val[5]) ? $f_val[5] : '';
 					if (strtolower($method) === 'in' || strtolower($method) === 'not in') {
-						
+
 						$in_vals = array();
 						foreach ($value as $val) {
 							$in_vals[] = "'".addslashes($val)."'";
 						}
-						
+
 						if (count($in_vals)) {
 							$filter_string .= "`".$mod."`.`".$key."` ".$method." (".implode(',',$in_vals).") ".$combo." ";
 						}else{
 							$filter_string .= ((strtolower($method) === 'in') ? " 0 " : " 1 ").$combo." ";
 						}
-						
+
 					} else {
 						$filter_string .= "`".$mod."`.`".$key."` ".$method." '".$start.addslashes($value).$stop."' ".$combo." ";
 					}
@@ -1266,7 +1306,7 @@ abstract class AcidModuleCore {
 		}
 		$order_string = empty($order_string) ? '' : "ORDER BY " . $order_string . " ";
 
-			
+
 		$order_string = substr($order_string,0,-2) . " ";
 
 		if (!empty($limit)) {
@@ -1283,7 +1323,7 @@ abstract class AcidModuleCore {
 
 
 		$req =	"SELECT " . $select . " " .
-				"FROM " . $from . " " . 
+				"FROM " . $from . " " .
 		$filter_string ." ";
 
 		if (!empty($order_string)) $req .= $order_string . " ";
@@ -1303,8 +1343,8 @@ abstract class AcidModuleCore {
 	/**
      * Joint plusieures tables
 	* Retourne le nombre d'éléments de la table SQL associée à l'objet en fonction de la configuration renseignée par les paramètress en entrée
-	* 
-	* @param unknown_type $mods 
+	*
+	* @param unknown_type $mods
 	* @param unknown_type $join
 	* @param unknown_type $filter
 	* @param unknown_type $combo
@@ -1335,10 +1375,10 @@ abstract class AcidModuleCore {
 	/**
 	* Initialise l'objet unique correspondant aux contraintes  renseignées par le tableau en entrée
 	* Renvoi true en cas de succés, false sinon.
-	* 
+	*
 	* @param array $tab
 	* @param boolean $limit si vrai, retourne le premier élément parmis ceux trouvés, sinon retourne une valeur que si cette dernière est unique
-	* @param array $order 
+	* @param array $order
 	* @return boolean
 	*/
 	public function dbInitSearch($tab,$limit=false,$order=array()) {
@@ -1351,7 +1391,7 @@ abstract class AcidModuleCore {
 		if (!empty($filter)) {
 			$my_limit = ($limit===false) ? '' : $limit;
 			$res = $this->dbList($filter,$order,$my_limit);
-			
+
 			$go_on = ($limit===false) ? (count($res) === 1) : (count($res) > 0);
 			if ($go_on) {
 				$this->initVars($res[0],true);
@@ -1376,7 +1416,7 @@ abstract class AcidModuleCore {
 
 		return ($res) ? $res['AUTO_INCREMENT'] : '';
 	}
-	
+
 	/**
 	* Formate l'url en fonction de l'AcidVar de la clé saisi en entrée
 	* @param string $key nom du paramètre
@@ -1384,7 +1424,7 @@ abstract class AcidModuleCore {
 	* @param string $format format à appliquer à l'url
 	*/
 	public static function genUrlKey($key,$url=null,$format=null) {
-		
+
 		$class = get_called_class();
 		$module = new $class();
 		if (isset($module->vars[$key])) {
@@ -1397,9 +1437,9 @@ abstract class AcidModuleCore {
 		}else{
 			trigger_error('genUrlKey : unable to find module\'s key : '. $key . ' in ' . $class,E_USER_ERROR);
 		}
-		
+
 	}
-	
+
 	/**
 	* Retourne l'url associé à l'AcidVar de la clé saisi en entrée
 	* @param string $key
@@ -1408,9 +1448,9 @@ abstract class AcidModuleCore {
 	public function getUrlKey($key,$format=null) {
 		return $this->genUrlKey($key,$this->get($key),$format);
 	}
-	
+
 	/**
-	* Regénère les images associées à l'AcidVar de la clé saisi en entrée 
+	* Regénère les images associées à l'AcidVar de la clé saisi en entrée
 	* @param string $key nom du paramètre
 	* @param array $format_filter liste des formats à traiter
 	* @return boolean
@@ -1418,28 +1458,28 @@ abstract class AcidModuleCore {
 	public static function regenImagesKey($key,$format_filter=null) {
 		$class = get_called_class();
 		$module = new $class();
-		
+
 		if (isset($module->vars[$key])) {
-			
+
 			$res = $module->dbList();
-			
+
 			Acid::log('maintenance','Regenerating all formats of '.$class.'::'.$key.'...');
-			
+
 			foreach ($res as $mod) {
 				$t_module = new $class();
 				$t_module->initVars($mod);
-				if ($t_module->get($key)) { 
+				if ($t_module->get($key)) {
 					$t_module->vars[$key]->regen($format_filter);
 				}
 				Acid::log('maintenance',$t_module->getId().' done.');
 			}
-			
+
 			return true;
 		}else{
 			trigger_error('genUrlKey : unable to find module\'s key : '. $key . ' in ' . $class,E_USER_ERROR);
 		}
 	}
-	
+
 	/**
 	* Regénère toutes les images associées au module
 	* @param array $keys liste des paramètres à traiter
@@ -1447,9 +1487,9 @@ abstract class AcidModuleCore {
 	*/
 	public static function regenAll($keys=null) {
 		$mod = static::build();
-		
+
 		$keys = ($keys===null)  ? array_keys($mod->getVarsImages()) : $keys;
-		
+
 		$done = array();
 		if (count($keys)) {
 			foreach ($keys as $key) {
@@ -1458,11 +1498,11 @@ abstract class AcidModuleCore {
 				}
 			}
 		}
-		
+
 		return $done;
 	}
-	
-	
+
+
 	/**
 	* Retourne la liste des clés du modules étant du type saisi en entrée
 	* @param array $types liste des types acceptés
@@ -1475,10 +1515,10 @@ abstract class AcidModuleCore {
 				$tab[$key]=$val;
 			}
 		}
-		
+
 		return $tab;
 	}
-	
+
 	/**
 	* Retourne la liste des clés "fichier" du modules
 	* @return Ambigous <multitype:unknown, multitype:unknown >
@@ -1486,7 +1526,7 @@ abstract class AcidModuleCore {
 	public function getVarsFiles() {
 		return $this->getVarsByType(array('AcidVarFile'));
 	}
-	
+
 	/**
 	* Retourne la liste des clés "images" du modules
 	* @return Ambigous <multitype:unknown, multitype:unknown >
@@ -1494,7 +1534,7 @@ abstract class AcidModuleCore {
 	public function getVarsImages() {
 		return $this->getVarsByType(array('AcidVarImage'));
 	}
-	
+
 	/**
 	* Retourne la liste des clés "nécéssitant un upload" du modules
 	* @return Ambigous <multitype:unknown, multitype:unknown >
@@ -1502,7 +1542,7 @@ abstract class AcidModuleCore {
 	public function getUploadVars() {
 		return $this->getVarsByType(array('AcidVarFile','AcidVarImage'));
 	}
-	
+
 	/**
 	* Préparation du module pour le processus POST
 	* @param array $vals les valeurs à traiter
@@ -1514,7 +1554,7 @@ abstract class AcidModuleCore {
 			$this->setConfig(null,$config);
 		}
 	}
-	
+
 	/**
 	* Traitement lors du succès d'un processus POST
 	* @param array $vals les valeurs à traiter
@@ -1524,21 +1564,21 @@ abstract class AcidModuleCore {
 	public function postSuccess($vals=array(),$do=null) {
 		return true;
 	}
-	
+
 	/**
 	* Traite la procédure d'ajout d'élément depuis un formulaire.
 	  *
 	* @param array $vals
-	* @param mixed $dialog 
-	* 
+	* @param mixed $dialog
+	*
 	* @return object | bool
 	*/
 	public function postAdd($vals,$dialog=null) {
 		$class = $this->getClass();
 		$obj = new $class();
 		$obj->postConfigure($vals,'add',$this->getConfig());
-		
-		
+
+
 		$obj->initVars($vals);
 		if ($obj->dbAdd()) {
 			$upload_success = true;
@@ -1552,21 +1592,21 @@ abstract class AcidModuleCore {
 					}
 				}
 			}
-			
+
 			$obj->dbUpdate($success);
-			
+
 			$dialog = $dialog===null ? $this->getDialogDo('add') : $dialog;
 			if ($dialog) {
 				AcidDialog::add('banner', $this->getDialogMessage('add',$dialog));
 			}
-			
+
 			//return (!$upload_success) ? false : $obj;
 			if ($obj->postSuccess($vals,'add')) {
 				return  $obj;
 			}else{
 				return false;
 			}
-			
+
 		} else {
 			return false;
 		}
@@ -1576,17 +1616,17 @@ abstract class AcidModuleCore {
 	* Traite la procédure de mise à jour d'un élément depuis un formulaire.
 	  *
 	* @param array $vals
-	* @param mixed $dialog 
-	* 
+	* @param mixed $dialog
+	*
 	* @return object | bool
 	*/
 	public function postUpdate($vals,$dialog=null) {
 		$class =  $this->getClass();
 		$obj = new $class($vals[static::tblId()]);
 		$obj->postConfigure($vals,'update',$this->getConfig());
-		
+
 		if ($obj->getId()) {
-			
+
 			$changes = $obj->initVars($vals);
 
 			foreach ($obj->getUploadVars() as $key=>$file) {
@@ -1594,20 +1634,20 @@ abstract class AcidModuleCore {
 					$changes[]=$key;
 				}
 			}
-			
+
 			$obj->dbUpdate($changes);
-			
+
 			$dialog = $dialog===null ? $this->getDialogDo('update') : $dialog;
 			if ($dialog) {
 				AcidDialog::add('banner', $this->getDialogMessage('update',$dialog));
 			}
-			
+
 			if ($obj->postSuccess($vals,'update')) {
 				return  $obj;
 			}else{
 				return false;
 			}
-			
+
 		}
 		return false;
 	}
@@ -1616,8 +1656,8 @@ abstract class AcidModuleCore {
 	* Traite la procédure de suppression d'un élément depuis un formulaire.
 	*
 	* @param mixed $id Identifiant de l'élément
-	* @param mixed $dialog 
-	* 
+	* @param mixed $dialog
+	*
 	* @return bool
 	*/
 	public function postRemove($id=null,$dialog=null) {
@@ -1625,22 +1665,22 @@ abstract class AcidModuleCore {
 		if ($this->dbCount(array(array(static::tblId(),'=',$id)))) {
 			$class = get_called_class();
 			$obj = new $class($id);
-			
+
 			$success = true;
 			foreach ($obj->getUploadVars() as $key => $val) {
 				if (!$val->fsRemove()) {
 		    		$success = false;
 		    	}
 			}
-			
+
 			if ($success) {
 				$obj->dbRemove();
-				
+
 				$dialog = $dialog===null ? $this->getDialogDo('remove') : $dialog;
 				if ($dialog) {
 					AcidDialog::add('banner', $this->getDialogMessage('remove',$dialog));
 				}
-				
+
 				if ($obj->postSuccess(array(static::tblId()=>$id),'remove')) {
 					return  $obj;
 				}else{
@@ -1650,12 +1690,12 @@ abstract class AcidModuleCore {
 		}
 		return false;
 	}
-	
+
 	/**
 	* Retourne le niveau d'accès à l'action en entrée
 	*
 	* @param string $do
-	* 
+	*
 	* @return int
 	*/
 	public function getUserAccess($do=null) {
@@ -1664,7 +1704,7 @@ abstract class AcidModuleCore {
 		}elseif (User::curLevel($this->getACL($do))) {
 			return true;
 		}else{
-			$acl_key_comp = $this->getACLKeys($do);	
+			$acl_key_comp = $this->getACLKeys($do);
 			if ($acl_key_comp) {
 				foreach ($acl_key_comp as $key => $min_level) {
 					if (User::curLevel($min_level)) {
@@ -1675,42 +1715,42 @@ abstract class AcidModuleCore {
 		}
 		return false;
 	}
-	
+
 	/**
 	* Retourne le niveau d'accès à l'action en entrée
 	*
 	* @param string $do
-	* 
+	*
 	* @return int
 	*/
 	public function getACL($do=null) {
-		
+
 		$acl_def = isset($this->config['acl']['default']) ? $this->config['acl']['default'] : Acid::get('lvl_def');
 		if ($do==null) {
 			return $acl_def;
 		}
-		
+
 		$acl_comp = isset($this->config['acl'][$do]) ? $this->config['acl'][$do] : $acl_def;
-		
+
 		return $acl_comp;
 	}
-	
+
 	/**
 	* Retourne le tableau associatif clé=>niveau correspondant à l'action en entrée
 	*
 	* @param string $do
-	* 
+	*
 	* @return int
 	*/
 	public function getACLKeys($do=null) {
 		$acl_key_def = isset($this->config['acl']['keys']) ? $this->config['acl']['keys'] : false;
-		
+
 		if ($do==null) {
 			return $acl_key_def;
 		}
-		
+
 		$acl_key_comp = isset($this->config['acl'][$do]['keys']) ? $this->config['acl'][$do]['keys'] : $acl_key_def;
-		
+
 		if ($acl_key_comp) {
 			if ($upkeys = $this->getUploadVars())  {
 				foreach (array_keys($upkeys) as $uk) {
@@ -1721,28 +1761,28 @@ abstract class AcidModuleCore {
 				}
 			}
 		}
-		
+
 		return $acl_key_comp;
 	}
-	
+
 	/**
 	* Définit les droits d'accés de l'utilisateur sur les éléments renseignés en entrée
 	* Retourne un tableau avec uniquement les éléments dont l'accés est autorisé, ou false si l'utilisateur n'a aucun droit.
 	*
 	* @param string $do
 	* @param array $vals
-	* 
+	*
 	* @return array|bool
 	*/
 	public function postACL($do,$vals) {
 			$acl_comp = $this->getACL($do);
 			$acl_key_comp = $this->getACLKeys($do);
-			
+
 			$level = User::curLevel();
-		
+
 			$permission = $this->getUserPermission($do);
-			
-					
+
+
 				// Global mod authorization
 				if (($permission) || ($level >= $acl_comp)) {
 					Acid::log('debug',	get_called_class().'::exePost() ' . $do . ' globaly authorized');
@@ -1761,18 +1801,18 @@ abstract class AcidModuleCore {
 
 					return $tab;
 				}
-					
+
 		Acid::log('debug',	get_called_class().'::exePost() ' . $do . ' permission denied');
 		return false;
 	}
-	
+
 	/**
 	* Définit une permission pour le module
 	*
 	* @param string $do l'action associée; default : tous
-	* @param int $id identifiant 
+	* @param int $id identifiant
 	* @param string $type type de permission (id_group, id_user, level)
-	* 
+	*
 	* @return string
 	*/
 	public function setPermission($do,$id,$type='id_user') {
@@ -1780,21 +1820,21 @@ abstract class AcidModuleCore {
 		//$GLOBALS['acid']['permission'][$this::TBL_NAME][$do][$type][]=$id;
 		Acid::add('permission:'.$this::TBL_NAME.':'.$do.':'.$type,$id);
 	}
-	
+
 	/**
 	* Recupère les permissions du module
 	*
 	* @param string $do l'action associée; default : tous
 	* @param string $type type de permission (id_group, id_user, level)
-	* 
+	*
 	* @return string
 	*/
 	public function getPermissions($do=null,$type=null) {
-		
+
 		if (Acid::get('permission_active')) {
-					
+
 			if (Acid::exist('permission:'.static::TBL_NAME)) {
-				
+
 				if ($do) {
 					if (Acid::exist('permission:'.static::TBL_NAME.':'.$do)) {
 						if ($type) {
@@ -1808,65 +1848,65 @@ abstract class AcidModuleCore {
 				}else{
 					return Acid::get('permission:'.static::TBL_NAME);
 				}
-			
+
 			}
-			
+
 		}
-		
+
 		return array();
 	}
-	
+
 	/**
 	* Permet de récupérer un $do de ce module qui aurait été transmis en $_POST.
 	* Ex : Pour le module Actu, vérifie la présence de "actu_do"
-	* 
+	*
 	* @return La valeur du $do en question s'il existe, FALSE sinon.
 	*/
 	public static function getPostDo() {
-		return static::getValsDo($_POST); 
+		return static::getValsDo($_POST);
 	}
-	
+
 	/**
 	* Permet de récupérer un $do de ce module qui aurait été transmis en $_GET.
 	* Ex : Pour le module Actu, vérifie la présence de "actu_do"
-	* 
+	*
 	* @return La valeur du $do en question s'il existe, FALSE sinon.
 	*/
 	public static function getGetDo() {
-		return static::getValsDo($_GET); 
+		return static::getValsDo($_GET);
 	}
-	
+
 	/**
 	* Permet de récupérer un $do de ce module qui aurait été transmis en $vals.
 	* Ex : Pour le module Actu, vérifie la présence de "actu_do"
 	* @param array $vals tableau à inspecter
-	* 
+	*
 	* @return La valeur du $do en question s'il existe, FALSE sinon.
 	*/
 	public static function getValsDo($vals) {
 		return ( isset($vals[static::preKey('do')]) ? $vals[static::preKey('do')] : false );
 	}
-	
+
  	/**
 	* Recupère les permissions de l'utilisateur sur le module
 	*
 	* @param string $do l'action associée; default : tous
 	* @param string $type type de permission (id_group, id_user, level)
 	* @param int $id_user identifiant utilisateur
-	* 
+	*
 	* @return string
 	*/
 	public function getUserPermission($do=null,$type=null,$id_user=null) {
 		$user = ($id_user === null) ? User::curUser() : new User($id_user);
 		$types = $type ? array($type) : Acid::get('permission_groups');
-			
-		
+
+
 		$def_do = Acid::exist('permission:'.static::TBL_NAME) ? Acid::get('permission:'.static::TBL_NAME) : array();
 		$to_do = $do ? array($do) : array_keys($def_do);
-		
+
 		foreach ($to_do as $d) {
 			foreach ($types as $t) {
-	
+
 				switch ($t) {
 					case 'id_group' :
 						$permission = $this->getPermissions($d,$t);
@@ -1878,7 +1918,7 @@ abstract class AcidModuleCore {
 							}
 						}
 					break;
-					
+
 					default:
 						if (in_array($user->get($t),$this->getPermissions($d,$t))) {
 							Acid::log('permission',	get_called_class().'::getUserPermission() ' . $d . '=> ' . $t .' permission');
@@ -1891,16 +1931,16 @@ abstract class AcidModuleCore {
 				}
 			}
 		}
-		
+
 		Acid::log('permission',	get_called_class().'::getUserPermission() ' . $do . ' permission denied');
 		return false;
 	}
-	
+
 	/**
 	* Définit le nom des clés contrôlées
 	*
 	* @param string $key
-	* 
+	*
 	* @return string
 	*/
 	public function checkLabel($key) {
@@ -1909,12 +1949,12 @@ abstract class AcidModuleCore {
 		}
 		return  '';
 	}
-	
+
 	/**
 	* Retourne un tableau contenant les clés à contrôler
 	*
 	* @param string $do
-	* 
+	*
 	* @return array()
 	*/
 	protected function getControlledKeys($do) {
@@ -1923,29 +1963,29 @@ abstract class AcidModuleCore {
 				return  array();
 			break;
 		}
-	
+
 	}
-	
+
 	/**
 	* Retourne un tableau contenant les clés à contrôler
 	*
 	* @param string $tab tableau à controller
 	* @param string $do action effectuée
-	* 
+	*
 	* @return array()
 	*/
 	protected function checkVals($tab,$do) {
-		
+
 		//récupération des clés controllées
 		$controlled_keys[$do] =  $this->getControlledKeys($do);
-		
+
 		//creation des sessions
 		$session_time[$do]  = 100;
 		AcidSession::tmpSet(static::preKey($do),$tab,$session_time[$do]);
-			
+
 		//initialisation
 		$missing = array();
-		
+
 		$missing_error = '';
 		$text_error = '';
 		foreach ($controlled_keys[$do] as $key) {
@@ -1955,10 +1995,10 @@ abstract class AcidModuleCore {
 						$missing[] = $key;
 						$missing_error .= $this->checkLabel($key) . '<br />';
 					}
-				break; 
+				break;
 			}
 		}
-		
+
 		//s'il n'y a pas d'erreurs
 		if (!$missing) {
 			AcidSession::tmpKill(static::preKey($do));
@@ -1966,20 +2006,20 @@ abstract class AcidModuleCore {
 		}
 		//en cas d'erreurs
 		else{
-			$error = ($missing_error? Acid::trad('checkvals_error_plur').'<br />' . $missing_error : '') . 
+			$error = ($missing_error? Acid::trad('checkvals_error_plur').'<br />' . $missing_error : '') .
 					 '<br />' . $text_error;
 			AcidDialog::add('banner',$error);
 			return false;
 		}
 	}
-	
+
 	/**
 	* Controlleur d'execution d'un formulaire.
 	*
 	* @return {object, bool}
 	*/
 	public function exePost() {
-		
+
 		if (static::getPostDo()) {
 
 			Acid::log('debug',get_called_class().'::exePost() ' . static::getPostDo());
@@ -2020,14 +2060,14 @@ abstract class AcidModuleCore {
 			}
 
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	* Execution d'un formulaire.
 	*
-	* 
+	*
 	* @return {object, bool}
 	*/
 	public function exePostProcess() {
@@ -2035,14 +2075,14 @@ abstract class AcidModuleCore {
 		$this->treatAjax($res);
 		return $res;
 	}
-	
+
 	/**
 	* Gestion Ajax d'un formulaire.
 	*
 	* @param mixed $res
 	* @param array $vals
 	* @param array $config
-	* 
+	*
 	* @return {object, bool}
 	*/
 	public function treatAjax($res,$vals=null,$config=array()) {
@@ -2050,13 +2090,13 @@ abstract class AcidModuleCore {
 		$custom_js  = (Acid::get('ajax:tmp_js') ? Acid::get('ajax:tmp_js') : '');
 
 		if (!empty($vals[Acid::get('post:ajax:key')])) {
-			
+
 			//dialog
 			AcidDialog::initDialog();
 			$sess = AcidSession::getInstance();
 			$dialog = $sess->data['dialog'];
-				
-			
+
+
 			//config
 			$config['dialog'] = $dialog;
 			$config['obj'] = $res ? $res->getVals() : array();
@@ -2064,17 +2104,17 @@ abstract class AcidModuleCore {
 			$config['success'] = !empty($res);
 			$config['content'] = isset($config['content']) ? $config['content'] : '';
 			$config['js'] = isset($config['js']) ? $config['js'] : $custom_js;
-			
+
 			echo json_encode($config);
 			exit();
-			
+
 		}
 	}
 
 	/**
 	* Définit une session relative à la table SQL associée à l'objet
 	* Si $id est renseigné, définit une session propre à l'identifiant correspondant
-	* 
+	*
 	* @param mixed $id
 	*/
 	public function sessionMake($id=null) {
@@ -2088,9 +2128,9 @@ abstract class AcidModuleCore {
 
 	/**
 	* Retourne la valeur de configuration de l'objet qui renseignée en entrée lorsque celle-ci existe, renvoie null sinon.
-	* 
+	*
 	* @param string $key Nom de la configuration.
-	* 
+	*
 	* @return mixed
 	*/
 	public function getConfig($key=null) {
@@ -2101,20 +2141,20 @@ abstract class AcidModuleCore {
 			return $this->config;
 		}
 	}
-	
+
 	/**
-	* Attribut une valeur de configuration de l'objet 
-	* 
+	* Attribut une valeur de configuration de l'objet
+	*
 	* @param string $key Nom/Chemin de la configuration.
 	* @param mixed $value Valeur de la configuration.
-	* 
+	*
 	* @return mixed
 	*/
 	public function setConfig($key,$value) {
 		if ($key!==null) {
 			$ident = $this->preKey('tmp').time();
 			$GLOBALS[$ident] = $this->config;
-			
+
 			Acid::set($key,$value,$ident);
 			$this->config = $GLOBALS[$ident];
 			unset($GLOBALS[$ident]);
@@ -2122,7 +2162,7 @@ abstract class AcidModuleCore {
 			$this->config = $value;
 		}
 	}
-	
+
 	/**
 	* Attribut la même configuration de l'objet à l'objet en entrée
 	*
@@ -2132,48 +2172,48 @@ abstract class AcidModuleCore {
 	public function cloneConfig(&$obj) {
 		$obj->setConfig($this->getConfig());
 	}
-	
+
 	/**
-	* Modifie une valeur de configuration de l'objet 
-	* 
+	* Modifie une valeur de configuration de l'objet
+	*
 	* @param string $key Nom/Chemin de la configuration.
 	* @param mixed $value Valeur de la configuration.
-	* 
+	*
 	* @return mixed
 	*/
 	public function addToConfig($key,$value) {
 		$ident = $this->preKey('tmp').time();
 		$GLOBALS[$ident] = $this->config;
-		
+
 		Acid::add($key,$value,$ident);
 		$this->config = $GLOBALS[$ident];
 		unset($GLOBALS[$ident]);
 	}
-	
+
 	/**
 	* Regarde si une configuration existe
-	* 
+	*
 	* @param string $key Nom/Chemin de la configuration.
 	* @param boolean $check_if_empty
-	* 
+	*
 	* @return mixed
 	*/
 	public function hasConfig($key,$check_if_empty=false) {
 		$ident = $this->preKey('tmp').time();
 		$GLOBALS[$ident] = $this->config;
-		if ($check_if_empty) {	
+		if ($check_if_empty) {
 			$res = Acid::isEmpty($key,$ident);
 		}else{
 			$res = Acid::exist($key,$ident);
 		}
 		unset($GLOBALS[$ident]);
-		
+
 		return $res;
 	}
 
 	/**
 	* Instancit un formulaire ( post ) AcidForm propre à l'objet.
-	* 
+	*
 	* @param string $prefix Prefixe pour le nom des éléments.
 	* @param bool $print_vals
 	*
@@ -2192,7 +2232,7 @@ abstract class AcidModuleCore {
 	* Stocke l'élément renseigné en entrée puis la retire de la variable PHP $_GET.
 	*
 	* @param string $name
-	* 
+	*
 	* @return bool
 	*/
 	protected function removeGet ($name) {
@@ -2213,7 +2253,7 @@ abstract class AcidModuleCore {
 	public function adminNav () {
 		if (!isset($this->admin_nav)) {
 			$this->admin_nav = array();
-	
+
 			$keys = array(	'do',	// Action
 							'id',	// ID Elt
 							'lo',	// List Order
@@ -2224,7 +2264,7 @@ abstract class AcidModuleCore {
 			foreach($keys as $key) {
 				$this->removeGet($key);
 			}
-	
+
 			foreach ($this->vars as $key=>$var) {
 				$this->removeGet('fm_'.$key);	// Filter method
 				$this->removeGet('fv_'.$key);	// Filter val
@@ -2271,45 +2311,45 @@ abstract class AcidModuleCore {
 	/**
 	* Retourne le titre de l'administration
 	*
-	* @param array $do 
-	* 
+	* @param array $do
+	*
 	* @return array
 	*/
 	public function getAdminTitle($do='default') {
-		$def = isset($this->config['admin']['title']['default']) ? 
+		$def = isset($this->config['admin']['title']['default']) ?
 					$this->config['admin']['title']['default'] : Acid::get('admin_title');
 		return isset($this->config['admin']['title'][$do]) ? $this->config['admin']['title'][$do] : $def;
 	}
-	
+
 	/**
 	* Retourne les attributs du titre de l'administration
 	*
-	* @param array $do 
-	* 
+	* @param array $do
+	*
 	* @return array
 	*/
 	public function getAdminTitleAttr($do='default') {
-		$def = isset($this->config['admin']['title_attr']['default']) ? 
+		$def = isset($this->config['admin']['title_attr']['default']) ?
 					$this->config['admin']['title_attr']['default'] : Acid::get('admin_title_attr');
 		return isset($this->config['admin']['title_attr'][$do]) ? $this->config['admin']['title_attr'][$do] : $def;
 	}
-	
+
 	/**
 	* Retourne une portion HTML correspondant aux boutons de modération de l'administration d'AcidFarm
 	*
 	* @param string $link Url du bouton.
 	* @param string $image Url de l'icone.
 	* @param string $title Titre / Alt de l'image.
-	* @param string $click Evènment Onclick. 
+	* @param string $click Evènment Onclick.
 	* @param string $tpl Chemin vers le fichier tpl.
-	* 
+	*
 	* @return string
 	*/
 	public function getIconLink($link=null,$image=null,$title='bouton',$click=null,$tpl=null) {
 		$tpl = $tpl ? $tpl : 'admin/admin-icone-link.tpl';
 		return Acid::tpl($tpl,array('link'=>$link,'image'=>$image,'title'=>$title,'click'=>$click),$this);
 	}
-	
+
 	/**
 	* Retourne un tableau représentant un onglet
 	*
@@ -2318,37 +2358,37 @@ abstract class AcidModuleCore {
 	* @param array $excluder Clés exclues de l'url
 	* @param string $key Clés associée à l'onglet
 	* @param string $src Url source
-	* 
+	*
 	* @return array
 	*/
 	public function buildAdminOnglets($name, $builder=array(),$excluder=array(),$key=null,$src=null) {
 		$url = AcidUrl::build($builder,$excluder,$src);
 		$sel = $builder;
-		
+
 		if ((empty($builder)) && in_array(static::preKey('do'),$excluder)) {
 			$sel = array(static::preKey('do')=>$this->getDefaultDo());
 		}
-		
+
 		$onglet =  array('url'=>$url,'name'=>$name,'selector'=>$sel);
-		
+
 		if ($key) {
 			$onglet['key'] = $key;
 		}
-		
+
 		return $onglet;
 	}
-	
+
 	/**
 	* Retourne un tableau d'onglets "standard" de l'administration d'AcidFarm
 	*
 	* @param array $config Tableau de filtrage / rangement des onglets
-	* 
+	*
 	* @return array
 	*/
 	public function getStandardOnglets($config=array('list','add','search')) {
-			
+
 			$tab=array();
-			
+
 			foreach ($config as $key) {
 				switch ($key) {
 					case 'list' :
@@ -2363,45 +2403,45 @@ abstract class AcidModuleCore {
 					break;
 				}
 			}
-			
+
 			return $tab;
 	}
-		
+
 	/**
-	* Retourne un tableau d'onglets personnalisés 
+	* Retourne un tableau d'onglets personnalisés
 	*
-	* @param array $do 
-	* 
+	* @param array $do
+	*
 	* @return array
 	*/
 	public function getOnglets($do='default') {
 		if ( isset($this->config['onglets'][$do]) ) {
 			return $this->config['onglets'][$do];
 		}elseif ( isset($this->config['onglets']['default']) ) {
-			return $this->config['onglets']['default'];	
+			return $this->config['onglets']['default'];
 		}else{
 			return $this->getStandardOnglets();
 		}
 	}
-	
+
 	/**
-	* Retourne le controller par défaut 
-	* 
+	* Retourne le controller par défaut
+	*
 	* @return array
 	*/
 	public function getDefaultDo() {
 		return isset($this->config['default_do']) ? $this->config['default_do'] : 'list';
 	}
-	
+
 	/**
 	* Retourne si la colonne d'action estactivée ou non dans l'AdminList
-	* 
+	*
 	* @return boolean
 	*/
 	public function getDisableAction() {
 		return isset($this->config['admin']['list']['disable_actions']) ? $this->config['admin']['list']['disable_actions'] : false;
 	}
-	
+
 	/**
 	* Retourne le controller dialog par défaut
 	*
@@ -2412,7 +2452,7 @@ abstract class AcidModuleCore {
 	public function getDialogDo($do) {
 		return isset($this->config['admin'][$do]['dialog']) ? $this->config['admin'][$do]['dialog'] : true;
 	}
-	
+
 	/**
 	* Retourne le texte dialog par défaut
 	*
@@ -2422,80 +2462,80 @@ abstract class AcidModuleCore {
 	* @return array
 	*/
 	public function getDialogMessage($do,$dialog=null) {
-		
+
 		if ($dialog===null) {
 			$dialog =  $this->getDialogDo($do);
 		}
-		
+
 		if ($dialog === true) {
 			switch($do) {
 				case 'add' :
 					return Acid::trad('admin_add_succeed');
 				break;
-				
+
 				case 'remove' :
 					return Acid::trad('admin_delete_succeed');;
 				break;
-					
+
 				case 'update' :
 				default :
 					return 	Acid::trad('admin_update_succeed');
 				break;
 			}
 		}
-		
+
 		return $dialog;
 	}
-	
+
 	/**
 	* Retourne un tableau de configuration "standard" du bouton d'affichage
 	*
 	* @param mixed $elt Tableau representatif de l'élement
-	* 
+	*
 	* @return array
 	*/
 	public function getStandardActionPrint($elt) {
 		$ident = isset($elt[static::tblId()]) ? $elt[static::tblId()] : $elt[self::dbPref(static::tblId())];
-		
-		return  array(	
+
+		return  array(
 					'link'=>AcidUrl::build(array(static::preKey('do')=>'print',static::preKey('id')=>$ident)),
 					'image'=>Acid::get('url:img').'admin/btn_afficher.png',
 					'title'=>Acid::trad('admin_action_print'),
 					'click'=>null
 				);
 	}
-	
+
 	/**
 	* Retourne un tableau de configuration "standard" du bouton de mise à jour
 	*
 	* @param mixed $elt Tableau representatif de l'élement
-	* 
+	*
 	* @return array
 	*/
 	public function getStandardActionUpdate($elt) {
 		$ident = isset($elt[static::tblId()]) ? $elt[static::tblId()] : $elt[self::dbPref(static::tblId())];
-		
-		return  array(	
+
+		return  array(
 				'link'=>AcidUrl::build(array(static::preKey('do')=>'update',static::preKey('id')=>$ident)),
 				'image'=>Acid::get('url:img').'admin/btn_modifier.png',
 				'title'=>Acid::trad('admin_action_update'),
 				'click'=>null
 				);
-	}	
-	
+	}
+
 	/**
 	* Retourne un tableau de configuration "standard" du bouton de suppression
 	*
 	* @param mixed $elt Tableau representatif de l'élement
-	* 
+	*
 	* @return array
 	*/
 	public function getStandardActionDelete($elt) {
 		$ident = isset($elt[static::tblId()]) ? $elt[static::tblId()] : $elt[self::dbPref(static::tblId())];
-		
+
 		$del_form = Acid::tpl('admin/admin-form-delete.tpl',array('id'=>$ident,'next'=>AcidUrl::build($this->getAdminCurNav())),$this);
-					
-		return array(	
+
+		return array(
 				'link'=>'#',
 				'image'=>Acid::get('url:img').'admin/btn_supprimer.png',
 				'title'=>Acid::trad('admin_action_remove'),
@@ -2503,20 +2543,20 @@ abstract class AcidModuleCore {
 				'script'=>$del_form
 				);
 	}
-	
+
 	/**
 	* Retourne le resultat de la fonction conditionnelle d'affichage du bouton, si inexistante, retourne true
 	*
 	* @param string $do L'action associée
 	* @param array $elt L'élement à contrôler
-	* 
+	*
 	* @return bool
 	*/
 	public function checkActionTabCondition($do,$elt) {
-		
+
 		if (isset($this->config['admin']['list']['actions_func'][$do])) {
 			$func = $this->config['admin']['list']['actions_func'][$do];
-			
+
 			if (isset($func['name']) && isset($func['args'])) {
 
 				foreach ($func['args'] as $k=>$v) {
@@ -2524,48 +2564,48 @@ abstract class AcidModuleCore {
 						$func['args'][$k] = $elt;
 					}
 				}
-				
+
 				return call_user_func_array($func['name'],$func['args']);
-				
+
 			}
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	* Retourne un tableau de configuration "standard" des boutons de modérations de l'administration AcidFarm
 	*
 	* @param mixed $elt L'élement à contrôler
 	* @param array $config Tableau de filtrage / rangement des boutons de modérations
-	* 
+	*
 	* @return string
 	*/
 	public function getStandardActionTab($elt,$config=array('print','update','delete')) {
 		$ident = isset($elt[static::tblId()]) ? $elt[static::tblId()] : $elt[self::dbPref(static::tblId())];
-		
+
 		$tab_btn = array();
 		$tab_script = array();
 		foreach ($config as $key) {
-			
+
 			$custom_key = ( is_array($key) ? (isset($key['key']) ? $key['key'] : 'custom')  : $key );
 			if ($this->checkActionTabCondition($custom_key,$elt)) {
 				switch ($key) {
 					case 'print' :
 						$tab_btn[] = $this->getStandardActionPrint($elt);
 					break;
-					
+
 					case 'update' :
 						$tab_btn[] = $this->getStandardActionUpdate($elt);
 					break;
-					
+
 					case 'delete' :
 						$tab_btn[] = $this->getStandardActionDelete($elt);
 					break;
-					
+
 					default :
 						if ( is_array($key) ) {
-							$tab = $key; 
+							$tab = $key;
 							//$tab['link'] = str_replace('__ID__',$ident,$tab['link']);
 							foreach ($tab as $k => $v) {
 								$tab[$k] = str_replace('__ID__',$ident,$v);
@@ -2579,13 +2619,13 @@ abstract class AcidModuleCore {
 				}
 			}
 		}
-		
+
 		return array($tab_btn,$tab_script);
 	}
 
 	/**
 	* Retourne une portion HTML representant des boutons de modérations
-	* 
+	*
 	* @param array $links
 	* @param array $forms
 	* @param array $elt
@@ -2595,20 +2635,20 @@ abstract class AcidModuleCore {
 	public function printAdminActionTab($links=array(),$forms = array(), $elt=array() , $conf=array()) {
 		$tpl_icone = isset($conf['tpl']['icone']) ? $conf['tpl']['icone'] : null;
 		$tpl = isset($conf['tpl']['action']) ? $conf['tpl']['action'] : 'admin/admin-action-tab.tpl';
-		
+
 		$actions =	'' ;
-		
+
 		foreach ($links as $l) {
 				$script = isset($l['script']) ? $l['script'] : '';
 				$actions .= $this->getIconLink($l['link'],$l['image'],$l['title'],$l['click'],$tpl_icone). $script . "\n";
 		}
-		
+
 		foreach ($forms as $f) {
 				$actions .= $f. "\n";
 		}
-		
-		
-		return Acid::tpl($tpl,array('actions'=>$actions),$this); 
+
+
+		return Acid::tpl($tpl,array('actions'=>$actions),$this);
 	}
 
 	/**
@@ -2622,10 +2662,10 @@ abstract class AcidModuleCore {
 		$tpl = isset($conf['tpl']['th']) ? $conf['tpl']['th'] : 'core/tab/admin-th.tpl';
 		return Acid::tpl($tpl,array('cont'=>$cont,'attr'=>$attr),$this);
 	}
-	
+
 	/**
 	* Retourne une portion HTML representant un Td du tableau de l'administration AcidFarm
-	* 
+	*
 	* @param string $cont
 	* @param array $attr
 	* @param array $conf
@@ -2635,7 +2675,7 @@ abstract class AcidModuleCore {
 		$tpl = isset($conf['tpl']['td']) ? $conf['tpl']['td'] : 'core/tab/admin-td.tpl';
 		return Acid::tpl($tpl,array('cont'=>$cont,'attr'=>$attr),$this);
 	}
-	
+
 	/**
 	* Retourne une portion HTML representant un Tr du tableau de l'administration AcidFarm
 	* @param int $line
@@ -2651,37 +2691,37 @@ abstract class AcidModuleCore {
 		$tpl = isset($conf['tpl']['tr']) ? $conf['tpl']['tr'] : 'core/tab/admin-tr.tpl';
 		return Acid::tpl($tpl,array('line'=>$line,'attr'=>$attr),$this);
 	}
-	
+
 	/**
 	* Renvoie un tableau associatif des données en basse poru ce module avec pour couple clé => valeur, le nom de champs du module
 	* passé en argument. Si les deux champs sont vides, cette méthode ira voir la présence de
 	* config['assoc:index'] && config['assoc:value'] qui devront être renseigné dans le module correspondant.
-	* 
+	*
 	* @param string $key_val Le nom du champ du module qui doit servir de valeur pour le tableau associatif (ex: title)
 	* @param string $key_index Le nom du champ du module qui doit servir de clé pour le tableau associatif (ex: id_module)
-	* @param string $hsc_if_value 
-	* 
+	* @param string $hsc_if_value
+	*
 	* @return array Le tableau associatif
 	*/
 	public static function getAssoc($key_val=null,$key_index=null, $hsc_if_value=true) {
 		$elts = static::dbList();
 		$mod = static::build();
-		
+
 		$def_key_index = $mod->getConfig('assoc:index') ? $mod->getConfig('assoc:index') : static::tblId();
 		$key_index = $key_index!==null ? $key_index : $def_key_index;
-		
+
 		$key_val = $key_val!==null ? $key_val : $mod->getConfig('assoc:value');
 		if(!$key_val) throw new Exception(get_called_class() . "::getAssoc() - config['assoc:value'] == null, association impossible.");
-		
-		
+
+
 		$assoc = static::sortByKey($elts,$key_index,$key_val,true,$hsc_if_value);
-		
+
 		return $assoc;
 	}
 
 	/**
 	* Tri un tableau associatif des données avec pour clé la valeur en entrée
-	* 
+	*
 	* @param array $tab tableau
 	* @param string $key_index Le nom du champ du module qui doit servir de clé pour le tableau associatif (ex: id_module)
 	* @param string $key_value Le nom du champ du module qui doit servir de valeur pour le tableau associatif (ex: title)
@@ -2693,14 +2733,14 @@ abstract class AcidModuleCore {
 		if ($key_index===null) {
 			$key_index = static::tblId();
 		}
-		
+
 		$assoc = array();
-		
+
 		if ($tab) {
 			foreach($tab as $elt) {
-				
+
 				$value= ($key_value===null) ? $elt : ($hsc_if_value ? htmlspecialchars($elt[$key_value]) : $elt[$key_value]);
-				
+
 				if ($force_unique) {
 					$assoc[$elt[$key_index]] =  $value;
 				}else{
@@ -2711,30 +2751,30 @@ abstract class AcidModuleCore {
 				}
 			}
 		}
-		
+
 		return $assoc;
 	}
-	
+
 	/**
 	* Retourne une portion HTML representant un tableau de l'administration AcidFarm
-	* 
+	*
 	* @param array $cols les entêtes
 	* @param array $rows les lignes
 	* @param array $conf configuration
 	* @return string
 	*/
 	public function printAdminTab($cols = array(),$rows=null,$conf=array()) {
-		
+
 		$my_rows = array();
 		foreach ($rows as $l_tab) {
 			if (is_array($l_tab)) {
-				
+
 				//on remplit les colonnes
 				$line='';
 				foreach ($l_tab as $k => $td) {
-					$line .= $this->getAdminTd($td,array('class'=>str_replace('.','_','col_'.$k)),$conf) . "\n" ; 
+					$line .= $this->getAdminTd($td,array('class'=>str_replace('.','_','col_'.$k)),$conf) . "\n" ;
 				}
-				
+
 				//on prépare la ligne
 				$my_rows[] = $line;
 			}
@@ -2743,18 +2783,18 @@ abstract class AcidModuleCore {
 		$tpl = isset($conf['tpl']['tab']) ? $conf['tpl']['tab'] : 'core/tab/admin-tab.tpl';
 		return Acid::tpl($tpl,array('cols'=>$cols,'rows'=>$my_rows,'config'=>$conf),$this);
 	}
-	
+
 	/**
 	* Retourne true si l'onglet designé par $check correspond à l'url en cours
 	*
 	* @param array $check Composantes de l'onglet
-	* 
+	*
 	* @return string
 	*/
 	public function isSelectedOnglet($check) {
 	 	if (is_array($check)) {
 	 		$gets = array();
-	 		
+
 	 		$url_parsed = parse_url($_SERVER['REQUEST_URI'],PHP_URL_QUERY);
 	 		if ($url_parsed) {
 	 			$parsed =  explode('&',$url_parsed);
@@ -2765,30 +2805,30 @@ abstract class AcidModuleCore {
 	 				}
 	 			}
 	 		}
-	 		
+
 	 		if (isset($check[static::preKey('do')]) && empty($gets[static::preKey('do')])) {
 	 			$gets[static::preKey('do')] = $this->getDefaultDo();
 	 		}
-  			
+
  			$selected = true;
  			foreach ($check as $k => $v) {
  				$get = isset($gets[$k]) ? $gets[$k] : null;
  				$selected = $selected && ($get==$v);
  			}
- 			
+
  			return $selected;
-	 		
+
 	 	}else{
 	 		return ($_SERVER['REQUEST_URI'] === html_entity_decode($check));
 	 	}
-	} 
-	 
+	}
+
 	/**
 	* Retourne une portion HTML representant les onglets de l'administration AcidFarm
 	*
 	* @param array $onglets Les onglets
 	* @param array $config Tableau de configuration pour les onglets
-	* 
+	*
 	* @return string
 	*/
 	 public function printAdminOnglets($onglets=array(), $config=array()) {
@@ -2815,7 +2855,7 @@ abstract class AcidModuleCore {
 
 		return Acid::tpl($tpl,$vars,$this);
 	 }
-	
+
 	/**
 	* Retourne une portion HTML representant le corps de l'administration AcidFarm
 	*
@@ -2823,104 +2863,104 @@ abstract class AcidModuleCore {
 	* @param array $onglets La configuration des onglets
 	* @param string $title Le titre
 	* @param array $title_attr La configuration du titre
-	* 
+	*
 	* @return string
 	*/
 	 public function printAdminBody($content,$onglets=array(),$title=null,$title_attr=null) {
-		
+
 		$this->adminNav();
-		
+
 		$do = isset($this->admin_nav['do']) ? $this->admin_nav['do'] : $this->getDefaultDo();
 		$title = $title!==null ? $title : $this->getAdminTitle($do);
 		$title_attr = $title_attr!==null ? $title_attr : $this->getAdminTitleAttr($do);
-		$title_attr = $title_attr ? AcidForm::getParams($title_attr) : ''; 
-		
+		$title_attr = $title_attr ? AcidForm::getParams($title_attr) : '';
+
 		$selected = ' class="selected"';
-		
+
 		$menu = $this->printAdminOnglets($onglets);
 
 		return Acid::tpl('admin/admin-body.tpl',array('menu'=>$menu,'title'=>$title,'title_attr'=>$title_attr,'content'=>$content));
 
 	}
-	
+
 	/**
 	* Exécute les méthodes standards d'administration en fonction du paramètre d'entrée $do
 	*
 	* @param string $do L'identifiant de la methode à effectuer
 	* @param array $config Configuration
-	* 
+	*
 	* @return string
 	*/
 	public function exeAdminController($do,$config=array()) {
 		$class = get_called_class();
 		$keys = array('add','search','update','print','list');
 		$do = in_array($do,$keys) ? $do : $this->getDefaultDo();
-		
+
 		$content = '';
 		switch($do) {
-			
+
 			case 'add' :
 				$content .= $this->printAdminAdd();
 				break;
-					
+
 			case 'search' :
 				$content .= $this->printAdminSearch();
 				break;
-					
+
 			case 'update' :
 				if (isset($this->admin_nav['id'])) {
  					$obj = new $class($this->admin_nav['id']);
 					$content .= $obj->printAdminUpdate();
 				}
 				break;
-					
+
 			case 'print' :
 				if (isset($this->admin_nav['id'])) {
 					$obj = new $class($this->admin_nav['id']);
 					$content .= $obj->printAdminElt();
 				}
 				break;
-					
+
 			default :
 				$config_list = isset($config['list']) ? $config['list'] : array();
 				$content .= $this->printAdminList($config_list);
 			break;
-		}	
-					
+		}
+
 		return $content;
-		
+
 	}
-	
+
 	/**
 	* Ajoute un onglet à l'administration
 	* @param string $do alias de l'onglet
 	*/
 	public function addAdminOnglets($do) {
 		if (empty($this->config['no_more_onglets'])) {
-						
+
 			switch ($do) {
 				case 'update' :
 					$this->config['onglets'][$do] = $this->getOnglets($do);
 					$name = Acid::trad('admin_action_update');
 					$this->config['onglets'][$do][] = $this->buildAdminOnglets($name,array($this->preKey('do')=>$do));
 				break;
-				
+
 				case 'print' :
 					$this->config['onglets'][$do] = $this->getOnglets($do);
 					$name = Acid::trad('admin_action_print');
-					$this->config['onglets'][$do][] = $this->buildAdminOnglets($name,array($this->preKey('do')=>$do));					
+					$this->config['onglets'][$do][] = $this->buildAdminOnglets($name,array($this->preKey('do')=>$do));
 				break;
 			}
-			
+
 		}
 	}
-	
+
 	/**
 	* Controlleur de l'interface d'administration.
 	*
 	*
 	* @param array $config Configuration
-	* 
+	*
 	* @return string
 	*/
 	public function printAdminInterface($config=array()) {
@@ -2930,17 +2970,17 @@ abstract class AcidModuleCore {
 		$default_do = isset($config['default_do']) ? $config['default_do'] : $this->getDefaultDo();
 		$no_permission = isset($config['no_permission']) ? $config['no_permission']: false;
 		$this->adminNav();
-		
-		$do = isset($this->admin_nav['do']) ? $this->admin_nav['do'] : $default_do;		
-		
+
+		$do = isset($this->admin_nav['do']) ? $this->admin_nav['do'] : $default_do;
+
 		// Content
 		$content = '';
 		if (($this->getUserAccess($do)) || ($no_permission)) {
-			
+
 			if ($controller === null) {
 				$content .= $this->exeAdminController($do,$config);
 			}else{
-				
+
 				//Génération du controller : tab_controller[key] = true pour une fonction personnalisée, false sinon
 				$tab_controller = array();
 				foreach ($controller as $key => $fun_do) {
@@ -2948,13 +2988,13 @@ abstract class AcidModuleCore {
 						$tab_controller[$fun_do] = false;
 					}else{
 						$tab_controller[$key] = true;
-					}	
+					}
 				}
-				
+
 				if ( in_array($do,array_keys($tab_controller)) ) {
 					if ($tab_controller[$do]) {
 						list($a,$b) = $controller[$do];
-						
+
 						if (isset($config[$do])) {
 							foreach ($b as $bk => $bv) {
 								if ($bv == '__CONFIG__') {
@@ -2962,34 +3002,34 @@ abstract class AcidModuleCore {
 								}
 							}
 						}
-						
+
 						$content .= $this->callFunction($a,$b);
 					}else{
 						$content .= $this->exeAdminController($do,$config);
 					}
 				}
-				
+
 			}
-		
+
 		}else{
 			$content .= Acid::trad('admin_no_permission');
 		}
-		
+
 		$this->addAdminOnglets($do);
 		$no_onglets = (($onglets===null) || ($onglets===false));
 		$onglets= $onglets? $onglets : ( $no_onglets ? null : $this->getOnglets($do) );
-		
+
 		if (!empty($config['content_only'])) {
 			return $content;
 		}else{
 			return $this->printAdminBody($content,$onglets);
 		}
-		
+
 	}
-	
+
 	/**
 	* Execute une fonction prédéfinie par l'utilisateur avec la gestion des methodes de $this
-	*	
+	*
 	*	@param mixed $cuf	Paramètre 1 de la function  call_user_func_array de PHP
 	*						Il est possible de lui renseigner $=>'true' en troisieme paramètre pour utiliser ${$cuf[0]} en entête de fonction
 	*	@param array $cup	Paramètre 2 de la function  call_user_func_array de PHP
@@ -2997,7 +3037,7 @@ abstract class AcidModuleCore {
 	* @return array
 	*/
 	public  function callFunction($cuf,$cup=array()) {
-		
+
 		if ($cuf[0]=='$' )  {
 
 			if ($cuf[1]!='this') {
@@ -3005,13 +3045,13 @@ abstract class AcidModuleCore {
 			}else{
 				$cuf[1] = $this;
 			}
-			
+
 			$cuf = array($cuf[1],$cuf[2]);
 		}
-		
+
 		return call_user_func_array($cuf,$cup);
 	}
-	
+
 	/**
 	* Retourne les paramètres de filtrage pour l'administration du module sous forme d'un couple ([filtres],[paramètre d'indexation])
 	*
@@ -3020,12 +3060,12 @@ abstract class AcidModuleCore {
 	* @return array
 	*/
 	public function getAdminListOptions($mods=false) {
-	
+
 		$filter = $order = array();
-	
-	
+
+
 		$gets = $this->admin_nav;
-	
+
 		// chaîne WHERE
 		foreach ($this->vars as $key=>$var) {
 			if (isset($gets['fm_'.$key]) && isset($gets['fv_'.$key]) && strlen($gets['fv_'.$key])) {
@@ -3039,7 +3079,7 @@ abstract class AcidModuleCore {
 				}
 			}
 		}
-	
+
 		//cas de jointure
 		if (isset($gets['lo'])) {
 			$valid_key = isset($this->vars[$gets['lo']]);
@@ -3055,45 +3095,45 @@ abstract class AcidModuleCore {
 				}
 			}
 		}
-		
+
 		// chaîne ORDER
 		if (isset($gets['lo']) && isset($gets['ld']) && $valid_key) {
 			$order = array($gets['lo']=>($gets['ld']?true:false));
 		}elseif (isset($this->config['admin']['list']['order'])) {
 			$order = $this->config['admin']['list']['order'];
 		}
-	
+
 		return array($filter,$order);
 	}
-	
+
 	/**
 	* Retourne le listing d'administration du module sous forme d'une chaîne de caractères mise en forme.
-	* 
+	*
 	* @param array $conf Configuration (filter, order, mods, tpl modules )
 	*
 	* @return string
 	*/
 	public function printAdminList ($conf=array()) {
-		
+
 		$this->printAdminConfigure('list',$conf);
-		
+
 		//Gestion des filtres additionnels
 		$add_filter = isset($conf['filter']) ? $conf['filter'] : array();
 		$add_order = isset($conf['order']) ? $conf['order'] : array();
 		$mods = isset($conf['mods']) ? $conf['mods'] : $this->getAdminListMods();
 		$modules = array();
-		
+
 		//Display mode
 		$basic = isset($conf['basic_mode']) ? $conf['basic_mode'] : false;
-	
+
 		//Template
 		$conf['tpl'] = isset($conf['tpl']) ?  $conf['tpl'] : $this->getAdminTpl('list');
-	
+
 		//Initialisation
 		$this->adminNav();
 		$cur_nav = $this->getAdminCurNav();
 		$ki = static::preKey();
-		
+
 		if ($mods) {
 			$modules = array($this->getClass()=>$this->getClass());
 			foreach (array_keys($mods) as $mod) {
@@ -3101,87 +3141,87 @@ abstract class AcidModuleCore {
 			}
 			$conf['modules'] = $modules;
 		}
-		
+
 		//Full mode
 		if (!$basic) {
-	
+
 			//Configurations des filtres
 			list($filter,$order) = $this->getAdminListOptions($modules);
 			$hide_filter_ind = empty($filter);
-				
+
 			if (!empty($add_filter)) {
 				$filter = array_merge($add_filter,$filter);
 			}
-				
+
 			if (!empty($add_order)) {
 				$order = array_merge($add_order,$order);
 			}
-				
+
 			//Récupération des paramètres
-			
+
 			if ($mods) {
 				$nb_elts = $this->dbListMods($mods,$filter,$order,'',true);
 			}else{
 				$nb_elts = $this->dbCount($filter);
 			}
-			
+
 			list($ll,$limit,$page,$nav) = $this->getAdminListParams($nb_elts,$conf);
-				
+
 			//Récupération des détails d'affichage
 			$infos = $this->printAdminListInfo($nb_elts,$page,$ll,$hide_filter_ind,$conf);
-	
+
 		}
 		//Basic mode
 		else{
-				
+
 			$infos = $limit = $nav = '';
 			$filter = $add_filter;
 			$order = $add_order;
-				
+
 		}
-	
+
 		//Initialisation du contenu
 		$content = '';
-	
+
 		//Génération de la liste
 		if ($mods) {
 			$elts = $this->dbListMods($mods,$filter,$order,$limit);
 		}else{
 			$elts = $this->dbList($filter,$order,$limit);
 		}
-		
+
 		if ($elts) {
 			$conf['req_elts'] = $elts;
 			$content .= $this->genAdminListContent($elts,$conf);
 		}
-	
+
 		return	$this->printAdminListBody($content,$infos,$nav,$conf);
-	
+
 	}
 
 	/**
-	* Génère le corps du listing d'administration du module sous forme d'une chaîne de caractères. 
+	* Génère le corps du listing d'administration du module sous forme d'une chaîne de caractères.
 	* @param unknown_type $content Contenu
 	* @param unknown_type $infos Les ibfos
 	* @param unknown_type $nav La nav
 	* @param unknown_type $conf Configuration
 	* @return string
 	*/
-	public function printAdminListBody($content,$infos,$nav,$conf=array()) {		
+	public function printAdminListBody($content,$infos,$nav,$conf=array()) {
 		//Appel du fichier template
 		$tpl = isset($conf['tpl']['body']) ? $conf['tpl']['body'] : 'admin/admin-body-list.tpl';
 		return	Acid::tpl($tpl,array('infos'=>$infos,'nav'=>$nav,'content'=>$content),$this);
 	}
-	
+
 	/**
-	* Retourne la tête du listing d'administration du module sous forme de tableau. 
-	* 
+	* Retourne la tête du listing d'administration du module sous forme de tableau.
+	*
 	* @param array $conf Configuration
 	*
 	* @return array
 	*/
 	public function genAdminListHead($conf=array()) {
-	
+
 		//initialisation
 		$cur_nav = $this->getAdminCurNav();
 		$ki = static::preKey();
@@ -3198,7 +3238,7 @@ abstract class AcidModuleCore {
 					$t_label[$module::dbPref($key)] = $module->getLabel($key);
 				}
 			}
-			
+
 			if (isset($this->config['admin']['list']['keys'])) {
 				foreach ($this->config['admin']['list']['keys'] as $tk => $tkey) {
 					if (strpos($tkey,'.')==false) {
@@ -3206,7 +3246,7 @@ abstract class AcidModuleCore {
 					}
 				}
 			}
-			
+
 			if (isset($this->config['admin']['list']['keys_exclued'])) {
 				foreach ($this->config['admin']['list']['keys_exclued'] as $tk => $tkey) {
 					if (strpos($tkey,'.')==false) {
@@ -3215,7 +3255,7 @@ abstract class AcidModuleCore {
 				}
 			}
 		}
-		
+
 		//les clés
 		$def_vars = !$modules ? $this->vars : $mod_champs;
 		if (isset($this->config['admin']['list']['keys'])) {
@@ -3229,24 +3269,24 @@ abstract class AcidModuleCore {
 		}else{
 			$t_champs = array_keys($def_vars);
 		}
-		
+
 		//l'entête
 		$th_tab = array();
 		foreach ($t_champs as $key) {
 			$ld = $this->getAdminListLd($key);
 			$f = array_merge($cur_nav,array($ki.'lo'=>$key,$ki.'ld'=>$ld));
-			
+
 			$value = $this->getLabel($key);
 			if ((!$value) && (isset($t_label[$key]))){
 				$value = $t_label[$key];
 			}
-			
+
 			if (isset($this->config['admin']['head'][$key]['func'])) {
 				$specs = $this->config['admin']['head'][$key]['func'];
 				if (is_array($specs)) {
 					$args = isset($specs['args']) ? $specs['args'] : array('__VAL__');
 					$func = isset($specs['name']) ? $specs['name'] : 'htmlspecialchars';
-						
+
 					foreach ($args as $k=>$v) {
 						if ($args[$k] === '__VAL__') {
 							$args[$k] = $value;
@@ -3256,28 +3296,28 @@ abstract class AcidModuleCore {
 							$args[$k] = str_replace('__VAL__',$value,$v);
 						}
 					}
-						
+
 					$value =  call_user_func_array($func,$args);
 				}
 			}else{
 				$value = htmlspecialchars($value);
 			}
-				
+
 			$url = isset($this->config['admin']['head'][$key]['url']) ? $this->config['admin']['head'][$key]['url'] : AcidUrl::build($f);
-				
+
 			$th_val = array('url'=>$url,'name'=>$value, 'key'=>$key);
 			if (isset($this->config['admin']['head'][$key]['attr'])) {
 				$th_val['attr'] = $this->config['admin']['head'][$key]['attr'];
 			}
 			$th_tab[$key]=$th_val;
 		}
-	
+
 		return $th_tab;
-	
+
 	}
-	
+
 	/**
-	* Génère une ligne du listing d'administration du module sous forme de tableau. 
+	* Génère une ligne du listing d'administration du module sous forme de tableau.
 	*
 	* @param array $fields Champs à traiter
 	* @param array $elt Element à traiter
@@ -3285,44 +3325,44 @@ abstract class AcidModuleCore {
 	*
 	* @return array
 	*/
-	public function genAdminListLine($fields,$elt,$conf=array()) {	
+	public function genAdminListLine($fields,$elt,$conf=array()) {
 		$line = array();
-			
+
 		//pour chaque champ, une valeur
 		foreach ($fields as $key=>$intitule) {
 			$line[$key]=$this->getPrinted($key,$elt,$conf);
 		}
-		
+
 		//si les boutons d'actions sont activés
 		$disable_action = isset($conf['disable_actions']) ? $conf['disable_actions'] : $this->getDisableAction();
 		if ( !$disable_action ) {
 			$line['std_actions']=$this->genAdminListAction($elt,$conf);
 		}
-		
+
 		return $line;
 	}
-	
+
 	/**
-	* Génère une cellule d'action du listing d'administration du module sous forme d'une chaîne de caractère. 
+	* Génère une cellule d'action du listing d'administration du module sous forme d'une chaîne de caractère.
 	*
 	* @param array $elt Element à traiter
 	* @param array $conf Configuration
 	*
 	* @return string
 	*/
-	public function genAdminListAction($elt,$conf=array()) {	
+	public function genAdminListAction($elt,$conf=array()) {
 
 		$config_btn = isset($this->config['admin']['list']['actions']) ? $this->config['admin']['list']['actions']:null;
-			
+
 		if ($config_btn!==null) {
 			list($btn,$form) = $this->getStandardActionTab($elt,$config_btn);
 		}else{
 			list($btn,$form) = $this->getStandardActionTab($elt);
 		}
-			
+
 		return $this->printAdminActionTab($btn,$form,$elt,$conf);
 	}
-	
+
 	/**
 	* Traites le tableau d'éléments en entrée
 	*
@@ -3334,7 +3374,7 @@ abstract class AcidModuleCore {
 	public function genAdminListFormat($elts,$conf=array()) {
 		return $elts;
 	}
-	
+
 	/**
 	 * Retourne la classe css personnalisée de la ligne du tableau
 	 *
@@ -3346,23 +3386,23 @@ abstract class AcidModuleCore {
 	public function genAdminListLineCustomClass($elt,$conf=array()) {
 		return '';
 	}
-	
+
 	/**
 	* Formate pour le listing d'administration du module les éléments en entrée sous forme d'une chaîne de caractères mise en forme.
-	* 
+	*
 	* @param array $elts Eléments à traiter
 	* @param array $conf Configuration
 	*
 	* @return array
 	*/
-	public function genAdminListContent($elts,$conf=array()) {	
-			
+	public function genAdminListContent($elts,$conf=array()) {
+
 			$elts = $this->genAdminListFormat($elts,$conf);
 			$conf['format_elts'] = $elts;
-			
+
 			//le header
 			$th_tab =  $this->genAdminListHead($conf);
-			
+
 			//les resultats
 			$td_tab = array();
 			$assoc_td_tab = array();
@@ -3370,34 +3410,34 @@ abstract class AcidModuleCore {
 			foreach ($elts as $elt) {
 				$assoc_td_tab[] = isset($elt[$this->tblId()]) ? $elt[$this->tblId()] : 0;
 				$custom_class[] = $this->genAdminListLineCustomClass($elt,$conf);
-				
-				$td_tab[] = $this->genAdminListLine($th_tab,$elt,$conf); 
+
+				$td_tab[] = $this->genAdminListLine($th_tab,$elt,$conf);
 			}
-			
+
 			$conf['assoc_rows_id'] = $assoc_td_tab;
 			$conf['assoc_rows_classes'] = isset($conf['assoc_rows_classes']) ? $conf['assoc_rows_classes'] : $custom_class;
-			
+
 			//si les boutons d'actions sont activés
 			$disable_action = isset($conf['disable_actions']) ? $conf['disable_actions'] : $this->getDisableAction();
 			if ( !$disable_action ) {
 				$th_tab['std_actions'] = array('url'=>false,'name'=>Acid::trad('admin_list_btns_label'), 'key'=>'std_actions');
 			}
-			
+
 			return $this->printAdminTab($th_tab,$td_tab,$conf);
-		
+
 	}
-	
+
 	/**
 	* Retourne le tableau des fichiers templates personnalisés
-	* 
+	*
 	* @param string $do l'action affectuée
 	*
 	* @return array
 	*/
 	public function getAdminTpl($do) {
-		return isset($this->config['admin'][$do]['tpl']) ? $this->config['admin'][$do]['tpl'] : array(); 
+		return isset($this->config['admin'][$do]['tpl']) ? $this->config['admin'][$do]['tpl'] : array();
 	}
-	
+
 	/**
 	* Retourne la liaison de modules associée à l'objet
 	*
@@ -3407,11 +3447,11 @@ abstract class AcidModuleCore {
 	public function getAdminListMods() {
 		return isset($this->config['admin']['list']['mods']) ? $this->config['admin']['list']['mods'] : false;
 	}
-	
+
 	/**
-	* Retourne le paramètre de tri ascendant / descendant pour la clé en entrée 
+	* Retourne le paramètre de tri ascendant / descendant pour la clé en entrée
 	*
-	* @param string $key le paramètre de tri par type 
+	* @param string $key le paramètre de tri par type
 	*
 	* @return array
 	*/
@@ -3423,41 +3463,41 @@ abstract class AcidModuleCore {
 				$ld = 1;
 			}
 		}
-		
+
 		return $ld;
 	}
-	
+
 	/**
 	* Retourne les paramètrages du listing
 	*
 	* @param int $nb_elts le nombre d'éléments trouvés par lors de l'execution de la recherche
 	* @param array $conf Configuration
-	* 
+	*
 	* @return array  list( nombre maxi d'éléments par page , limite d'affichage, page courante, pagination )
 	*/
 	public function getAdminListParams($nb_elts,$conf=array()) {
 		$cur_nav = $this->getAdminCurNav();
-		
+
 		$def_tpl = isset($this->config['admin']['list']['tpl']['pagination']) ? $this->config['admin']['list']['tpl']['pagination'] : null;
 		$tpl = isset($conf['tpl']['pagination']) ? $conf['tpl']['pagination'] : $def_tpl;
-		
+
 		$ll = 	isset($this->admin_nav['ll']) ? $this->admin_nav['ll'] :(
 		isset($this->config['admin']['list']['limit']) ? $this->config['admin']['list']['limit'] : 10
 		);
 
 		$page = isset($this->admin_nav['lp']) ? $this->admin_nav['lp'] : 1;
 		$page = AcidPagination::getPage($page,$nb_elts,$ll);
-		
+
 		$start = AcidUrl::build($cur_nav,array(static::preKey('lp')));
 		$middle = '&amp;'.static::preKey('lp').'=';
 
 		$nav = AcidPagination::getNav($page,$nb_elts,$ll,$tpl,array('link_start'=>$start,'link_middle'=>$middle));
-		
+
 		$limit = $limit = ($ll*($page-1)).','.$ll;
-		
+
 		return array($ll,$limit,$page,$nav);
 	}
-	
+
 	/**
 	* Retourne une portion HTML mettant en forme des indications relatives au listing
 	*
@@ -3466,22 +3506,22 @@ abstract class AcidModuleCore {
 	* @param int 		$ll nombre maxi d'éléments par page
 	* @param boolean 	$hide_filter_ind true si on affiche la gestion des filtres
 	* @param array		$conf Configuration
-	* 
+	*
 	* @return array  list( nombre maxi d'éléments par page , limite d'affichage, page courante, pagination )
 	*/
 	public function printAdminListInfo($nb_elts,$page,$ll,$hide_filter_ind,$conf=array()) {
 		//$this->getAdminCurNav();
 		$cur_nav = $this->getAdminCurNav();
-		
+
 		$aff = $nb_elts < $ll ? $nb_elts : $ll;
 		$start = ($page-1)*$ll + 1;
 		$stop = $start + $ll -1;
-		
+
 		if ($stop > $nb_elts) {
 			$aff = $nb_elts%$ll;
 			$stop = $nb_elts;
 		}
-		
+
 
 		$txt_info = Acid::trad('admin_list_total_elts',array('__TOTAL__'=>$nb_elts,'__NB__'=>$aff,'__START__'=>$start,'__STOP__'=>$stop));
 		$vars = array(
@@ -3497,23 +3537,23 @@ abstract class AcidModuleCore {
 					'stop'=>$stop,
 					'txt_info'=>$txt_info
 		);
-		
+
 		$tpl = isset($conf['tpl']['info']) ? $conf['tpl']['info'] : 'admin/admin-list-info.tpl';
 		return Acid::tpl($tpl,$vars,$this);
-		
+
 	}
-	
-	
+
+
 	/**
 	 * Préparation du module pour les différents affichage/formulaires
 	 * @param string $do Vue en cours
 	 * @param array $conf Configuration
 	 */
 	public function printAdminConfigure($do='default',$conf=array()) {
-	
+
 	}
-	
-	
+
+
 	/**
 	 * Préparation du module pour le retour CSV
 	 */
@@ -3524,14 +3564,14 @@ abstract class AcidModuleCore {
 				$this->config['print'][$key] = array('type'=>'bool');
 			}
 		}
-	
+
 		if ($list = $this->getVarsByType(array('AcidVarList','AcidVarRadio'))) {
 			foreach ($list as $key =>$var) {
 				$this->config['print'][$key] = array('type'=>'tab','tab'=>$var->getElts());
 			}
 		}
 	}
-	
+
 	/**
 	* Retourne le formulaire d\'ajout de l'objet après initialisation
 	*
@@ -3543,7 +3583,7 @@ abstract class AcidModuleCore {
 		}
 		return $this->printAdminAddForm();
 	}
-	
+
 	/**
 	* Retourne l'interface de modification d'un élément du module sous forme d'une chaîne de caractères mise en forme.
 	*
@@ -3553,7 +3593,7 @@ abstract class AcidModuleCore {
 	public function printAdminUpdate () {
 		return $this->printAdminUpdateForm();
 	}
-	
+
 	/**
 	* Retourne le formulaire d\'ajout de l'objet
 	*
@@ -3562,7 +3602,7 @@ abstract class AcidModuleCore {
 	protected function printAdminAddForm () {
 		return $this->printAdminForm('add');
 	}
-	
+
 	/**
 	* Retourne le formulaire de mise à jour de l'objet
 	*
@@ -3571,11 +3611,11 @@ abstract class AcidModuleCore {
 	protected function printAdminUpdateForm () {
 		return $this->printAdminForm('update');
 	}
-	
+
 	/**
 	* Assigne aux formulaires des éléments au debut
 	*
-	* @param object $form objet AcidForm 
+	* @param object $form objet AcidForm
 	* @param string $do la vue demandée
 	*
 	* @return string
@@ -3583,41 +3623,41 @@ abstract class AcidModuleCore {
 	public function printAdminFormStart(&$form, $do) {
 		$form->tableStart();
 	}
-	
+
 	/**
 	* Assigne aux formulaires des éléments à la fin
 	*
-	* @param object $form objet AcidForm 
+	* @param object $form objet AcidForm
 	* @param string $do la vue demandée
 	*
 	* @return string
 	*/
 	public function printAdminFormStop(&$form, $do) {
-		
+
 		$this->printAdminFormSubmit($form,$do);
 		$form->tableStop();
-		
+
 	}
-	
+
 	/**
 	* Assigne le bouton submit au formulaire d'administration de la vue en entrée
 	*
-	* @param object $form objet AcidForm 
+	* @param object $form objet AcidForm
 	* @param string $do la vue demandée
 	*
 	* @return string
 	*/
 	public function printAdminFormSubmit(&$form, $do) {
-		
+
 		$submit_mode = isset($this->config['admin'][$do]['submit']) ? $this->config['admin'][$do]['submit'] : null;
 		$submit_label = ($do=='add'? Acid::trad('admin_action_add'):Acid::trad('admin_action_update'));
 		$submit_attr = array();
-		
+
 		if ($submit_mode) {
 			$submit_type = isset($submit_mode['type']) ? $submit_mode['type'] : 'default';
 			$submit_label = isset($submit_mode['label']) ? $submit_mode['label'] : $submit_label;
 			$submit_attr = isset($submit_mode['params']) ? $submit_mode['params'] : $submit_attr;
-			
+
 			switch ($submit_type) {
 				case 'image' :
 					$submit_src = isset($submit_mode['src']) ? $submit_mode['src'] : '';
@@ -3625,14 +3665,14 @@ abstract class AcidModuleCore {
 				break;
 			}
 		}
-		
+
 		$submit_attr['class'] = empty($submit_attr['class']) ? $do : $submit_attr['class'].' '.$do;
 
 		$start = '<span class="submit_bg '.$do.'">';
 		$stop  = '</span>';
 		return $form->addSubmit('',$submit_label,$submit_attr,$start,$stop);
 	}
-	
+
 	/**
 	* Retourne le formulaire d'administration du module pour la vue demandée
 	*
@@ -3642,7 +3682,7 @@ abstract class AcidModuleCore {
 	*/
 	public function printAdminForm($do) {
 		$this->printAdminConfigure($do);
-		
+
 		if ($sess_form = AcidSession::tmpGet(self::preKey($do))) {
 			$sess_id = isset($sess_form[$this->tblId()]) ? $sess_form[$this->tblId()] : 0;
 			if ($sess_id==$this->getId()) {
@@ -3655,15 +3695,15 @@ abstract class AcidModuleCore {
 
 		$images_keys = array_keys($this->getVarsImages());
 		$files_keys = array_keys($this->getVarsFiles());
-		
-		
+
+
 		$next_page = isset($this->config['admin'][$do]['next_page']) ? $this->config['admin'][$do]['next_page'] : null;
 		$action_page = isset($this->config['admin'][$do]['action']) ? $this->config['admin'][$do]['action'] : '';
-		
+
 		if ($next_page === null) {
 			$next_page = ($do!='add') ? false : AcidUrl::build(array($this->preKey().'do'=>'list'));
 		}
-		
+
 		if (isset($this->config['admin'][$do]['keys'])) {
 			$keys = $this->config['admin'][$do]['keys'];
 		} else {
@@ -3674,31 +3714,31 @@ abstract class AcidModuleCore {
 				}
 			}
 		}
-			
+
 		$form = new AcidForm('post',$action_page);
 		$form->setFormParams(array('class'=>$this::TBL_NAME.' '.$this->preKey($do).' admin_form'));
-		
+
 		$form->addHidden('',$this->preKey('do'),$do);
 		$form->addHidden('','module_do',$this->getClass());
-		
+
 		if ($do!='add') {
 			$form->addHidden('',static::tblId(),$this->getId());
 		}
-		
+
 		if ($next_page !== false) {
 				$form->addHidden('','next_page',$next_page);
 		}
-				
+
 		$this->printAdminFormStart($form,$do);
-		
+
 		foreach ($keys as $key) {
 			if (isset($this->vars[$key])) {
-				
+
 				$params = isset($this->config['admin'][$do]['params'][$key]) ? $this->config['admin'][$do]['params'][$key] : array();
 				$start = isset($this->config['admin'][$do]['start'][$key]) ? $this->config['admin'][$do]['start'][$key] : '';
 				$stop = isset($this->config['admin'][$do]['stop'][$key]) ? $this->config['admin'][$do]['stop'][$key] : '';
 				$body_attrs = isset($this->config['admin'][$do]['body_attrs'][$key]) ? $this->config['admin'][$do]['body_attrs'][$key] : array();
-				
+
 				if (in_array($key,$lang_keys)) {
 					$l = explode('_',$key);
 					$l = $l[(count($l)-1)];
@@ -3706,7 +3746,7 @@ abstract class AcidModuleCore {
 					$params['class'] = !empty($params['class']) ? $params['class'].' '.$l_class : $l_class;
 					$body_attrs['class'] = !empty($body_attrs['class']) ? $body_attrs['class'].' '.$l_class : $l_class;
 				}
-				
+
 				if(Conf::get('plupload:active')) {
 					if(Conf::get('plupload:all') || Conf::get('plupload:key:'.$key)) {
 						if(in_array($key, array_keys($this->getUploadVars()) )) {
@@ -3716,45 +3756,45 @@ abstract class AcidModuleCore {
 						}
 					}
 				}
-				
+
 				$this->vars[$key]->getForm($form,$key,true,$params,$start,$stop,$body_attrs);
-				
+
 			} else {
 				trigger_error(get_called_class().'::printAdminForm('.$do.') key "'.$key.'" does not exists',E_USER_WARNING);
 			}
-			
+
 		}
-		
+
 		$this->printAdminFormStop($form,$do);
-		
-		
+
+
 		$flags = $lang_keys ? $this->printAdminFlags($do,$lang_keys) : '';
 		return $flags . $form->html();
-		
+
 	}
-	
+
 	/**
 	* Retourne une gestion multilingue en javascript des formulaires d'administrations
 	*
 	* @param string $do la vue demandée
-	* @param array $keys les clés 
+	* @param array $keys les clés
 	*/
 	public function printAdminFlags ($do='default',$keys=null) {
 		$default = isset($this->config['multilingual']['flags']['default'])  ?  $this->config['multilingual']['flags']['default'] : false ;
 		$current = isset($this->config['multilingual']['flags'][$do])  ?  $this->config['multilingual']['flags'][$do] : $default ;
 		$tpl = $this->getAdminTpl($do);
 		$tpl_def = $this->getAdminTpl('default');
-		
+
 		if ($current) {
 			$langs = Acid::get('lang:available');
 			$cur = Acid::get('lang:current');
-			
+
 			$tpl_flag_def = isset($tpl_def['flags']) ? $tpl_def['flags'] : 'admin/admin-flags.tpl';
 			$tpl_flag = isset($tpl['flags']) ? $tpl['flags'] : $tpl_flag_def;
 			return Acid::tpl($tpl_flag,array('def_lang'=>$cur,'langs'=>$langs,'do'=>$do,'keys'=>$keys));
 		}
 	}
-	
+
 	/**
 	* Retourne les éléments de l'objet sous forme d'une chaîne de caractères mise en forme.
 	*
@@ -3763,7 +3803,7 @@ abstract class AcidModuleCore {
 	*/
 	public function printAdminElt () {
 		$this->printAdminConfigure('print');
-		
+
 		if (isset($this->config['admin']['elt']['keys'])) {
 			$keys = $this->config['admin']['elt']['keys'];
 		} else {
@@ -3788,10 +3828,10 @@ abstract class AcidModuleCore {
 			$tbl->addVal($line,1,$this->getPrinted($key));
 			$line++;
 		}
-	
+
 		return Acid::tpl('admin/admin-print.tpl',array('content'=>$tbl->html()),$this);
 	}
-	
+
 	/**
 	* Retourne l'interface de recherche d'un élément du module sous forme d'une chaîne de caractères mise en forme.
 	*
@@ -3800,10 +3840,10 @@ abstract class AcidModuleCore {
 	*/
 	public function printAdminSearch () {
 		$this->printAdminConfigure('search');
-		
+
 		$this->adminNav();
 		$admin_nav = $this->getAdminCurNav();
-		
+
 		if (isset($this->config['admin']['search']['keys'])) {
 			$keys = $this->config['admin']['search']['keys'];
 		} else {
@@ -3819,41 +3859,41 @@ abstract class AcidModuleCore {
 								'start'=>Acid::trad('admin_search_list_start'),
 								'stop'=>Acid::trad('admin_search_list_stop')
 		);
-	
+
 		$ll = isset($this->config['admin']['list']['limit']) ? $this->config['admin']['list']['limit'] : 10;
-		
+
 		$tpl = $this->getAdminTpl('search');
 		$tpl = $tpl ? $tpl : 'admin/admin-search.tpl';
 		return Acid::tpl($tpl,array('admin_nav'=>$admin_nav,'ll'=>$ll,'vars'=>$this->vars,'keys'=>$keys,'get'=>$_GET,'method_list'=>$method_list),$this);
 	}
-	
+
 	/**
-	* Affiche un formulaire de switch on/off 
+	* Affiche un formulaire de switch on/off
 	* @param string $key Nom du paramètre
 	* @param object $obj L'objet
 	* @param boolean $ajax Le formulaire sera traité en ajax
-	* 
+	*
 	* @return string
 	*/
 	public function printFormToggle($key,$obj=null,$ajax=false) {
 		$config = array();
-		
+
 		$obj = $obj===null ? $this : $obj;
-		$active = $obj->get($key); 
+		$active = $obj->get($key);
 		$new_state = $active ? 0 : 1;
 		$ident = 'form_toggle_'.$obj->checkTbl().'_'.$obj->getId().'_'.$key;
 		$form = new AcidForm('post','');
 		$form->setFormParams(array('class'=>'toggle_form '.$ident));
-		
+
 		$form->addHidden('',$obj->preKey('do'),'update');
 		$form->addHidden('',$obj->preKey('toggle'),'1');
 		$form->addHidden('','module_do',$obj->getClass());
 		$form->addHidden('',$obj->tblId(),$obj->getId());
-		
+
 		$form->addHidden('',$key,$new_state);
-		
+
 		$real_key = self::dbPrefRemove($key);
-		
+
 		if ($ajax) {
 			$onclick=	"$('.".$ident."').find('[type=submit]').attr('disabled','disabled'); ".
 						"$.post('".Acid::get('url:ajax')."', $(this).serialize(), ".
@@ -3869,20 +3909,20 @@ abstract class AcidModuleCore {
 						"} ".
 						"$('.".$ident."').find('[type=submit]').attr('disabled',''); " .
 						"}); return false;";
-			
+
 			$form->addHidden('','ajax',1);
 			$form->setFormParams(array('onsubmit'=>$onclick));
 		}
-		
+
 		$label = $active ? Acid::trad('yes') : Acid::trad('no');
-	
-		
+
+
 		$form->addSubmit('',$label,$config);
-		
+
 		return $form->html();
 	}
-	
-	
+
+
 	/**
 	 * Retourne un AcidCSV correspondant au module
 	 * @param mixed $filter filtre à appliquer sue le dbList
@@ -3893,11 +3933,11 @@ abstract class AcidModuleCore {
 	 * @return AcidCSV
 	 */
 	public function exportCSV($filter='',$fields=array(),$config=null,$label=false,$printed=true) {
-	
+
 		$this->printAdminConfigureCSV();
-	
+
 		$csv = new AcidCSV();
-	
+
 		if ($config) {
 			$csv->setConfig(
 					isset($config[0])? $config[0]:null, //delimiter
@@ -3905,7 +3945,7 @@ abstract class AcidModuleCore {
 					isset($config[2])? $config[2]:null //espace
 			);
 		}
-	
+
 		$csv->setHead($csv->getInitHead($this->getKeys(),$fields));
 		$head = $csv->getHead();
 		$res = static::dbList($filter);
@@ -3914,7 +3954,7 @@ abstract class AcidModuleCore {
 			foreach ($res as $elt) {
 				$mod = self::build($elt);
 				$line = array();
-	
+
 				if ($printed) {
 					foreach ($this->getKeys() as $key) {
 						if ((!$fields) || in_array($key,$fields)) {
@@ -3926,14 +3966,14 @@ abstract class AcidModuleCore {
 				}else{
 					$line = array_values($mod->getVals());
 				}
-	
+
 				$tab[] = $csv->getInitRow($line,$head);
 			}
-	
+
 			$csv->setRows($tab);
-				
+
 		}
-	
+
 		if ($label) {
 			$hkeys = array();
 			foreach ($head as $key => $num) {
@@ -3941,12 +3981,12 @@ abstract class AcidModuleCore {
 			}
 			$csv->setHead($hkeys);
 		}
-	
-	
+
+
 		return $csv;
 	}
-	
-	
+
+
 	/**
 	* Retourne la pré-configuration d'affichage associée à la clé en entrée
 	* @param string $key nom du paramètre
@@ -3957,7 +3997,7 @@ abstract class AcidModuleCore {
 		$module = get_class($this->vars[$key]);
 
 		$admin_format = ($module=='AcidVarImage') ? $this->vars[$key]->getConfig('admin_format') : '';
-		
+
 		$tab = 	array(
 					'AcidVarBool'			=> array('type'=>'bool'),
 					'AcidVarDateTime'		=> array('type'=>'date','format'=>'datetime','empty_val'=>'-'),
@@ -3970,15 +4010,15 @@ abstract class AcidModuleCore {
 					'AcidVarList' 			=> array('type'=>'tab', 'tab'=>$this->vars[$key]->getElts()),
 					'AcidVarFile' 			=> array('type'=>'link', 'absolute'=>false, 'basename'=>true, 'popup'=>true)
 		);
-		
-		
+
+
 		if($module) {
 			return isset($tab[$module]) ? $tab[$module] : false;
 		}
-		
+
 		return $tab;
 	}
-	
+
 	/**
 	* Retourne une valeur de l'objet mise en forme pour l'interface d'adminsitration.
 	* @param string $key	Nom du paramètre
@@ -3988,7 +4028,7 @@ abstract class AcidModuleCore {
 	*/
 	public function getPrinted($key,$elt=null,$conf=array()) {
 		$nkey = isset($this->vars[$key]) ? $key : (isset($this->vars[self::dbPrefRemove($key)]) ? self::dbPrefRemove($key) : $key);
-		
+
 		if ($elt === null) {
 			$elt = $this->getVals();
 			$val = $this->trad($key);
@@ -3997,19 +4037,19 @@ abstract class AcidModuleCore {
 		}else{
 			$val = $elt;
 		}
-	
+
 		if (isset($this->vars[$nkey])) {
 			$def_value = $this->getPrintedAssoc($nkey);
 		}
-	
+
 		if ( isset($this->config['print'][$nkey]) || (!empty($def_value)) ) {
-				
+
 			$specs = isset($this->config['print'][$nkey]) ? $this->config['print'][$nkey] : $def_value;
-				
-				
+
+
 			if (isset($specs['type'])) {
 				switch ($specs['type']) {
-						
+
 					case 'link' :
 						$prefix = isset($specs['absolute']) && $specs['absolute'] ? '' : Acid::get('url:folder');
 						$url_val = $val ? $prefix.$val  : "";
@@ -4018,12 +4058,12 @@ abstract class AcidModuleCore {
 						$popup = isset($specs['popup']) ? $specs['popup'] : false;
 						return Acid::tpl('core/print/link.tpl',array('url'=>$url_val,'text'=>$text, 'popup'=>$popup),$this);
 					break;
-							
+
 					case 'mailto' :
 						$text = isset($specs['text']) ? $specs['text'] : $val;
 						return Acid::tpl('core/print/mailto.tpl',array('email'=>$val,'text'=>$text),$this);
 					break;
-							
+
 					case 'tab' :
 						if (isset($specs['tab'])) {
 							if (isset($specs['tab'][$val])) {
@@ -4033,24 +4073,24 @@ abstract class AcidModuleCore {
 							}
 						}
 					break;
-							
+
 					case 'bool' :
 						return $val ? Acid::trad('yes') : Acid::trad('non');
 					break;
-							
+
 					case 'toggle' :
 						$toggle_key = $nkey;
-						
+
 						if (isset($specs['module'])) {
 							$module = $specs['module']::build($elt);
 							$toggle_key = $module::dbPrefRemove($key);
 						}else{
 							$module = static::build($elt);
 						}
-						
+
 						return $module->printFormToggle($toggle_key,null,(!empty($specs['ajax'])));
 					break;
-	
+
 					case 'mod_tab' :
 						if (isset($specs['mod']) && isset($specs['field'])) {
 							if ($obj = new $specs['mod']($val)) {
@@ -4058,7 +4098,7 @@ abstract class AcidModuleCore {
 							}
 						}
 					break;
-							
+
 					case 'sql' :
 						if (isset($specs['req']) && isset($specs['field'])) {
 							if ($rep = AcidDB::query($req)) {
@@ -4066,35 +4106,35 @@ abstract class AcidModuleCore {
 							}
 						}
 					break;
-							
+
 					case 'date' :
 						$format  = isset($specs['format']) ? $specs['format'] : 'date';
 						$format = $format == 'date' ? Acid::get('date_format:date','lang') : $format;
 						$format = $format == 'datetime' ? Acid::get('date_format:datetime','lang') : $format;
 						$format = $format == 'datetime_small' ? Acid::get('date_format:datetime_small','lang') : $format;
-	
+
 						$empty_val = isset($specs['empty_val']) ? $specs['empty_val'] : '';
 						return AcidTime::conv($val,$format,$empty_val);
 					break;
-	
+
 					case 'time' :
 						return AcidTime::conv($val);
 						break;
-							
+
 					case 'img' :
 						$src_key = isset($specs['key']) ? $specs['key']  : $nkey;
 						$size = isset($specs['size']) ? $specs['size']  : null;
 						$view = isset($specs['link']) ? $specs['link']  : null;
 						return Acid::tpl('core/print/img.tpl',array('size'=>$size,'view'=>$view,'src'=>$val,'key'=>$src_key),$this);
 						break;
-							
+
 					case 'split' :
 						$size = isset($specs['size']) ? $specs['size']  : 200;
 						$end = isset($specs['end']) ? $specs['end']  : '...' ;
-	
+
 						return 	AcidVarString::split($val,$size,$end);
 					break;
-							
+
 					case 'func' :
 						if (isset($specs['name']) && isset($specs['args'])) {
 							if (isset($specs['load'])) {

@@ -233,7 +233,7 @@ $lang['trad']['admin_delete_failed']      =  'Failed to delete';
 $lang['trad']['admin_page_ident_exists']       = 'This page key already exists, please choose another one';
 $lang['trad']['admin_page_ident_config']       = 'Your page key can only be composed of small letters, figures and hyphens';
 $lang['trad']['admin_page_ident_reserved_key'] = 'Your page key is a reserved word, please choose another one';
-$lang['trad']['admin_page_ident_empty']        = 'You have to enter a new user name';
+$lang['trad']['admin_page_ident_empty']        = 'You have to enter a new page key';
 
 $lang['trad']['admin_page_update_canceled']    =  'The modifications can not be registered until your page key is incorrect';
 $lang['trad']['admin_page_update_page']        =  'Modify this page';
@@ -382,7 +382,7 @@ $langs['currency']['letters_sing'] = '__VAL__ euro';
 $langs['currency']['letters_plur'] = '__VAL__ euros';
 
 
-//Date 
+//Date
 $lang['date_format']['date']     = 'd/m/Y';
 $lang['date_format']['datetime'] = 'd/m/Y H:i:s';
 $lang['date_format']['datetime_small'] = 'd/m/Y H:i';

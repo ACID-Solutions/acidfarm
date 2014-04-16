@@ -2,7 +2,7 @@
 
 /**
  * AcidFarm - Yet Another Framework
- * 
+ *
  * Requires PHP version 5.3
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
@@ -23,29 +23,46 @@
 class Actu extends AcidModule {
 	const TBL_NAME = 'actu';
 	const TBL_PRIMARY = 'id_actu';
-	
+
 	/**
 	 * Constructeur
 	 * @param mixed $init_id
 	 */
 	public function __construct($init_id=null) {
-		
+
 		$this->vars['id_actu'] = new AcidVarInt($this->modTrad('id_actu'),true);
-		$this->vars['title'] = new AcidVarString($this->modTrad('title'),60);
-		$this->vars['head'] = new AcidVarText($this->modTrad('head'));
-		$this->vars['content'] = new AcidVarText($this->modTrad('content'));
+
+		if ($langs = Acid::get('lang:available')) {
+			/*AUTODETECTION DU MULTILINGUE*/
+			//commenter cette ligne pour desactiver le multilingue auto
+			$have_lang_keys = count($langs)>1;
+			//POUR CHAQUE LANGUE
+			foreach ($langs as $l) {
+				//AUTODETECT
+				$ks = !empty($have_lang_keys) ? ('_'.$l) : '';
+				$ds = !empty($have_lang_keys) ? (' '.$l) : '';
+				//DECLARATION DES VARS
+				$this->vars['title'.$ks] = new AcidVarString($this->modTrad('title').$ds,60);
+				$this->vars['head'.$ks] = new AcidVarText($this->modTrad('head').$ds);
+				$this->vars['content'.$ks] = new AcidVarText($this->modTrad('content').$ds);
+				//CONFIGURATION
+				$this->config['print']['head'.$ks] = $this->config['print']['content'.$ks] = array('type'=>'split');
+			}
+			$this->config['multilingual']['flags']['default']  = !empty($have_lang_keys);
+		}
+
 		$this->vars['adate'] = new AcidVarDateTime($this->modTrad('adate'));
 		$this->vars['active'] = new AcidVarBool($this->modTrad('active'));
-		
+
 		parent::__construct($init_id);
-				
-		$this->config['print']['head'] = $this->config['print']['content'] = array('type'=>'split');
+
+		/*--- CONFIGURATION ---*/
 		$this->config['print']['adate']= array('type'=>'date','format'=>'datetime','empty_val'=>'-');
-		
 		//$this->config['print']['active']= array('type'=>'bool');
 		$this->config['print']['active']= array('type'=>'toggle','ajax'=>true);
+
 	}
-	
+
 	/**
 	 * Retourne l'url de la liste des actualités (gère la pagination)
 	 * @param int $page page à afficher
@@ -54,7 +71,7 @@ class Actu extends AcidModule {
 	public static function buildUrlList($page=null) {
 		return Route::buildUrl(static::checkTbl().'_list',array('page'=>$page));
 	}
-	
+
 	/**
 	 * Retourn la dernière actualité sous forme d'objet
 	 * @return object
@@ -69,32 +86,39 @@ class Actu extends AcidModule {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @see AcidModuleCore::printAdminAdd()
 	 */
 	public function printAdminAdd() {
-		$this->config['admin']['add']['def'] = array('adate'=>date('Y-m-d H:i:s'));		
+		$this->config['admin']['add']['def'] = array('adate'=>date('Y-m-d H:i:s'));
 		return parent::printAdminAdd();
 	}
-	
+
 	/**
 	 * (non-PHPdoc)
-	 * @param string $type 
+	 * @param string $type
 	 * @see AcidModuleCore::printAdminForm()
 	 */
 	public function printAdminForm($type) {
-		$this->config['admin']['add']['keys'] = $this->config['admin']['update']['keys'] = array('title','head','content');
-		$this->config['admin'][$type]['params']['title'] = array('class'=>'head_field');
-		
+		$this->config['admin']['add']['keys'] = $this->config['admin']['update']['keys'] = array_merge($this->langKeyDecline('title'),$this->langKeyDecline('head'),$this->langKeyDecline('content'));
+
+		foreach ($this->langKeyDecline('title') as $lk) {
+			$this->config['admin'][$type]['params'][$lk] = array('class'=>'head_field');
+		}
+
+		foreach ($this->langKeyDecline('content') as $lk) {
+			$this->config['admin'][$type]['params']['content'] = array('id'=>'content_textarea');
+		}
+
 		//$this->vars['adate']->setForm('hidden');
-		$this->config['admin'][$type]['params']['content'] = array('id'=>'content_textarea');
+
 		$GLOBALS['tinymce']['all'] = false;
 		$GLOBALS['tinymce']['ids'] = array('content_textarea');
 		return parent::printAdminForm($type);
 	}
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @param object $form
@@ -102,18 +126,18 @@ class Actu extends AcidModule {
 	 * @see AcidModuleCore::printAdminFormStop()
 	 */
 	public function printAdminFormStop(&$form, $do) {
-		
+
 		$forms = '<div class="form_subline">' . "\n" .
 				 '	<div class="form_subline_elt first">'.$this->getLabel('adate').' '.$this->getVarForm('adate') . '</div>' . "\n" .
 				 '	<div class="form_subline_elt">'.$this->getLabel('active').' '.$this->getVarForm('active') . '</div>' . "\n" .
 				 '	<div class="clear"></div>' . "\n" .
 				 '</div>';
-	
+
 		$form->addFreeText('',$forms);
-		
+
 		parent::printAdminFormStop($form,$do);
 	}
-	
+
 	/**
 	 * Retourne la liste des actus sous forme HTML (gère la pagination)
 	 * @param int $page page à afficher
@@ -121,30 +145,30 @@ class Actu extends AcidModule {
 	 */
 	public static function printList($page=1) {
 		$nb_elts_per_page = 5;
-		
+
 		$filter = array(array('active','=',1));
 		$count = self::dbCount($filter);
-		
+
 		$page = AcidPagination::getPage($page,$count,$nb_elts_per_page);
 		$limit = ($nb_elts_per_page*($page-1)).','.$nb_elts_per_page;
 		$elts = self::dbList($filter,array('adate'=>'DESC'),$limit);
-		
+
 		$link_function = array('func'=>'Actu::buildUrlList','args'=>array('__PAGE__'));
 		$pagination = AcidPagination::getNav($page,$count,$nb_elts_per_page,'tools/pagination.tpl',array('link_func'=>$link_function));
-	
-		
-		$v = array( 
-				'url'=>self::buildUrl(), 
-				'elts' => $elts, 
-				'pagination' => $pagination 
+
+
+		$v = array(
+				'url'=>self::buildUrl(),
+				'elts' => $elts,
+				'pagination' => $pagination
 		);
-		
-		
-	
+
+
+
 		return Acid::tpl('pages/actu-list.tpl',$v,Acid::mod('Actu'));
-		
+
 	}
-	
+
 	/**
 	 * Retourne une actualité sous forme HTML
 	 * @return string
@@ -152,10 +176,10 @@ class Actu extends AcidModule {
 	public function printActu() {
 
 		$v = array(  );
-		
+
 
 		return Acid::tpl('pages/actu.tpl',$v,$this);
-		
+
 	}
-	
+
 }

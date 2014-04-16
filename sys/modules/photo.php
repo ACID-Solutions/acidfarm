@@ -2,7 +2,7 @@
 
 /**
  * AcidFarm - Yet Another Framework
- * 
+ *
  * Requires PHP version 5.3
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
@@ -23,14 +23,14 @@
 class Photo extends AcidModule {
 	const TBL_NAME = 'photo';
 	const TBL_PRIMARY = 'id_photo';
-	
+
 	/**
 	 * Constructeur
 	 * @param mixed $init_id
 	 */
 	public function __construct($init_id=null) {
-		
-		$photo_format 		=	array(	
+
+		$photo_format 		=	array(
 									'src'=>array(	'size' => array(0,0,false), 'suffix' => '', 'effect' => array() ),
 									'large'=>array(	'size' => array(500,500,false),	'suffix' => '_l', 'effect' => array() ),
 									'diapo'=>array(	'size' => array(180,180,true),	'suffix' => '_diapo', 'effect' => array() ),
@@ -38,19 +38,35 @@ class Photo extends AcidModule {
 								);
 
 		$config = array('format'=>$photo_format,'admin_format'=>'mini');
-		
+
 		$this->vars['id_photo'] = new AcidVarInt(self::modTrad('id_photo'),true);
-		$this->vars['name'] = new AcidVarString(self::modTrad('name'),60);
-		$this->vars['pos'] = new AcidVarInt(self::modTrad('position'),true);							
+
+		if ($langs = Acid::get('lang:available')) {
+			/*AUTODETECTION DU MULTILINGUE*/
+			//commenter cette ligne pour desactiver le multilingue auto
+			$have_lang_keys = count($langs)>1;
+			//POUR CHAQUE LANGUE
+			foreach ($langs as $l) {
+				//AUTODETECT
+				$ks = !empty($have_lang_keys) ? ('_'.$l) : '';
+				$ds = !empty($have_lang_keys) ? (' '.$l) : '';
+				//DEFINITION DE LA VARIABLE
+				$this->vars['name'.$ks] = new AcidVarString(self::modTrad('name').$ds,60);
+			}
+			//CONFIGURATION DU MULTILINGUE DANS LES FORMULAIRES ADMIN
+			$this->config['multilingual']['flags']['default']  = !empty($have_lang_keys);
+		}
+
+		$this->vars['pos'] = new AcidVarInt(self::modTrad('position'),true);
 		$this->vars['src'] 	= 	new AcidVarImage( self::modTrad('src'), Acid::get('path:files').'photo/', $config);
-		
+
 		parent::__construct($init_id);
-		
-		$this->config['print']['src'] = array('type'=>'img','link'=>'src','size'=>'mini');		
+
+		$this->config['print']['src'] = array('type'=>'img','link'=>'src','size'=>'mini');
 		//$this->config['default_do'] = 'add';
 	}
 
-	
+
 	/**
 	 * Rerourne l'url de l'image en entrée au format $format
 	 * @param string $url url de l'image source
@@ -59,7 +75,7 @@ class Photo extends AcidModule {
 	public static function genUrlSrc($url=null,$format=null) {
 		return self::genUrlKey('src',$url,$format);
 	}
-	
+
 	/**
 	 * Retourne l'url de l'image associée à l'objet au format saisi en entrée
 	 * @param string $format format pour l'url retournée
@@ -67,7 +83,7 @@ class Photo extends AcidModule {
 	public function urlSrc($format=null) {
 		return $this->genUrlSrc($this->get('src'),$format);
 	}
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @param array $vals
@@ -76,20 +92,20 @@ class Photo extends AcidModule {
 	 */
 	public function postAdd($vals,$dialog=null) {
 		$go_on = true;
-		
+
 		$limit = !Conf::exist('photo:limit') ? null : Conf::get('photo:limit');
 		if ($limit) {
 			$count = $this->dbCount();
 			$go_on = ($count < $limit);
 		}
-		
+
 		if ($go_on) {
 			return parent::postAdd($vals,$dialog);
 		}else{
 			AcidDialog::add('error',Acid::trad('photo_above_limit',array('__NUM__'=>$limit)));
 		}
 	}
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @see AcidModuleCore::printAdminAddForm()
@@ -100,7 +116,7 @@ class Photo extends AcidModule {
 		$this->initVars(array('pos'=>$plus,'name'=>'Photo '.$plus));
 		return parent::printAdminAddForm();
 	}
-		
+
 	/**
 	 * Retourne la galerie/wallart du site en HTML
 	 * @return string
@@ -109,5 +125,5 @@ class Photo extends AcidModule {
 		$elts = Acid::mod('Photo')->dbList(array(),array('pos'=>'ASC'));
 		return Acid::tpl('tools/wall.tpl',array('elts'=>$elts),Acid::mod('Photo'));
 	}
-	
+
 }
