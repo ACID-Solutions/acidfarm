@@ -133,6 +133,9 @@ class MyTemplate extends AcidTemplate {
 
 			$this->addJS(Acid::get('url:folder').'js/plupload/i18n/'.Acid::get('lang:current').'.js');
 
+			$this->addJS(Acid::get('url:folder').'js/plupload/jquery.plupload.queue/jquery.plupload.queue.js');
+			$this->addCSS(Acid::get('url:folder').'js/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css');
+
 			$ids = Conf::exist('plupload:ids') ? Conf::get('plupload:ids') : array();
 			$my_js = Acid::tpl('tools/plupload.tpl', array('ids'=>$ids), $this);
 
