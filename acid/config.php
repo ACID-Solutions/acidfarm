@@ -2,7 +2,7 @@
 
 /**
  * AcidFarm - Yet Another Framework
- * 
+ *
  * Requires PHP version 5.3
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
@@ -22,6 +22,7 @@ $acid['maintenance_desc']		= 'Site en maintenance...';
 
 // Core
 $acid['core']['module']['path'] = SITE_PATH.'sys/modules/core.php';
+$acid['core']['mail']['path'] 	= SITE_PATH.'sys/tools/mail.php';
 
 // Site info
 $acid['site']['name']           = 'ACID Farm';
@@ -38,7 +39,7 @@ $acid['db']['port']             = '3306';
 $acid['db']['user']             = 'acidfarm';
 $acid['db']['pass']             = 'acidfarm';
 $acid['db']['base']             = 'acidfarm';
-$acid['db']['prefix']           = 'af_'; 
+$acid['db']['prefix']           = 'af_';
 
 
 // Meta tags
@@ -105,11 +106,11 @@ $acid['user']['levels'] = array(
                                     $acid['lvl']['dev']       => 'Développeur'
                                 );
 
-// Permissions                                
-$acid['permission']	 			= array();                               
-$acid['permission_groups']	 	= array('id_user','id_group','level');  
+// Permissions
+$acid['permission']	 			= array();
+$acid['permission_groups']	 	= array('id_user','id_group','level');
 $acid['permission_active']		= true;
-                                
+
 // Lang
 $acid['lang']['default']        = 'fr';
 $acid['lang']['available']      = array('fr');
@@ -136,7 +137,7 @@ $acid['cookie']['httponly']     = true;                      // Protection le vo
 
 
 // Sessions
-$acid['session']['enable']      = isset($acid['session']['enable']) ? 
+$acid['session']['enable']      = isset($acid['session']['enable']) ?
 								  $acid['session']['enable'] : true;  // Enable/Disable session
 $acid['session']['name']        = 'session';                           // Cookie name
 $acid['session']['table']       = $acid['db']['prefix'] . 'session';   // Cookie name
@@ -181,7 +182,7 @@ $acid['log']['filename']        = 'acidfarm';
 $acid['log']['filename_date']   = 'Y-m-d';
 $acid['log']['date_format']     = 'Y-m-d H:i:s';
 $acid['log']['keys']			= '*'; // '*' OR array('ACID','DEBUG','SQL','SESSION','INFO','URL','USER','DEPRECATED','HACK','ERROR')
-$acid['log']['type'] 			= 'single'; // single / daily 
+$acid['log']['type'] 			= 'single'; // single / daily
 $acid['log']['custom']			= '';
 $acid['log']['colorize']		= array();
 
@@ -200,7 +201,7 @@ $acid['debug']                  = true;
 $acid['phplog']['enable']       = true;
 $acid['phplog']['filename']     = 'php_errors';
 $acid['phplog']['path']		    = SITE_PATH . 'logs/';
-$acid['phplog']['type']		    = 'single'; // single / daily 
+$acid['phplog']['type']		    = 'single'; // single / daily
 $acid['error_report']['debug']	= E_ALL & ~E_STRICT;
 $acid['error_report']['prod']	= 0;
 
@@ -209,7 +210,7 @@ $acid['files']['file_mode']     = 0644;
 $acid['files']['ext'][0]        = array('jpg','jpeg','png','gif');                              // 0 Images avec miniatures
 $acid['files']['ext'][1]        = array('bmp','psd','eps','tiff');                              // 1 Images
 $acid['files']['ext'][2]        = array('mp3','wav','mpc','ogg','wma');                         // 2 Son
-$acid['files']['ext'][3]        = array('avi','mpg','mpeg','wmv','flv');                        // 3 Vidéo 
+$acid['files']['ext'][3]        = array('avi','mpg','mpeg','wmv','flv');                        // 3 Vidéo
 $acid['files']['ext'][4]        = array('pdf');                                                 // 4 PDF
 $acid['files']['ext'][5]        = array('txt','doc','odt','rtf');                               // 5 Documents texte
 $acid['files']['ext'][6]        = array('xls','ods');                                           // 6 Feuilles de caculs

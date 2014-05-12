@@ -3121,6 +3121,7 @@ abstract class AcidModuleCore {
 		$add_filter = isset($conf['filter']) ? $conf['filter'] : array();
 		$add_order = isset($conf['order']) ? $conf['order'] : array();
 		$mods = isset($conf['mods']) ? $conf['mods'] : $this->getAdminListMods();
+
 		$modules = array();
 
 		//Display mode
@@ -3446,6 +3447,26 @@ abstract class AcidModuleCore {
 	*/
 	public function getAdminListMods() {
 		return isset($this->config['admin']['list']['mods']) ? $this->config['admin']['list']['mods'] : false;
+	}
+
+	/**
+	 * Retourne le combo ORM associé à l'objet
+	 *
+	 *
+	 * @return array
+	 */
+	public function getAdminListCombo() {
+		return isset($this->config['admin']['list']['combo']) ? $this->config['admin']['list']['combo'] : 'AND';
+	}
+
+	/**
+	 * Retourne le group by ORM associé à l'objet
+	 *
+	 *
+	 * @return array
+	 */
+	public function getAdminListGroupBy() {
+		return isset($this->config['admin']['list']['group_by']) ? $this->config['admin']['list']['group_by'] : '';
 	}
 
 	/**

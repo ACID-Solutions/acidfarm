@@ -23,18 +23,24 @@ $acid['includes']['UserPermission']    	 = 'sys/modules/user_permission.php';
 //Site
 $acid['includes']['Page']         		 = 'sys/modules/page.php';
 $acid['includes']['Actu']        		 = 'sys/modules/actu.php';
-$acid['includes']['Contact']	  		 = 'sys/modules/contact.php';
 $acid['includes']['PhotoHome']	  		 = 'sys/modules/photo_home.php';
 $acid['includes']['Photo']	  	  		 = 'sys/modules/photo.php';
 
+//Tools
+$acid['includes']['Contact']	  = 'sys/tools/contact.php';
+
 // Libraries
 $acid['includes']['Lib'] 		  = 'sys/tools/lib.php';
+$acid['includes']['Lang'] 		  = 'sys/tools/lang.php';
 $acid['includes']['Conf'] 		  = 'sys/tools/conf.php';
 $acid['includes']['Ajax'] 	 	  = 'sys/tools/ajax.php';
 $acid['includes']['Route'] 	 	  = 'sys/tools/route.php';
 
 // Admin Config
 $acid['includes']['SiteConfig']	  = 'sys/modules/config.php';
+
+// Conroller Tools
+$acid['includes']['SitemapController'] 	 	  = 'sys/controller/acid/SitemapController.php';
 
 // Print
 $acid['includes']['MyTemplate']   = 'sys/template.php';

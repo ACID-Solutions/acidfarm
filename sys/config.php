@@ -49,12 +49,15 @@ include(SITE_PATH.'sys/includes.php');
 // LANG
 //************************************************************************************//
 
-$acid['lang']['use_nav_0'] 		= false;
+if (empty($acid['lang']['use_server'])) {
 
+	$def_lang = 'en'; //fr
+	$acid['lang']['use_nav_0'] 		= false;
+	$acid['lang']['default']        = $def_lang;
+	$acid['lang']['available']      = array($def_lang);
 
-$def_lang = 'en'; //fr
-$acid['lang']['default']        = $def_lang;
-$acid['lang']['available']      = array($def_lang);
+}
+
 $acid['lang']['current']      	= $acid['lang']['default'];
 
 // SITE CONFIGURATION

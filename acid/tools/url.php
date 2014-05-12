@@ -2,7 +2,7 @@
 
 /**
  * AcidFarm - Yet Another Framework
- * 
+ *
  * Requires PHP version 5.3
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
@@ -28,9 +28,13 @@ class AcidUrl
     public static function error403() {
         header($_SERVER['SERVER_PROTOCOL'].' 403 Forbidden');
         Acid::log('url','AcidUrl::error403');
-        $GLOBALS['html'] .= '<h1>'.Acid::trad('url_access_denied').'</h1>';
+
+        include SITE_PATH . 'sys/pages/403.php';
+        echo $GLOBALS['html'];
+
+        include ACID_PATH . 'stop.php';
     }
-    
+
     /**
      * Procède à l'appel d'une erreur 404 (Page non trouvée)
      * Appel du fichier 404
@@ -38,27 +42,27 @@ class AcidUrl
     public static function error404() {
         header($_SERVER['SERVER_PROTOCOL'].' 404 Not Found');
         Acid::log('url','AcidUrl::error404 ' . $_SERVER['REQUEST_URI']);
-        
+
         include SITE_PATH . 'sys/pages/404.php';
     }
-    
+
     /**
      * Procède à l'appel d'une erreur 503 (Service non disponible)
      * Appel du fichier 503
      */
     public static function error503() {
-        header($_SERVER['SERVER_PROTOCOL'].' 503 Service Unavailable'); 
+        header($_SERVER['SERVER_PROTOCOL'].' 503 Service Unavailable');
         Acid::log('url','AcidUrl::error503 ' . $_SERVER['REQUEST_URI']);
-        
+
         include SITE_PATH . 'sys/pages/503.php';
 		echo $GLOBALS['html'];
-		
+
         include ACID_PATH . 'stop.php';
     }
-    
+
     /**
      * Procède à l'appel d'une redirection 301 vers $url
-     * 
+     *
      * @param string $url
      */
     public static function redirection301($url) {
@@ -68,10 +72,10 @@ class AcidUrl
         Acid::log('url','AcidUrl::redirection301 : ' . $url);
         include ACID_PATH . 'stop.php';
     }
-    
+
     /**
      * Effectue une redirection vers $url.
-     * 
+     *
      * @param string $url
      */
     public static function redirection($url) {
@@ -79,15 +83,15 @@ class AcidUrl
         Acid::log('url','AcidUrl::redirection302 : ' . $url);
         include ACID_PATH . 'stop.php';
     }
-    
+
  	/**
      * Redéfinit les paramètres pour une URL
-     * 
+     *
      * @param array $tab
      */
     public static function buildParams($tab=null) {
     	$tab = ($tab===null) ? $_GET : $tab;
-    	
+
     	$res = '';
     	if (count($tab)) {
     		foreach ($tab as $k => $v) {
@@ -98,30 +102,30 @@ class AcidUrl
     	}
 		return $res;
     }
-    
+
 	/**
      * Créer des champs hidden correspondant à la signature $_GET
-     * 
+     *
      * @param array $tab
      */
     public static function buildFields($tab=null) {
     	$tab = empty($_GET) ? array() : $_GET;
-    	
+
     	$res ='';
     	if (count($tab)) {
 	    	foreach ($tab as $k =>$v) {
 	    		$res .=  '<input type="hidden" value="'.urlencode($v).'" />';
 	    	}
     	}
-    	
+
 		return $res;
     }
-    
+
     /**
      * Retourne une version normalisée pour une URL de la chaîne de carractère en entrée.
      *
      * @param string $str
-     * 
+     *
      * @return string
      */
     public static function normalize($str) {
@@ -137,18 +141,18 @@ class AcidUrl
         }
         return $output;
     }
-    
+
     /**
      * Retourne une URL en fonction des paramètres de $_GET, ainsi que les paramètres en entrée.
      *
      * @param array $params A ajouter.
      * @param array $without A enlever du GET.
      * @param string $url_src Si définit, on utilisera $url_src pour base, $_SERVER['REQUEST_URI'] sinon
-     * 
+     *
      * @return string
      */
 	public static function build ($params=array(),$without=array(),$url_src=null) {
-    	
+
     	if ($url_src === null) {
     		$tab = $_GET;
     		$url_src = $_SERVER['REQUEST_URI'];
@@ -165,32 +169,32 @@ class AcidUrl
                 }
             }
     	}
-    	
+
     	$gets = array();
     	foreach ($tab as $key => $val) {
             $gets[$key] = $key.'='.$val;
         }
-        
+
         foreach($params as $key => $val) {
             $gets[$key] = $key.'='.$val;
         }
-        
+
         foreach ($without as $key) {
             if (isset($gets[$key])) {
                 unset($gets[$key]);
             }
         }
-        
+
         $url_parsed = explode('?',$url_src);
         $next = empty($gets) ? '' : '?' . implode('&amp;',$gets);
         return $url_parsed[0] . $next;
     }
-	  
+
     /**
      * Détecte une URL et la retourne avec la balise <a>
      *
      * @param string $str Chaîne à vérifier.
-     * 
+     *
      * @return string
      */
     public static function linkurl($str) {

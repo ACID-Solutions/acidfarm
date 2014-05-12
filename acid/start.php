@@ -2,7 +2,7 @@
 
 /**
  * AcidFarm - Yet Another Framework
- * 
+ *
  * Requires PHP version 5.3
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
@@ -120,13 +120,13 @@ if ($acid['phplog']['enable']) {
 		case 'daily' :
 			$phplog_name = $acid['phplog']['filename'] . '_' . date($acid['log']['filename_date']) . '.log';
 		break;
-		
+
 		default :
 			$phplog_name = $acid['phplog']['filename'] . '.log';
 		break;
 	}
-	
-	
+
+
 	ini_set('error_log', $acid['phplog']['path'].$phplog_name);
 	ini_set('log_errors', 'On');
 }
@@ -175,15 +175,7 @@ require ACID_PATH . 'core/acid_upgrade.php';
 require ACID_PATH . 'core/vars.php';
 require ACID_PATH . 'core/module.php';
 
-if (file_exists($acid['core']['module']['path'])) {
-	include $acid['core']['module']['path'];
-}else{
-	/**
-	 * Permet la modification utilisateur de l'ensemble des AcidModule
-	 * @package   User Module
-	 */
-	abstract class AcidModule extends AcidModuleCore {}
-}
+require_once ACID_PATH . 'extend.php';
 
 require_once ACID_PATH . 'core/router/acid_router.php';
 require_once ACID_PATH . 'core/router/acid_route.php';

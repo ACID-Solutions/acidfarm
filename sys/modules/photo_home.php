@@ -44,7 +44,7 @@ class PhotoHome extends AcidModule {
 		if ($langs = Acid::get('lang:available')) {
 			/*AUTODETECTION DU MULTILINGUE*/
 			//commenter cette ligne pour desactiver le multilingue auto
-			$have_lang_keys = count($langs)>1;
+			$have_lang_keys = (count($langs)>1) || Acid::get('lang:use_nav_0');
 			//POUR CHAQUE LANGUE
 			foreach ($langs as $l) {
 				//AUTODETECT

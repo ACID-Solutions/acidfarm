@@ -2,7 +2,7 @@
 
 /**
  * AcidFarm - Yet Another Framework
- * 
+ *
  * Requires PHP version 5.3
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
@@ -20,57 +20,57 @@
  * @package   Core
  */
 class AcidRoute{
-	
+
 	/**
 	 * @var string URI
 	 */
     protected $URI              = null;
-    
+
     /**
      * @var string URI partielle
      */
     protected $_partitional_URI = null;
-    
+
     /**
      * @var string URI générée
      */
     protected $generatedURI     = null;
-    
+
     /**
      * @var string Module associé à la route
      */
     protected $module           = null;
-    
+
     /**
      * @var string Controller associé à la route
      */
     protected $controller       = null;
-    
+
     /**
      * @var string Méthode liée à la route
      */
     protected $action           = null;
-    
+
     /**
      * @var array Paramètres obligatoires
      */
     protected $params           = array();
-    
+
     /**
      * @var array Cette route contient des paramètres partiels
      */
     protected $partial          = null;
-    
+
     /**
      * @var array  Paramètres partiels
      */
     protected $partialParams    = array();
-    
+
     /**
      * @var string Nom de la route
      */
     protected $name    			= null;
-    
+
     /**
      * Constructeur
      * @param string $URI alias de la route
@@ -93,7 +93,7 @@ class AcidRoute{
              }
         }
     }
-    
+
     /**
      * Définit le nom de la route
      * @param string $val
@@ -102,7 +102,7 @@ class AcidRoute{
     public function setName($val){
     	return $this->name = $val;
     }
-    
+
     /**
      * Retourne le nom de la route
      * @return string
@@ -110,7 +110,7 @@ class AcidRoute{
     public function getName(){
     	return $this->name;
     }
-    
+
     /**
      * Retourn l'URI de la route
      * @return string
@@ -118,7 +118,7 @@ class AcidRoute{
     public function getURI(){
         return $this->URI;
     }
-    
+
     /**
      * Retourne l'URI partielle de la route
      * @return string
@@ -126,16 +126,16 @@ class AcidRoute{
     public function getPartitionalUri(){
         return $this->_partitional_URI;
     }
-    
+
     /**
-     * Retourne si le chemin en entré coïncide avec la route  
+     * Retourne si le chemin en entré coïncide avec la route
      * @param string $path
      * @param unknown_type $partial_on_fail
      * @return boolean
      */
 	public function match($path,$partial_on_fail=null){
-    	
-    	
+
+
         if($path!==''){
             $path = explode(AcidRouter::URI_DELIMITER, $path);
         }
@@ -143,16 +143,16 @@ class AcidRoute{
         $param='';
         $matched = false;
         $currentPartial = 0;
-        
+
         if(count($path)<count($this->_partitional_URI)){
             return false;
         }
 
-      
-        
+
+
         foreach ($path as $key => $value) {
 			$value = urldecode($value);
-        	
+
            if(!array_key_exists($key, $this->_partitional_URI)){
                if(isset($this->partial['start'])){
                    if(isset($this->partial['stop'])&&$this->partial['stop']===$currentPartial){
@@ -170,36 +170,36 @@ class AcidRoute{
                $this->params[substr($this->_partitional_URI[$key], 1)] = $value;
                continue;
            }
-           // IS A TRANSLATE   
+           // IS A TRANSLATE
            if($this->_partitional_URI[$key]{0}==='@'){
                if($this->proceedToTranslate($key,$value)){
                    continue;
                }
                return false;
                break;
-               
+
            }
            if($value===$this->_partitional_URI[$key]){
                $this->generatedURI.=$value.'|';
            }else{
-	           	
+
            		if ($partial_on_fail) {
 	           		if (!is_array($partial_on_fail)) {
 	           			$partial_on_fail = $path;
 	           		}
 	           		$this->setPartial($partial_on_fail);
 	           	}
-	           	
+
                $matched = false;
                return false;
            }
         }
-        
-        
-        
+
+
+
         return true;
     }
-    
+
     /**
      * Traduit une route
      * @param string $key
@@ -209,7 +209,7 @@ class AcidRoute{
     public function proceedToTranslate($key,$value){
         $langRout = $GLOBALS['lang']['router'];
         $lang = (Acidrouter::getCurrentLang()!=='')?AcidRouter::getCurrentLang():Acid::get('lang:current');
-                       
+
         if(array_key_exists(substr($this->_partitional_URI[$key], 1),$langRout)){
             if(array_key_exists($lang, $langRout[substr($this->_partitional_URI[$key], 1)])){
                 if($value===$langRout[substr($this->_partitional_URI[$key], 1)][$lang]['key']){
@@ -221,7 +221,7 @@ class AcidRoute{
         }
         return false;
     }
-    
+
     /**
      * Retourne les paramètres obligatoires
      * @return array
@@ -229,7 +229,7 @@ class AcidRoute{
     public function getParams(){
         return $this->params;
     }
-    
+
     /**
      * Retourne les paramètres partiels
      * @return array
@@ -237,7 +237,7 @@ class AcidRoute{
     public function getPartials(){
         return $this->partialParams;
     }
-    
+
     /**
      * Definit les paramètres obligatoires
      * @param array $new_params
@@ -249,7 +249,7 @@ class AcidRoute{
             }
         }
     }
-    
+
     /**
      * Definit les paramètres partiels
      * @param mixed $value
@@ -259,7 +259,7 @@ class AcidRoute{
     	if ($clear) {
     		$this->cleanPartialParams();
     	}
-    	
+
     	if (($value) && (is_array($value))) {
     		foreach ($value as $val) {
     			$this->partialParams[] = $val;
@@ -268,7 +268,7 @@ class AcidRoute{
         	$this->partialParams[] = $value;
     	}
     }
-    
+
     /**
      * Traitement la route
      * @throws Exception
@@ -279,9 +279,11 @@ class AcidRoute{
         if (file_exists($include_url)){
             include_once($include_url);
             $className = $this->controller;
+            Acid::log('ROUTER','Calling '.$className);
             if(class_exists($className)){
                 $instance = new $className();
                 $action = $this->action;
+                Acid::log('ROUTER','Launching '.$action);
                 if(method_exists($instance, $action)){
                     $instance->$action();
                     return true;
@@ -298,7 +300,7 @@ class AcidRoute{
             return false;
         }
     }
-    
+
     /**
      * Supprimes les paramètres associés à la route
      * @param string $name
@@ -310,14 +312,14 @@ class AcidRoute{
             $this->params = array();
         }
     }
-    
+
     /**
      * Supprimes les paramètres partiels associés à la route
      */
     public function cleanPartialParams(){
-        $this->partialParams = array(); 
+        $this->partialParams = array();
     }
-    
+
     /**
      * Builder
      * @return boolean|Ambigous <string, unknown>
@@ -325,7 +327,7 @@ class AcidRoute{
     public function build(){
        $final_url = '';
        $langRout = $GLOBALS['lang']['router'];
-       if(AcidRouter::getInstance()->getDefaultRoute()->getURI()!==$this->URI){ 
+       if(AcidRouter::getInstance()->getDefaultRoute()->getURI()!==$this->URI){
            $lang = (Acidrouter::getCurrentLang()!=='')?AcidRouter::getCurrentLang():Acid::get('lang:current');
            foreach ($this->_partitional_URI as $key => $value) {
                 if($value{0}===':'){

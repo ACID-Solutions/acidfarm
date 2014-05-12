@@ -1,7 +1,7 @@
-<?php 
+<?php
 /**
  * AcidFarm - Yet Another Framework
- * 
+ *
  * Requires PHP version 5.3
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
@@ -25,11 +25,11 @@ if (!file_exists('.htaccess')) {
 
 
 if (get_magic_quotes_gpc()) {
-	
+
 
 	/**
 	 * Applique un stripslashes sur un tableau ou une chaine
-	 * @param mixed $value tableau ou chaine 
+	 * @param mixed $value tableau ou chaine
 	 * @return string
 	 */
 	function stripslashes_deep($value) {
@@ -38,43 +38,82 @@ if (get_magic_quotes_gpc()) {
 					stripslashes($value);
 		return $value;
 	}
-	
+
 	$_POST = array_map('stripslashes_deep', $_POST);
 	$_GET = array_map('stripslashes_deep', $_GET);
 	$_COOKIE = array_map('stripslashes_deep', $_COOKIE);
 	$_REQUEST = array_map('stripslashes_deep', $_REQUEST);
 }
-	
+
 
 /**
  *  Génération aléatoire de mot de passe
- *  
+ *
  *  @return string
  */
 function getRandPasswordSalt() {
 		$chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
 		$nbchars = strlen($chars);
 		$ident = '';
-		
+
 		$salt_size = 8;
 		for ($i=0;$i<=$salt_size;$i++) {
 			$ident .= $chars[rand(0,$nbchars-1)];
 		}
-		return $ident;	
+		return $ident;
 }
- 
+
 $action = $_POST;
 
 $dir_path = __DIR__.'/sys/server.php';
 $htaccess_path = __DIR__.'/.htaccess';
 $db_path = __DIR__.'/sys/db/init.sql';
+$dbml_path = __DIR__.'/sys/db/multilingual.sql';
 
 
 include(__DIR__.'/acid/core/acid_db.php');
 
+$css = <<< CSS
+<style type="text/css">
+<!--
+
+html, body { background-color:#9D9FA0; }
+
+
+.corpus{
+	display:table;
+	margin:auto;
+	padding:50px;
+	background-color:#EFEFEF;
+	border:1px solid #CCCCCC;
+}
+
+.corpus .block{ }
+.corpus	h2 { margin:0px; margin-bottom:5px; padding-bottom:5px; border:0px solid #000000; border-bottom-width:1px;  }
+
+
+.corpus .btn{
+	margin:auto;
+	display:block;
+	cursor:pointer;
+	width:150px;
+	padding:10px;
+	border:1px solid #FFFFFF;
+	background-color:#2A2A2A;
+	color:#FFFFFF;
+	font-weight:bold;
+}
+
+.corpus .btn:hover{ opacity:0.5; filter:alpha(opacity=50); }
+
+-->
+</style>
+CSS;
 
 if (!is_writable(dirname($dir_path))) {
+	echo $css. "\n" .'<div class="corpus">';
 	echo 'Write access denied in <b>' . dirname($dir_path) . '</b>. Folder must be writable.';
+	echo '</div>';
 	exit();
 }
 
@@ -82,41 +121,41 @@ if (!is_writable(dirname($dir_path))) {
 
 
 if (!file_exists($dir_path)) {
-	
+
 	if (isset($action['acidfarm_do'])) {
-		
+
 		$name 			= addslashes($action['site_name']);
 		$mail 			= addslashes($action['site_mail']);
 		$salt 			= addslashes($action['site_salt']);
-		
+
 		$config_contact 		= addslashes($action['config_contact']);
 		$config_phone 			= addslashes($action['config_phone']);
 		$config_fax 			= addslashes($action['config_fax']);
 		$config_address 		= addslashes($action['config_address']);
 		$config_cp 				= addslashes($action['config_cp']);
 		$config_city 			= addslashes($action['config_city']);
-		
+
 		$username 		= addslashes($action['user_name']);
 		$userpass 		= addslashes($action['user_pass']);
 		$usermail 		= addslashes($action['user_mail']);
 		$user_salt		= getRandPasswordSalt();
-		
+
 		$scheme 		= addslashes($action['scheme']);
 		$domain 		= addslashes($action['domain']);
 		$folder 		= addslashes($action['folder']);
-		
+
 		$devmode		= addslashes($action['devmode']);
 		$upg_mode		= $devmode=='prod' ? 'prod' : 'dev';
 		$lprod_quote	= $devmode=='prod' ? '' : '//';
 		$lpp_quote		= $devmode=='preprod' ? '' : '//';
 		$lpp_plus_quote  = in_array($devmode,array('preprod','prod')) ? '':'//';
 		$lpp_less_quote  = in_array($devmode,array('preprod','dev')) ? '':'//';
-		
+
 		$ldev_quote		= $devmode=='dev' ? '' : '//';
 		$cssdyn_mode	= $devmode=='dev' ? 'debug' : 'default';
-		
+
 		$hoster 		= addslashes($action['hoster']);
-		
+
 		$dbtype 		= addslashes($action['db_type']);
 		$dbhost 		= addslashes($action['db_host']);
 		$dbport 		= addslashes($action['db_port']);
@@ -124,8 +163,20 @@ if (!file_exists($dir_path)) {
 		$dbpass 		= addslashes($action['db_password']);
 		$dbname 		= addslashes($action['db_name']);
 		$dbpref 		= addslashes($action['db_pref']);
-		
+
 		$db_init = !empty($action['init_db']);
+
+		$multilingual = !empty($action['multilingual']);
+
+		$lang_manual = !empty($action['site-lang-manual']);
+		$lang_quote = $lang_manual ? '' : '//';
+
+		$lang_available = !empty($action['site-lang-available']) ? $action['site-lang-available'] : array();
+		$lang_default = !empty($action['site-lang-default']) ? $action['site-lang-default'] : '';
+		$lang_use_nav_0 = (count($lang_available) > 1);
+
+		$lang_use_nav_0_value =  $lang_use_nav_0 ? 'true' : 'false';
+		$lang_available_value =  "'".implode("','",$lang_available)."'";
 
 		$config = <<< EOT
 <?php
@@ -153,6 +204,12 @@ if (!file_exists($dir_path)) {
 $lpp_plus_quote\$acid['email']['method']          	= 'smtp';
 $lpp_plus_quote\$acid['email']['smtp']['host']		= 'localhost'; // If smtp'
 
+
+$lang_quote\$acid['lang']['use_server'] 	= true;
+$lang_quote\$acid['lang']['use_nav_0'] 		= $lang_use_nav_0_value;
+$lang_quote\$acid['lang']['default']        = '$lang_default';
+$lang_quote\$acid['lang']['available']      = array($lang_available_value);
+
 // SESSION
 \$acid['session']['table']	     = \$acid['db']['prefix'] . 'session';
 
@@ -165,8 +222,8 @@ $lpp_plus_quote\$acid['email']['smtp']['host']		= 'localhost'; // If smtp'
 \$acid['url']['folder_lang']     = \$acid['url']['folder'];
 
 // COOKIES
-//\$acid['cookie']['path']          = \$acid['url']['folder']; // Dossier pour lequel le cookie est accessible 
-//\$acid['cookie']['domain']          = \$acid['url']['domain']; // Domaine pour lequel le cookie est accessible 
+//\$acid['cookie']['path']          = \$acid['url']['folder']; // Dossier pour lequel le cookie est accessible
+//\$acid['cookie']['domain']          = \$acid['url']['domain']; // Domaine pour lequel le cookie est accessible
 
 // Salt
 \$acid['hash']['salt']           = '$salt';
@@ -177,12 +234,12 @@ $lpp_plus_quote\$acid['email']['smtp']['host']		= 'localhost'; // If smtp'
 // PROD DEBUG : array('START','SQL','SESSION','INFO','URL','USER','DEPRECATED','ROUTER','PERMISSION','HACK','ERROR','PAYPAL','PAYMENT','MAINTENANCE','FILE')
 $lpp_quote\$acid['log']['keys']          	= array('START','SQL','SESSION','INFO','POSTINFO','URL','USER','DEPRECATED','ROUTER','PERMISSION','HACK','ERROR','PAYPAL','PAYMENT','MAINTENANCE','FILE'); //Preprod
 $lprod_quote\$acid['log']['keys']          	= array('INFO','POSTINFO','URL','DEPRECATED','HACK','ERROR','PAYMENT','MAINTENANCE','FILE'); //Prod
-$lprod_quote\$acid['log']['type']          	= 'daily'; // single / daily 
+$lprod_quote\$acid['log']['type']          	= 'daily'; // single / daily
 //\$acid['log']['colorize']         = array();
 $lprod_quote\$acid['debug']		         	= false;
 $lprod_quote\$acid['error_report']['debug']	= E_ALL & ~E_STRICT;
 $lprod_quote\$acid['error_report']['prod']	= 0;
-				
+
 // Maintenance
 \$acid['maintenance']           	= false;
 //\$acid['maintenance_desc']		= 'Site en maintenance...';
@@ -205,17 +262,17 @@ $lprod_quote\$acid['error_report']['prod']	= 0;
 
 EOT;
 
-		
+
 		$h = fopen($dir_path,'w');
 		$ec = fwrite($h, $config);
 		fclose($h);
-		
+
 		$htaccessOVH = ($hoster == 'ovh') ?
 		'# OVH' . "\n" .
 		'SetEnv PHP_VER 5_TEST' . "\n" .
 		'SetEnv REGISTER_GLOBALS 0' . "\n" .
 		'SetEnv MAGIC_QUOTES 0' : '';
-		
+
 		$htaccess = <<< HTACC
 # Charset
 AddDefaultCharset UTF-8
@@ -228,18 +285,18 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ {$folder}index.php?acid_nav=$1 [L,QSA]
 HTACC;
-		
+
 		$h = fopen($htaccess_path,'w');
 		$eh = fwrite($h, $htaccess);
 		fclose($h);
-			
+
 		if ($db_init) {
-			
+
 			$requete= file_get_contents($db_path);
 			$requete = str_replace('`acid_','`'.$dbpref, $requete);
-			
+
 			$requete .= "\n" ."UPDATE `".$dbpref."user` SET `username`='".$username."', `password`=MD5('".$salt.$userpass.$user_salt."'),`email`='".$usermail."', `user_salt`='".$user_salt."' WHERE `id_user`='1';";
-						
+
 			$requete .= "\n" ."INSERT INTO `".$dbpref."config` (`id_config`, `name`, `value`) VALUES (NULL, 'email', '".$mail."');" ;
 			$requete .= "\n" ."INSERT INTO `".$dbpref."config` (`id_config`, `name`, `value`) VALUES (NULL, 'fax', '".$config_fax."');" ;
 			$requete .= "\n" ."INSERT INTO `".$dbpref."config` (`id_config`, `name`, `value`) VALUES (NULL, 'phone', '".$config_phone."');" ;
@@ -248,14 +305,22 @@ HTACC;
 			$requete .= "\n" ."INSERT INTO `".$dbpref."config` (`id_config`, `name`, `value`) VALUES (NULL, 'cp', '".$config_cp."');" ;
 			$requete .= "\n" ."INSERT INTO `".$dbpref."config` (`id_config`, `name`, `value`) VALUES (NULL, 'contact', '".$config_contact."');" ;
 			$requete .= "\n" ."INSERT INTO `".$dbpref."config` (`id_config`, `name`, `value`) VALUES (NULL, 'website', '".htmlspecialchars($scheme.$domain.$folder)."');" ;
-			
+
 			$ressource = new PDO($dbtype.':host='.$dbhost.';port='.$dbport.';dbname='.$dbname, $dbuser, $dbpass);
 			$ressource->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			$ressource->exec("SET CHARACTER SET UTF8");
 			$ressource->exec($requete);
-			
+
+			if ($multilingual) {
+				$ressource->exec('COMMIT;');
+				$requeteml= file_get_contents($dbml_path);
+				$requeteml = str_replace('`acid_','`'.$dbpref, $requeteml);
+				$ressource->exec($requeteml);
+			}
+
+
 		}
-		
+
 		//ADDING IGNORED FILES
 		$file_to_add = array('/sys/stats.tpl','/sys/update/cur_version.txt','/sys/upgrade/cur_version.txt');
 		foreach ($file_to_add as $fta) {
@@ -264,7 +329,7 @@ HTACC;
 				file_put_contents($fa_path,'');
 			}
 		}
-		
+
 		//ADDING IGNORED PATHS
 		$path_to_add = array('/files','/files/users','/files/tmp','/files/home','/files/photo','/upload','/logs');
 		foreach ($path_to_add as $pta) {
@@ -273,7 +338,7 @@ HTACC;
 				mkdir($pa_path);
 			}
 		}
-		
+
 		//ADDING DENY FROM ALL
 		$path_to_secure = array('/logs');
 		foreach ($path_to_secure as $pts) {
@@ -284,15 +349,16 @@ HTACC;
 				fclose($h);
 			}
 		}
-		
-		
+
+
+		echo $css. "\n" .'<div class="corpus">';
 		if ((!$ec) || (!$eh)) {
 			echo 'An error happened.';
-		}else{				
+		}else{
 			echo 'Install complete<br /><br />'.'<a href="'.$scheme.$domain.$folder.'">Go to your website.</a>';
 		}
-		
-		
+		echo '</div>';
+
 	}else{
 		$folder = explode('/',$_SERVER['PHP_SELF']);
 		if (count($folder)) {
@@ -300,36 +366,48 @@ HTACC;
 		}
 		$folder_sample = implode('/',$folder);
 		$salt_sample = rand(0,9).rand(0,9).rand(0,9).rand(0,9).rand(0,9);
-		
+
 		$scheme = empty($_SERVER['HTTPS']) ? 'http' : 'https';
-		
+
 		$prod_selected = strpos($_SERVER['HTTP_HOST'],'www.')===0 ? ' selected="selected" ' : '';
-		
+
+
 		$form = <<< FORM
-<form action="#" method="post">
-	<div><pre>
+<form class="corpus" action="#" method="post">
+	<div><pre><h1>Install your AcidFarm</h1>
 	<input type="hidden" name="acidfarm_do" value="install" />
+	<div class="block">
 	<h2>Site Profile</h2>
-	Site name : <input type="text" name="site_name" value="" /><br /> 
+	Site name : <input type="text" name="site_name" value="" /><br />
 	Site email : <input type="text" name="site_mail" value="" /><br />
 	Site Salt : <input type="text" name="site_salt" value="{$salt_sample}" /> personal keycode used for securing passwords or other elements of your website<br />
+	</div>
+	<div class="block">
 	<h2>Site Url</h2>
-	Site scheme : <input type="text" name="scheme" value="{$scheme}://" /><br /> 
+	Site scheme : <input type="text" name="scheme" value="{$scheme}://" /><br />
 	Site domain : <input type="text" name="domain" value="{$_SERVER['HTTP_HOST']}" /> (ex : acid-solutions.fr)<br />
 	Site folder : <input type="text" name="folder" value="{$folder_sample}/" /> alway finish with / (ex : /acidfarm/ )<br />
+	</div>
+	<div class="block">
 	<h2>Site Profil</h2>
-	Site contact : <input type="text" name="config_contact" value="" /> ( for example the webmaster )<br /> 
+	Site contact : <input type="text" name="config_contact" value="" /> ( for example the webmaster )<br />
 	Site address : <input type="text" name="config_address" value="" /><br />
 	Site cp : <input type="text" name="config_cp" value="" /><br />
 	Site city : <input type="text" name="config_city" value="" /><br />
 	Site phone : <input type="text" name="config_phone" value="" /><br />
 	Site fax : <input type="text" name="config_fax" value="" /><br />
+	</div>
+	<div class="block">
 	<h2>User Profile</h2>
-	User name : <input type="text" name="user_name" value="admin" /><br /> 
+	User name : <input type="text" name="user_name" value="admin" /><br />
 	User password : <input type="password" name="user_pass" value="admin" /><br />
-	User mail : <input type="text" name="user_mail" value="" /><br /> 	
+	User mail : <input type="text" name="user_mail" value="" /><br />
+	</div>
+	<div class="block">
 	<h2>Configuration</h2>
 	Server Mode : <select name="devmode"><option value="dev">Dev</option><option value="preprod">Preprod</option><option value="prod"{$prod_selected}>Prod</option></select>
+	</div>
+	<div class="block">
 	<h2>Housing</h2>
 	<select name="hoster">
 		<option value="0">Hoster</option>
@@ -337,25 +415,37 @@ HTACC;
 		<option value="1and1">1and1</option>
 		<option value="other">other</option>
 	</select> (ex :  some server host need a particular .htaccess file)
+	</div>
+	<div class="block">
+	<h2>Lang</h2>
+	<label><input type="checkbox" name="site-lang-manual" value="1" /> Custom mode -</label> <b>Do not check for default setting</b><br />
+		<label>Prepare database for multilingual <input type="checkbox" name="multilingual" value="1" /> </label><br />
+		Available : <label> fr <input type="checkbox" name="site-lang-available[]" value="fr" /></label> <label> en <input type="checkbox" name="site-lang-available[]" value="en" /></label> <label> de <input type="checkbox" name="site-lang-available[]" value="de" /></label> <label> es <input type="checkbox" name="site-lang-available[]" value="es" /></label> <label> it <input type="checkbox" name="site-lang-available[]" value="it" /></label><br />
+		Default : <select name="site-lang-default" ><option value=""></option> <option value="fr">fr</option><option value="en">en</option><option value="de">de</option><option value="es">es</option><option value="it">it</option></select>
+	</div>
+	<div class="block">
 	<h2>Database</h2>
-	Initialize database   <input type="checkbox" name="init_db"  value="1" checked="checked" /><br />
-	type : <input type="text" name="db_type" value="mysql" /> (ex : mysql, pgsql, sqlite, odbc, oci (oracle), dblib (microsoft))<br /> 
-	host : <input type="text" name="db_host" value="localhost" /><br /> 
-	port : <input type="text" name="db_port" value="3306" /><br /> 
-	username : <input type="text" name="db_user" value="" /><br /> 
+	<label>Initialize database   <input type="checkbox" name="init_db"  value="1" checked="checked" /></label><br />
+	type : <input type="text" name="db_type" value="mysql" /> (ex : mysql, pgsql, sqlite, odbc, oci (oracle), dblib (microsoft))<br />
+	host : <input type="text" name="db_host" value="localhost" /><br />
+	port : <input type="text" name="db_port" value="3306" /><br />
+	username : <input type="text" name="db_user" value="" /><br />
 	password : <input type="password" name="db_password" value="" /><br />
 	database : <input type="text" name="db_name" value="" /><br />
 	prefix : <input type="text" name="db_pref" value="acid_" /><br />
-	<input type="submit" value="Install">
+	</div>
+	<input class="btn" type="submit" value="Install">
 	</pre></div>
 </form>
 FORM;
-		
-		echo $form;
+
+		echo $css. "\n" . $form;
 	}
 
 }else{
-	
+
+	echo $css. "\n" .'<div class="corpus">';
 	echo 'Installation has already been done.';
+	echo '</div>';
 
 }

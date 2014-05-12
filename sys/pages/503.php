@@ -2,7 +2,7 @@
 
 /**
  * AcidFarm - Yet Another Framework
- * 
+ *
  * Requires PHP version 5.3
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
@@ -16,8 +16,4 @@
  */
 
 
-Conf::addToContent(
-		'<h1 class="erreur405">'.Acid::get('maintenance_desc').'</h1>' . 
-	 	 Acid::trad('url_site_unvailable')
-);
-
+Conf::addToContent(Acid::tpl('pages/url/503.tpl'));

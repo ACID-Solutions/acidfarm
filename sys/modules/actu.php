@@ -35,7 +35,7 @@ class Actu extends AcidModule {
 		if ($langs = Acid::get('lang:available')) {
 			/*AUTODETECTION DU MULTILINGUE*/
 			//commenter cette ligne pour desactiver le multilingue auto
-			$have_lang_keys = count($langs)>1;
+			$have_lang_keys = (count($langs)>1) || Acid::get('lang:use_nav_0');
 			//POUR CHAQUE LANGUE
 			foreach ($langs as $l) {
 				//AUTODETECT
@@ -85,6 +85,18 @@ class Actu extends AcidModule {
 		}else{
 			return null;
 		}
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @param array $conf
+	 * @see AcidModuleCore::printAdminList()
+	 */
+	public function printAdminConfigure($do='default',$conf=array()) {
+
+		$this->config['admin']['list']['keys'] = array('id_actu',$this->langKey('title'),$this->langKey('head'),$this->langKey('content'),'adate','active');
+
+		return parent::printAdminConfigure($do,$conf);
 	}
 
 	/**

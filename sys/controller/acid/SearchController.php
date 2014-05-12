@@ -2,7 +2,7 @@
 
 /**
  * AcidFarm - Yet Another Framework
- * 
+ *
  * Requires PHP version 5.3
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
@@ -21,12 +21,12 @@
  */
 
 class SearchController {
-	
+
 	/**
 	 * Affiche la page des résultats de recherche
 	 */
     public function index(){
-      
+
         Conf::addToAriane(AcidRouter::getName('search'),Acid::get('url:folder_lang').AcidRouter::getParamById(0));
 
         $my_search = (AcidRouter::getPartialParamById(0)) ?AcidRouter::getPartialParamById(0)  : null;
@@ -42,28 +42,28 @@ class SearchController {
         $my_search = urldecode($my_search);
         $my_search = addslashes($my_search);
         $my_search = htmlspecialchars($my_search);
-        
+
         $s_modules = array(
                         'Page'=>array('fields'=>array('content','title'),'cond'=>"`active`='1'",'title_field'=>'title','head'=>'Page'),
                         'Actu'=>array('fields'=>array('content','head','title'),'cond'=>"`active`='1'",'title_field'=>'title','head'=>'News')
                     );
-        
+
         $content = '';
-        
+
         if ($my_search) {
             foreach ($s_modules as $mod => $config) {
-                $req = ''; 
+                $req = '';
                 $sub_content = '';
-                
+
                 foreach ($config['fields'] as $field) {
                     $req .= $req ? ' OR ' : '';
-                    $req .= "`".$field."` LIKE '%".$my_search."%' ";
+                    $req .= "`".Acid::mod($mod)->langKey($field)."` LIKE '%".$my_search."%' ";
                 }
-                
+
                 $requete =  "SELECT * FROM ".Acid::mod($mod)->tbl()." WHERE ".
-                            ( (!empty($config['cond'])) ? $config['cond'] . ' AND ' : '' ) . 
+                            ( (!empty($config['cond'])) ? $config['cond'] . ' AND ' : '' ) .
                             '( '.($req ? $req : '1').' )';
-                            
+
                 $res = AcidDB::query($requete)->fetchAll(PDO::FETCH_ASSOC);
                 foreach ($res as $elt) {
                     $my_mod = new $mod();
@@ -74,10 +74,10 @@ class SearchController {
                     $content .=     '<h2>'.$config['head'].'</h2>'. "\n" .
                                     '<ul>'.$sub_content.'</ul>' . "\n" ;
                 }
-                
+
             }
         }
-        
+
         if ($my_search) {
             if ($content) {
                 Conf::addToContent($content);
@@ -87,6 +87,6 @@ class SearchController {
         }else{
              Conf::addToContent(Acid::tpl('forms/search_form.tpl'));
         }
-    } 
+    }
 }
 

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * AcidFarm - Yet Another Framework
  *
@@ -19,7 +19,7 @@
  * @package   Model / View
  */
 class Func {
-	
+
 	/**
 	 * Retourne les drapeaux de langue en HTML
 	 * @return string
@@ -27,43 +27,43 @@ class Func {
 	public static function getFlags() {
 		return Acid::tpl('tools/flags.tpl');
 	}
-	
+
 	/**
 	 * Retourne le menu du site en HTML
 	 * @return string
 	 */
 	public static function getMenu() {
 		$elts = array();
-		
-		//Start		
+
+		//Start
 		$elts['index'] = array('url'=>Route::buildUrl(),'name'=>AcidRouter::getName('index'));
 		$elts['news'] = array('url'=>Actu::buildUrl(),'name'=>AcidRouter::getName('news'));
 		$elts['gallery'] = array('url'=>Photo::buildUrl(),'name'=>AcidRouter::getName('gallery'));
-		
+
 		//Middle
-		
+
 		//--getting pages using session
-		$pages = AcidSession::tmpGet('active_pages');
-		if ($pages === null) {
+		//$pages = AcidSession::tmpGet('active_pages');
+		//if ($pages === null) {
 			$pages = Page::dbList(array(array('active','=',1)));
-			AcidSession::tmpSet('active_pages',$pages,600);
-		}
-		
+			//AcidSession::tmpSet('active_pages',$pages,600);
+		//}
+
 		//--adding pages to menu
 		foreach ($pages as $key =>$elt) {
 			$p = new Page($elt);
-			$elts[$elt['ident']] = array('url'=>$p->url(),'name'=>$p->hscTrad('title'));
+			$elts[$elt[$p->langKey('ident','default')]] = array('url'=>$p->url(),'name'=>$p->hscTrad('title'));
 		}
-		
+
 		//Stop
 		$elts['contact'] = array('url'=>Route::buildUrl('contact'),'name'=>AcidRouter::getName('contact'));
         $elts['search'] = array('url'=>Route::buildUrl('search'),'name'=>AcidRouter::getName('search'));
 		$elts['siteadmin.php'] = array('url'=>Route::buildUrl('admin'),'name'=>'Admin');
-		
+
 		$vars = array('elts' => $elts);
 		return Acid::tpl('menu.tpl',$vars);
 	}
-	
+
 	/**
 	 * Retourne l'ariane en HTML à partir du tableau en entrée
 	 * @param array $ariane array('nameparent'=>'urlparent','namechild'=>'urlchild','namesubchild'=>'urlsubchild')
@@ -73,7 +73,7 @@ class Func {
 		global $acid;
 
 		$l = '›';
-		
+
 		if (empty($ariane)) {
 		    $output = Acid::get('site:name');
 		} elseif (is_array($ariane)) {
@@ -84,7 +84,7 @@ class Func {
 			    $_url = (!empty($url['url']))? $url['url']:null;
                 $_name = (!empty($url['name']))? $url['name']:$page;
                 $_key = $page;
-                
+
 				if ($i != $deep) {
 					if ($_url) {
 						$output .= ' '.$l.' <a href="'.$_url.'" class="ariane_'.$i.'" >'.htmlspecialchars($_name).'</a>';
@@ -97,15 +97,15 @@ class Func {
 				$i ++;
 			}
 		}
-	   
-       
-        
-		return	'<div class="ariane">' . "\n" . 
-					$output . 
+
+
+
+		return	'<div class="ariane">' . "\n" .
+					$output .
 				'</div>' . "\n";
-	
+
 	}
-	
+
 	/**
 	 * Appelle un picto en HTML
 	 * @param string $src url de l'image
@@ -118,7 +118,7 @@ class Func {
 		$attrs['class'] = isset($attrs['class']) ? 'picto '.$attrs['class'] : 'picto';
 		return self::callImg($src,$alt,$title,$attrs);
 	}
-	
+
 	/**
 	 * Appelle une image en HTML
 	 * @param string $src url de l'image
@@ -131,9 +131,9 @@ class Func {
 		if ($title) {
 			$attrs['title'] = $title;
 		}
-	
+
 		$attrs['alt'] = $alt ? $alt : '';
-	
+
 		if (is_array($src)) {
 			$roll = isset($src[1]) ?  $src[1] : '';
 			$src = isset($src[0]) ?  $src[0] : '';
@@ -147,12 +147,12 @@ class Func {
 			$attrs['onmouseover'] = isset($attrs['onmouseover']) ? $rolling.$attrs['onmouseover'] : $rolling;
 			$attrs['onmouseout'] = isset($attrs['onmouseout']) ? $rolling_off.$attrs['onmouseout'] : $rolling_off;
 		}
-	
+
 		$attrs['src'] = $src;
-	
-	
+
+
 		$vars = array('attrs'=>$attrs);
-	
+
 		return Acid::tpl('tools/img.tpl',$vars);
 	}
 }

@@ -1,0 +1,1 @@
+<h1 class="erreur403"><?php echo Acid::trad('url_access_denied'); ?></h1>

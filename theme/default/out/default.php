@@ -14,6 +14,7 @@
  * @link      http://www.acidfarm.net
  */
 
+$output = '';
 
 $site_class = !empty($GLOBALS['site_class']) ? $GLOBALS['site_class'] : '';
 
@@ -31,9 +32,9 @@ if ($page_class&&$nav_class) {
 
 $bhead='header';
 $bfoot = 'footer';
-if (isset($_SERVER['HTTP_USER_AGENT'])) { 
+if (isset($_SERVER['HTTP_USER_AGENT'])) {
 	$nav_old = false;
-	foreach (array('MSIE 8','MSIE 7','MSIE 6') as $search) { 
+	foreach (array('MSIE 8','MSIE 7','MSIE 6') as $search) {
 		$nav_old = $nav_old || (stripos($_SERVER['HTTP_USER_AGENT'],$search) !== false);
 	}
 	if ($nav_old) {
@@ -62,3 +63,6 @@ $output .=  <<<OUTPUT
 </$bfoot>
 
 OUTPUT;
+
+
+$this->output = $output;

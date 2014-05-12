@@ -296,6 +296,12 @@ $lang['trad']['url_404']             = '404 Non trouvé';
 $lang['trad']['url_503']             = '503 Service Indisponible';
 $lang['trad']['url_301']             = '301 Déplacement Permanent';
 
+//--Mail
+$lang['trad']['mail_footer_auto_generation'] = 'Ce courrier a été généré automatiquement par __NAME__.';
+$lang['trad']['mail_footer_no_response'] = 'Ne répondez pas à cet email, pour nous contacter utilisez le __LINK__.';
+$lang['trad']['mail_footer_contact_form'] = 'formulaire de contact';
+$lang['trad']['mail_footer_staff_generation'] = 'Email envoyé par __LINK__.';
+
 //Modules
 
 //--actu
@@ -382,7 +388,7 @@ $langs['currency']['letters_sing'] = '__VAL__ euro';
 $langs['currency']['letters_plur'] = '__VAL__ euros';
 
 
-//Date 
+//Date
 $lang['date_format']['date']     = 'd/m/Y';
 $lang['date_format']['datetime'] = 'd/m/Y H:i:s';
 $lang['date_format']['datetime_small'] = 'd/m/Y H:i';
