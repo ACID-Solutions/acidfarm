@@ -3717,6 +3717,7 @@ abstract class AcidModuleCore {
 		$images_keys = array_keys($this->getVarsImages());
 		$files_keys = array_keys($this->getVarsFiles());
 
+		$exclued_keys = isset($this->config['admin'][$do]['keys_exclued']) ? $this->config['admin'][$do]['keys_exclued'] : array();
 
 		$next_page = isset($this->config['admin'][$do]['next_page']) ? $this->config['admin'][$do]['next_page'] : null;
 		$action_page = isset($this->config['admin'][$do]['action']) ? $this->config['admin'][$do]['action'] : '';
@@ -3754,32 +3755,32 @@ abstract class AcidModuleCore {
 
 		foreach ($keys as $key) {
 			if (isset($this->vars[$key])) {
+				if (!in_array($key,$exclued_keys)) {
+					$params = isset($this->config['admin'][$do]['params'][$key]) ? $this->config['admin'][$do]['params'][$key] : array();
+					$start = isset($this->config['admin'][$do]['start'][$key]) ? $this->config['admin'][$do]['start'][$key] : '';
+					$stop = isset($this->config['admin'][$do]['stop'][$key]) ? $this->config['admin'][$do]['stop'][$key] : '';
+					$body_attrs = isset($this->config['admin'][$do]['body_attrs'][$key]) ? $this->config['admin'][$do]['body_attrs'][$key] : array();
 
-				$params = isset($this->config['admin'][$do]['params'][$key]) ? $this->config['admin'][$do]['params'][$key] : array();
-				$start = isset($this->config['admin'][$do]['start'][$key]) ? $this->config['admin'][$do]['start'][$key] : '';
-				$stop = isset($this->config['admin'][$do]['stop'][$key]) ? $this->config['admin'][$do]['stop'][$key] : '';
-				$body_attrs = isset($this->config['admin'][$do]['body_attrs'][$key]) ? $this->config['admin'][$do]['body_attrs'][$key] : array();
+					if (in_array($key,$lang_keys)) {
+						$l = explode('_',$key);
+						$l = $l[(count($l)-1)];
+						$l_class = 'lang '.$l;
+						$params['class'] = !empty($params['class']) ? $params['class'].' '.$l_class : $l_class;
+						$body_attrs['class'] = !empty($body_attrs['class']) ? $body_attrs['class'].' '.$l_class : $l_class;
+					}
 
-				if (in_array($key,$lang_keys)) {
-					$l = explode('_',$key);
-					$l = $l[(count($l)-1)];
-					$l_class = 'lang '.$l;
-					$params['class'] = !empty($params['class']) ? $params['class'].' '.$l_class : $l_class;
-					$body_attrs['class'] = !empty($body_attrs['class']) ? $body_attrs['class'].' '.$l_class : $l_class;
-				}
-
-				if(Conf::get('plupload:active')) {
-					if(Conf::get('plupload:all') || Conf::get('plupload:key:'.$key)) {
-						if(in_array($key, array_keys($this->getUploadVars()) )) {
-							$params['class'] = isset($params['class']) ? $params['class'] . ' plupload_for_'.$key : 'plupload_for_'.$key;
-							$as = !isset($this->config['plupload']['autosubmit']) ? Acid::get('plupload:autosubmit') : $this->config['plupload']['autosubmit'];
-							Conf::add('plupload:selectors', array('.plupload_for_'.$key, '.'.$this::TBL_NAME.'.'.$this->preKey($do), $this->vars[$key]->getConfig('ext'), $as));
+					if(Conf::get('plupload:active')) {
+						if(Conf::get('plupload:all') || Conf::get('plupload:key:'.$key)) {
+							if(in_array($key, array_keys($this->getUploadVars()) )) {
+								$params['class'] = isset($params['class']) ? $params['class'] . ' plupload_for_'.$key : 'plupload_for_'.$key;
+								$as = !isset($this->config['plupload']['autosubmit']) ? Acid::get('plupload:autosubmit') : $this->config['plupload']['autosubmit'];
+								Conf::add('plupload:selectors', array('.plupload_for_'.$key, '.'.$this::TBL_NAME.'.'.$this->preKey($do), $this->vars[$key]->getConfig('ext'), $as));
+							}
 						}
 					}
+
+					$this->vars[$key]->getForm($form,$key,true,$params,$start,$stop,$body_attrs);
 				}
-
-				$this->vars[$key]->getForm($form,$key,true,$params,$start,$stop,$body_attrs);
-
 			} else {
 				trigger_error(get_called_class().'::printAdminForm('.$do.') key "'.$key.'" does not exists',E_USER_WARNING);
 			}

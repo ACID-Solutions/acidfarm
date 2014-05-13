@@ -23,6 +23,14 @@ $lang['router']['index']     = array(
 								'de'=>array('key'=>'index','name'=>'Empfang')
                             );
 
+$lang['router']['page'] 	= array(
+								'fr'=>array('key'=>'page','name'=>'Pages'),
+								'en'=>array('key'=>'page','name'=>'Pages'),
+								'es'=>array('key'=>'page','name'=>'Páginas'),
+								'it'=>array('key'=>'page','name'=>'Pagine'),
+								'de'=>array('key'=>'page','name'=>'Seiten')
+							);
+
 $lang['router']['news'] 	= array(
 								'fr'=>array('key'=>'actu','name'=>'Actualité'),
 								'en'=>array('key'=>'news','name'=>'News'),

@@ -44,8 +44,8 @@ class SearchController {
         $my_search = htmlspecialchars($my_search);
 
         $s_modules = array(
-                        'Page'=>array('fields'=>array('content','title'),'cond'=>"`active`='1'",'title_field'=>'title','head'=>'Page'),
-                        'Actu'=>array('fields'=>array('content','head','title'),'cond'=>"`active`='1'",'title_field'=>'title','head'=>'News')
+                        'Page'=>array('fields'=>array('content','title'),'cond'=>"`active`='1'",'title_field'=>'title','head'=>AcidRouter::getName('page')),
+                        'Actu'=>array('fields'=>array('content','head','title'),'cond'=>"`active`='1'",'title_field'=>'title','head'=>AcidRouter::getName('news'))
                     );
 
         $content = '';
