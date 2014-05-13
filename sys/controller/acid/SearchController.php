@@ -68,7 +68,7 @@ class SearchController {
                 foreach ($res as $elt) {
                     $my_mod = new $mod();
                     $my_mod->initVars($elt);
-                    $sub_content .= '<li><a href="'.$my_mod->url().'">'.$my_mod->get($config['title_field']).'</a></li>'. "\n" ;
+                    $sub_content .= '<li><a href="'.$my_mod->url().'">'.$my_mod->trad($config['title_field']).'</a></li>'. "\n" ;
                 }
                 if ($sub_content) {
                     $content .=     '<h2>'.$config['head'].'</h2>'. "\n" .
