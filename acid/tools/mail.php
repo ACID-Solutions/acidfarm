@@ -44,6 +44,8 @@ class AcidMail {
 
 	    try {
 
+	    	Acid::log('MAIL',json_encode(array('from_name'=>$from_name,'from_email'=>$from_email,'to_email'=>$to_email,'subject'=>$subject)));
+
 			$mail = new PHPMailer();
 			$mail->set('exceptions', true);
 
