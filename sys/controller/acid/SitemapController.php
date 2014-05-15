@@ -65,7 +65,7 @@ class SitemapController{
 			foreach ($res as $elt) {
 				$mod = new Page($elt);
 
-				$map[] =  array('url'=>$mod->get('ident'));
+				$map[] =  array('url'=>$mod->trad('ident'));
 			}
 
 
