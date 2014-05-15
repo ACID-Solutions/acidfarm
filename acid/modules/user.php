@@ -52,7 +52,6 @@ abstract class AcidUser extends AcidModule {
 		$this->vars['last_lang'] = empty($this->vars['last_lang']) ? new AcidVarHidden($this->modTrad('last_lang'),20,15) : $this->vars['last_lang'];
 		$this->vars['ip'] = empty($this->vars['ip']) ? new AcidVarString($this->modTrad('ip'),20,15) : $this->vars['ip'];
 
-
 		$avatar_effect = array(
 								'fill_gray'=>array('AcidFs::fill',array('__PATH__','__PATH__','__WIDTH__','__HEIGHT__',array(100,100,100))),
 						);
@@ -316,6 +315,7 @@ abstract class AcidUser extends AcidModule {
 				'user_salt'=>$user_salt,
 				'password'=>static::getHashedPassword($pass,$user_salt),
 				'email'=>$email,
+				'lang'=>Acid::get('lang:current'),
 				'level'=>static::getLevelNextInscription(),
 				'date_creation'=>AcidVarDatetime::now(),
 				'ip_inscription'=>$_SERVER['REMOTE_ADDR']
@@ -607,7 +607,13 @@ abstract class AcidUser extends AcidModule {
 	/* *****************************
 	 * Emails
 	 * *****************************/
+	public function sendMail($subject,$body,$from_name=null,$from_email=null,$email=null) {
+		$from_name = $from_name===null ? Acid::get('site:name') : $from_name;
+		$from_email = $from_email===null ? Acid::get('site:email') : $from_email;
+		$email = $email===null ? $this->get('email') : $email;
 
+		return Mailer::send($from_name,$from_email,$email,$subject,$body);
+	}
 
 	/**
 	 * Gère l'envoi du mail d'inscription d'un utilisateur.
@@ -621,6 +627,8 @@ abstract class AcidUser extends AcidModule {
 	public static function newInscription($user,$email,$pass,$usermod=null,$need_validation=null) {
 		Acid::load('tools/mail.php');
 		$usermod = $usermod===null ? static::build() : $usermod;
+		$usermod = is_object($usermod) ? $usermod : static::build($usermod);
+
 		$new = false;
 
 		$new = ($pass != false);
@@ -634,12 +642,12 @@ abstract class AcidUser extends AcidModule {
 		$vars = array('username'=>$user,'pass'=>$pass,'email'=>$email,'link'=>$link,'need_validation'=>$need_validation);
 		$body = Acid::tpl('modules/user/mail/user-new-inscription.tpl',$vars,Acid::mod(get_called_class()));
 
-		Mailer::send(Acid::get('site:name'),Acid::get('site:email'),$email,$subject,$body);
+		$usermod->sendMail($subject,$body);
 
 		if ($new) {
 			$subject = 'Nouvel Utilisateur '.' : ' . $user;
 			$body = Acid::tpl('modules/user/mail/admin-new-inscription.tpl',$vars,$usermod);
-			Mailer::send(Acid::get('site:name'),Acid::get('site:email'),Acid::get('admin:email'),$subject,$body);
+			Mailer::sendStaff($subject,$body);
 		}
 
 	}
@@ -659,7 +667,7 @@ abstract class AcidUser extends AcidModule {
 		$vars = array('username'=>$user,'new_mail'=>$new_email,'email'=>$email,'link'=>$link);
 		$body = Acid::tpl('modules/user/mail/user-new-mail.tpl',$vars,Acid::mod(get_called_class()));
 
-		Mailer::send(Acid::get('site:name'),Acid::get('site:email'),$new_email,$subject,$body);
+		User::curUser()->sendMail($subject,$body,null,null,$new_email);
 	}
 
 	/**
@@ -683,7 +691,7 @@ abstract class AcidUser extends AcidModule {
 		$vars = array('username'=>$user,'pass'=>$pass,'email'=>$email,'link'=>$link,'src_page'=>$src_page);
 		$body = Acid::tpl('modules/user/mail/user-forget-password.tpl',$vars,Acid::mod(get_called_class()));
 
-		Mailer::send(Acid::get('site:name'),Acid::get('site:email'),$email,$subject,$body);
+		User::curUser()->sendMail($subject,$body,null,null,$email);
 	}
 
 
@@ -698,7 +706,7 @@ abstract class AcidUser extends AcidModule {
 		$link = $acid['url']['scheme'].$acid['url']['domain'] . $acid['user']['page'] . '?page=messagerie&mailbox=' . $id_message ;
 		$vars = array('dest_user'=>$dest_user,'from_user'=>$from_user,'title'=>$title,'email'=>$email,'link'=>$link);
 		$body = Acid::tpl('modules/user/mail/user-new-private-message.tpl',$vars,Acid::mod(get_called_class()));
-		Mailer::send($acid['site']['name'],$acid['site']['email'],$email,$subject,$body);
+		User::curUser()->sendMail($subject,$body,null,null,$email);
 
 	}
 	*/
@@ -1171,7 +1179,7 @@ abstract class AcidUser extends AcidModule {
 			if ($res = $this->dbList(array(array('email','=',$email)))) {
 				$tab = $res[0];
 			    if (!isset($_GET['code'])) {
-					Acid::mod('User')->passOublie($tab['email'],$tab['username'],$tab['password'],$src_page);
+					User::passOublie($tab['email'],$tab['username'],$tab['password'],$src_page);
 
 			        $content = Acid::tpl('modules/user/res-forget.tpl',array('src_page'=>$src_page,'email'=>htmlspecialchars($tab['email'])),Acid::mod(get_called_class()));
 				}else{
@@ -1218,13 +1226,15 @@ abstract class AcidUser extends AcidModule {
 		}
 
 		if (isset($_GET['new_email']) && isset($_GET['old_email']) && isset($_GET['code'])) {
-		    $user_form .= $my_user->emailChange($_GET['old_email'],$_GET['new_email'],$_GET['code']);
+			$user_form .= $my_user->emailChange($_GET['old_email'],$_GET['new_email'],$_GET['code']);
+		}
+
+		if (isset($_GET['change']) && $_GET['change'] == 'email') {
+			$user_form .= User::printEmailChange();
 		}
 
 		if (User::curLevel(User::getLevelNextActivation())) {
-			if (isset($_GET['change']) && $_GET['change'] == 'email') {
-			    $user_form .= User::printEmailChange();
-			}
+
 			if (isset($_GET['change']) && $_GET['change'] == 'password') {
 			    $user_form .= User::printPasswordChange();
 			}

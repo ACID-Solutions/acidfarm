@@ -312,7 +312,7 @@ class Acid {
 	 * @return string
 	 */
 	public static function tplPath($file) {
-		return self::themePath('/tpl/'.$file);
+		return self::themePath('tpl/'.$file);
 	}
 
 	/**

@@ -148,4 +148,5 @@ class AcidMail {
 		return self::send($from_name,$from_email,$to_email,$subject,$body,$is_html,$attached,$functions);
 
 	}
+
 }

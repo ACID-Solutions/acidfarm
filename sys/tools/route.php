@@ -20,7 +20,7 @@
  * @package   Model
  */
 class Route {
-	
+
 
 	/**
 	 * Retourne une URL en fonction des paramètres renseignés en entrée
@@ -28,78 +28,78 @@ class Route {
 	 * @param array $vals configuration
 	 * @param bool $absolute si true retourne une url en absolute
 	 * @param mixed $force_lang si false utilise la langue courante, sinon la valeur de $force_lang
-	 * 
-	 * @return string  
+	 *
+	 * @return string
 	 */
-	
+
 	public static function buildUrl($key=null,$vals=array(),$absolute=false,$force_lang=false) {
 		if ($force_lang) {
 			$base = $absolute ? Acid::get('url:system').$force_lang.'/' : Acid::get('url:folder').$force_lang.'/';
 		}else{
 			$base = $absolute ? Acid::get('url:system_lang') : Acid::get('url:folder_lang');
 		}
-		
-		
+
+
 		switch ($key) {
-			
+
 			//Page
 			case Page::checkTbl() :
-				$mod = new Page($vals); 	
+				$mod = new Page($vals);
 				$print = !empty($vals['print_page']) ? AcidRouter::getKey('pagination_key').'/' :'' ;
 				return Acid::get('url:folder_lang') .$print. $mod->trad('ident');
 			break;
-				
+
 			//News
 			case Actu::checkTbl() :
-				
+
 				$base .= AcidRouter::getKey('news');
 				$mod = new Actu($vals);
-			
+
 				if ($mod->getId()) {
 					return $base . '/' . $mod->getId() . '/' . AcidUrl::normalize($mod->trad('title'));
 				}else{
 					return $base;
 				}
-				
+
 			break;
-			
+
 			//Gallery
 			case Photo::checkTbl() :
-				$base = Acid::get('url:folder_lang').AcidRouter::getKey('gallery');
+				$base .= AcidRouter::getKey('gallery');
 				return $base;
 			break;
-				
+
 			//News List
 			case Actu::checkTbl().'_list' :
-			
-				$base = Acid::get('url:folder_lang').AcidRouter::getKey('news');
+
+				$base .= AcidRouter::getKey('news');
 				$page = isset($vals['page']) ? $vals['page'] : 1;
-				
+
 				if ($page>1) {
 					return $base . '/'.AcidRouter::getKey('pagination_key').'/' . $page;
 				}else{
 					return $base;
 				}
-				
+
 			break;
-			
+
 			//Admin
 			case 'admin' :
 				return Conf::get('url:admin');
 			break;
-					
+
 			//Index
 			case 'index' :
 			case null :
 				return $base;
 			break;
-				
+
 			//Custom
 			case 'custom' :
 				$next = isset($vals['page']) ? $vals['page'] : '';
 				return $base.$next;
 			break;
-				
+
 			//Route
 			case 'route' :
 				$route_name = isset($vals['route']) ? $vals['route'] : '';
@@ -107,14 +107,14 @@ class Route {
 				$partial_params = isset($vals['partial_params']) ? $vals['partial_params'] : null;
 				return AcidRouter::buildUrl($route_name,$params,$partial_params);
 			break;
-				
+
 			//Default
 			default :
 				return $base.AcidRouter::getKey($key);
 			break;
 		}
-		
+
 		return '';
 	}
-	
+
 }

@@ -119,13 +119,13 @@ $lang['trad']['user_valid_mail_success']            = 'Su dirección e-mail es a
 
 $lang['trad']['user_welcom']          				= 'Buenos días __USER__, ';
 $lang['trad']['user_new_user']                      = 'Nuevo usuario';
-$lang['trad']['user_new_user_registred']            = 'UUn nuevo usuario se registró en __SITE__ : __NAME__';
-$lang['trad']['user_new_user_print_infos']  		= 'Voici vos identifiants de connexion à conserver :';
-$lang['trad']['user_new_user_register_asked']  		= 'Vous venez de vous inscrire sur __SITE__';
-$lang['trad']['user_new_user_validation_asked']  	= 'Vous avez demandé le lien pour valider votre email sur __SITE__.';
+$lang['trad']['user_new_user_registred']            = 'Un nuevo usuario se registró en __SITE__ : __NAME__';
+$lang['trad']['user_new_user_print_infos']  		= 'Estos son sus datos de acceso para mantener:';
+$lang['trad']['user_new_user_register_asked']  		= 'Usted sólo tiene que registrarse en __SITE__';
+$lang['trad']['user_new_user_validation_asked']  	= 'Usted lo pidió el enlace para confirmar tu email __SITE__.';
 
-$lang['trad']['user_message_received']  			= 'Un nouveau message privé de "__USER__" vient d\'arriver sur __SITE__ ayant pour sujet : ';
-$lang['trad']['user_message_read_it']  				= 'Pour consulter votre message, cliquez sur ce lien : ';
+$lang['trad']['user_message_received']  			= 'Un nuevo mensaje privado "__USER__" acaba de llegar a __SITE__ tratar con:';
+$lang['trad']['user_message_read_it']  				= 'Para leer el mensaje, haga clic en este enlace:';
 
 $lang['trad']['user_valid_mail_action']             = 'Confirmación de su nueva dirección e-mail';
 $lang['trad']['user_mail_footer']                   = 'El equipo __SITE__';

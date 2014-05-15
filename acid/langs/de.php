@@ -120,12 +120,12 @@ $lang['trad']['user_valid_mail_success']            = 'Ihre Adresse wurde bestä
 $lang['trad']['user_welcom']          				= 'Guten Tag __USER__, ';
 $lang['trad']['user_new_user']                      = 'Neuer Benutzer';
 $lang['trad']['user_new_user_registred']            = 'Ein neuer Benutzer hat sich auf __SITE__ registriert: __NAME__';
-$lang['trad']['user_new_user_print_infos']  		= 'Voici vos identifiants de connexion à conserver :';
-$lang['trad']['user_new_user_register_asked']  		= 'Vous venez de vous inscrire sur __SITE__';
-$lang['trad']['user_new_user_validation_asked']  	= 'Vous avez demandé le lien pour valider votre email sur __SITE__.';
+$lang['trad']['user_new_user_print_infos']  		= 'Hier sind Ihre Login-Daten zu halten:';
+$lang['trad']['user_new_user_register_asked']  		= 'Sie melden Sie sich an __SITE__';
+$lang['trad']['user_new_user_validation_asked']  	= 'Sie fragte den Link zu Ihrer E-Mail-__SITE__ bestätigen.';
 
-$lang['trad']['user_message_received']  			= 'Un nouveau message privé de "__USER__" vient d\'arriver sur __SITE__ ayant pour sujet : ';
-$lang['trad']['user_message_read_it']  				= 'Pour consulter votre message, cliquez sur ce lien : ';
+$lang['trad']['user_message_received']  			= 'Eine neue Nachricht "__USER__" nur auf den Umgang mit __SITE__ angekommen:';
+$lang['trad']['user_message_read_it']  				= 'Um Ihre Nachricht zu lesen, klicken Sie auf diesen Link:';
 
 $lang['trad']['user_valid_mail_action']             = 'Bestätigung Ihrer neuen E-Mail Adresse';
 $lang['trad']['user_mail_footer']                   = 'Das Team __SITE__';
