@@ -15,6 +15,8 @@
  * @link      http://www.acidfarm.net
  */
 
+Acid::load('tools/mail.php');
+
 /**
  *
  * Outil Mailer, Override du Gestionnaire Mail
