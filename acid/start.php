@@ -179,6 +179,7 @@ require_once ACID_PATH . 'extend.php';
 
 require_once ACID_PATH . 'core/router/acid_router.php';
 require_once ACID_PATH . 'core/router/acid_route.php';
+require_once ACID_PATH . 'core/router/acid_event.php';
 require_once SITE_PATH . 'sys/langs/router/lang_router.php';
 
 

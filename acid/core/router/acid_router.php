@@ -2,7 +2,7 @@
 
 /**
  * AcidFarm - Yet Another Framework
- * 
+ *
  * Requires PHP version 5.3
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
@@ -22,43 +22,53 @@ require_once 'interface/acid_router_interface.php';
  * @package   Core
  */
 class AcidRouter implements Acid_Router_Interface{
-    
+
     const URI_DELIMITER         = "/";
     const MODULES_PATH          = 'sys/controller/';
     const DEFAULT_MODULE        = 'acid';
     const DEFAULT_CONTROLLER    = 'IndexController';
     const DEFAULT_ACTION        = 'index';
-    
+
     /**
-     * @var array Tableau des routes Défini    
+     * @var array Tableau des routes Défini
      */
-    protected  $_routes = array(); 
-    
+    protected  $_routes = array();
+
     /**
      * @var object Route courante
      */
     private $_currentRoute  = null;
-    
+
     /**
-     * @var object Route par défaut 
+     * @var object Route par défaut
      */
     private $_defaultRoute  = null;
-    
+
     /**
      * @var string Langue courante
      */
     private $_currentLang   = null;
-    
+
     /**
      * @var string url folder
      */
     private $_folder        = null;
-    
+
     /**
      * @var string url site
      */
     private $_site          = null;
-    
+
+    /**
+     * @var array liste des callbacks avant dispach
+     */
+    private $_before          = array();
+
+    /**
+     * @var array liste des callbacks après dispach
+     */
+    private $_after          = array();
+
     /**
      * @var array Paramètres qui seront transmis à toutes les routes
      */
@@ -67,8 +77,8 @@ class AcidRouter implements Acid_Router_Interface{
     /**
      * @var objet Instance
      */
-    private static $instance; 
-    
+    private static $instance;
+
     /**
      * Retourne l'instance
      * @return AcidRouter
@@ -85,7 +95,7 @@ class AcidRouter implements Acid_Router_Interface{
      * Lance une détection d'URI
      */
     public static function run(){
-    	
+
         Acid::log('ROUTER', 'START RUN...');
         $_server = $_SERVER["SERVER_NAME"];
         $_uri_total= parse_url($_SERVER["REQUEST_URI"],PHP_URL_PATH);
@@ -97,22 +107,22 @@ class AcidRouter implements Acid_Router_Interface{
         $indexstep = strpos(self::getInstance()->_folder,AcidRouter::URI_DELIMITER)!==false ? (count(explode(AcidRouter::URI_DELIMITER, self::getInstance()->_folder)) - 2) : 0;
 
         if(Acid::get('lang:use_nav_0')){
-        	
+
         	if(self::getInstance()->_folder!=''&&self::getInstance()->_folder!='/'){
                 self::getInstance()->_currentLang = $formated_path[$indexstep];
             }else{
             	self::getInstance()->_currentLang = $formated_path[0];
             }
-            
+
             if(isset($formated_path[$indexstep]) && in_array($formated_path[$indexstep], Acid::get('root_keys','acidconf'))){
                 self::getInstance()->_currentLang = '';
                 $root_keys = true;
             }
-            
+
         }else{
             self::getInstance()->_currentLang = '';
         }
-        
+
         $_uri = substr($_uri_total, (strlen(self::getInstance()->_folder)+strlen(self::getInstance()->_currentLang)));
         $_uri = ($root_keys)? $formated_path[$indexstep] : $_uri;
         try{
@@ -124,23 +134,54 @@ class AcidRouter implements Acid_Router_Interface{
                 	self::getInstance()->runDefault();
                 	return true;
             	}else{
-               		throw new Exception('No route defined'); 
+               		throw new Exception('No route defined');
                 	return false;
             	}
             }
         }catch(Exception $e){
             echo 'Router Exception (on router run() ) : '.$e->getMessage()."\n";
             die();
-        } 
+        }
     }
-    
+
  	/**
      * Lance la route par défaut
      */
     public static function runDefault(){
    		self::getInstance()->_currentRoute = self::getInstance()->_defaultRoute;
+
+    	self::runCallBack(self::getInstance()->_before);
     	Acid::log('ROUTER', 'DISPATCH DEFAULT URL...');
     	self::getInstance()->dispatcher();
+
+    	self::runCallBack(self::getInstance()->_after);
+    }
+
+    /**
+     * Renvoi vers le controller/action si match parmis les routes existantes
+     * Sinon Renvoi une erreur 404
+     * @param Request = URI de requete soumis.
+     */
+    public static function proceed($request){
+
+		if (self::getInstance()->_routes) {
+			foreach (self::getInstance()->_routes as $key => $route) {
+				if($route->match($request)){
+					self::getInstance()->_currentRoute = $route;
+
+					self::runCallBack(self::getInstance()->_before);
+					Acid::log('ROUTER', 'DISPATCH FOUNDED URL : '.$route->build());
+					self::getInstance()->dispatcher();
+					self::runCallBack(self::getInstance()->_after);
+
+					if ($route->unique_match) {
+						return true;
+					}
+				}
+			}
+		}
+
+		return false;
     }
 
     /**
@@ -150,51 +191,104 @@ class AcidRouter implements Acid_Router_Interface{
       */
      public static function route($request){
         try {
-            
+
         	if($request{0}==="/"){
                 $request = substr($request, 1);
             }
-            
+
             if($request==''){
                 if(self::getInstance()->_defaultRoute){
-                	/*
-                    self::getInstance()->_currentRoute = self::getInstance()->_defaultRoute;
-                    Acid::log('ROUTER', '----- DISPATCH DEFAULT URL -----');
-                    self::getInstance()->dispatcher();
-                    */
+
+					if (self::proceed($request)) {
+	                	return true;
+					}
+
                 	self::getInstance()->runDefault();
                     return true;
                 }else{
-                   throw new Exception('No Default route call'); 
+                   throw new Exception('No Default route call');
                 }
             }
 
-            foreach (self::getInstance()->_routes as $key => $route) {   
-                if($route->match($request)){
-                    self::getInstance()->_currentRoute = $route;
-                    Acid::log('ROUTER', 'DISPATCH FOUNDED URL : '.$route->build());
-                    self::getInstance()->dispatcher();
-                    return true;
-                }                      
+            if (self::proceed($request)) {
+            	return true;
             }
-          	
-            
+
+
             Acid::log('ROUTER', 'No matching for '.$request);
             if(self::getInstance()->_defaultRoute){
             	self::getInstance()->_defaultRoute->match($request,true);
         	    self::getInstance()->runDefault();
         	    return true;
             }
-            
-            
+
+
             AcidUrl::error404();
-            
+
          }catch(Exception $e){
              echo 'Router Exception (on route match) : '.$e->getMessage()."\n";
              die();
          }
      }
-     
+
+     /**
+      * Ajoute un callback before
+      * @param string $routename
+      * @param function $callback
+      */
+     public static function before($routename,$callback){
+     	self::getInstance()->_before[$routename][] = $callback;
+     	return self::getInstance();
+     }
+
+     /**
+      * Ajoute un callback before
+      * @param string $routename
+      * @param function $callback
+      */
+     public static function after($routename,$callback){
+     	self::getInstance()->_after[$routename][] = $callback;
+     	return self::getInstance();
+     }
+
+     /**
+      * Execute un callback
+      * @param string $routename
+      * @param function $callback
+      */
+     public static function runCallback($tab) {
+		$execute = array();
+
+		$to_call = array('*','events','routes',self::getCurrentRouteName());
+		foreach ($to_call as $call) {
+
+	     	if (isset($tab[$call])) {
+
+	     		$accept = true;
+	     		if (($call=='events') && (self::getInstance()->_currentRoute->unique_match)) {
+	     			$accept = false;
+	     		}
+
+	     		if (($call=='routes') && (!self::getInstance()->_currentRoute->unique_match)) {
+	     			$accept = false;
+	     		}
+
+				if ($accept) {
+					$execute =  array_merge($execute,$tab[$call]);
+				}
+	     	}
+		}
+
+		if ($execute) {
+			foreach ($execute as $function) {
+				Acid::log('ROUTER', 'RUNNING CALLBACK');
+				call_user_func_array($function,array(self::getInstance()));
+			}
+		}
+
+		return self::getInstance();
+     }
+
      /**
       * Ajoute une route
       * @param string $name
@@ -205,7 +299,7 @@ class AcidRouter implements Acid_Router_Interface{
      	 $route->setName($name);
          self::getInstance()->_routes[$name] = $route;
      }
-     
+
      /**
       * Définit la route par défaut
       * @param string $name
@@ -216,9 +310,9 @@ class AcidRouter implements Acid_Router_Interface{
      	 $route->setName($name);
          self::getInstance()->_defaultRoute = $route;
      }
-     
+
      /**
-      * Definit des paramètres 
+      * Definit des paramètres
       * @param string $name = nom du parametre
       * @param $value = valeur du parametre
       */
@@ -226,7 +320,7 @@ class AcidRouter implements Acid_Router_Interface{
           self::getInstance()->_currentRoute->setParams(array($name=>$value));
           return self::getInstance();
      }
-     
+
      /**
       * Récupère la valeur d'un paramètre
       * @param string $name = nom du parametre
@@ -242,17 +336,17 @@ class AcidRouter implements Acid_Router_Interface{
          }
          return false;
      }
-     
+
      /**
       * Défini les parametres à injecté lors de l'appel
       * @param array $params Array(name=>value)
-      * 
+      *
       */
      public static function setParams($params=array()){
          self::getInstance()->_currentRoute->setParams($params);
          return self::getInstance();
      }
-     
+
      /**
       * Renvoi un tableau des parametres URI
       * array(key=>value)
@@ -260,7 +354,7 @@ class AcidRouter implements Acid_Router_Interface{
      public static function getParams(){
          return self::getInstance()->_currentRoute->getParams();
      }
-     
+
      /**
       * Retourne la valeur sinon une Exception
       * @param $id = position du parametre voulu
@@ -286,7 +380,7 @@ class AcidRouter implements Acid_Router_Interface{
      		return false;
      	}
      }
-     
+
      /**
       * Définit les paramètres partiels
       * @param string $value
@@ -297,14 +391,14 @@ class AcidRouter implements Acid_Router_Interface{
          self::getInstance()->_currentRoute->setPartial($value,$clear);
          return self::getInstance();
      }
-     
+
      /**
       * All partial
       */
      public static function getPartialParams(){
          return self::getInstance()->_currentRoute->getPartials();
      }
-     
+
      /**
       * Partial
       * @param srting $id ident
@@ -317,7 +411,7 @@ class AcidRouter implements Acid_Router_Interface{
              return false;
          }
      }
-     
+
      /**
       * Retourne une url partielle au moyen de l'identifiant en entrée
       * @param mixed $id
@@ -327,7 +421,7 @@ class AcidRouter implements Acid_Router_Interface{
          $array = self::getInstance()->_currentRoute->getPartitionalURI();
          return (!empty($array[$id]))?$array[$id]:false;
      }
-     
+
      /**
       * Si un name est entré, suppression et clear du parametre URI
       * Sinon Clear de tous les parametres
@@ -336,7 +430,7 @@ class AcidRouter implements Acid_Router_Interface{
      public static function clearParams($name=null){
          self::getInstance()->_currentRoute->cleanParam($name);
      }
-     
+
      /**
       * Retourne la langue courante
       * @return string
@@ -344,7 +438,7 @@ class AcidRouter implements Acid_Router_Interface{
      public static function getCurrentLang(){
          return self::getInstance()->_currentLang;
      }
-     
+
      /**
       * Retourne la route par défaut
       * @return string
@@ -352,7 +446,7 @@ class AcidRouter implements Acid_Router_Interface{
      public static function getDefaultRoute(){
          return self::getInstance()->_defaultRoute;
      }
-     
+
      /**
       * Distribution de la route
       */
@@ -377,7 +471,7 @@ class AcidRouter implements Acid_Router_Interface{
          }
          return self::getInstance();
      }
-     
+
      /**
       * Retourne la route courante
       */
@@ -387,7 +481,7 @@ class AcidRouter implements Acid_Router_Interface{
      	}
      	return false;
      }
-     
+
      /**
       * Génère une URL en fonction de la route désignée par les paramètres en entrée
       * @param string $routename
@@ -400,7 +494,7 @@ class AcidRouter implements Acid_Router_Interface{
       * @return mixed
       */
      public static function buildURL($routename,$params=null,$partial_params=null,$no_slash=false,$no_lang=false,$no_param=false,$http=false){
-         
+
          $lang = (AcidRouter::getCurrentLang()!=='')?self::getInstance()->_currentLang.AcidRouter::URI_DELIMITER:'';
          if($no_lang){
              $lang='';
@@ -411,22 +505,22 @@ class AcidRouter implements Acid_Router_Interface{
          	$route = new AcidRoute($rroute->getURI());
          	$route->setParams($params);
           	$route->setPartial($partial_params);
-                 
+
         	$path = (($http)?self::getInstance()->_site:self::getInstance()->_folder).$lang.$route->build($no_param);
-                 
+
         	if($no_slash){
            		$try_patch = strrev($path);
             	if($try_patch{0}=="/"){
             		$path = substr($path, 0,strlen($path)-1);
-           		} 
+           		}
            	}
-           	
+
           	return $path;
           }
-         
+
          return false;
      }
-     
+
      /**
       * Dispatch current URL
       */
@@ -436,7 +530,7 @@ class AcidRouter implements Acid_Router_Interface{
          Acid::log('ROUTER', 'REDIRECT TO : '.$path);
          AcidUrl::redirection301($path);
      }
-     
+
      /**
       * Retourne la traduction de la clé de routage pour la langue soumise en entrée, retourne false si non trouvée
       * @param string $key
@@ -450,7 +544,7 @@ class AcidRouter implements Acid_Router_Interface{
         }
         return false;
      }
-     
+
      /**
       * Retourne le nom associé à la clé de routage pour la langue soumise en entrée, retourne false si non trouvé
       * @param string $key
@@ -459,13 +553,13 @@ class AcidRouter implements Acid_Router_Interface{
       */
      public static function getName($key,$lang=null){
      	$lang = $lang===null ? Acid::get('lang:current') : $lang;
-     	
+
         if (Acid::exist('router:'.$key.':'.$lang.':name','lang')) {
             return Acid::get('router:'.$key.':'.$lang.':name','lang');
         }
         return false;
      }
-     
+
      /**
       * Cherche la clé de routage correspondant à $value
       * @param string $value

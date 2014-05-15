@@ -72,6 +72,11 @@ class AcidRoute{
     protected $name    			= null;
 
     /**
+     * @var boolean Empêche les autres routes d'être appelées si rencontré
+     */
+    public $unique_match    	= true;
+
+    /**
      * Constructeur
      * @param string $URI alias de la route
      * @param string $controller
@@ -135,6 +140,14 @@ class AcidRoute{
      */
 	public function match($path,$partial_on_fail=null){
 
+		if($this->URI==='*'){
+			return true;
+		}
+
+
+		if (($path===false) && ($this->URI!=='')) {
+			return false;
+		}
 
         if($path!==''){
             $path = explode(AcidRouter::URI_DELIMITER, $path);
