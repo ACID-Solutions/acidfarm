@@ -98,7 +98,7 @@ spl_autoload_register('AcidAutoLoader');
 
 
 // Externals
-$acid['externals']['phpmailer']['path']['dir']       = 'PHPMailer_v5.1';
+$acid['externals']['phpmailer']['path']['dir']       = 'PHPMailer_v5.2.8';
 $acid['externals']['phpmailer']['path']['phpmailer'] = 'externals/' . $acid['externals']['phpmailer']['path']['dir'] . '/class.phpmailer.php';
 $acid['externals']['phpmailer']['path']['smtp']      = 'externals/' . $acid['externals']['phpmailer']['path']['dir'] . '/class.smtp.php';
 
