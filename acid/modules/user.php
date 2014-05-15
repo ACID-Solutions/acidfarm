@@ -47,6 +47,9 @@ abstract class AcidUser extends AcidModule {
 		$this->vars['date_creation'] = empty($this->vars['date_creation']) ? new AcidVarDateTime($this->modTrad('date_creation')) : $this->vars['date_creation'];
 		$this->vars['date_activation'] = empty($this->vars['date_activation']) ? new AcidVarDateTime($this->modTrad('date_activation')) : $this->vars['date_activation'];
 		$this->vars['date_deactivation'] = empty($this->vars['date_deactivation']) ? new AcidVarDateTime($this->modTrad('date_deactivation')) : $this->vars['date_deactivation'];
+		$this->vars['date_connexion'] = empty($this->vars['date_connexion']) ? new AcidVarDateTime($this->modTrad('date_connexion')) : $this->vars['date_connexion'];
+		$this->vars['lang'] = empty($this->vars['lang']) ? new AcidVarList($this->modTrad('lang'),Acid::get('lang:available'),Acid::get('lang:default')) : $this->vars['lang'];
+		$this->vars['last_lang'] = empty($this->vars['last_lang']) ? new AcidVarHidden($this->modTrad('last_lang'),20,15) : $this->vars['last_lang'];
 		$this->vars['ip'] = empty($this->vars['ip']) ? new AcidVarString($this->modTrad('ip'),20,15) : $this->vars['ip'];
 
 
@@ -198,6 +201,17 @@ abstract class AcidUser extends AcidModule {
 		}
 
 		//$GLOBALS['user'] = $my_user;
+	}
+
+	/**
+	 * Met à jour le profil de l'utilisateur
+	 */
+	public static function updateInstance() {
+		$user = User::curUser();
+		if ($user->getId()) {
+			$changes = $user->initVars(array('last_lang'=>Acid::get('lang:current'),'date_connexion'=>AcidVarDateTime::now()));
+			$user->dbUpdate($changes);
+		}
 	}
 
 	/**

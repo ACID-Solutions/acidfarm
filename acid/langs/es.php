@@ -361,6 +361,9 @@ $lang['mod']['user']['date_creation']     = 'Fecha de creación';
 $lang['mod']['user']['date_activation']   = 'Fecha de activación';
 $lang['mod']['user']['date_deactivation'] = 'Fecha de desactivación';
 $lang['mod']['user']['ip']                = 'IP';
+$lang['mod']['user']['date_connexion'] 	  = 'Fecha de inicio de sesión';
+$lang['mod']['user']['last_lang'] 		  = 'Última Idioma';
+$lang['mod']['user']['lang'] 			  = 'Idioma';
 $lang['mod']['user']['image_0']           = 'Avatar';
 $lang['mod']['user']['user_salt']         = 'User Salt';
 

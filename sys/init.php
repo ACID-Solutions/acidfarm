@@ -228,6 +228,7 @@ include (Acid::outPath('functions.php'));
 
 //initialisation de l'utilisateur
 User::initUser();
+User::updateInstance();
 
 //routage par défaut
 AcidRouter::addDefaultRoute('index',new AcidRoute('default',array('controller'=>'PageController','action'=>'home')));
