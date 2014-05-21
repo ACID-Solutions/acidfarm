@@ -55,8 +55,12 @@ $output .=  <<<OUTPUT
 <$bhead id="header" >
     {$this->getHeader()}
 </$bhead>
-<div id="content">
-    {$this->output}
+<div id="wrapper">
+	<div id="container">
+		<div id="content">
+		    {$this->output}
+		</div>
+	</div>
 </div>
 <$bfoot id="footer">
     {$this->getFooter()}

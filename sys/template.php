@@ -250,6 +250,7 @@ class MyTemplate extends AcidTemplate {
 		'	<div id="site" class="admin">' . "\n" .
 		$this->output .
 		'	</div>' . "\n" .
+		Acid::tpl('admin/stop.tpl') .
 		'';
 
 		$this->print_html();

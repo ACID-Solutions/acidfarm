@@ -2,7 +2,7 @@
 /* Code couleurs :
 /* noir : #000000
 /*------------------------------------*/
-html, body {  margin:0px; padding:0px; font-size:9pt; font-family: arial; background-color:#9D9FA0; }
+html, body { height:100%;  margin:0px; padding:0px; font-size:9pt; font-family: arial; background-color:#C0C0C0; }
 body{ margin:auto; }
 
 a:focus{ outline:none; }
@@ -23,24 +23,27 @@ h2{margin:15px auto; font-size:12pt;}
 h3{margin:15px auto; font-size:11pt;}
 h4{margin:10px auto; font-size:10pt; font-weight:normal;}
 
+h1:first-child{ margin-top:0px; }
+
 p{margin:5px auto;}
 
 hr{ border:0px solid #000000; height:1px; background-color:#000000; color:#000000;  }
 
+#wrapper{ min-height:100%; }
+#container{ padding-top:230px; padding-bottom:100px; }
+#header_content, #footer_content, #content { width:780px;  padding:10px 20px;  margin:auto; }
 
+#content { border:1px solid #1C1C1C; background-color:#FFFFFF; padding:20px;  min-height:100px;}
 
-
-#header, #footer, #content{ width:798px;  padding:10px;  margin:auto; }
-
-#content { border:1px solid #1A171A;background-color:#FFFFFF; padding-top:20px; padding-bottom:20px; min-height:180px;}
-
-#header{ border:1px solid #1A171A; background-color:#1A171A; text-align:center; color:#FFFFFF; }
+#header{ position:absolute; top:0px; height:180px; min-width:100%;  background-color:#1C1C1C; text-align:center; color:#FFFFFF; }
 #header_content #header_logo{ margin:10px 0px;}
-#header_content #header_logo_link{  display:table; }
+#header_content #header_logo_link{  display:table; margin:auto; }
 
-#footer{ border:1px solid #1A171A; background-color:#1A171A; text-align:center; color:#FFFFFF; }
+#footer{ position:absolute; margin-top:-50px; height:50px; min-width:100%; background-color:#1C1C1C; text-align:center; color:#FFFFFF; }
+#footer a{ color:#96C11F; }
 #footer_flags{ float:right; }
 #footer_flags a{ float:left; margin:0px 2px;  }
+
 
 #stats_content{ position:absolute; height:0px; width:0px; left:0px; }
 
@@ -50,15 +53,16 @@ hr{ border:0px solid #000000; height:1px; background-color:#000000; color:#00000
 #menu li:nth-child(n+1):before { color:#000000;	padding-left:5px; padding-right:5px; content: "-"; }
 #menu li:first-child:before { color:#000000;  content: ""; }
 
-#menu_block{ padding:5px; background-color:#FFFFFF;}
+#menu_block{ padding:15px 0px; font-size:16px; }
+#menu_block a{ color:#FFFFFF; }
 
-.menu.selected a{ color:#1A171A; }
+#menu_block .menu.selected a{ color:#7A7A7A; }
 
 
 /*ARIANE*/
 
-#ariane{text-align:left; padding:0px 5px; margin-top:10px; }
-#ariane a, #footer a{ color:#96C11F; }
+#ariane{ background-color:rgba(28,28,28,0.2); height:20px; line-height:20px; font-size:11px; position:absolute; bottom:-20px; text-align:left; padding:0px 5px; margin-top:10px; }
+#ariane a { color:#4F4F4F; }
 #ariane a:hover, #footer a:hover{ color:#7A7A7A; }
 
 

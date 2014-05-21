@@ -198,6 +198,15 @@ class Acid {
 	}
 
 	/**
+	 * Retourne vrai si une traduction existe
+	 * @param string $val
+	 * @return boolean
+	 */
+	public static function tradExists($val) {
+		return Acid::exist('trad:'.$val,'lang');
+	}
+
+	/**
 	 *  Traduit la clé en entrée
 	 *
 	 * @param string $val
@@ -206,7 +215,7 @@ class Acid {
 	*/
 	public static function trad($val,$replace=array()) {
 
-		if (Acid::exist('trad:'.$val,'lang')) {
+		if (self::tradExists($val)) {
 			$res = Acid::get('trad:'.$val,'lang');
 		}else{
 			$res = $val;

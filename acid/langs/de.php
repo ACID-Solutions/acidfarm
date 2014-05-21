@@ -108,6 +108,12 @@ $lang['trad']['user_ask_set_mail']                  = 'Bitte geben Sie Ihre E-Ma
 $lang['trad']['user_mail_sent']                     = 'Ihnen wurde eine E-Mail auf __MAIL__ gesendet';
 $lang['trad']['user_valid_mail_sent']               = 'Rufen Sie Ihre Mailbox ab, um Ihre Adresse zu bestätigen';
 
+$lang['trad']['user_mail_subject_new_user_subscribe']		= 'Abonnieren Sie __SITE__';
+$lang['trad']['user_mail_subject_new_user_subscribe_admin']	= 'Neue User: __USER__';
+$lang['trad']['user_mail_subject_user_change_mail']			= 'Validierung von neuen E-Mail-Adresse';
+$lang['trad']['user_mail_subject_user_forget_pass']			= 'Passwort vergessen';
+$lang['trad']['user_mail_user_new_private']					= 'Neue Nachricht';
+
 $lang['trad']['user_password_ask_enter_mail']       = 'Geben Sie Ihre E-Mail Adresse ein, um das Passwort zu ändern: ';
 $lang['trad']['user_password_ask_click']            = 'Rufen Sie Ihre Mailbox ab, um Ihr Passwort zu ändern';
 $lang['trad']['user_change_mail_ask_click']         = 'Um Ihre E-Mail Adresse zu ändern, klicken Sie bitte auf diesen Link: ';
@@ -384,6 +390,19 @@ $lang['mod']['user_permission']['module']          		  = 'Module';
 $lang['mod']['user_permission']['do']      				  = 'Action';
 $lang['mod']['user_permission']['type']          		  = 'Type';
 $lang['mod']['user_permission']['id']      				  = 'Ident';
+
+
+//Levels
+$lang['lvl']['visitor']   = 'Besucher';
+$lang['lvl']['robot']     = 'Roboter';
+$lang['lvl']['unvalid']   = 'Ungültig';
+$lang['lvl']['registred'] = 'Aufgezeichnet';
+$lang['lvl']['member']    = 'Mitglied';
+$lang['lvl']['vip']       = 'VIP';
+$lang['lvl']['modo']      = 'Moderator';
+$lang['lvl']['admin']     = 'Verwalter';
+$lang['lvl']['dev']       = 'Entwickler';
+
 
 // Devise
 $langs['currency']['symbol']       = '__VAL__ €';

@@ -184,6 +184,12 @@ if (Acid::get('include:mode')=='full_stack') {
 	}
 
 	//Langue pré-définie
+	if (!empty(User::curValue('lang'))) {
+		$acid_user_lang = in_array(User::curValue('lang'),Acid::get('lang:available')) ? User::curValue('lang') : Acid::get('lang:default');
+		Acid::set('lang:current',$acid_user_lang);
+	}
+
+	//Langue pré-définie
 	if (!empty($admin_lang)) {
 		$acid_cur_lang = in_array($admin_lang,Acid::get('lang:available')) ? $admin_lang : Acid::get('lang:default');
 		Acid::set('lang:current',$acid_cur_lang);
@@ -193,9 +199,9 @@ if (Acid::get('include:mode')=='full_stack') {
 	if ((Acid::get('lang:use_nav_0')) && ($use_nav_page)) {
 		$root = Conf::exist('root_keys') ? Conf::get('root_keys') : array();
 		if (!in_array($nav[0],$root)) {
-			$use_nav_lang = empty($nav[0]) ? ( $nav_lang ? $nav_lang : 'en' ) : $nav[0];
-			$use_nav_lang = in_array($use_nav_lang,Acid::get('lang:available')) ?
-								$use_nav_lang : ($nav_lang ? $nav_lang : Acid::get('lang:default'));
+			$to_use_nav_lang = empty($acid_user_lang) ? ( $nav_lang ? $nav_lang : Acid::get('lang:default') ) : $acid_user_lang;
+			$use_nav_lang = empty($nav[0]) ? $to_use_nav_lang : $nav[0];
+			$use_nav_lang = in_array($use_nav_lang,Acid::get('lang:available')) ? $use_nav_lang : $to_use_nav_lang;
 			$redirect_nav_lang = $nav_empty || ($use_nav_lang != $nav[0]) || !isset($nav[1]);
 
 			Acid::set('lang:current',$use_nav_lang);

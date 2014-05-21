@@ -108,6 +108,12 @@ $lang['trad']['user_ask_set_mail']                  = 'Veuillez saisir votre e-m
 $lang['trad']['user_mail_sent']                     = 'Un e-mail vous a été envoyé sur __MAIL__';
 $lang['trad']['user_valid_mail_sent']               = 'Consultez votre messagerie pour valider votre adresse';
 
+$lang['trad']['user_mail_subject_new_user_subscribe']		= 'Inscription à __SITE__';
+$lang['trad']['user_mail_subject_new_user_subscribe_admin']	= 'Nouvel Utilisateur : __USER__';
+$lang['trad']['user_mail_subject_user_change_mail']			= 'Validation de votre nouvelle adresse email';
+$lang['trad']['user_mail_subject_user_forget_pass']			= 'Mot de passe oublié';
+$lang['trad']['user_mail_user_new_private']					= 'Nouveau message privé';
+
 $lang['trad']['user_password_ask_enter_mail']       = 'Entrez votre adresse e-mail pour modifier votre mot de passe : ';
 $lang['trad']['user_password_ask_click']            = 'Consultez votre messagerie pour changer de mot de passe';
 $lang['trad']['user_change_mail_ask_click']         = 'Pour changer votre adresse e-mail, veuillez cliquer sur ce lien : ';
@@ -383,6 +389,18 @@ $lang['mod']['user_permission']['module']          		  = 'Module';
 $lang['mod']['user_permission']['do']      				  = 'Action';
 $lang['mod']['user_permission']['type']          		  = 'Type';
 $lang['mod']['user_permission']['id']      				  = 'Ident';
+
+
+//Levels
+$lang['lvl']['visitor']   = 'Visiteur';
+$lang['lvl']['robot']     = 'Robot';
+$lang['lvl']['unvalid']   = 'Invalide';
+$lang['lvl']['registred'] = 'Enregistré';
+$lang['lvl']['member']    = 'Membre';
+$lang['lvl']['vip']       = 'VIP';
+$lang['lvl']['modo']      = 'Modérateur';
+$lang['lvl']['admin']     = 'Administrateur';
+$lang['lvl']['dev']       = 'Développeur';
 
 
 // Devise

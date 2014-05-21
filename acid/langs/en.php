@@ -108,6 +108,12 @@ $lang['trad']['user_ask_set_mail']                  = 'Please enter your e-mail 
 $lang['trad']['user_mail_sent']                     = 'You have got mail on __MAIL__';
 $lang['trad']['user_valid_mail_sent']               = 'Consult your mailbox in order to valid your address';
 
+$lang['trad']['user_mail_subject_new_user_subscribe']		= 'Subscribe to __SITE__';
+$lang['trad']['user_mail_subject_new_user_subscribe_admin']	= 'New User: __USER__';
+$lang['trad']['user_mail_subject_user_change_mail']			= 'Validation of your new email address';
+$lang['trad']['user_mail_subject_user_forget_pass']			= 'Forgot Password';
+$lang['trad']['user_mail_user_new_private']					= 'New private message';
+
 $lang['trad']['user_password_ask_enter_mail']       = 'Enter your e-mail address in order to change your password: ';
 $lang['trad']['user_password_ask_click']            = 'Consult your mailbox in order to change your password';
 $lang['trad']['user_change_mail_ask_click']         = 'If you want to change your e-mail address, please click on the following link: ';
@@ -382,6 +388,18 @@ $lang['mod']['user_permission']['module']          		  = 'Module';
 $lang['mod']['user_permission']['do']      				  = 'Action';
 $lang['mod']['user_permission']['type']          		  = 'Type';
 $lang['mod']['user_permission']['id']      				  = 'Ident';
+
+
+//Levels
+$lang['lvl']['visitor']   = 'Visitor';
+$lang['lvl']['robot']     = 'Robot';
+$lang['lvl']['unvalid']   = 'Unvalid';
+$lang['lvl']['registred'] = 'Registred';
+$lang['lvl']['member']    = 'Member';
+$lang['lvl']['vip']       = 'VIP';
+$lang['lvl']['modo']      = 'Modo';
+$lang['lvl']['admin']     = 'Admin';
+$lang['lvl']['dev']       = 'Developer';
 
 
 // Devise

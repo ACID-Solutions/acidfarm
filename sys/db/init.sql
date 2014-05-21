@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `acid_user` (
   `date_deactivation` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `date_connexion` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `last_lang` varchar(3) COLLATE utf8_unicode_ci NOT NULL,
-  `lang` varchar(3) COLLATE utf8_unicode_ci NOT NULL DEFAULT 'en',
+  `lang` varchar(3) COLLATE utf8_unicode_ci NOT NULL,
   `ip` varchar(19) COLLATE utf8_unicode_ci NOT NULL,
   `user_salt` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id_user`)
