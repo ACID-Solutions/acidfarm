@@ -2,7 +2,7 @@
 
 /**
  * AcidFarm - Yet Another Framework
- * 
+ *
  * Requires PHP version 5.3
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
@@ -34,14 +34,14 @@ Ajax::setNextPage();
 Ajax::enableAjax();
 
 if (isset($_GET['do'])) {
-	
+
 	switch ($_GET['do']) {
 
 		default :
 			//$html .= Ajax::returnJSON('ajax','ajax title',array('other'=>'my other content'),"alert('here my ajax');");
 			$html .= 'ajax';
 		break;
-		
+
 	}
 
 }

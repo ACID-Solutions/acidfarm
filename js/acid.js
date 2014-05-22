@@ -57,7 +57,7 @@ var Acid = {
 									params = '&'+params;
 								}
 								
-								return url_ajax+"?do="+action+params+"&next="+encodeURIComponent(document.location);
+								return url_ajax+"?do="+action+params+"&lang="+acid_cur_lang+"&next="+encodeURIComponent(document.location);
 							},
 
 							
