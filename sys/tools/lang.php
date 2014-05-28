@@ -54,7 +54,7 @@ class Lang {
 		$end = $sel ? 'sel':'unsel';
 
 		$style = $style ? 'style="'.$style.'"' : '';
-		$url_lang = Acid::get('url:img').'langs/'.$lang.'_'.$end.'.png';
+		$url_lang = Acid::themeUrl('img/langs/'.$lang.'_'.$end.'.png');
 		return '<img '.$attribute.' src="'.$url_lang.'" alt="'.Acid::trad('lang_'.$lang).'" title="'.Acid::trad('lang_'.$lang).'" '.$style.' />' . "\n" ;
 	}
 

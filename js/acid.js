@@ -101,99 +101,177 @@ var Acid = {
 						
 							},
 		
-		clonePicker 	:	function (selector,callback,configuration) {
-								
-								if (callback==undefined) {	var callback = function() {  };	}
-								if (configuration==undefined) {	var configuration = {}; 	}
-									
-								//mode clone
-								$(selector).each(
-									function() {
-										if (!$(this).hasClass('hasClonePicker')) {
-											
-											var config = {}; 
-											$.each(configuration,function(key,val) { config[key] = val; });
-											
-											var cur_name = $(this).attr('name');
-											var cur_val = $(this).val();
-											var clone_name = $(this).attr('name')+'_clone';
-										
-											if (config.nulldate==undefined) { config.nulldate = '0000-00-00'; }
-											if (config.nullval==undefined) { config.nullval = 'choisir date'; }
-											if (config.dateFormat==undefined) { config.dateFormat = 'dd/mm/yy'; }
-											if (config.altFormat==undefined) { config.altFormat = 'yy-mm-dd'; }
-											if (config.correction==undefined) { config.correction = true; }
-																				
-											$(this).attr('name',clone_name);
-											$(this).parent().append('<input class="hasClonePicker"  type="hidden" name="'+cur_name+'" value="'+cur_val+'" />');										
-											
-											var selector_input = $(this).parent().find('input[name='+cur_name+']');
-											var selector_clone = $(this).parent().find('input[name='+clone_name+']');
-										
-											
-									
-											if (selector_clone.val()==config.nulldate) {
-												selector_clone.val(config.nullval);
-											}else{
-												var clone_date = $.datepicker.parseDate(config.altFormat,selector_clone.val());
-												selector_clone.val($.datepicker.formatDate(config.dateFormat, clone_date));
-											}
-											
-											
-							
-											
-											selector_clone.addClass('clonePicker');
-											
-											$(selector_clone).datepicker(
-													{ 	
-														dateFormat: config.dateFormat,  
-														altFormat : config.altFormat,
-														altField : selector_input,
-														/*minDate: new Date(),*/ 
-														onSelect : function(dateText, inst) { return callback(dateText, inst); } 
-													}
-											);
-											
-											if (config.correction) {
-												var df = config.dateFormat;
-												var nv = config.nullval;
-												var nf = config.nulldate;
-												$(selector_clone).bind('change', function() { 
-													try {
-														$.datepicker.parseDate(df,$(this).val());
-														if (!$(this).val()) {
-															$(this).val(nv);
-															$(selector_input).val(nf);
-														}
-													}
-													catch(e) {
-														$(this).val(nv);
-														$(selector_input).val(nf);
-													}
-												});
-											}
-											
-											if (config!==undefined) {
-												delete config.nulldate;
-												delete config.nullval;
-												delete config.dateFormat;
-												delete config.altFormat;
-												delete config.correction;
-												
-												$.each(config, function(key,val) {
-													$(selector_clone).datepicker( "option" , key , val);
-													
-												});
 
+		cloneTimePicker 	:	function (selector,callback,config) {
+				if (config==undefined) {	var config = {}; 	}
+				if (callback==undefined) {	var callback = function() {  };	}
+				config.datetime = true;
+				config.nulldate = '0000-00-00 00:00:00'; 
+				config.nullval = 'choisir date et heure';
+				Acid.Tools.clonePicker(selector,callback,config);
+		},
+		
+		clonePicker 	:	function (selector,callback,configuration) {
+
+			if (callback==undefined) {	var callback = function() {}; }
+			if (configuration==undefined) {	var configuration = {}; }
+
+			var datetime  = configuration.datetime;
+
+			//mode clone
+			$(selector).each(
+					function() {
+
+						var config = {};			
+						$.each(configuration,function(key,val) { config[key] = val; });
+
+						if (!$(this).hasClass('hasClonePicker')) {
+
+							var cur_name = $(this).attr('name');
+							var cur_val = $(this).val();
+							var clone_name = $(this).attr('name')+'_clone';
+
+							if (config.datetime==undefined) { config.datetime = false; }
+							if (config.nulldate==undefined) { config.nulldate = '0000-00-00'; }
+							if (config.nullval==undefined) { config.nullval = 'choisir date'; }
+							if (config.dateFormat==undefined) { config.dateFormat = 'dd/mm/yy'; }
+							if (config.altFormat==undefined) { config.altFormat = 'yy-mm-dd'; }
+							if (config.correction==undefined) { config.correction = true; }
+							if (config.altFormat==undefined) { config.altFormat = 'yy-mm-dd'; }
+							if (config.timeFormat==undefined) { config.timeFormat = 'HH:mm'; }
+							if (config.altTimeFormat==undefined) { config.altTimeFormat = 'HH:mm:ss'; }
+							if (config.stepMinute==undefined) { config.stepMinute = 5; }
+							if (config.stepHours==undefined) { config.stepHours = 1;  }
+
+							$(this).attr('name',clone_name);
+							$(this).parent().append('<input class="hasClonePicker"  type="hidden" name="'+cur_name+'" value="'+cur_val+'" />');										
+
+							var selector_input = $(this).parent().find('input[name='+cur_name+']');
+							var selector_clone = $(this).parent().find('input[name='+clone_name+']');
+
+							if (selector_clone.val()==config.nulldate) {
+								selector_clone.val(config.nullval);
+							}else{
+
+								if (!datetime) {
+									var clone_date = $.datepicker.parseDate(config.altFormat,selector_clone.val());
+									selector_clone.val($.datepicker.formatDate(config.dateFormat, clone_date));
+								}else{
+
+									var clone_date = $.datepicker.parseDateTime(config.altFormat,config.altTimeFormat,selector_clone.val());
+									var val = $.datepicker.formatDate(config.dateFormat, clone_date);
+									var json = {
+											hour: clone_date.getHours(),
+											minute: clone_date.getMinutes(),
+											second: clone_date.getSeconds(),
+											millisec: clone_date.getMilliseconds(),
+											timezone: clone_date.getTimezoneOffset()
+									}
+									var time = $.datepicker.formatTime(config.timeFormat, json);
+									selector_clone.val(val+' '+time);
+
+								}
+
+							}
+
+							selector_clone.addClass('clonePicker');
+
+							if (!config.datetime) {
+								$(selector_clone).datepicker(
+										{ 	
+											dateFormat: config.dateFormat,  
+											altFormat : config.altFormat,
+											altField : selector_input,
+											/*minDate: new Date(),*/ 
+											onSelect : function(dateText, inst) { return callback(dateText, inst); } 
+										}
+								);
+							}else{
+
+								$(selector_clone).datetimepicker(
+										{ 	
+											timeFormat : config.timeFormat,
+											altTimeFormat : config.altTimeFormat,
+											stepMinute : config.stepMinute,
+											stepHour :  config.stepHour,
+											dateFormat: config.dateFormat, 
+											altFormat : config.altFormat,
+											altField : selector_input,
+											altFieldTimeOnly : false,
+											showButtonPanel : false,
+											/*minDate: new Date(),*/ 
+											onSelect : function(dateText, inst) { return callback(dateText, inst); } 
+										}
+								);
+
+							}
+
+							if (config.correction) {
+								var df = config.dateFormat;
+								var nv = config.nullval;
+								var nf = config.nulldate;
+								var dtp = config.datetime;
+								var tf = config.timeFormat;
+								$(selector_clone).bind('change', function() { 
+
+									if (!dtp) {
+										try {
+											$.datepicker.parseDate(df,$(this).val());
+											if (!$(this).val()) {
+												$(this).val(nv);
+												$(selector_input).val(nf);
 											}
-											
-											$('#ui-datepicker-div').hide();
-										
+										}
+										catch(e) {
+											$(this).val(nv);
+											$(selector_input).val(nf);
+										}
+									}else{
+										try {
+
+											$.datepicker.parseDateTime(df,tf,$(this).val());
+											if (!$(this).val()) {
+												$(this).val(nv);
+												$(selector_input).val(nf);
+											}
+
+										}
+										catch(e) {
+											$(this).val(nv);
+											$(selector_input).val(nf);
 										}
 									}
-								);									
-												
-							},
+								});
+							}
+
+							if (config!==undefined) {
+
+								delete config.datetime;
+								delete config.nulldate;
+								delete config.nullval;
+								delete config.dateFormat;
+								delete config.altFormat;
+								delete config.timeFormat;
+								delete config.altTimeFormat;
+								delete config.correction;
+
+								$.each(config, function(key,val) {
+									if (datetime) {
+										$(selector_clone).datetimepicker( "option" , key , val);
+									}else{
+										$(selector_clone).datepicker( "option" , key , val);
+									}
+								});
+
+							}
+
+							$('#ui-datepicker-div').hide();
+
+						}
+					}
+			);									
+
+		},
 		
 		parseDialog		: 	function (tab) {
 								var result = '';

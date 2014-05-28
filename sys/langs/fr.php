@@ -28,6 +28,9 @@ $lang['trad']['admin_form_forget_ask_click'] 	= 'Veuillez cliquer sur le lien de
 $lang['trad']['admin_form_forget_ask_password'] = 'Veuillez saisir votre nouveau mot de passe :';
 $lang['trad']['admin_form_forgotten_password']  = 'Mot de passe oublié ?';
 
+$lang['trad']['admin_board_welcome'] = 'Bonjour __NAME__,';
+$lang['trad']['admin_board_welcome_in_admin'] = 'Vous voici dans votre espace d\'administration.';
+
 $lang['trad']['search_ask_input'] 	 = 'Veuillez saisir votre recherche :';
 $lang['trad']['no_result_found'] 	 = 'Aucun résultat trouvé';
 $lang['trad']['no_result_found_for'] = 'Aucun résultat trouvé pour __SEARCH__';

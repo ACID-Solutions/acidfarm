@@ -1,0 +1,1 @@
+<a href="<?php echo $v['link']; ?>"><?php echo Acid::trad('back'); ?></a>

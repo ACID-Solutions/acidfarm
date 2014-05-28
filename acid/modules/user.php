@@ -43,6 +43,13 @@ abstract class AcidUser extends AcidModule {
 		$this->vars['password'] = empty($this->vars['password']) ? new AcidVarPassword($this->modTrad('password')) : $this->vars['password'];
 		$this->vars['user_salt'] = empty($this->vars['user_salt']) ? new AcidVarString($this->modTrad('user_salt')) : $this->vars['user_salt'];
 		$this->vars['email'] = empty($this->vars['email']) ? new AcidVarEmail($this->modTrad('email')) : $this->vars['email'];
+		$this->vars['firstname'] = empty($this->vars['firstname']) ? new AcidVarString($this->modTrad('firstname')) : $this->vars['firstname'];
+		$this->vars['lastname'] = empty($this->vars['lastname']) ? new AcidVarString($this->modTrad('lastname')) : $this->vars['lastname'];
+		$this->vars['address'] =	empty($this->vars['address']) ? new AcidVarString($this->modTrad('address')) : $this->vars['address'];
+		$this->vars['cp'] =	empty($this->vars['cp']) ? new AcidVarString($this->modTrad('cp'),15,15) : $this->vars['cp'];
+		$this->vars['city']	=	empty($this->vars['city']) ? new AcidVarString($this->modTrad('city')) : $this->vars['city'];
+		$this->vars['country'] =	empty($this->vars['country']) ? new AcidVarString($this->modTrad('country')) : $this->vars['country'];
+		$this->vars['phone'] =	empty($this->vars['phone']) ? new AcidVarString($this->modTrad('phone'),15,20) : $this->vars['phone'];
 		$this->vars['level'] = empty($this->vars['level']) ? new AcidVarList($this->modTrad('level'),$acid['user']['levels'],0,false,true) : $this->vars['level'];
 		$this->vars['date_creation'] = empty($this->vars['date_creation']) ? new AcidVarDateTime($this->modTrad('date_creation')) : $this->vars['date_creation'];
 		$this->vars['date_activation'] = empty($this->vars['date_activation']) ? new AcidVarDateTime($this->modTrad('date_activation')) : $this->vars['date_activation'];
@@ -51,6 +58,7 @@ abstract class AcidUser extends AcidModule {
 		$this->vars['lang'] = empty($this->vars['lang']) ? new AcidVarList($this->modTrad('lang'),Acid::get('lang:available'),Acid::get('lang:default'),false,false) : $this->vars['lang'];
 		$this->vars['last_lang'] = empty($this->vars['last_lang']) ? new AcidVarInfo($this->modTrad('last_lang')) : $this->vars['last_lang'];
 		$this->vars['ip'] = empty($this->vars['ip']) ? new AcidVarString($this->modTrad('ip'),20,15) : $this->vars['ip'];
+		$this->vars['active'] = empty($this->vars['active']) ? new AcidVarBool($this->modTrad('active'),1) : $this->vars['active'];
 
 		$avatar_effect = array(
 								'fill_gray'=>array('AcidFs::fill',array('__PATH__','__PATH__','__WIDTH__','__HEIGHT__',array(100,100,100))),
@@ -68,6 +76,7 @@ abstract class AcidUser extends AcidModule {
 
 		$cur_date = date('Y-m-d H:i:s');
 		$this->config['admin']['add']['def'] = array('date_creation'=>$cur_date);
+		$this->config['print']['active'] = array('type'=>'toggle');
 		$res = parent::__construct($init_id);
 
 		return $res;
@@ -229,6 +238,23 @@ abstract class AcidUser extends AcidModule {
 	}
 
 	/**
+	 * Retourne le nom complet de l'utilisateur
+	 */
+	public function fullName($hsc=true) {
+		$name = trim(Acid::trad($this->get('firstname').' '.$this->get('lastname')));
+		$name =  $name ? $name : $this->get('username');
+		return $hsc ? htmlspecialchars($name) : $name;
+	}
+
+	/**
+	 * Retourne l'adresse complete de l'utilisateur
+	 */
+	public function address($hsc=true) {
+		$address = trim(Acid::trad($this->get('address').' '.$this->get('cp').' '.$this->get('city').' '.$this->get('country')));
+		return $hsc ? htmlspecialchars($address) : $address;
+	}
+
+	/**
 	 * Retourne une forme hachée du mot de passe associé à l'objet.
 	 *
 	 *
@@ -289,7 +315,7 @@ abstract class AcidUser extends AcidModule {
 		//$mod = self::build();
 		//$exclued = array('id_user','id_group','user_salt','username','password','email','level','date_creation','date_activation','ip');
 		//return array_diff($mod->getKeys(),$exclued);
-		return array();
+		return array('firstname','lastname','address','cp','city','country','phone','lang');
 	}
 
 
@@ -317,6 +343,7 @@ abstract class AcidUser extends AcidModule {
 				'email'=>$email,
 				'lang'=>Acid::get('lang:current'),
 				'level'=>static::getLevelNextInscription(),
+				'active'=>static::getActiveNextInscription(),
 				'date_creation'=>AcidVarDatetime::now(),
 				'ip_inscription'=>$_SERVER['REMOTE_ADDR']
 		));
@@ -565,7 +592,7 @@ abstract class AcidUser extends AcidModule {
 										$updates = array('password');
 										AcidDialog::add('success',Acid::trad('user_password_change_success'));
 										if ($my_user->get('level') === static::getLevelBeforeActivation()) {
-											$my_user->initVars(array('level'=>$my_user->getLevelNextActivation(),'date_activation'=>date('Y-m-d H:i:s')));
+											$my_user->initVars(array('level'=>$my_user->getLevelNextActivation(),'active'=>$my_user->getActiveNextActivation(),'date_activation'=>date('Y-m-d H:i:s')));
 											array_push($updates,'level','date_activation');
 											AcidDialog::add('success',Acid::trad('user_valid_mail_success'));
 										}
@@ -834,27 +861,29 @@ abstract class AcidUser extends AcidModule {
 
 		foreach($identifiants as $ident) {
 			if ($comp->dbInitSearch(array($ident=>$login))) {
-				$the_password = $hashed_password ?  $pass : User::getHashedPassword($pass,$comp->get('user_salt'));
-				if ($comp->get('password') == $the_password) {
-					// Vérification de la date de validité du compte (00-00-0000 => illimité)
-					if ( ($comp->get('date_deactivation') == '0000-00-00 00:00:00') || (strtotime($comp->get('date_deactivation')) > time()) ) {
+				if ($comp->get('active')) {
+					$the_password = $hashed_password ?  $pass : User::getHashedPassword($pass,$comp->get('user_salt'));
+					if ($comp->get('password') == $the_password) {
+						// Vérification de la date de validité du compte (00-00-0000 => illimité)
+						if ( ($comp->get('date_deactivation') == '0000-00-00 00:00:00') || (strtotime($comp->get('date_deactivation')) > time()) ) {
 
-						if ($session_make) {
-							$comp->sessionMake(null,$autolog);
+							if ($session_make) {
+								$comp->sessionMake(null,$autolog);
+							}
+
+							$sess = AcidSession::getInstance();
+							$sess->id_user = $comp->getId();
+
+							return true;
+						} else {
+							Acid::log('user', 'Identification failed for ' . $login . ' (account has expired)');
+
+							if ($print_error) {
+								AcidDialog::add('error',Acid::trad('user_date_expired'));
+							}
+
+							return false;
 						}
-
-						$sess = AcidSession::getInstance();
-						$sess->id_user = $comp->getId();
-
-						return true;
-					} else {
-						Acid::log('user', 'Identification failed for ' . $login . ' (account has expired)');
-
-						if ($print_error) {
-							AcidDialog::add('error',Acid::trad('user_date_expired'));
-						}
-
-						return false;
 					}
 				}
 			}
@@ -964,7 +993,7 @@ abstract class AcidUser extends AcidModule {
 
 					$my_user = new User();
 					$my_user->initVars($tab);
-					$my_user->initVars(array('level'=>$this->getLevelNextActivation(),'date_activation'=>date('Y-m-d H:i:s')));
+					$my_user->initVars(array('level'=>$this->getLevelNextActivation(),'active'=>$this->getActiveNextActivation(),'date_activation'=>date('Y-m-d H:i:s')));
 					$my_user->dbUpdate(array('level','date_activation'));
 					$my_user->sessionMake();
 					$output .= $this->printResEmailValidation();
@@ -1006,6 +1035,30 @@ abstract class AcidUser extends AcidModule {
 	 */
 	public static function getLevelNextInscription() {
 		return static::getLevelBeforeActivation();
+	}
+
+	/**
+	 * Retourne l'état actif de membre relatif à un compte activé.
+	 * @return int
+	 */
+	public static function getActiveNextActivation() {
+		return 1;
+	}
+
+	/**
+	 * Retourne  l'état actif de membre relatif à un compte non activé.
+	 * @return int
+	 */
+	public static function getActiveBeforeActivation() {
+		return 1;
+	}
+
+	/**
+	 * Retourne  l'état actifde membre relatif à un compte dès l'inscription.
+	 * @return int
+	 */
+	public static function getActiveNextInscription() {
+		return 1;
 	}
 
 	/**
@@ -1166,7 +1219,7 @@ abstract class AcidUser extends AcidModule {
 				$my_user->initVars($tab);
 				$my_user->initVars(array('email'=>$new_email));
 				if ($tab['level'] == $this->getLevelBeforeActivation()) {
-					$my_user->initVars(array('level'=>$this->getLevelNextActivation(),'date_activation'=>date('Y-m-d H:i:s')));
+					$my_user->initVars(array('level'=>$this->getLevelNextActivation(),'active'=>$this->getActiveNextActivation(),'date_activation'=>date('Y-m-d H:i:s')));
 				}
 				$my_user->dbUpdate(array('level','email'));
 				$my_user->sessionMake();
@@ -1313,7 +1366,7 @@ abstract class AcidUser extends AcidModule {
 		}
 
 		if (!empty($user_form)) {
-		    $user_form .= '<a href="'.Acid::get('user:page').'">Retour</a>';
+		    $user_form .= Acid::tpl('modules/user/form-back.tpl',array('link'=>Acid::get('user:page')));
 		}
 
 		return $user_form;
@@ -1327,21 +1380,23 @@ abstract class AcidUser extends AcidModule {
 	 * @return string
 	 */
 	public static function printCreateForm() {
-		$ins_login = $ins_pass = $ins_email = '';
+
+		$insert = array('login'=>'','pass'=>'','email'=>'');
 
 		if ($sess_co = AcidSession::get('connexion')) {
-			if(isset($sess_co['login'])) {
-			    $ins_login = htmlspecialchars($sess_co['login']);
-			}
-			if(isset($sess_co['pass'])) {
-			    $ins_pass = htmlspecialchars($sess_co['pass']);
-			}
-			if(isset($sess_co['email'])) {
-			    $ins_email = htmlspecialchars($sess_co['email']);
+
+			foreach ($sess_co as $key=>$val) {
+
+				if (in_array($key, array('login','pass','mail'))) {
+					$insert[$key] = htmlspecialchars($val);
+				}else{
+					$insert[$key] = $val;
+				}
+
 			}
 		}
 
-		return	Acid::tpl('modules/user/create-form.tpl',array('email'=>$ins_email,'login'=>$ins_login,'pass'=>$ins_pass),Acid::mod(get_called_class()));
+		return	Acid::tpl('modules/user/create-form.tpl',$insert,Acid::mod(get_called_class()));
 	}
 
 

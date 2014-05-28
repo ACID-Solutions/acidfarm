@@ -68,7 +68,10 @@ $acid['permission_active']		=  empty($permission_active) ? false : true;
 $acidconf['root_keys'] = array('sitemap.xml','robots.txt');
 $acidconf['site_keys'] = array('news','gallery','search','contact');
 
-$acid['def_theme'] = $acid['theme'] = 'default';
+
+$acid['def_theme'] = 'default';
+$acid['theme'] = empty($acid['server_theme']) ?  $acid['def_theme'] : $acid['server_theme'];
+
 
 $acidconf['photo']['limit'] = 12;
 $acidconf['photo_home']['limit'] = null;

@@ -2,7 +2,7 @@
 
 /**
  * AcidFarm - Yet Another Framework
- * 
+ *
  * Requires PHP version 5.3
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
@@ -30,7 +30,6 @@ $page_title = '';
 $page_title_alone = false;
 Acid::set('title:left',Acid::get('site:name').' - ');
 Acid::set('title:right','');
-
 
 $check_for_keywords = 3;
 
@@ -80,7 +79,7 @@ AcidRouter::addRoute('robots',new AcidRoute('robots.txt',array('controller'=>'Ro
 // Route vers la page search
 AcidRouter::addRoute('searchPage', new AcidRoute('@search',array('controller'=>'SearchController'),1));
 
-//Par défault : affichage d'une page 
+//Par défault : affichage d'une page
 AcidRouter::addRoute('page',new AcidRoute(':page_key',array('controller'=>'PageController'),1));
 
 //Si pas de page définie, affichage de la home

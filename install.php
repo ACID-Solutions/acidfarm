@@ -63,6 +63,33 @@ function getRandPasswordSalt() {
 		return $ident;
 }
 
+/**
+ * Retourne la liste des thèmes disponibles à l'install
+ * @return string
+ */
+function getThemes() {
+
+	$themes = array(''=>'default');
+	$path = __DIR__.'/theme';
+
+	if (is_dir($path)) {
+		if ($handle = opendir($path)) {
+			while (false !== ($entry = readdir($handle))) {
+				if (!in_array($entry,array('.','..','default'))) {
+					if (is_dir($path.'/'.$entry)) {
+						$themes[$entry] = $entry;
+					}
+				}
+		    }
+
+		    closedir($handle);
+		}
+
+	}
+
+	return $themes;
+}
+
 $action = $_POST;
 
 $dir_path = __DIR__.'/sys/server.php';
@@ -168,6 +195,9 @@ if (!file_exists($dir_path)) {
 
 		$multilingual = !empty($action['multilingual']);
 
+		$server_theme = isset($action['server_theme']) ? $action['server_theme'] : '';
+		$theme_quote = $server_theme ? '' : '//';
+
 		$lang_manual = !empty($action['site-lang-manual']);
 		$lang_quote = $lang_manual ? '' : '//';
 
@@ -204,11 +234,14 @@ if (!file_exists($dir_path)) {
 $lpp_plus_quote\$acid['email']['method']          	= 'smtp';
 $lpp_plus_quote\$acid['email']['smtp']['host']		= 'localhost'; // If smtp'
 
-
+// Lang
 $lang_quote\$acid['lang']['use_server'] 	= true;
 $lang_quote\$acid['lang']['use_nav_0'] 		= $lang_use_nav_0_value;
 $lang_quote\$acid['lang']['default']        = '$lang_default';
 $lang_quote\$acid['lang']['available']      = array($lang_available_value);
+
+// Theme
+$theme_quote\$acid['server_theme'] 	= '$server_theme';
 
 // SESSION
 \$acid['session']['table']	     = \$acid['db']['prefix'] . 'session';
@@ -371,6 +404,11 @@ HTACC;
 
 		$prod_selected = strpos($_SERVER['HTTP_HOST'],'www.')===0 ? ' selected="selected" ' : '';
 
+		$theme_options = '';
+		foreach (getThemes() as $k=>$t) {
+			$theme_options .= '<option value="'.$k.'" >' . $t .'</option>' . "\n" ;
+		}
+		$theme_list = '<select name="server_theme">'.$theme_options.'</select>';
 
 		$form = <<< FORM
 <form class="corpus" action="#" method="post">
@@ -422,6 +460,10 @@ HTACC;
 		<label>Prepare database for multilingual <input type="checkbox" name="multilingual" value="1" /> </label><br />
 		Available : <label> fr <input type="checkbox" name="site-lang-available[]" value="fr" /></label> <label> en <input type="checkbox" name="site-lang-available[]" value="en" /></label> <label> de <input type="checkbox" name="site-lang-available[]" value="de" /></label> <label> es <input type="checkbox" name="site-lang-available[]" value="es" /></label> <label> it <input type="checkbox" name="site-lang-available[]" value="it" /></label><br />
 		Default : <select name="site-lang-default" ><option value=""></option> <option value="fr">fr</option><option value="en">en</option><option value="de">de</option><option value="es">es</option><option value="it">it</option></select>
+	</div>
+	<div class="block">
+	<h2>Theme</h2>
+	$theme_list
 	</div>
 	<div class="block">
 	<h2>Database</h2>

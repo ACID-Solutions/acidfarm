@@ -326,7 +326,7 @@ abstract class AcidModuleCore {
 	*
 	* @return mixed
 	*/
-	public function modTrad($val) {
+	public static function modTrad($val) {
 		if (Acid::exist('mod:'.static::TBL_NAME.':'.$val,'lang')) {
 			return Acid::get('mod:'.static::TBL_NAME.':'.$val,'lang');
 		}else{
@@ -755,16 +755,42 @@ abstract class AcidModuleCore {
 	public static function dbGenerateFilter($filter,$combo='AND',$add_aquote=true) {
 		$filter_string = '';
 
+		//String filter
 		if (!is_array($filter)) {
 			$filter_string = $filter;
-		} else {
+		}
+		//Array filter
+		else {
+
 			foreach ($filter as $f_val) {
+
+				//Array valide
 				if (is_array($f_val) && count($f_val) >= 3) {
 
 					list($key,$method,$value) = $f_val;
 					$start = isset($f_val[3]) ? $f_val[3] : '';
 					$stop = isset($f_val[4]) ? $f_val[4] : '';
-					if (strtolower($method) === 'in' || strtolower($method) === 'not in') {
+
+					//between
+					if (strtolower($method) === 'between') {
+						$akey = $add_aquote ? "`".$key."`" : $key;
+						if (is_array($value)) {
+							$bvalue = array('','');
+							if (count($value)>1) {
+								$bvalue[0] = $value[0];
+								$bvalue[1] = $value[1];
+							}else{
+								$bvalue[0] = $value[0];
+								$bvalue[1] = $value[0];
+							}
+							$between_val = "'".$bvalue[0]."' AND '".$bvalue[1]."'";
+						}else{
+							$between_val = $value;
+						}
+						$filter_string .= $akey." ".$method." ".$between_val." ".$combo." ";
+					}
+					//in (not)
+					elseif (strtolower($method) === 'in' || strtolower($method) === 'not in') {
 
 						$in_vals = array();
 						if (count($value)) {
@@ -780,16 +806,25 @@ abstract class AcidModuleCore {
 							$filter_string .= ((strtolower($method) === 'in') ? " 0 " : " 1 ").$combo." ";
 						}
 
-					} else {
+					}
+					//default
+					else {
 						$akey = $add_aquote ? "`".$key."`" : $key;
 						$filter_string .= $akey." ".$method." '".($start!==null?$start:'').addslashes($value).($stop!==null?$stop:'')."' ".$combo." ";
 					}
-				}else if(is_string($f_val)) {
+
+				}
+				//String filter
+				else if(is_string($f_val)) {
 					$filter_string .= " ".$f_val." ".$combo." ";
-				} else {
+				}
+				//Bad format
+				else {
 					trigger_error('Acid : dbList filter error, invalid param : ' . var_export($f_val,true),E_USER_WARNING);
 				}
+
 			}
+
 			$filter_string = substr($filter_string,0,-strlen($combo)-1);
 
 		}

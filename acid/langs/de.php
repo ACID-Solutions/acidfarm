@@ -364,6 +364,13 @@ $lang['mod']['user']['id_group']          = 'Gruppe';
 $lang['mod']['user']['username']          = 'Benutzername';
 $lang['mod']['user']['password']          = 'Passwort';
 $lang['mod']['user']['email']             = 'E-mail';
+$lang['mod']['user']['firstname']         = 'Vorname';
+$lang['mod']['user']['lastname']          = 'Name';
+$lang['mod']['user']['address'] 		  = 'Adresse';
+$lang['mod']['user']['cp'] 				  = 'Postleitzahl';
+$lang['mod']['user']['city'] 			  = 'Stadt';
+$lang['mod']['user']['country']			  = 'Land';
+$lang['mod']['user']['phone'] 			  = 'Rufnummer';
 $lang['mod']['user']['level']             = 'Level';
 $lang['mod']['user']['date_creation']     = 'Erstellungsdatum';
 $lang['mod']['user']['date_activation']   = 'Aktivierungsdatum';
@@ -374,6 +381,8 @@ $lang['mod']['user']['lang'] 			  = 'Sprache';
 $lang['mod']['user']['ip']                = 'IP';
 $lang['mod']['user']['image_0']           = 'Avatar';
 $lang['mod']['user']['user_salt']         = 'User Salt';
+$lang['mod']['user']['active']         	  = 'Aktiv';
+
 
 //--user group
 $lang['mod']['user_group']['id_user_group']     = 'Id';

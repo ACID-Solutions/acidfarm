@@ -103,6 +103,13 @@ CREATE TABLE IF NOT EXISTS `acid_user` (
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `image_0` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `firstname` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL,
+  `lastname` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL,
+  `address` VARCHAR( 255 ) COLLATE utf8_unicode_ci NOT NULL ,
+  `cp` VARCHAR( 15 ) COLLATE utf8_unicode_ci NOT NULL ,
+  `city` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL ,
+  `country` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL ,
+  `phone` VARCHAR( 20 ) COLLATE utf8_unicode_ci NOT NULL ,
   `level` tinyint(4) NOT NULL DEFAULT '0',
   `date_creation` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `date_activation` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -112,8 +119,10 @@ CREATE TABLE IF NOT EXISTS `acid_user` (
   `lang` varchar(3) COLLATE utf8_unicode_ci NOT NULL,
   `ip` varchar(19) COLLATE utf8_unicode_ci NOT NULL,
   `user_salt` varchar(30) COLLATE utf8_unicode_ci NOT NULL,
+  `active` ENUM( '0', '1' ) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_user`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
 
 --
 -- Contenu de la table `acid_user`
