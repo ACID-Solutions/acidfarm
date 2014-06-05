@@ -29,6 +29,8 @@ class Lang {
 		$nav[0] = ($nav[0] == 'index') ? '' : $nav[0];
 		if (($key = AcidRouter::searchKey($nav[0]))) {
 			$nav[0] = AcidRouter::getKey($key,$lang);
+		}elseif ($object = Acid::get('tmp_current_object')) {
+			return Route::buildUrl($object->checkTbl(),$object->getVals(),false,$lang);
 		}
 		return Acid::get('url:folder').$lang.'/'.implode('/',$nav);
 	}

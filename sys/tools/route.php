@@ -39,20 +39,22 @@ class Route {
 			$base = $absolute ? Acid::get('url:system_lang') : Acid::get('url:folder_lang');
 		}
 
+		$rl = $force_lang ? $force_lang : null;
 
 		switch ($key) {
 
 			//Page
 			case Page::checkTbl() :
 				$mod = new Page($vals);
-				$print = !empty($vals['print_page']) ? AcidRouter::getKey('pagination_key').'/' :'' ;
-				return Acid::get('url:folder_lang') .$print. $mod->trad('ident');
+				$print = !empty($vals['print_page']) ? AcidRouter::getKey('pagination_key',$rl).'/' :'' ;
+				$key = $mod->langKey('ident',$rl);
+				return $base .$print. $mod->get($key);
 			break;
 
 			//News
 			case Actu::checkTbl() :
 
-				$base .= AcidRouter::getKey('news');
+				$base .= AcidRouter::getKey('news',$rl);
 				$mod = new Actu($vals);
 
 				if ($mod->getId()) {
@@ -65,18 +67,18 @@ class Route {
 
 			//Gallery
 			case Photo::checkTbl() :
-				$base .= AcidRouter::getKey('gallery');
+				$base .= AcidRouter::getKey('gallery',$rl);
 				return $base;
 			break;
 
 			//News List
 			case Actu::checkTbl().'_list' :
 
-				$base .= AcidRouter::getKey('news');
+				$base .= AcidRouter::getKey('news',$rl);
 				$page = isset($vals['page']) ? $vals['page'] : 1;
 
 				if ($page>1) {
-					return $base . '/'.AcidRouter::getKey('pagination_key').'/' . $page;
+					return $base . '/'.AcidRouter::getKey('pagination_key',$rl).'/' . $page;
 				}else{
 					return $base;
 				}
@@ -110,7 +112,7 @@ class Route {
 
 			//Default
 			default :
-				return $base.AcidRouter::getKey($key);
+				return $base.AcidRouter::getKey($key,$rl);
 			break;
 		}
 

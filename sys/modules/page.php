@@ -285,6 +285,10 @@ class Page extends AcidModule {
 				);
 		*/
 
+		/*
+		$this->config['onglets']['default'] = 'false';
+		*/
+
 		return parent::printAdminInterface(array('onglets'=>$menu,'controller'=>$controller));
 	}
 

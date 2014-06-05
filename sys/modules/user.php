@@ -229,7 +229,6 @@ class User extends AcidUser {
 	    return $GLOBALS['acid']['lvl']['registred'];
 	}
 
-
 	/**
 	 * Retourne les groupes d'un utilisateur sous forme de chaine
 	 * @param mixed $elts identifiant de l'utilisateur
@@ -267,6 +266,67 @@ class User extends AcidUser {
 		}
 
 		return $tab;
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see AcidUser::bodyMail()
+	 */
+	public function bodyMail($tpl,$vars=array(),$object=null) {
+
+		if ($this->get('lang')) {
+			Lang::switchTo($this->get('lang'));
+		}
+
+		$res = parent::bodyMail($tpl,$vars,$object);
+
+		if ($this->get('lang')) {
+			Lang::rollback();
+		}
+
+		return $res;
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see AcidUser::subjectMail()
+	 */
+	public function subjectMail($subject,$replace=array(),$staff=false) {
+
+		$chang_lang = !$staff ? ($this->get('lang')) : (Conf::get('lang:admin') && (Acid::get('lang:current')!=Conf::get('lang:admin')));
+
+		if ($chang_lang) {
+			$lang = !$staff ? $this->get('lang') : Conf::get('lang:admin');
+			Lang::switchTo($lang);
+		}
+
+		$res = parent::subjectMail($subject,$replace,$staff);
+
+		if ($chang_lang) {
+			Lang::rollback();
+		}
+
+		return $res;
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see AcidUser::bodyMailStaff()
+	 */
+	public static function bodyMailStaff($tpl,$vars,$object) {
+
+		$chang_lang = Conf::get('lang:admin') && (Acid::get('lang:current')!=Conf::get('lang:admin'));
+
+		if ($chang_lang) {
+			Lang::switchTo(Conf::get('lang:admin'));
+		}
+
+		$res = parent::bodyMailStaff($tpl,$vars,$object);
+
+		if ($chang_lang) {
+			Lang::rollback();
+		}
+		return $res;
 	}
 
 

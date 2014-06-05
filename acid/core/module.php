@@ -3966,7 +3966,7 @@ abstract class AcidModuleCore {
 						"if (res.js!=undefined) { ".
 						"	eval(res.js); ".
 						"} ".
-						"$('.".$ident."').find('[type=submit]').attr('disabled',''); " .
+						"$('.".$ident."').find('[type=submit]').removeAttr('disabled'); " .
 						"}); return false;";
 
 			$form->addHidden('','ajax',1);
