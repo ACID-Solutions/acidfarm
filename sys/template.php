@@ -149,7 +149,7 @@ class MyTemplate extends AcidTemplate {
 	 */
 	public function jQuery() {
 
-		$this->addJS(Acid::get('url:folder').'js/jquery-1.7.1.min.js');
+		$this->addJS(Acid::get('url:folder').'js/jquery-1.11.1.min.js');
 		$this->addJS(Acid::get('url:folder').'js/jquery.textchange.min.js');
 
 	}
@@ -236,9 +236,7 @@ class MyTemplate extends AcidTemplate {
 
 		$this->addCSS(Acid::themeUrl('css/dialog.css'));
 
-		$this->addJS(Acid::get('url:folder').'js/jquery-1.4.4.min.js');
-		$this->addJS(Acid::get('url:folder').'js/jquery.textchange.min.js');
-
+		$this->jQuery();
 		$this->jqueryUI();
 		$this->tinyMCE();
 		$this->plupload();

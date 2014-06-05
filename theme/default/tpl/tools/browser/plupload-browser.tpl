@@ -136,6 +136,7 @@ $().ready(function() {
 		$('#fsb_upload_file').hide();
 		$('.fsb_plupload').toggle();
 		$('.btn_upload').bind('click',function() { $('.fsb_plupload').toggle(); });
+		$('.plupload_button').on('click',function() { return false; });
 	}
 
 });
