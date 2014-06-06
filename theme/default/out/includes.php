@@ -6,7 +6,7 @@ $this->jQuery();
 $this->jQueryLightBox();
 $this->jQueryUI();
 
-$this->addCss(Acid::themeUrl('css/carousel.css'));
-$this->addJs(Acid::themeUrl('js/carousel.js'));
+$this->addCss(Acid::themeUrl('js/slick/slick.css'));
+$this->addJs(Acid::themeUrl('js/slick/slick.min.js'));
 
 $this->dependencies();

@@ -1517,7 +1517,7 @@ class AcidVarImage extends AcidVarFile {
 		}
 
 		if ($this->config['ext'] === null) {
-			$this->config['ext'] = $GLOBALS['acid']['ext']['images'];
+			$this->config['ext'] = Acid::get('ext:varimage');
 		}
 
 		parent::__construct($label,$folder,$config,$name);

@@ -206,25 +206,68 @@ $acid['error_report']['debug']	= E_ALL & ~E_STRICT;
 $acid['error_report']['prod']	= 0;
 
 // Files
+
+// --mode
 $acid['files']['file_mode']     = 0644;
-$acid['files']['ext'][0]        = array('jpg','jpeg','png','gif');                              // 0 Images avec miniatures
-$acid['files']['ext'][1]        = array('bmp','psd','eps','tiff');                              // 1 Images
-$acid['files']['ext'][2]        = array('mp3','wav','mpc','ogg','wma');                         // 2 Son
-$acid['files']['ext'][3]        = array('avi','mpg','mpeg','wmv','flv');                        // 3 Vidéo
-$acid['files']['ext'][4]        = array('pdf');                                                 // 4 PDF
-$acid['files']['ext'][5]        = array('txt','doc','odt','rtf');                               // 5 Documents texte
-$acid['files']['ext'][6]        = array('xls','ods');                                           // 6 Feuilles de caculs
-$acid['files']['ext'][7]        = array('zip','rar','ace','tar.gz','bzip','gz','bzip2','tgz');	// 7 Archives
 
-$acid['files']['icons']         = array(0=>'image.png',1=>'image.png',2=>'musique.png',3=>'video.png',
-                                        4=>'pdf.png',5=>'txt.png',6=>'calc.png',7=>'archive.png');
+// --assoc
+$acid['files']['ext_assoc']['img']		 	= 0; // 0 Images avec miniatures
+$acid['files']['ext_assoc']['img_print'] 	= 1; // 1 Images
+$acid['files']['ext_assoc']['sound']		= 2; // 2 Son
+$acid['files']['ext_assoc']['movie'] 		= 3; // 3 Vidéo
+$acid['files']['ext_assoc']['pdf']		 	= 4; // 4 PDF
+$acid['files']['ext_assoc']['text'] 		= 5; // 5 Documents texte
+$acid['files']['ext_assoc']['calc']		 	= 6; // 6 Feuilles de caculs
+$acid['files']['ext_assoc']['archive']		= 7; // 7 Archives
 
-$acid['ext']['files'] 			= array('jpg','jpeg','png','gif','bmp','psd','eps','tiff',
-										'mp3','wav','mpc','ogg','wma','avi','mpg','mpeg','wmv','flv',
-										'pdf','txt','doc','odt','rtf','xls','ods',
-										'zip','rar','ace','tar.gz','bzip','gz','bzip2','tgz');
+// --extension
+$acid['files']['ext'] = array(
 
-$acid['ext']['images'] 			= array('jpg','jpeg','png','gif','bmp','psd','eps','tiff');
+							$acid['files']['ext_assoc']['img']		 	=> array('jpg','jpeg','png','gif'),
+							$acid['files']['ext_assoc']['img_print'] 	=> array('bmp','psd','eps','tiff'),
+							$acid['files']['ext_assoc']['sound']		=> array('mp3','wav','mpc','ogg','wma'),
+							$acid['files']['ext_assoc']['movie'] 		=> array('avi','mpg','mpeg','wmv','flv'),
+							$acid['files']['ext_assoc']['pdf']		 	=> array('pdf'),
+							$acid['files']['ext_assoc']['text'] 		=> array('txt','doc','odt','rtf'),
+							$acid['files']['ext_assoc']['calc']		 	=> array('xls','ods'),
+							$acid['files']['ext_assoc']['archive']		=> array('zip','rar','ace','tar.gz','bzip','gz','bzip2','tgz')
+
+						);
+
+// --icons
+$acid['files']['icons'] = array(
+
+		$acid['files']['ext_assoc']['img']		 	=> 'image.png',
+		$acid['files']['ext_assoc']['img_print'] 	=> 'image.png',
+		$acid['files']['ext_assoc']['sound']		=> 'musique.png',
+		$acid['files']['ext_assoc']['movie'] 		=> 'video.png',
+		$acid['files']['ext_assoc']['pdf']		 	=> 'pdf.png',
+		$acid['files']['ext_assoc']['text'] 		=> 'txt.png',
+		$acid['files']['ext_assoc']['calc']		 	=> 'calc.png',
+		$acid['files']['ext_assoc']['archive']		=> 'archive.png'
+
+);
+
+// --files shortcut
+$acid['ext']['files'] =  array_merge(
+							$acid['files']['ext'][$acid['files']['ext_assoc']['img']],
+							$acid['files']['ext'][$acid['files']['ext_assoc']['img_print']],
+							$acid['files']['ext'][$acid['files']['ext_assoc']['sound']],
+							$acid['files']['ext'][$acid['files']['ext_assoc']['movie']],
+							$acid['files']['ext'][$acid['files']['ext_assoc']['pdf']],
+							$acid['files']['ext'][$acid['files']['ext_assoc']['text']],
+							$acid['files']['ext'][$acid['files']['ext_assoc']['calc']],
+							$acid['files']['ext'][$acid['files']['ext_assoc']['archive']]
+						);
+
+// --image shortcut
+$acid['ext']['images'] 	= array_merge(
+							$acid['files']['ext'][$acid['files']['ext_assoc']['img']],
+							$acid['files']['ext'][$acid['files']['ext_assoc']['img_print']]
+						);
+
+// --acidvarimage shortcut
+$acid['ext']['varimage'] = $acid['files']['ext'][$acid['files']['ext_assoc']['img']];
 
 
 // Pagination

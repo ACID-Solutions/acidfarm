@@ -84,7 +84,13 @@ section header{	border:none; background:none; padding:0px; text-align:left; colo
 /*HOME*/
 
 #home_diaporama{ margin-bottom:15px; }
-
+#home_diaporama .carousel_container{ width:100%; }
+#home_diaporama .carousel_container_list{ width:100%; padding:0px; list-style-type:none;  }
+#home_diaporama .carousel_item{ list-style-type:none;  width:100%; }
+#home_diaporama .slick-next{ right:3px; text-align:right;  }
+#home_diaporama .slick-prev{ left:-3px; text-align:left;  }
+#home_diaporama .slick-slider{margin-bottom:0px; }
+#home_diaporama .slick-dots{ position:relative; bottom:0px;  }
 
 /*CONTACT*/
 
