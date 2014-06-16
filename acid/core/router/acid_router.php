@@ -231,13 +231,16 @@ class AcidRouter implements Acid_Router_Interface{
          }
      }
 
-     /**
+      /**
       * Ajoute un callback before
       * @param string $routename
       * @param function $callback
       */
      public static function before($routename,$callback){
-     	self::getInstance()->_before[$routename][] = $callback;
+     	$routes = is_array($routename) ? $routename : array($routename);
+     	foreach ($routes as $r) {
+     		self::getInstance()->_before[$r][] = $callback;
+     	}
      	return self::getInstance();
      }
 
@@ -247,7 +250,10 @@ class AcidRouter implements Acid_Router_Interface{
       * @param function $callback
       */
      public static function after($routename,$callback){
-     	self::getInstance()->_after[$routename][] = $callback;
+     	$routes = is_array($routename) ? $routename : array($routename);
+     	foreach ($routes as $r) {
+     		self::getInstance()->_after[$r][] = $callback;
+     	}
      	return self::getInstance();
      }
 
