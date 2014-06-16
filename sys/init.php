@@ -184,7 +184,7 @@ if (Acid::get('include:mode')=='full_stack') {
 	}
 
 	//Langue pré-définie
-	if (!empty(User::curValue('lang'))) {
+	if (User::curValue('lang')) {
 		$acid_user_lang = in_array(User::curValue('lang'),Acid::get('lang:available')) ? User::curValue('lang') : Acid::get('lang:default');
 		Acid::set('lang:current',$acid_user_lang);
 	}
