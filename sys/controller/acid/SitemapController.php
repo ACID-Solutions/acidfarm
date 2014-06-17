@@ -34,10 +34,10 @@ class SitemapController{
      * @param float $priority seuil de priorité
      * @return string
      */
-    public function decline_sitemap ($tab,$url_base,$priority=0.9) {
+	public function decline_sitemap ($tab,$url_base=null,$priority=0.9,$changefreq='monthly',$lastmod=null) {
 
     	foreach ($tab as $key => $elt) {
-    		$this->xml_content .= AcidSitemap::getElt($url_base.$elt['url'],$priority);
+    		$this->xml_content .= AcidSitemap::getElt($elt['url'],$priority,$changefreq,$lastmod,$url_base);
     	}
 
     	return $this->xml_content;
@@ -69,7 +69,7 @@ class SitemapController{
 			}
 
 
-			$base = Acid::get('lang:use_nav_0') ? $lang.'/' : '';
+			$base = Acid::get('lang:use_nav_0') ? Acid::get('url:system').$lang.'/' : '';
 			$this->decline_sitemap($map,$base);
 		}
 
