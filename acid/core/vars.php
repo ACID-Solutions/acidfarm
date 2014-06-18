@@ -1801,6 +1801,16 @@ class AcidVarImage extends AcidVarFile {
 				    );
 	    		break;
 
+	    		case 'fill_transparent' :
+	    			AcidFs::fill(
+	    			$this->getPath($format),
+	    			$this->getPath($format),
+	    			$this->config['format'][$format]['size'][0],
+	    			$this->config['format'][$format]['size'][1],
+	    			array(false,false,false)
+	    			);
+	    		break;
+
 	    		case 'fill_black' :
 	    			AcidFs::fill(
 	    				$this->getPath($format),

@@ -2,7 +2,7 @@
 
 /**
  * AcidFarm - Yet Another Framework
- * 
+ *
  * Requires PHP version 5.3
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
@@ -21,12 +21,12 @@
  */
 class AcidFs
 {
-    
+
     /**
      * Retourne l'extension du fichier en entrée ou false en cas d'échec.
      *
      * @param string $file_name
-     * 
+     *
      * @return string | bool
      */
     public static function getExtension($file_name) {
@@ -38,8 +38,8 @@ class AcidFs
     		else return strtolower($strs[0]);
 	    }else return false;
     }
-    
-    
+
+
     /**
      * Retourne le nom du fichier en entrée sans extension.
      *
@@ -49,15 +49,15 @@ class AcidFs
      */
     public static function removeExtension($file_name) {
 		$name = $file_name;
-		
+
     	if ($ext = self::getExtension($file_name)) {
     		$name = substr($name,0,(strlen('.'.$ext)*-1));
 	    }
-	    
+
 	    return $name;
     }
-    
-    
+
+
     /**
      * Retourne le couple (largeur, hauteur) correspondant à l'encoffrage d'une image de dimension $w x $h dans $mw x $mh.
      *
@@ -65,7 +65,7 @@ class AcidFs
      * @param int $h Hauteur à traiter.
      * @param int $mw Largeur du coffre.
      * @param int $mh Hauteur du coffre.
-     * 
+     *
      * @return array ( int , int )
      */
     public static function getImgSmallerSize($w,$h,$mw,$mh) {
@@ -82,8 +82,8 @@ class AcidFs
     		return array(round($mw),round($mh));
     	}
     }
-    
-    
+
+
      /**
      * Retourne un tableau correspondant au remplissage du coffre de dimension $mw x $mh par une image de dimension $w x $h.
      *
@@ -91,14 +91,14 @@ class AcidFs
      * @param int $h Hauteur de l'image.
      * @param int $mw Largeur du coffre.
      * @param int $mh Hauteur du coffre.
-     * 
-     * @return array ( int : largeur, int : hauteur, int : capture_x, int : capture_y ) 
+     *
+     * @return array ( int : largeur, int : hauteur, int : capture_x, int : capture_y )
      */
     public static function getImgSrcSizeCroped($w,$h,$mw,$mh) {
-        
+
     	$ratio_src = $w/$h;
         $ratio_dst = $mw/$mh;
-        
+
         if ($ratio_src == $ratio_dst) {
         	$src_x = $src_y = 0;
         	$bw = $w;
@@ -111,7 +111,7 @@ class AcidFs
         	$bh = $h;
         	$src_y = 0;
         }
-        
+
         // Hauteur plus grande
         else {
         	$bh = round(1/$ratio_dst*$w);
@@ -119,13 +119,13 @@ class AcidFs
         	$bw = $w;
         	$src_x = 0;
         }
-        
-        
+
+
     	return array($bw,$bh,$src_x,$src_y);
     }
-    
-    
-    
+
+
+
 	/**
 	 * Créer une image redimensionnée en fonction des paramètres en entrée et retourne true en cas de succès, false sinon.
 	 *
@@ -138,7 +138,7 @@ class AcidFs
 	 * @param int $src_type
 	 * @param int $src_x
 	 * @param int $src_y
-	 * 
+	 *
 	 * @return bool
 	 */
 	public static function imgResize($src_path,$dst_path,$img_w,$img_h,$src_w=null,$src_h=null,$src_type=null,$src_x=0,$src_y=0){
@@ -146,11 +146,11 @@ class AcidFs
 		    if ($src_w === null || $src_h === null || $src_type === null) {
 			    list($src_w,$src_h,$src_type) = getimagesize($src_path);
 		    }
-			
+
 			$dst_source = ImageCreateTrueColor ($img_w,$img_h);
 			imagealphablending($dst_source,false);
 			imagesavealpha($dst_source,true);
-			
+
 			$success = true;
 			switch($src_type) {
 				case 1	:	// Cas du GIF
@@ -159,14 +159,14 @@ class AcidFs
 							$success = ImageGif($dst_source, $dst_path);
 							imagedestroy($dst_source);
 							break;
-				
+
 				case 2	:	// Cas du JPG
 							$img_source = ImageCreateFromJpeg($src_path);
 							ImageCopyResampled($dst_source, $img_source, 0,0,$src_x,$src_y, $img_w, $img_h, $src_w, $src_h);
 							$success = ImageJpeg($dst_source, $dst_path,100);
 							imagedestroy($dst_source);
 							break;
-				
+
 				case 3	:	// Cas du PNG
 							$img_source = ImageCreateFromPng($src_path);
 							ImageCopyResampled($dst_source, $img_source, 0,0,$src_x,$src_y, $img_w, $img_h, $src_w, $src_h);
@@ -177,37 +177,37 @@ class AcidFs
 			return $success;
 		}
 	}
-	
+
 	/**
 	 * Créer une replique grisée de l'image désignée par $src_path et la stocke en $dst_path.
-	 * 
+	 *
 	 * @param string $src_path
 	 * @param string $dst_path
-	 * 
+	 *
 	 */
 	public static function imgGray($src_path,$dst_path) {
 		if (file_exists($src_path)) {
 			list($img_w,$img_h,$type) = getImageSize($src_path);
-			
+
 			switch($type) {
 				case 1 : // GIF
 					$img_source = imagecreatefromgif($src_path);
 				break;
-					
+
 				case 2 : // JPG
 					$img_source = imagecreatefromjpeg($src_path);
 				break;
-				
+
 				case 3 : // PNG
 					$img_source = imagecreatefrompng($src_path);
 				break;
-				
-				default : 
+
+				default :
 					trigger_error('Acids::imgGrayCopy : Image must be a GIF, JPG, or PNG. Current is type "'.$type.'"',E_USER_ERROR);
 				break;
 			}
-			
-		
+
+
 			// convert to grayscale
 			for ($y = 0; $y <$img_h; $y++) {
 				for ($x = 0; $x <$img_w; $x++) {
@@ -215,48 +215,48 @@ class AcidFs
 					$red   = ($rgb >> 16) & 0xFF;
 					$green = ($rgb >> 8)  & 0xFF;
 					$blue  = $rgb & 0xFF;
-					
+
 					$gray = round(.299*$red + .587*$green + .114*$blue);
-					           
+
 					// shift gray level to the left
 					$grayR = $gray << 16;   // R: red
 					$grayG = $gray << 8;    // G: green
 					$grayB = $gray;         // B: blue
-					
+
 					// OR operation to compute gray value
 					$grayColor = $grayR | $grayG | $grayB;
-					
+
 					// set the pixel color
 					imagesetpixel ($img_source, $x, $y, $grayColor);
 					imagecolorallocate ($img_source, $gray, $gray, $gray);
 				}
 			}
-		
+
 			// copy pixel values to new file buffer
 			$dst_source = ImageCreateTrueColor($img_w, $img_h);
 			imagealphablending($dst_source,false);
 			imagesavealpha($dst_source,true);
-			
-			
+
+
 			imagecopy($dst_source, $img_source, 0, 0, 0, 0, $img_w, $img_h);
-			
+
 			switch($type) {
-				
+
 				case 1 : // GIF
 					imagegif($dst_source,$dst_path);
 				break;
-					
+
 				case 2 : // JPG
 					imagejpeg($dst_source,$dst_path);
 				break;
-				
+
 				case 3 : // PNG
 					imagepng($dst_source,$dst_path);
 				break;
-				
+
 			}
-			
-			imagedestroy($dst_source);   
+
+			imagedestroy($dst_source);
 			imagedestroy($img_source);
 		}
 	}
@@ -272,74 +272,86 @@ class AcidFs
 	public function fill($src_path,$dst_path,$dst_w,$dst_h,$color) {
 		if (file_exists($src_path)) {
 			list($img_w,$img_h,$type) = getImageSize($src_path);
-			
+
 			$margin_left = floor(($dst_w - $img_w) / 2);
 			$margin_left = ($margin_left < 0) ? 0 : $margin_left ;
-			
+
 			$margin_top = floor(($dst_h - $img_h) / 2);
 			$margin_top = ($margin_top < 0) ? 0 : $margin_top ;
-			
-			
-			
+
+
+
 			switch($type) {
 				case 1 : // GIF
 					$img_source = imagecreatefromgif($src_path);
 				break;
-					
+
 				case 2 : // JPG
 					$img_source = imagecreatefromjpeg($src_path);
 				break;
-				
+
 				case 3 : // PNG
 					$img_source = imagecreatefrompng($src_path);
 				break;
-				
-				default : 
+
+				default :
 					trigger_error('Acids::fill : Image must be a GIF, JPG, or PNG. Current is type "'.$type.'"',E_USER_ERROR);
 				break;
 			}
-			
+
 			$color[0] = isset($color[0]) ? $color[0] : 0;
 			$color[1] = isset($color[1]) ? $color[1] : 0;
 			$color[2] = isset($color[2]) ? $color[2] : 0;
-			
+
+			$transparent = false;
+			if (($color[0]===false) && ($color[1]===false) && ($color[2]===false)) {
+				$color[0] = $color[1] = $color[2] = 255;
+				$transparent = in_array($type,array(2,3));
+			}
+
 			// filling dst_source
-			$dst_source = imagecreatetruecolor  ($dst_w, $dst_h);
-			$cur_color = ImageColorAllocate ($dst_source, $color[0], $color[1], $color[2]); 
-			imagefill($dst_source,0,0,$cur_color);
-			
-	
+			if ($transparent) {
+				$dst_source = imagecreatetruecolor  ($dst_w, $dst_h);
+				$cur_color = imagecolorallocatealpha ($dst_source, $color[0], $color[1], $color[2], 127);
+				imagefill($dst_source,0,0,$cur_color);
+				imagesavealpha($dst_source, TRUE);
+			}else{
+				$dst_source = imagecreatetruecolor  ($dst_w, $dst_h);
+				$cur_color = ImageColorAllocate ($dst_source, $color[0], $color[1], $color[2]);
+				imagefill($dst_source,0,0,$cur_color);
+			}
+
 			$cur_source = imagecreatetruecolor  ($img_w, $img_h);
 			imagefill($cur_source,0,0,$cur_color);
-			
+
 			imagecopyresampled($cur_source,$img_source,0,0,0,0,$img_w,$img_h,$img_w,$img_h);
 			//imagecopymerge($cur_source,$img_source,0,0,0,0,$img_w,$img_h,100);
-			
+
 			//imagefill($cur_source,0,0,$cur_color);
-					
+
 			imagecopyresampled($dst_source,$cur_source,$margin_left,$margin_top,0,0,$img_w,$img_h,$img_w,$img_h);
 			//imagecopymerge($dst_source,$cur_source,$margin_left,$margin_top,0,0,$img_w,$img_h,100);
-			
+
 			switch($type) {
-				
+
 				case 1 : // GIF
 					imagegif($dst_source,$dst_path);
 				break;
-					
+
 				case 2 : // JPG
 					imagejpeg($dst_source,$dst_path);
 				break;
-				
+
 				case 3 : // PNG
 					imagepng($dst_source,$dst_path);
 				break;
-				
+
 			}
-			
-			imagedestroy($dst_source);   
+
+			imagedestroy($dst_source);
 			imagedestroy($img_source);
 			imagedestroy($cur_source);
-			
+
 		}
 	}
 }
