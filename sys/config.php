@@ -51,7 +51,7 @@ include(SITE_PATH.'sys/includes.php');
 
 if (empty($acid['lang']['use_server'])) {
 
-	$def_lang = 'en'; //fr
+	$def_lang = 'fr'; //fr
 	$acid['lang']['use_nav_0'] 		= false;
 	$acid['lang']['default']        = $def_lang;
 	$acid['lang']['available']      = array($def_lang);

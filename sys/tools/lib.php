@@ -162,6 +162,20 @@ class Lib {
 		return implode(array_keys($treat));
 	}
 
+	/**
+	 * Enlève les accents d'une chaine de caractères
+	 * @param string $string
+	 * @return mixed
+	 */
+	public static function removeAccents($string) {
+		$output = utf8_encode($string);
+		$output = $string;
+		$output = str_replace(get_html_translation_table(HTML_ENTITIES), array_keys(get_html_translation_table(HTML_ENTITIES)), $output);
+		$output = strip_tags($output);
+		$output = htmlentities($output, ENT_COMPAT, 'utf-8');
+		$output = preg_replace( '`&([a-z]+)(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig);`i', "\\1", $output );
+		return $output;
+	}
 
 	/**
 	 * Retourne un texte UTF-8 à partir du contenu html saisi en entrée

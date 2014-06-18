@@ -159,7 +159,7 @@ class MyTemplate extends AcidTemplate {
 	 */
 	public function jQueryUI() {
 
-		if (isset($GLOBALS['datepicker'])) {
+		if (!empty($GLOBALS['datepicker'])) {
 			$this->addCSS(Acid::themeUrl('css/jquery-ui.css'));
 			$this->addJS(Acid::get('url:folder').'js/jquery-ui.min.js');
 			$this->addJS(Acid::get('url:folder').'js/datepicker/timepicker.js');

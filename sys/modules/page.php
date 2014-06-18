@@ -347,7 +347,13 @@ class Page extends AcidModule {
 
 		$this->config['admin'][$do]['keys'] = array_merge($this->langKeyDecline('title'),$this->langKeyDecline('ident'),$this->langKeyDecline('content'));
 
-		return parent::printAdminForm($do);
+
+		$js = '';
+ 		foreach (Acid::get('lang:available') as $l) {
+ 			$js .= "Acid.Tools.fieldNormalize('[name=".$this->langKey('title',$l)."]','[name=".$this->langKey('ident',$l)."]','.admin_form');" . "\n" ;
+ 		}
+
+		return parent::printAdminForm($do) .Lib::getJsCaller($js);
 	}
 
 	/**

@@ -317,6 +317,42 @@ var Acid = {
 								}
 							);
 											    
+						},
+						
+		fieldNormalize : function (read,write,parent) {
+			if (parent==undefined) {
+				var parent = 'form';
+			}
+			
+			$(parent).each(function(){
+				$(this).find(write).attr("readonly", "readonly");
+				$(this).find(write).css("background-color", "#F9F9F8");
+				$(this).find(read).on('textchange',function(){
+					var text = $(this).val();
+					text = Acid.Tools.urlNormalize(text);
+					$(this).parents(parent).find(write).val(text);
+			    });
+				$(this).find(read).keyup();
+			});
+			
+		},				
+						
+		urlNormalize : function(str){
+							str = str.replace(/^\s+|\s+$/g, ''); // trim
+							str = str.toLowerCase();
+			
+							// remove accents, swap ñ for n, etc
+							var from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;";
+							var to   = "aaaaaeeeeeiiiiooooouuuunc------";
+							for (var i=0, l=from.length ; i<l ; i++) {
+								str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+							}
+			
+							str = str.replace(/[^a-z0-9 -]/g, '') // remove invalid chars
+						    .replace(/\s+/g, '-') // collapse whitespace and replace by -
+						    .replace(/-+/g, '-'); // collapse dashes
+			
+							return str;
 						}
 							
 	},
