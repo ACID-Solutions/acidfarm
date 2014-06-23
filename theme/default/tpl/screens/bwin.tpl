@@ -20,14 +20,15 @@
 
 	var Bwin = {
 					show : function() {
-						$('#bwin').show();
-						Bwin.init();
-						$(document).bind('scroll resize',Bwin.init);
+						$('#bwin').show(0,Bwin.init);
+						$(document).bind('scroll',Bwin.init);
+						$(window).bind('resize',Bwin.init);
 					},
 
 					close : function() {
 						$('#bwin').hide();
-						$(document).unbind('scroll resize',Bwin.init);
+						$(document).unbind('scroll',Bwin.init);
+						$(window).unbind('resize',Bwin.init);
 					},
 
 					call : function (json) {

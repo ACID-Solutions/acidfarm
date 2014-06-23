@@ -135,7 +135,8 @@
 <?php echo AcidGMap::apiCall(); ?>
 
 <?php
+$style = array(	'featureType' => "all", 'stylers'=> array(array('saturation'=>-100),array('gamma'=> 0.50)));
 $address = $g['site_config']->hscConf('address') .' '.$g['site_config']->hscConf('cp').' '.$g['site_config']->hscConf('city');
-echo AcidGMap::initMap('block_gmap',array('init_address'=>$address,'coords'=>'0,0','zoom'=>5,'no_inner_content'=>false/*,'icon'=>$g['acid']['url']['img'].'langs/'.$g['acid']['lang']['current'].'_sel.png'*/));
+echo AcidGMap::initMap('block_gmap',array('init_address'=>$address,'coords'=>'0,0','zoom'=>5,'no_inner_content'=>false/*,'icon'=>$g['acid']['url']['img'].'langs/'.$g['acid']['lang']['current'].'_sel.png','style'=>$style*/));
 //echo AcidGMap::initDirection('block_gmap','start','stop',	array('coords'=>'0,0','zoom'=>5, 'no_inner_content'=>false));
 ?>
