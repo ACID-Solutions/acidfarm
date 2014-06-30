@@ -76,6 +76,9 @@ $acid['theme'] = empty($acid['server_theme']) ?  $acid['def_theme'] : $acid['ser
 $acidconf['photo']['limit'] = 12;
 $acidconf['photo_home']['limit'] = null;
 
+$acidconf['contact']['shield'] = true;
+$acidconf['contact']['shield_key'] = 'form_who_i_am';
+$acidconf['contact']['shield_value'] = 'human';
 
 //$acid['plupload']['runtimes'] = array('html5','flash');
 

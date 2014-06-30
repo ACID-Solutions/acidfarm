@@ -39,6 +39,9 @@
 			<div class="clear"></div>
 
 			<div class="row">
+				<?php if (Conf::get('contact:shield')) { ?>
+				<noscript><div style="color:red;"><?php echo Acid::trad('contact_please_enable_javascript'); ?></div></noscript>
+				<?php } ?>
 				<input class="btn" id="contact_form_submit" type="submit" value="Envoyer" 	/>
 			</div>
 
@@ -131,6 +134,16 @@
 </div>
 
 </div>
+
+<script type="text/javascript">
+<!--
+<?php if (Conf::get('contact:shield')) { ?>
+$().ready( function() {
+	$('#contact_form').append('<input type="hidden" name="<?php echo Conf::get('contact:shield_key'); ?>" value="<?php echo Conf::get('contact:shield_val'); ?>"  />');
+});
+<?php }?>
+-->
+</script>
 
 <?php echo AcidGMap::apiCall(); ?>
 

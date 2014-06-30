@@ -153,8 +153,12 @@ class Lang {
 	 * Change de langue en intégrant un rollback
 	 * @param string $lang identifiant de langue
 	 */
-	public static function switchTo($lang) {
+	public static function switchTo($lang,$change_current=true) {
 		Acid::save(null,'lang');
+		if($change_current) {
+			Acid::save('lang:current','acid');
+			Acid::set('lang:current',$lang);
+		}
 
 		$GLOBALS['lang'] = array();
 		Lang::loadLang($lang);
@@ -164,8 +168,12 @@ class Lang {
 	/**
 	 * Remonte dans l'historique de langue
 	 */
-	public static function rollback() {
+	public static function rollback($change_current=true) {
 		Acid::rollback(null,'lang');
+		if($change_current) {
+			Acid::rollback('lang:current','acid');
+		}
+
 	}
 
 	/**
@@ -178,9 +186,10 @@ class Lang {
 
 		$language = $language===null ? Acid::get('lang:default') : $language;
 
-		$acid_lang_path =  ACID_PATH . 'langs/'.$language.'.php';
-		$site_lang_path =  SITE_PATH . 'sys/langs/'.$language.'.php';
-		$mod_lang_path  =  SITE_PATH . 'sys/langs/module_'.$language.'.php';
+		$acid_lang_path 	 =  ACID_PATH . 'langs/'.$language.'.php';
+		$site_lang_path 	 =  SITE_PATH . 'sys/langs/'.$language.'.php';
+		$mod_lang_path  	 =  SITE_PATH . 'sys/langs/module_'.$language.'.php';
+		$override_lang_path  =  SITE_PATH . 'sys/langs/override_'.$language.'.php';
 
 		if ( file_exists($acid_lang_path) ) {
 			require($acid_lang_path);
@@ -192,6 +201,10 @@ class Lang {
 
 		if ( file_exists($mod_lang_path) ) {
 			require($mod_lang_path);
+		}
+
+		if ( file_exists($override_lang_path) ) {
+			require($override_lang_path);
 		}
 
 	}
