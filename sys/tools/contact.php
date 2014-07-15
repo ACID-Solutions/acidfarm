@@ -36,7 +36,6 @@ class Contact {
 
 			if ($do == 'send_form') {
 				if ((!Conf::get('contact:shield')) || (Lib::getInPost(Conf::get('contact:shield_key'),'novalue')==Conf::get('contact:shield_val'))) {
-					echo Conf::get('contact:shield') .' vs '.Lib::getInPost(Conf::get('contact:shield_key')).' vs '.Conf::get('contact:shield_val'); exit();
 					Contact::exeForm();
 				}else{
 					AcidDialog::add('error',Acid::trad('contact_please_enable_javascript'));
