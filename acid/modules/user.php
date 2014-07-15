@@ -415,10 +415,13 @@ abstract class AcidUser extends AcidModule {
 		$user = Acid::mod('User');
 
 		if (isset($_POST['connexion_do'])) {
+
+
 			switch($_POST['connexion_do']) {
 
 			    case 'inscription' :
 					if (isset($_POST['login']) && isset($_POST['email']) && isset($_POST['pass']) && isset($_POST['confirmation'])) {
+						AcidSession::tmpSet(static::preKey($_POST['connexion_do']),$_POST,100);
 
 					    $sess['connexion']['login'] = trim($_POST['login']);
 						$sess['connexion']['email'] = trim($_POST['email']);
@@ -434,7 +437,7 @@ abstract class AcidUser extends AcidModule {
 
 						// Vérification Login
 						if (!empty($sess['connexion']['login'])) {
-							if (strlen($sess['connexion']['login']) < 18) {
+							if (strlen($sess['connexion']['login']) < Acid::get('user:login_max_size')) {
 								if ( ! $user->loginExists($sess['connexion']['login'])) {
 									$user_valid = true;
 								}else{
@@ -487,6 +490,8 @@ abstract class AcidUser extends AcidModule {
 
 							//Création de l'utilisateur
 							static::exeUserCreate();
+
+							AcidSession::tmpKill(static::preKey($_POST['connexion_do']));
 
 						}
 					}
