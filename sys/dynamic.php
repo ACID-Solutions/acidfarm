@@ -70,3 +70,6 @@ $level_assoc = array_flip(Acid::get('lvl'));
 foreach ($acid['user']['levels'] as $lvl => $value) {
 	Acid::set('user:levels:'.$lvl,Acid::get('lvl:'.$level_assoc[$lvl],'lang'));
 }
+
+// Hooks
+AcidHook::call('dynamic');

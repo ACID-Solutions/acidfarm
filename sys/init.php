@@ -63,6 +63,9 @@ else {
 include (SITE_PATH . 'sys/config.php');
 include (ACID_PATH . 'start.php');
 
+//Hook for includes
+AcidHook::call('includes');
+
 if (!empty($acid_page_type)) {
 	switch ($acid_page_type) {
 		case 'ajax' :

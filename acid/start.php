@@ -171,6 +171,7 @@ require ACID_PATH . 'core/acid_db.php';
 require ACID_PATH . 'core/acid_session.php';
 require ACID_PATH . 'core/acid_dialog.php';
 require ACID_PATH . 'core/acid_upgrade.php';
+require ACID_PATH . 'core/acid_hook.php';
 
 require ACID_PATH . 'core/vars.php';
 require ACID_PATH . 'core/module.php';

@@ -102,6 +102,9 @@ else {
     				    'medias'          	 => array('level'=>$def_level,'separator'=>false,'margin'=>0, 'label'=>Acid::trad('admin_menu_browser'),'display'=>true,'parent'=>'tools'),
 				);
 
+	//hook controller set
+	AcidHook::call('admin_conroller_done');
+
 
 	//Checking for User Access
 	$module = null;
@@ -126,6 +129,7 @@ else {
 	else{
 		$module = isset($controller[$check_key]['mod']) ? $controller[$check_key]['mod'] : null;
 	}
+
 
 	switch($p) {
 		//configuration
@@ -164,6 +168,10 @@ else {
 
 		//general
 		default:
+
+			//hook for case
+			AcidHook::call('admin_conroller_case');
+
 			//modules
 			if ($module) {
 				$content .= Acid::mod($module)->printAdminInterface();

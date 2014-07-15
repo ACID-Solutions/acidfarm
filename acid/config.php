@@ -79,6 +79,8 @@ $acid['url']['img']             = $acid['url']['folder'] . $acid['keys']['theme'
 $acid['url']['folder_lang'] 	= $acid['url']['folder'];
 $acid['url']['system_lang'] 	= $acid['url']['system'];
 
+//Hook acid
+$acid['hook']['path']          	  = 'hook/';
 
 // User
 $acid['lvl']['visitor'] = 0;
@@ -121,7 +123,7 @@ $acid['lang']['use_nav_0'] 		= false;
 
 // User account
 $acid['user']['page']           = $acid['url']['folder_lang'] . 'account';
-
+$acid['user']['login_max_size'] = 255;
 
 // Hash
 $acid['hash']['type']           = 'md5';

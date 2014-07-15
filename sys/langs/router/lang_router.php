@@ -78,3 +78,6 @@ $lang['router']['pagination_key'] 	= array(
 		'it'=>array('key'=>'pagina','name'=>'Pagina'),
 		'de'=>array('key'=>'seite','name'=>'Seite')
 );
+
+//Hooks
+AcidHook::call('lang_router');

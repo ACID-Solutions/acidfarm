@@ -17,7 +17,6 @@
 
 require 'sys/start.php';
 
-
 // Config référencement
 $meta_desc_start = '';
 $meta_desc_base = '';
@@ -32,6 +31,9 @@ Acid::set('title:left',Acid::get('site:name').' - ');
 Acid::set('title:right','');
 
 $check_for_keywords = 3;
+
+//Hook for index
+AcidHook::call('index');
 
 //Setting Default Meta Keys
 
@@ -56,6 +58,9 @@ if (Conf::defaultPageTitle($searched_key)) {
 
 
 //Définitions des Routes Controller
+
+//Hooks
+AcidHook::call('routes');
 
 // Page Actu avec X Params Facultatif
 AcidRouter::addRoute('news', new AcidRoute('@news',array('controller'=>'ActuController'),1));
