@@ -113,7 +113,8 @@ class MyTemplate extends AcidTemplate {
 			$this->addJS(Acid::get('url:folder').'js/tiny_mce/tiny_mce.js');
 
 			$ids = isset($GLOBALS['tinymce']['ids']) ? $GLOBALS['tinymce']['ids'] : array();
-			$my_js = Acid::tpl('tools/tiny-mce.tpl',array('ids'=>$ids),$this);
+			$tpl = isset($GLOBALS['tinymce']['tpl']) ? $GLOBALS['tinymce']['tpl'] : 'tools/tiny-mce.tpl';
+			$my_js = Acid::tpl($tpl,array('ids'=>$ids),$this);
 			$this->add( $my_js . "\n" );
 
 		}
