@@ -1537,6 +1537,23 @@ abstract class AcidModuleCore {
 		return $done;
 	}
 
+	/**
+	 * Lance le processus d'upload pour la clé en entrée
+	 * @param string $key clé du fichier
+	 * @param string $val chemin vers le fichier
+	 * @param string $name nom du fichier
+	 */
+	public function exeUploadKey($key,$val,$name=null) {
+		$vals['tmp_'.$key] = $val;
+		if ($name) {
+			$vals['tmp_name_'.$key] = $name;
+		}
+
+		$filename = '';
+		if ($this->vars[$key]->uploadProcess($this->getId(),$key,$filename,array(),$vals)) {
+			$this->dbUpdate(array($key));
+		}
+	}
 
 	/**
 	* Retourne la liste des clés du modules étant du type saisi en entrée
@@ -2882,7 +2899,7 @@ abstract class AcidModuleCore {
 			$_onglet = new stdClass();
 			$_onglet->url = !is_numeric($url_onglet) ? $url_onglet : $conf_onglet['url'];
 			$_onglet->name = is_array($conf_onglet) ? $conf_onglet['name'] : $conf_onglet;
-			$_onglet->selector = is_array($conf_onglet) ? (isset($conf_onglet['selector']) ? $conf_onglet['selector'] : $url): $url_onglet;
+			$_onglet->selector = is_array($conf_onglet) ? (isset($conf_onglet['selector']) ? $conf_onglet['selector'] : $_onglet->url): $url_onglet;
 			$_onglet->isSelected = $this->isSelectedOnglet($_onglet->selector);
 
 			$vars['onglets'][] = $_onglet;
