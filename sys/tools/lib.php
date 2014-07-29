@@ -163,7 +163,7 @@ class Lib {
 	}
 
 	/**
-	 * Enlève les accents d'une chaine de caractères
+	 * Supprime les accents et caractères spéciaux d'une chaine de catactères
 	 * @param string $string
 	 * @return mixed
 	 */

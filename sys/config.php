@@ -98,20 +98,61 @@ $acidconf['keys']['reserved']=$acidconf['site_keys'];
 //************************************************************************************//
 
 //--keywords
-$acidconf['meta']['keywords'][$acid['lang']['default']] 		= array(
-																//''=>array('',''),
-															);
+
+/**
+ * Configuration des meta keywords de base
+ */
+
+//$acidconf['meta']['keywords']['fr']		= array('exemple', 'de', 'mots-clé');
+//$acidconf['meta']['keywords']['fr']		= array();
+//$acidconf['meta']['keywords']['en']		= array();
+//$acidconf['meta']['keywords']['es']		= array();
+//$acidconf['meta']['keywords']['de']		= array();
+//$acidconf['meta']['keywords']['it']		= array();
 
 
 //--description
-$acidconf['meta']['description'][$acid['lang']['default']]		= array(
-																//''=>"",
-															);
+
+/**
+ * Configuration des meta description de base
+ */
+
+//$acidconf['meta']['keywords']['fr']		= "exemple de metadesc";
+//$acidconf['meta']['description']['fr']		= "";
+//$acidconf['meta']['description']['en']		= "";
+//$acidconf['meta']['description']['es']		= "";
+//$acidconf['meta']['description']['de']		= "";
+//$acidconf['meta']['description']['it']		= "";
 
 
 //--title
-$acidconf['meta']['title'][$acid['lang']['default']]			= array(
-																'news'=>"News",
-																'contact'=>"Contact",
-																'search'=>"Search",
-															);
+
+/**
+ * Configuration des meta title de base
+ */
+
+$acidconf['meta']['title']['fr']		= array(
+		'news'=>"Actualités",
+		'contact'=>"Contact",
+		'search'=>"Recherche",
+);
+$acidconf['meta']['title']['en']		= array(
+		'news'=>"News",
+		'contact'=>"Contact",
+		'search'=>"Search",
+);
+$acidconf['meta']['title']['es']		= array(
+		'news'=>"Noticias",
+		'contact'=>"Contacto",
+		'search'=>"Búsqueda",
+);
+$acidconf['meta']['title']['de']		= array(
+		'news'=>"Aktualitäten",
+		'contact'=>"Kontakt",
+		'search'=>"Suche",
+);
+$acidconf['meta']['title']['it']		= array(
+		'news'=>"Notizie",
+		'contact'=>"Contatto",
+		'search'=>"Ricerca",
+);

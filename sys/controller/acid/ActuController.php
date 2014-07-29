@@ -34,6 +34,27 @@ class ActuController {
                  $page = AcidRouter::getPartialParamById(1);
              }
 
+             // SEO settings
+//              $title = array(
+//              		'fr'=>'Actualités',
+// 					'en'=>'News',
+// 					'es'=>'Noticias',
+// 					'it'=>'Notizie',
+// 					'de'=>'Aktualitäten'
+//              );
+//              $desc = array(
+//              		'fr' => 'Suivez toute l\'actualités de '.Acid::get('site:name').' et restez informés de nos actions.',
+//              		'en' => 'Follow all the news '.Acid::get('site:name').' and stay informed of our actions.',
+//              		'es' => 'Siga todas las noticias de '.Acid::get('site:name').' y mantente informado de nuestras acciones.',
+//              		'it' => 'Segui tutte le notizie '.Acid::get('site:name').' e rimanere informati delle nostre azioni.',
+//              		'de' => 'Befolgen Sie alle Nachrichten '.Acid::get('site:name').' und bleiben Sie informiert unseres Handelns.'
+//              );
+//              $meta_img_url = Acid::get('url:img').'site/logo.png';
+//              $use_default_kewords = true;
+//              $added_keywords = array('keyword', 'ajouté');
+//              $generate_keywords_from_text = 'ceci est une chaine de caractère test que l\'on ajoute manuellement pour faire le test et voir ce qui est retenu. Ici, on peut voir qu\'un mot présent deux fois est retenu. Tout mot indésirable est à ajouter dans le fichier "kw_excluded.txt"';
+//              Conf::SEOGen($title, $desc, $meta_img_url, $use_default_kewords, $added_keywords, $generate_keywords_from_text);
+
              //add to HTML
              Conf::addToContent(Actu::printList($page));
 
@@ -61,6 +82,28 @@ class ActuController {
                         Conf::setPageTitle($actu->hscTrad('title'));
                         Conf::addToMetaKeys($actu->hscTrad('title'));
                         Conf::setMetadesc(AcidVarString::split($actu->trad('content'),100) . ' - '. Conf::getMetaDesc());
+
+                        // SEO settings
+		//              $title = array(
+		//              	'fr'=>$actu->get('title_fr'),
+		// 					'en'=>$actu->get('title_en'),
+		// 					'es'=>$actu->get('title_es'),
+		// 					'it'=>$actu->get('title_it'),
+		// 					'de'=>$actu->get('title_de')
+		//              );
+		//              $desc = array(
+		//              		'fr' => $actu->split('head_fr',180),
+		//              		'en' => $actu->split('head_en',180),
+		//              		'es' => $actu->split('head_es',180),
+		//              		'it' => $actu->split('head_it',180),
+		//              		'de' => $actu->split('head_de',180)
+		//              );
+		//              $meta_img_url = Acid::get('url:img').'site/logo.png';
+		//              $use_default_kewords = false;
+		//              $added_keywords = array();
+		//              $generate_keywords_from_text = $actu->trad('head').' '.$actu->trad('content');
+		//              Conf::SEOGen($title, $desc, $meta_img_url, $use_default_kewords, $added_keywords, $generate_keywords_from_text);
+
 
                         //add to HTML
                         Conf::addToContent($actu->printActu());
