@@ -37,7 +37,7 @@ class SitemapController{
 	public function decline_sitemap ($tab, $url_base, $priority=0.9, $changefreq='monthly') {
 		foreach ($tab as $elt) {
 			if(!isset($elt['url'])){
-				$this->xml_content .= AcidSitemap::getMultilangElt($elt, $priority, $changefreq);
+				$this->xml_content .= AcidSitemap::getMultilangElt($elt, $priority, $changefreq,null,$url_base);
 			}
 			else{
 
