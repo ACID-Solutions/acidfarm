@@ -40,7 +40,8 @@ class SitemapController{
 				$this->xml_content .= AcidSitemap::getMultilangElt($elt, $priority, $changefreq);
 			}
 			else{
-				$this->xml_content .= AcidSitemap::getElt($url_base.$elt['url'], $priority, $changefreq);
+
+				$this->xml_content .= AcidSitemap::getElt($elt['url'], $priority, $changefreq,null,$url_base);
 			}
 		}
 		return $this->xml_content;
