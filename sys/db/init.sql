@@ -200,6 +200,7 @@ CREATE TABLE IF NOT EXISTS `acid_photo_home` (
   `name` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `pos` int(11) NOT NULL,
   `src` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `active` ENUM( '0', '1' ) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_photo_home`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -218,5 +219,6 @@ CREATE TABLE IF NOT EXISTS `acid_photo` (
   `name` varchar(60) COLLATE utf8_unicode_ci NOT NULL,
   `pos` int(11) NOT NULL,
   `src` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `active` ENUM( '0', '1' ) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_photo`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;

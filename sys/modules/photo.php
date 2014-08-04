@@ -61,6 +61,8 @@ class Photo extends AcidModule {
 
 		$this->vars['src'] 	= 	new AcidVarImage( self::modTrad('src'), Acid::get('path:files').'photo/', $config);
 
+		$this->vars['active'] = new AcidVarBool($this->modTrad('active'),true);
+
 		parent::__construct($init_id);
 
 		$this->config['print']['src'] = array('type'=>'img','link'=>'src','size'=>'mini');
@@ -94,8 +96,10 @@ class Photo extends AcidModule {
 	public function printAdminConfigure($do='default',$conf=array()) {
 
 		$this->config['admin']['list']['order']= array('pos'=>'ASC');
-		$this->config['admin']['list']['keys'] = array('id_photo','src',$this->langKey('name'),'pos');
+		$this->config['admin']['list']['keys'] = array('id_photo','src',$this->langKey('name'),'active','pos');
 		$this->config['print']['pos']= array('type'=>'quickchange','ajax'=>false,'params'=>array('style'=>'width:30px; text-align:center;'));
+
+		$this->config['print']['active']= array('type'=>'toggle','ajax'=>true);
 
 		return parent::printAdminConfigure($do,$conf);
 	}
@@ -138,7 +142,7 @@ class Photo extends AcidModule {
 	 * @return string
 	 */
 	public static function printGallery() {
-		$elts = Acid::mod('Photo')->dbList(array(),array('pos'=>'ASC'));
+		$elts = Acid::mod('Photo')->dbList(array(array('active','=',1)),array('pos'=>'ASC'));
 		return Acid::tpl('tools/wall.tpl',array('elts'=>$elts),Acid::mod('Photo'));
 	}
 

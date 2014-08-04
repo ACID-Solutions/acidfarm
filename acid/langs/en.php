@@ -330,12 +330,14 @@ $lang['mod']['photo']['id_photo'] = 'Id';
 $lang['mod']['photo']['name']	  = 'Name';
 $lang['mod']['photo']['position'] = 'Position';
 $lang['mod']['photo']['image']    = 'Picture';
+$lang['mod']['photo']['active']  = 'Activ';
 
 //--photo home
 $lang['mod']['photo_home']['id_photo'] = 'Id';
 $lang['mod']['photo_home']['name']	   = 'Name';
 $lang['mod']['photo_home']['position'] = 'Position';
 $lang['mod']['photo_home']['image']    = 'Picture';
+$lang['mod']['photo_home']['active']  = 'Activ';
 
 //--contact
 $lang['mod']['contact']['mail'] = 'Mail';

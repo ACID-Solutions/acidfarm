@@ -61,6 +61,7 @@ class PhotoHome extends AcidModule {
 
 		$this->vars['src'] 	= 	new AcidVarImage( self::modTrad('src'), $GLOBALS['acid']['path']['files'].'home/', $config,'__ID__-__NAME__');
 
+		$this->vars['active'] = new AcidVarBool($this->modTrad('active'),true);
 
 
 
@@ -98,8 +99,10 @@ class PhotoHome extends AcidModule {
 	public function printAdminConfigure($do='default',$conf=array()) {
 
 		$this->config['admin']['list']['order']= array('pos'=>'ASC');
-		$this->config['admin']['list']['keys'] = array('id_photo_home','src',$this->langKey('name'),'pos');
+		$this->config['admin']['list']['keys'] = array('id_photo_home','src',$this->langKey('name'),'active','pos');
 		$this->config['print']['pos']= array('type'=>'quickchange','ajax'=>false,'params'=>array('style'=>'width:30px; text-align:center;'));
+
+		$this->config['print']['active']= array('type'=>'toggle','ajax'=>true);
 
 		return parent::printAdminConfigure($do,$conf);
 	}
@@ -161,7 +164,7 @@ class PhotoHome extends AcidModule {
 	 * @return string
 	 */
 	public static function printGallery() {
-		$elts = Acid::mod('PhotoHome')->dbList(array(),array('pos'=>'ASC'));
+		$elts = Acid::mod('PhotoHome')->dbList(array(array('active','=',1)),array('pos'=>'ASC'));
 		return Acid::tpl('tools/home_diaporama.tpl',array('elts'=>$elts),Acid::mod('PhotoHome'));
 	}
 
