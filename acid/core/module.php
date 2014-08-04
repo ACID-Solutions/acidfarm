@@ -3998,6 +3998,62 @@ abstract class AcidModuleCore {
 		return $form->html();
 	}
 
+	/**
+	 * Affiche un formulaire de "quick change"
+	 * @param string $key Nom du paramètre
+	 * @param object $obj L'objet
+	 * @param boolean $ajax Le formulaire sera traité en ajax
+	 *
+	 * @return string
+	 */
+	public function printFormQuickChange($key,$obj=null,$ajax=false,$params=array()) {
+
+		$obj = $obj===null ? $this : $obj;
+
+		$ident = 'form_quickchange_'.$obj->checkTbl().'_'.$obj->getId().'_'.$key;
+		$form = new AcidForm('post','');
+		$form->setFormParams(array('class'=>'quickchange_form '.$ident));
+
+		$form->addHidden('',$obj->preKey('do'),'update');
+		$form->addHidden('',$obj->preKey('quickchange'),'1');
+		$form->addHidden('','module_do',$obj->getClass());
+		$form->addHidden('',$obj->tblId(),$obj->getId());
+
+		if (!isset($params['onchange'])) {
+			$params['onchange'] = "$('.".$ident."').find('[type=submit]').click();";
+		}
+
+		$form->addFreeText('',$obj->getVarForm($key,true,$params).'<span class="loader"></span>');
+
+		$real_key = self::dbPrefRemove($key);
+
+		if ($ajax) {
+			$loader = htmlspecialchars('<img style="margin-left:30px; display:inline; vertical-align:middle;" src="'.(Acid::get('url:img').'admin/loading.gif').'" alt="..." title="'.Acid::trad('loading').'" />');
+			$onclick=
+					"$('.".$ident."').find('[type=submit]').attr('disabled','disabled'); ".
+					"$('.".$ident."').find('.loader').html('".$loader."');".
+					"$.post('".Acid::get('url:ajax')."', $(this).serialize(), ".
+					"function (data) { ".
+					"var res = $.parseJSON(data); ".
+					"if (res.".$key." !=undefined) { " .
+					"$('.".$ident."').find('[name=".$key."]').val(res.".$key."); ".
+					"}" .
+					"if (res.js!=undefined) { ".
+					"	eval(res.js); ".
+					"} ".
+					"$('.".$ident."').find('[type=submit]').removeAttr('disabled'); " .
+					"setTimeout(function() { $('.".$ident."').find('.loader').html(''); },300);" .
+					"}); return false;";
+
+			$form->addHidden('','ajax',1);
+			$form->setFormParams(array('onsubmit'=>$onclick));
+		}
+
+		$label = Acid::trad('update');
+		$form->addSubmit('',$label,array('style'=>'display:none;'));
+
+		return $form->html();
+	}
 
 	/**
 	 * Retourne un AcidCSV correspondant au module
@@ -4165,6 +4221,21 @@ abstract class AcidModuleCore {
 						}
 
 						return $module->printFormToggle($toggle_key,null,(!empty($specs['ajax'])));
+					break;
+
+					case 'quickchange' :
+						$quickchange_key = $nkey;
+
+						if (isset($specs['module'])) {
+							$module = $specs['module']::build($elt);
+							$quickchange_key = $module::dbPrefRemove($key);
+						}else{
+							$module = static::build($elt);
+						}
+
+						$params = isset($specs['params']) ? $specs['params'] : array();
+
+						return $module->printFormQuickChange($quickchange_key,null,(!empty($specs['ajax'])),$params);
 					break;
 
 					case 'mod_tab' :

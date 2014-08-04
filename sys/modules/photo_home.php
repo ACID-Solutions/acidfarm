@@ -58,7 +58,11 @@ class PhotoHome extends AcidModule {
 		}
 
 		$this->vars['pos'] = new AcidVarInt(self::modTrad('position'),true);
+
 		$this->vars['src'] 	= 	new AcidVarImage( self::modTrad('src'), $GLOBALS['acid']['path']['files'].'home/', $config,'__ID__-__NAME__');
+
+
+
 
 
 		parent::__construct($init_id);
@@ -84,6 +88,20 @@ class PhotoHome extends AcidModule {
 	 */
 	public function urlSrc($format=null) {
 		return $this->genUrlSrc($this->get('src'),$format);
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @param array $conf
+	 * @see AcidModuleCore::printAdminList()
+	 */
+	public function printAdminConfigure($do='default',$conf=array()) {
+
+		$this->config['admin']['list']['order']= array('pos'=>'ASC');
+		$this->config['admin']['list']['keys'] = array('id_photo_home','src',$this->langKey('name'),'pos');
+		$this->config['print']['pos']= array('type'=>'quickchange','ajax'=>false,'params'=>array('style'=>'width:30px; text-align:center;'));
+
+		return parent::printAdminConfigure($do,$conf);
 	}
 
 	/**
