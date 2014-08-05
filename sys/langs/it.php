@@ -62,3 +62,7 @@ $lang['trad']['contact_post_fields_missing'] 	= 'Those following fields are miss
 $lang['trad']['contact_post_field_mistakes']	= 'There is mistakes with the following fields :';
 $lang['trad']['contact_post_bad_request']		= 'This form isn\'t filled correctly.';
 $lang['trad']['contact_please_enable_javascript'] = 'Si prega di abilitare javascript per utilizzare questo modulo.';
+
+$lang['trad']['conception']			= 'concezione';
+$lang['trad']['realisation']		= 'realizzazione';
+$lang['trad']['creation']			= 'creazione';

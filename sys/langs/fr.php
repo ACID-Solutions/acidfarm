@@ -62,3 +62,7 @@ $lang['trad']['contact_post_fields_missing'] 	= 'Les champs suivants ne sont pas
 $lang['trad']['contact_post_field_mistakes']	= 'Les champs suivants sont mal renseignés :';
 $lang['trad']['contact_post_bad_request']		= 'Le formulaire n\'est pas rempli correctement.';
 $lang['trad']['contact_please_enable_javascript'] = 'Veuillez activer javascript pour utiliser le formulaire';
+
+$lang['trad']['conception']			= 'conception';
+$lang['trad']['realisation']		= 'réalisation';
+$lang['trad']['creation']			= 'création';
