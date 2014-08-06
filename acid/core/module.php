@@ -3959,7 +3959,7 @@ abstract class AcidModuleCore {
 		$new_state = $active ? 0 : 1;
 		$ident = 'form_toggle_'.$obj->checkTbl().'_'.$obj->getId().'_'.$key;
 		$form = new AcidForm('post','');
-		$form->setFormParams(array('class'=>'toggle_form '.$ident));
+		$form->setFormParams(array('class'=>'toggle_form to_value_'.$new_state.' '.$ident));
 
 		$form->addHidden('',$obj->preKey('do'),'update');
 		$form->addHidden('',$obj->preKey('toggle'),'1');
@@ -3976,9 +3976,12 @@ abstract class AcidModuleCore {
 						"function (data) { ".
 						"var res = $.parseJSON(data); ".
 						"if (res.success) { ".
-						"var nval = res.obj.".$real_key." ? 0 : 1 ;  var nlab = !nval ? '".Acid::trad('yes')."':'".Acid::trad('no')."'; ".
+						"var nval = res.obj.".$real_key." ? 0 : 1 ; var nlab = !nval ? '".Acid::trad('yes')."':'".Acid::trad('no')."'; ".
 						"$('.".$ident."').find('[name=".$key."]').val(nval); ".
 						"$('.".$ident."').find('[type=submit]').val(nlab); ".
+						"$('.".$ident."').removeClass('to_value_0'); ".
+						"$('.".$ident."').removeClass('to_value_1'); ".
+						"$('.".$ident."').addClass('to_value_'+nval); ".
 						"} ".
 						"if (res.js!=undefined) { ".
 						"	eval(res.js); ".
