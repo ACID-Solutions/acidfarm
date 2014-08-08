@@ -77,6 +77,13 @@ hr{ height:1px; border: 0px solid #999999; color:#999999;  background-color:#999
 #admin_site .to_value_0 input[type=submit]{ background-image:url('../img/admin/btn_switch_on.png'); }
 #admin_site .to_value_1 input[type=submit]{ background-image:url('../img/admin/btn_switch_off.png'); }
 
+.radioswitch .radio_image{ display:block; cursor:pointer; background-color:transparent;  border:0px solid #FFFFFF; height:16px; width:40px; text-ident:-99px; overflow:hidden; color:transparent; background-repeat:no-repeat; background-position:center center;  }
+.radioswitch label input[type=radio][value='0'] + .radio_image{ background-image:url('../img/admin/btn_switch_on.png'); }
+.radioswitch label input[type=radio][value='1'] + .radio_image{ background-image:url('../img/admin/btn_switch_off.png'); }
+.radioswitch label input[type=radio]:checked + .radio_image { display:none; }
+.radioswitch label input[type=radio], .radioswitch label .radio_label{ display:none; }
+#admin_site .radioswitch label input[type=radio] { display:none; }
+
 #admin_site input.head_field, #admin_site .admin_form input.head_field{ height:25px; line-height:25px; font-size:17px; }
 
 #admin_site .form_subline{ 

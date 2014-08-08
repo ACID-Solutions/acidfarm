@@ -372,6 +372,11 @@ class AcidVar {
 				$form->addRadio($this->getLabel(),$key,($print?$this->getVal():$this->getDef()),$this->elts, $params,$start,$stop,$body_attrs);
 			break;
 
+			case 'switch' :
+				$body_attrs['class'] = trim((!isset($body_attrs['class']) ? '' : ($body_attrs['class'])).' radioswitch');
+				$form->addRadio($this->getLabel(),$key,($print?$this->getVal():$this->getDef()),$this->elts, $params,$start,$stop,$body_attrs);
+			break;
+
 			case 'checkbox':
 				$form->addCheckbox($this->getLabel(),$key,($print?$this->getVal():$this->getDef()),$this->form['text'],$this->form['checked'],$params,$start,$stop);
 			break;
@@ -437,6 +442,10 @@ class AcidVar {
 
 			case 'radio' :
 				$this->form['type'] = 'radio';
+			break;
+
+			case 'switch' :
+				$this->form['type'] = 'switch';
 			break;
 
 			case 'checkbox':
@@ -2035,7 +2044,7 @@ class AcidVarBool extends AcidVarInteger {
 		parent::__construct($label,true,20,1,$def,'tinyint');
 		$this->setDef($def);
 		$this->elts = self::assoc();
-		$this->setForm('radio');
+		$this->setForm('switch');
 	}
 
 	/**
