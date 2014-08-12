@@ -56,12 +56,13 @@ class AcidTime {
 	 * Retourne le jour renseigné par la date en entrée.
 	 *
 	 * @param string $date
-	 *
+	 * @param boolean $small
 	 * @return string
 	 */
-	public static function dayName($date) {
+	public static function dayName($date,$small=false) {
 		$day = date('N',strtotime($date));
-		return Acid::get('date:day:'.($day%7),'lang');
+		$key = $small ? 'day_s' : 'day';
+		return Acid::get('date:'.$key.':'.($day%7),'lang');
 	}
 
 	/**

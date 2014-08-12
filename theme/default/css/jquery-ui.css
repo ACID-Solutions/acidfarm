@@ -569,3 +569,63 @@ button.ui-button::-moz-focus-inner { border: 0; padding: 0; } /* reset extra pad
 /* Overlays */
 .ui-widget-overlay { background: #aaaaaa/*{bgColorOverlay}*/ url(../img/datepicker/ui-bg_flat_0_aaaaaa_40x100.png)/*{bgImgUrlOverlay}*/ 50%/*{bgOverlayXPos}*/ 50%/*{bgOverlayYPos}*/ repeat-x/*{bgOverlayRepeat}*/; opacity: .3;filter:Alpha(Opacity=30)/*{opacityOverlay}*/; }
 .ui-widget-shadow { margin: -8px/*{offsetTopShadow}*/ 0 0 -8px/*{offsetLeftShadow}*/; padding: 8px/*{thicknessShadow}*/; background: #aaaaaa/*{bgColorShadow}*/ url(../img/datepicker/ui-bg_flat_0_aaaaaa_40x100.png)/*{bgImgUrlShadow}*/ 50%/*{bgShadowXPos}*/ 50%/*{bgShadowYPos}*/ repeat-x/*{bgShadowRepeat}*/; opacity: .3;filter:Alpha(Opacity=30)/*{opacityShadow}*/; -moz-border-radius: 8px/*{cornerRadiusShadow}*/; -webkit-border-radius: 8px/*{cornerRadiusShadow}*/; border-radius: 8px/*{cornerRadiusShadow}*/; }
+
+
+/*TIMEPICKER*/
+.ui-timepicker-div .ui-widget-header {
+	margin-bottom: 0px;
+	background-color:#a4d143!important;
+	border:none;
+}
+.ui-timepicker-div .time-title{
+	padding:5px;
+	color:#FFF;
+	text-transform:uppercase;
+	text-shadow: 1px 1px 2px #141014;
+	}
+.ui-timepicker-div dl {
+	text-align: left;
+	padding-left:10px;
+	font-size:12px;
+	padding-bottom:5px;
+	color:#a7a7a7;
+		text-transform:uppercase;
+/*	font-weight:600;*/
+}
+.ui-timepicker-div dl dt {
+	height: 35px;
+}
+.ui-timepicker-div dl dd {
+	margin: -32px 10px 10px 65px;
+}
+.ui-timepicker-div dl dd:last-child  {
+	margin: -25px 10px 0px 65px;
+}
+.ui-timepicker-div td {
+/*	font-size: 10px;*/
+}
+.ui-tpicker-grid-label {
+	background: none;
+	border: 0px #666 solid;
+	margin: 55px;
+	height: 35px;
+	padding: 0;
+}
+.ui_tpicker_time  {
+	font-family:"Myriad Pro", Arial, Helvetica, sans-serif;
+	font-size:30px!important;
+	color:#000000;
+	text-align:center;
+}
+
+.ui-timepicker-div dl dd.ui_tpicker_time{ margin:0px; margin-top:-15px; margin-bottom:15px;  }
+.ui-timepicker-div dl dt.ui_tpicker_time_label{ text-align:center; }
+.ui-timepicker-div dl dd > div { background-color:#EFEFEF; background-image:none;}
+
+.labelTime,.labelTimeSelect {
+	position: absolute;
+	margin-top:6px;
+}
+.labelTimeSelect{
+		margin-top:22px;
+}
