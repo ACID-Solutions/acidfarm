@@ -21,7 +21,7 @@ $site_class = !empty($GLOBALS['site_class']) ? $GLOBALS['site_class'] : '';
 $page_class = AcidRouter::getCurrentRouteName() ? AcidUrl::normalize('page_'.AcidRouter::getCurrentRouteName()) : '';
 $nav_class = trim(AcidUrl::normalize(Lib::mobileDevice('')).' '.AcidUrl::normalize(Lib::navDevice('')));
 
-if ($page_class&&$nav_class) {
+if ($page_class||$nav_class||$site_class) {
 	$body = $this->getBodyAttrs();
 	$body_class = isset($body['class']) ? $body['class'] : '';
 	$body_class = trim($body_class.' '.$page_class.' '.$nav_class.' '.$site_class);

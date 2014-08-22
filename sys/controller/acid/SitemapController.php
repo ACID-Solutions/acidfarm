@@ -58,24 +58,29 @@ class SitemapController{
 		$res = Acid::mod('Page')->dblist(array(array('active','=',1)));
 
 		foreach ($langs as $lang) {
-			$map = array();
-			Acid::set('lang:current',$lang);
+
+			//Acid::set('lang:current',$lang);
+			Lang::switchTo($lang);
 
 			//Site keys
+			$map = array();
 			foreach (Conf::get('site_keys') as $key) {
-				$map[] =  array('url'=>AcidRouter::getKey($key));
+				$map[] =  array('url'=>AcidUrl::absolute(Route::buildUrl($key)));
 			}
+			$this->decline_sitemap($map,'',0.9);
 
 			//Pages
+			$map = array();
 			foreach ($res as $elt) {
 				$mod = new Page($elt);
 
-				$map[] =  array('url'=>$mod->trad('ident'));
+				$map[] =  array('url'=>AcidUrl::absolute($mod->url()));
 			}
 
+			$this->decline_sitemap($map,'',0.8);
 
-			$base = Acid::get('lang:use_nav_0') ? Acid::get('url:system').$lang.'/' : '';
-			$this->decline_sitemap($map,$base);
+
+			Lang::rollback();
 		}
 
 		Conf::addToContent(AcidSitemap::printSitemap($this->xml_content,!Acid::get('lang:use_nav_0')));

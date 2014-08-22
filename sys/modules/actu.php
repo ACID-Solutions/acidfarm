@@ -95,6 +95,7 @@ class Actu extends AcidModule {
 	public function printAdminConfigure($do='default',$conf=array()) {
 
 		$this->config['admin']['list']['keys'] = array('id_actu',$this->langKey('title'),$this->langKey('head'),$this->langKey('content'),'adate','active');
+		$this->config['admin']['list']['order'] = array('adate'=>'DESC');
 
 		return parent::printAdminConfigure($do,$conf);
 	}

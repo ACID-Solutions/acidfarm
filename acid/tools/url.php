@@ -142,6 +142,32 @@ class AcidUrl
         return $output;
     }
 
+        /**
+     * Retourne l'url relative si possible
+     * @param url $url
+     * @return mixed
+     */
+    public static function relative($url) {
+    	if (strpos($url,Acid::get('url:system'))===0) {
+			return Acid::get('url:folder').substr($url,strlen(Acid::get('url:system')));
+    	}
+
+		return $url;
+    }
+
+    /**
+     * Retourne l'url relative si possible
+     * @param url $url
+     * @return mixed
+     */
+    public static function absolute($url) {
+    	if (strpos($url,Acid::get('url:folder'))===0) {
+    		return Acid::get('url:system').substr($url,strlen(Acid::get('url:folder')));
+    	}
+
+    	return $url;
+    }
+
     /**
      * Retourne une URL en fonction des paramètres de $_GET, ainsi que les paramètres en entrée.
      *
