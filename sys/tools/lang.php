@@ -158,6 +158,10 @@ class Lang {
 		if($change_current) {
 			Acid::save('lang:current','acid');
 			Acid::set('lang:current',$lang);
+			Acid::save('url:folder_lang','acid');
+			Acid::set('url:folder_lang',Acid::get('url:folder').$lang.'/');
+			Acid::save('url:system_lang','acid');
+			Acid::set('url:system_lang',Acid::get('url:system').$lang.'/');
 		}
 
 		$GLOBALS['lang'] = array();
@@ -172,6 +176,8 @@ class Lang {
 		Acid::rollback(null,'lang');
 		if($change_current) {
 			Acid::rollback('lang:current','acid');
+			Acid::rollback('url:folder_lang','acid');
+			Acid::rollback('url:system_lang','acid');
 		}
 
 	}

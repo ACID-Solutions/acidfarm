@@ -53,7 +53,13 @@ class SitemapController{
      */
     public function index(){
 
-		$langs =  Acid::get('lang:use_nav_0') ? Acid::get('lang:available') : array(Acid::get('lang:default'));
+    	$full_lang_file = false;
+
+    	if ($full_lang_file || Acid::get('lang:root_file')) {
+			$langs =  Acid::get('lang:use_nav_0') ? Acid::get('lang:available') : array(Acid::get('lang:default'));
+		}else{
+			$langs = array(Acid::get('lang:current'));
+		}
 
 		$res = Acid::mod('Page')->dblist(array(array('active','=',1)));
 
@@ -61,6 +67,9 @@ class SitemapController{
 
 			//Acid::set('lang:current',$lang);
 			Lang::switchTo($lang);
+
+			//Index
+			$this->decline_sitemap(array(array('url'=>Acid::get('url:system_lang'))),'',1);
 
 			//Site keys
 			$map = array();

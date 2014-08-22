@@ -221,6 +221,8 @@ if (Acid::get('include:mode')=='full_stack') {
 
 				AcidUrl::redirection(Acid::get('url:system_lang'));
 			}
+		}else{
+			Acid::set('lang:root_file',$nav[0]);
 		}
 	}
 
