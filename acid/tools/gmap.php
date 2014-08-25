@@ -25,7 +25,7 @@ class AcidGMap {
 	 * @return string
 	 */
 	public static function apiCall() {
-		return '<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>'. "\n" ;
+		return '<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>'. "\n" ;
 	}
 
 	/**
