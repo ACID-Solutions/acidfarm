@@ -86,7 +86,7 @@ function AcidAutoLoader($class_name) {
 
 		include (SITE_PATH . $file_path);
 
-	}else{
+	}elseif (count(spl_autoload_functions())==1){
 		trigger_error($class_name . ' path must be defined in $acid[\'includes\'][\''.$class_name.'\']', E_USER_ERROR);
 	}
 
@@ -146,7 +146,7 @@ if ($acid['debug']) {
 }
 
 
-
+global $lang;
 require ACID_PATH . 'langs/'.$acid['lang']['current'].'.php';
 require ACID_PATH . 'tools/bash.php';
 

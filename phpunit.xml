@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+  backupGlobals="false"
+  backupStaticAttributes="false"
+  bootstrap="sys/tests.php"
+  colors="true"
+  convertErrorsToExceptions="true"
+  convertNoticesToExceptions="true"
+  convertWarningsToExceptions="true"
+  processIsolation="false"
+  stopOnFailure="true"
+  syntaxCheck="false">
+
+  <php>
+    <ini name="memory_limit" value="2047M" />
+  </php>
+  
+  <testsuites>
+    <testsuite name="Application Test Suite">
+      <directory>./sys/tests</directory>
+    </testsuite>
+  </testsuites>
+  
+</phpunit>
