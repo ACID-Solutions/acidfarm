@@ -276,15 +276,15 @@ abstract class AcidUser extends AcidModule {
 		$ident = isset($this->config['identification']) ? $this->config['identification'] : array('username');
 		$ident = !is_array($ident) ? array($ident) : $ident;
 
-		setcookie(	'user[login]',$this->get($ident[0]), $expire,
+		AcidCookie::setcookie(	'user[login]',$this->get($ident[0]), $expire,
 					Acid::get('url:folder'), Acid::get('url:domain'),
 		            Acid::get('session:secure'),Acid::get('session:httponly'));
 
 		if ($autolog || isset($_COOKIE['user']['id'])) {
-			setcookie(	'user[id]',$this->get('id_user'), $expire,
+			AcidCookie::setcookie(	'user[id]',$this->get('id_user'), $expire,
 						Acid::get('url:folder'), Acid::get('url:domain'),
 		                Acid::get('session:secure'),Acid::get('session:httponly'));
-		    setcookie(	'user[code]',$this->getCookieCode(), $expire,
+		   AcidCookie::setcookie(	'user[code]',$this->getCookieCode(), $expire,
 		    			Acid::get('url:folder'), Acid::get('url:domain'),
 		                Acid::get('session:secure'),Acid::get('session:httponly'));
 		}
@@ -295,9 +295,9 @@ abstract class AcidUser extends AcidModule {
 	 * Supprime les cookies de l'utilisateur.
 	 */
 	public static function unsetCookie() {
-		setcookie(	'user[id]','',time() - 63072000,Acid::get('url:folder'), Acid::get('url:domain'),
+		AcidCookie::setcookie(	'user[id]','',time() - 63072000,Acid::get('url:folder'), Acid::get('url:domain'),
 					Acid::get('session:secure'),Acid::get('session:httponly'));
-		setcookie('user[code]','',time() - 63072000,Acid::get('url:folder'), Acid::get('url:domain'),
+		AcidCookie::setcookie(	'user[code]','',time() - 63072000,Acid::get('url:folder'), Acid::get('url:domain'),
 					Acid::get('session:secure'),Acid::get('session:httponly'));
 	}
 

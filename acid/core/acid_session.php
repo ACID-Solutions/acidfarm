@@ -2,7 +2,7 @@
 
 /**
  * AcidFarm - Yet Another Framework
- * 
+ *
  * Requires PHP version 5.3
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
@@ -43,37 +43,37 @@ class AcidSession {
 	 * @var boolean true si une ligne est trouvée en bdd
 	 */
 	public $in_db      = false;
-	
+
 	/**
 	 * @var int identifiant session
 	 */
 	public $id         = '';
-	
+
 	/**
 	 * @var int identifiant user
 	 */
 	public $id_user    = 0;
-	
+
 	/**
 	 * @var string timestamp d'expiration
 	 */
 	public $expire     = '';
-	
+
 	/**
 	 * @var int ip utilisateur
 	 */
 	public $user_ip    = '';
-	
+
 	/**
 	 * @var int user agent
 	 */
 	public $user_agent = '';
-	
+
 	/**
 	 * @var array les données courantes
 	 */
 	public $data       = array();
-	
+
 	/**
 	 * @var array les données courantes en bdd
 	 */
@@ -91,7 +91,7 @@ class AcidSession {
 
 	/**
 	 * Méthode de clonage
-	 * 
+	 *
 	 * @return void
 	 */
 	private function __clone() {}
@@ -105,29 +105,29 @@ class AcidSession {
 
 		try {
 			if (Acid::get('session:enable')) {
-				
+
 				if (self::$_session === null) {
 					$hash = Acid::hash($_SERVER['REMOTE_ADDR'] . microtime());
-		
+
 					self::$_session = new AcidSession();
 					self::$_session->expire = time()+Acid::get('session:expire');
-		
+
 					// First connexion or cookie disable
 					if (!isset($_COOKIE[Acid::get('session:name')])) {
-						setcookie(  Acid::get('session:name'),$hash,time()+Acid::get('session:expire'),Acid::get('url:folder'),
+						AcidCookie::setcookie(  Acid::get('session:name'),$hash,time()+Acid::get('session:expire'),Acid::get('url:folder'),
 						Acid::get('url:domain'),Acid::get('session:secure'),Acid::get('session:httponly'));
 						//self::$_session = false;
 						$sess_id = $hash;
 						$sess = false;
 					}
-		
+
 					// Session founded
 					else {
 						$sess = AcidDB::query(	"SELECT * FROM " . Acid::get('session:table') .
 		                    					" WHERE id='".addslashes($_COOKIE[Acid::get('session:name')])."'")->fetch(PDO::FETCH_ASSOC);
-		
+
 						$sess_id = $_COOKIE[Acid::get('session:name')];
-							
+
 						// Récupération des valeurs en BDD
 						if ($sess) {
 							if (!Acid::get('session:check_ua') || $sess['user_agent'] === $_SERVER['HTTP_USER_AGENT']) {
@@ -139,7 +139,7 @@ class AcidSession {
 										self::$_session->user_agent = $sess['user_agent'];
 										self::$_session->db_data = self::$_session->data = json_decode($sess['data'],true);
 										self::$_session->in_db = true;
-		
+
 									} else {
 										Acid::log('session', 'Session expire');
 										$sess_id = $hash;
@@ -154,7 +154,7 @@ class AcidSession {
 							}
 						}
 					}
-		
+
 					// Création du cookie (première connexion ou no cookie)
 					if (!self::$_session->id) {
 						self::$_session->id = $sess_id;
@@ -167,20 +167,20 @@ class AcidSession {
 							self::dbAdd();
 							self::$_session->in_db = true;
 						}
-						
+
 						Acid::log('session','Session created in DB '.time());
 					}
 					self::cookieUpdate();
-		
+
 					Acid::log('session','Initialazing session');
 				}
-		
+
 				return self::$_session;
-				
+
 			}else{
-				
+
 				throw new Exception('');
-				
+
 			}
 		} catch (Exception $e) {
 			trigger_error("AcidSession use not allowed",E_USER_ERROR);
@@ -192,7 +192,7 @@ class AcidSession {
 	 */
 	public static function cookieUpdate() {
 		if ($s = self::getInstance()) {
-			setcookie(  
+			AcidCookie::setcookie(
 			Acid::get('session:name'),
 			$s->id,
 			$s->expire,
@@ -239,7 +239,7 @@ class AcidSession {
 	 */
 	public static function destroy() {
 		$sess = self::getInstance();
-		setcookie(  
+		AcidCookie::setcookie(
 		Acid::get('session:name'),
 		0,
 		time()-63072000,
@@ -298,18 +298,18 @@ class AcidSession {
 	public static function garbage_collector() {
 		AcidDB::exec("DELETE FROM " . Acid::get('session:table') . " WHERE expire < '".time()."'");
 	}
-	
+
 	/**
 	 * Contrôleur de la mémoire tampon
-	 * @param string $key identifiant 
-	 */	
+	 * @param string $key identifiant
+	 */
 	private static function tmpController($key) {
-		
+
 		if ((Acid::sessExist('session_tmptime:'.$key.':time')) && (Acid::sessExist('session_tmptime:'.$key.':duration'))) {
-			
-			$time= Acid::sessGet('session_tmptime:'.$key.':time'); 
+
+			$time= Acid::sessGet('session_tmptime:'.$key.':time');
 			$duration = Acid::sessGet('session_tmptime:'.$key.':duration');
-			
+
 			if ($duration!==NULL) {
 				if ( ($time+$duration) < time() ) {
 					 self::tmpKill($key);
@@ -318,7 +318,7 @@ class AcidSession {
 			}
 		}
 	}
-		
+
 	/**
 	 * Setter de la mémoire tampon
 	 * @param string $key identifiant
@@ -331,7 +331,7 @@ class AcidSession {
 		Acid::sessSet('session_tmptime:'.$key.':duration',$duration);
 		Acid::log('session','Setting tmp session : '.$key.' => '.serialize($val).', duration : '.$duration);
 	}
-	
+
 	/**
 	 * Getter de la mémoire tampon
 	 * @param string $key identifiant
@@ -340,8 +340,8 @@ class AcidSession {
 	 */
 	public static function tmpGet($key,$def=null) {
 		self::tmpController($key);
-		
-	
+
+
 		if (Acid::sessExist('session_tmp:'.$key)) {
 			$tmp = Acid::sessGet('session_tmp:'.$key);
 			$log = 'a value is returned';
@@ -349,15 +349,15 @@ class AcidSession {
 			$tmp = $def;
 			$log = 'not found, default value returned';
 		}
-		
+
 		Acid::log('session','Getting tmp session : '.$key.' - '.$log);
 		return $tmp;
 	}
-	
+
 	/**
 	 * Killer de la mémoire tampon
 	 * @param string key identifiant
-	 */	
+	 */
 	public static function tmpKill($key=null) {
 		if ($key!==null) {
 			Acid::sessKill('session_tmp:'.$key);
@@ -367,6 +367,6 @@ class AcidSession {
 			Acid::log('session','Session, killing all tmp sessions');
 		}
 	}
-	
-	
+
+
 }

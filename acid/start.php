@@ -50,6 +50,7 @@ if (!file_exists($acid['log']['path'])) {
  *****************************************************************************/
 
 $acid['includes']['AcidBrowser']   = $acid['folder'].'tools/browser.php';
+$acid['includes']['AcidCookie']   = $acid['folder'].'tools/cookie.php';
 $acid['includes']['AcidForm']      = $acid['folder'].'tools/form.php';
 $acid['includes']['AcidFs']        = $acid['folder'].'tools/fs.php';
 $acid['includes']['AcidMail']      = $acid['folder'].'tools/mail.php';
