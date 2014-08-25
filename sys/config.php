@@ -46,6 +46,17 @@ if (file_exists(SITE_PATH.'sys/maintenance.txt')) {
 include(SITE_PATH.'sys/includes.php');
 
 
+// COOKIE
+//************************************************************************************//
+
+if (empty($acid['cookie']['use_server'])) {
+
+	$acid['cookie']['path']     = $acid['url']['folder']; // Dossier pour lequel le cookie est accessible
+	$acid['cookie']['domain']	= $acid['url']['domain']; // Domaine pour lequel le cookie est accessible
+	$acid['cookie']['dyndomain']	= true;	// Si true, autorise le cookie sur un domaine à la volée
+
+}
+
 // LANG
 //************************************************************************************//
 

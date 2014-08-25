@@ -114,8 +114,8 @@ class AcidSession {
 
 					// First connexion or cookie disable
 					if (!isset($_COOKIE[Acid::get('session:name')])) {
-						AcidCookie::setcookie(  Acid::get('session:name'),$hash,time()+Acid::get('session:expire'),Acid::get('url:folder'),
-						Acid::get('url:domain'),Acid::get('session:secure'),Acid::get('session:httponly'));
+						AcidCookie::setcookie(  Acid::get('session:name'),$hash,time()+Acid::get('session:expire'),Acid::get('cookie:folder'),
+						Acid::get('cookie:domain'),Acid::get('session:secure'),Acid::get('session:httponly'));
 						//self::$_session = false;
 						$sess_id = $hash;
 						$sess = false;
@@ -196,8 +196,8 @@ class AcidSession {
 			Acid::get('session:name'),
 			$s->id,
 			$s->expire,
-			Acid::get('url:folder'),
-			Acid::get('url:domain'),
+			Acid::get('cookie:folder'),
+			Acid::get('cookie:domain'),
 			Acid::get('session:secure'),
 			Acid::get('session:httponly'));
 		}
@@ -243,8 +243,8 @@ class AcidSession {
 		Acid::get('session:name'),
 		0,
 		time()-63072000,
-		Acid::get('url:folder'),
-		Acid::get('url:domain'),
+		Acid::get('cookie:folder'),
+		Acid::get('cookie:domain'),
 		Acid::get('session:secure'),
 		Acid::get('session:httponly')
 		);

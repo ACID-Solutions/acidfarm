@@ -255,8 +255,10 @@ $theme_quote\$acid['server_theme'] 	= '$server_theme';
 \$acid['url']['folder_lang']     = \$acid['url']['folder'];
 
 // COOKIES
+//\$acid['cookie']['use_server'] 	= true;
 //\$acid['cookie']['path']          = \$acid['url']['folder']; // Dossier pour lequel le cookie est accessible
-//\$acid['cookie']['domain']          = \$acid['url']['domain']; // Domaine pour lequel le cookie est accessible
+//\$acid['cookie']['domain']        = array(\$acid['url']['domain']); // Domaine pour lequel le cookie est accessible
+//\$acid['cookie']['dyndomain']		= true;	// Si true, autorise le cookie sur un domaine à la volée
 
 // Salt
 \$acid['hash']['salt']           = '$salt';

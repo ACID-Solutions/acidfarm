@@ -136,7 +136,7 @@ $acid['cookie']['path']         = $acid['url']['folder'];    // Dossier pour leq
 $acid['cookie']['domain']       = $acid['url']['domain'];    // Domaine pour lequel le cookie est accessible
 $acid['cookie']['secure']       = false;                     // Client en utilisation HTTPS (à coder coté serveur)
 $acid['cookie']['httponly']     = true;                      // Protection le vol de session par script client
-
+$acid['cookie']['dyndomain']	= true;						 // Si true, autorise le cookie sur un domaine à la volée
 
 // Sessions
 $acid['session']['enable']      = isset($acid['session']['enable']) ?

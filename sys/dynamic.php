@@ -58,10 +58,6 @@ $acidconf['url']['robots'] 		= Acid::get('url:folder').'robots.txt';
 $acid['user']['page']		= Acid::get('url:folder_lang') . AcidRouter::getKey('account');
 $acid['url']['system']		= Acid::get('url:prefix').Acid::get('url:folder');
 
-$acid['cookie']['path']     = Acid::get('url:folder'); // Dossier pour lequel le cookie est accessible
-$acid['cookie']['domain']	= Acid::get('url:domain'); // Domaine pour lequel le cookie est accessible
-
-
 //configuration du css
 $acid['css']['dynamic']['files'] = array();
 
