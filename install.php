@@ -90,6 +90,36 @@ function getThemes() {
 	return $themes;
 }
 
+/**
+ * Test si les informations de BDD sont correctes
+ * @param string $db_type
+ * @param string $db_host
+ * @param string $db_port
+ * @param string $db_base
+ * @param string $db_user
+ * @param string $db_pass
+ * @return boolean
+ */
+function checkDataBase($db_type,$db_host,$db_port,$db_base,$db_user,$db_pass) {
+
+	$db = new PDO($db_type.
+			':host='.$db_host.
+			';port='.$db_port.
+			';dbname='.$db_base,
+			$db_user,
+			$db_pass
+	);
+
+	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+	$rand = rand(1,100);
+	$res = $db->query('SELECT '.$rand.' as rand_value')->fetch(PDO::FETCH_ASSOC);
+
+	return  ($res['rand_value'] == $rand);
+
+}
+
+
 $action = $_POST;
 
 $dir_path = __DIR__.'/sys/server.php';
@@ -149,7 +179,7 @@ if (!is_writable(dirname($dir_path))) {
 
 if (!file_exists($dir_path)) {
 
-	if (isset($action['acidfarm_do'])) {
+	if (isset($action['acidfarm_do']) && ($action['acidfarm_do']=='install')) {
 
 		$name 			= addslashes($action['site_name']);
 		$mail 			= addslashes($action['site_mail']);
@@ -394,6 +424,26 @@ HTACC;
 		}
 		echo '</div>';
 
+	}elseif (isset($action['acidfarm_do']) && ($action['acidfarm_do']=='check_database')) {
+
+		$dbtype 		= addslashes($action['db_type']);
+		$dbhost 		= addslashes($action['db_host']);
+		$dbport 		= addslashes($action['db_port']);
+		$dbuser 		= addslashes($action['db_user']);
+		$dbpass 		= addslashes($action['db_password']);
+		$dbname 		= addslashes($action['db_name']);
+		$dbpref 		= addslashes($action['db_pref']);
+
+		$result = false;
+
+		try {
+			$result = checkDataBase($dbtype,$dbhost,$dbport,$dbname,$dbuser,$dbpass);
+		}catch(Exception $e){ $result =false; }
+
+		echo json_encode(array('success'=>$result));
+
+
+		exit();
 	}else{
 		$folder = explode('/',$_SERVER['PHP_SELF']);
 		if (count($folder)) {
@@ -470,17 +520,72 @@ HTACC;
 	<div class="block">
 	<h2>Database</h2>
 	<label>Initialize database   <input type="checkbox" name="init_db"  value="1" checked="checked" /></label><br />
-	type : <input type="text" name="db_type" value="mysql" /> (ex : mysql, pgsql, sqlite, odbc, oci (oracle), dblib (microsoft))<br />
-	host : <input type="text" name="db_host" value="localhost" /><br />
-	port : <input type="text" name="db_port" value="3306" /><br />
-	username : <input type="text" name="db_user" value="" /><br />
-	password : <input type="password" name="db_password" value="" /><br />
-	database : <input type="text" name="db_name" value="" /><br />
-	prefix : <input type="text" name="db_pref" value="acid_" /><br />
+	type : <input type="text" id="db_type"  name="db_type" value="mysql" /> (ex : mysql, pgsql, sqlite, odbc, oci (oracle), dblib (microsoft))<br />
+	host : <input type="text" id="db_host" name="db_host" value="localhost" /><br />
+	port : <input type="text" id="db_port" name="db_port" value="3306" /><br />
+	username : <input type="text" id="db_user" name="db_user" value="" /><br />
+	password : <input type="password" id="db_password" name="db_password" value="" /><br />
+	database : <input type="text" id="db_name" name="db_name" value="" /><br />
+	prefix : <input type="text" id="db_pref" name="db_pref" value="acid_" /><br />
+	<a href="#" onclick="InstallTools.checkDB(); return false;" >Check Database</a> : <span id="check_data_base_result"></span><br />
 	</div>
 	<input class="btn" type="submit" value="Install">
+
 	</pre></div>
 </form>
+
+
+<script type="text/javascript">
+<!--
+
+var InstallTools = {
+
+	checkDB : function() {
+		var http = new XMLHttpRequest();
+		var url = "install.php";
+		var params = "acidfarm_do=check_database"+
+					 "&db_type="+document.getElementById("db_type").value+
+					 "&db_host="+document.getElementById("db_host").value+
+					 "&db_port="+document.getElementById("db_port").value+
+					 "&db_user="+document.getElementById("db_user").value+
+					 "&db_password="+document.getElementById("db_password").value+
+					 "&db_pref="+document.getElementById("db_pref").value+
+					 "&database="+document.getElementById("db_name").value;
+
+		http.open("POST", url, true);
+
+		//Send the proper header information along with the request
+		http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		http.setRequestHeader("Content-length", params.length);
+		http.setRequestHeader("Connection", "close");
+
+		http.onreadystatechange = function() {//Call a function when the state changes.
+			if(http.readyState == 4) { //&& http.status == 200
+
+				if (http.responseText) {
+					var res = JSON.parse(http.responseText);
+					if (res.success==true) {
+						document.getElementById("check_data_base_result").innerHTML='Success';
+					}else{
+						document.getElementById("check_data_base_result").innerHTML='Bad params for database';
+					}
+				}else{
+					document.getElementById("check_data_base_result").innerHTML='Failed';
+				}
+
+			}
+		}
+		http.send(params);
+
+		document.getElementById("check_data_base_result").innerHTML='Treatment';
+
+	}
+
+}
+
+-->
+</script>
+
 FORM;
 
 		echo $css. "\n" . $form;
