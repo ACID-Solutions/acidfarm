@@ -28,7 +28,7 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 CREATE TABLE IF NOT EXISTS `acid_actu` (
   `id_actu` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `head` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `head` text COLLATE utf8_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8_unicode_ci NOT NULL,
   `adate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `active` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,

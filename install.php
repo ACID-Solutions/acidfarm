@@ -112,6 +112,8 @@ function checkDataBase($db_type,$db_host,$db_port,$db_base,$db_user,$db_pass) {
 
 	$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
+
+	//ACCESS
 	$rand = rand(1,100);
 	$res = $db->query('SELECT '.$rand.' as rand_value')->fetch(PDO::FETCH_ASSOC);
 
@@ -431,7 +433,7 @@ HTACC;
 		$dbport 		= addslashes($action['db_port']);
 		$dbuser 		= addslashes($action['db_user']);
 		$dbpass 		= addslashes($action['db_password']);
-		$dbname 		= addslashes($action['db_name']);
+		$dbname 		= addslashes($action['database']);
 		$dbpref 		= addslashes($action['db_pref']);
 
 		$result = false;

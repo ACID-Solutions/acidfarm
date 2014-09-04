@@ -1,19 +1,19 @@
 #ACTU
 ALTER TABLE `acid_actu` 
 ADD `title_fr` VARCHAR( 100 ) NOT NULL AFTER `id_actu` ,
-ADD `head_fr` VARCHAR( 255 ) NOT NULL AFTER `title_fr` ,
+ADD `head_fr` TEXT NOT NULL AFTER `title_fr` ,
 ADD `content_fr` LONGTEXT NOT NULL AFTER `head_fr` ,
 ADD `title_en` VARCHAR( 100 ) NOT NULL AFTER `content_fr` ,
-ADD `head_en` VARCHAR( 255 ) NOT NULL AFTER `title_en` ,
+ADD `head_en` TEXT NOT NULL AFTER `title_en` ,
 ADD `content_en` LONGTEXT NOT NULL AFTER `head_en` ,
 ADD `title_es` VARCHAR( 100 ) NOT NULL AFTER `content_en` ,
-ADD `head_es` VARCHAR( 255 ) NOT NULL AFTER `title_es` ,
+ADD `head_es` TEXT NOT NULL AFTER `title_es` ,
 ADD `content_es` LONGTEXT NOT NULL AFTER `head_es` ,
 ADD `title_de` VARCHAR( 100 ) NOT NULL AFTER `content_es` ,
-ADD `head_de` VARCHAR( 255 ) NOT NULL AFTER `title_de` ,
+ADD `head_de` TEXT NOT NULL AFTER `title_de` ,
 ADD `content_de` LONGTEXT NOT NULL AFTER `head_de` ,
 ADD `title_it` VARCHAR( 100 ) NOT NULL AFTER `content_de` ,
-ADD `head_it` VARCHAR( 255 ) NOT NULL AFTER `title_it` ,
+ADD `head_it` TEXT NOT NULL AFTER `title_it` ,
 ADD `content_it` LONGTEXT NOT NULL AFTER `head_it` ;
 
 COMMIT; 
