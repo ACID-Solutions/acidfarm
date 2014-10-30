@@ -66,3 +66,6 @@ $lang['trad']['contact_please_enable_javascript'] = 'Bitte aktivieren Sie Javasc
 $lang['trad']['conception']			= 'konzeption';
 $lang['trad']['realisation']		= 'leistung';
 $lang['trad']['creation']			= 'schöpfung';
+
+$lang['trad']['next']			= 'Nächste';
+$lang['trad']['previous']		= 'Früher';

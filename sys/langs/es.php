@@ -66,3 +66,6 @@ $lang['trad']['contact_please_enable_javascript'] = 'Por favor, active Javascrip
 $lang['trad']['conception']			= 'concepción';
 $lang['trad']['realisation']		= 'logro';
 $lang['trad']['creation']			= 'creación';
+
+$lang['trad']['next']			= 'Anterior';
+$lang['trad']['previous']		= 'Siguiente';

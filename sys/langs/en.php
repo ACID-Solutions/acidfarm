@@ -66,3 +66,6 @@ $lang['trad']['contact_please_enable_javascript'] = 'Please enable javascript to
 $lang['trad']['conception']			= 'conception';
 $lang['trad']['realisation']		= 'achievement';
 $lang['trad']['creation']			= 'creation';
+
+$lang['trad']['next']			= 'Next';
+$lang['trad']['previous']		= 'Previous';
