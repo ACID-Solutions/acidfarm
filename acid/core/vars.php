@@ -382,7 +382,7 @@ class AcidVar {
 			break;
 
 			case 'free' :
-				$form->addFreeText($this->getLabel(),$this->form['free_value'],array(),array(),$key);
+				$form->addFreeText($this->getLabel(),$this->form['free_value'],array(),$body_attrs,$key);
 			break;
 
 			case 'info' :
