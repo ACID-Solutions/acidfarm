@@ -2,7 +2,7 @@
 
 /**
  * AcidFarm - Yet Another Framework
- * 
+ *
  * Requires PHP version 5.3
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
@@ -47,7 +47,7 @@ class AcidDB {
 	 */
 	public static function getInstance()
 	{
-		
+
 		if (!self::$_db) {
 			Acid::log('sql','Initialazing connection ('.Acid::get('db:type').')');
 			try
@@ -59,7 +59,9 @@ class AcidDB {
                                     ';dbname='.Acid::get('db:base'),
 				Acid::get('db:user'), Acid::get('db:pass'));
 				self::$_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-				self::$_db->exec("SET CHARACTER SET UTF8");
+				self::$_db->exec("SET CHARACTER SET ".Acid::get('db:charset'));
+				self::$_db->exec("SET sql_mode=".Acid::get('db:sql_mode'));
+
 				Acid::timerStop('db-connect');
 			}
 			catch(PDOException $e)
@@ -123,7 +125,7 @@ class AcidDB {
 	 *  Exécute une requête SQL et retourne le nombre de lignes affectées.
 	 *
 	 * @param object $statement
-	 *  
+	 *
 	 * @return int
 	 */
 	public static function exec($statement)
@@ -139,7 +141,7 @@ class AcidDB {
 	 *  Récupère un attribut d'une connexion à une base de données.
 	 *
 	 * @param mixed $attribute
-	 *  
+	 *
 	 * @return {PDO::constant | null}
 	 */
 	public static function getAttribute($attribute)
@@ -162,7 +164,7 @@ class AcidDB {
 	 *  Retourne l'identifiant de la dernière ligne insèrée ou la valeur d'une séquence.
 	 *
 	 * @param string $name
-	 *  
+	 *
 	 * @return string
 	 */
 	public static function lastInsertId($name=null)
@@ -172,11 +174,11 @@ class AcidDB {
 
 	/**
 	 * Prépare une requête à l'exécution et retourne un objet.
-	 * 
+	 *
 	 * @param object $statement
 	 * @param array $driverOptions
 	 * @param boolean $no_log true pour desactiver le log acidfarm
-	 * 
+	 *
 	 * @return PDOStatement
 	 */
 	public static function prepare($statement,$driverOptions=array(),$no_log=false)
@@ -205,10 +207,10 @@ class AcidDB {
 
 	/**
 	 * Protège une chaîne pour l'utiliser dans une requête SQL PDO.
-	 *  
+	 *
 	 * @param string $string
 	 * @param PDO::constant $parameterType
-	 * 
+	 *
 	 * @return string
 	 */
 	public static function quote($string,$parameterType=PDO::PARAM_STR)

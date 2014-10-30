@@ -40,7 +40,8 @@ $acid['db']['user']             = 'acidfarm';
 $acid['db']['pass']             = 'acidfarm';
 $acid['db']['base']             = 'acidfarm';
 $acid['db']['prefix']           = 'af_';
-
+$acid['db']['sql_mode']         = "''";
+$acid['db']['charset']         = "UTF8";
 
 // Meta tags
 $acid['title']['left']          = '';
