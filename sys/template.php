@@ -55,6 +55,10 @@ class MyTemplate extends AcidTemplate {
 	 * Retourne le corps  de la pop-in de dialogue du template
 	 */
 	public function getDialog() {
+		if (!Acid::get('session:enable')) {
+			return '';
+		}
+
 		$dialog_banner = AcidDialog::getFiltredDialog(false,array('banner'));
 		$dialog = AcidDialog::getDialog(array('banner'));
 

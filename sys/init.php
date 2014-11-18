@@ -104,6 +104,7 @@ if (Acid::get('session:enable')) {
 	$sess = &AcidSession::getInstance()->data;
 }
 
+
 //FULL STACK
 //Gestion de la navigation pour le mode full stack
 if (Acid::get('include:mode')=='full_stack') {
@@ -187,9 +188,11 @@ if (Acid::get('include:mode')=='full_stack') {
 	}
 
 	//Langue pré-définie
-	if (User::curValue('lang')) {
-		$acid_user_lang = in_array(User::curValue('lang'),Acid::get('lang:available')) ? User::curValue('lang') : Acid::get('lang:default');
-		Acid::set('lang:current',$acid_user_lang);
+	if (Acid::get('session:enable')) {
+		if (User::curValue('lang')) {
+			$acid_user_lang = in_array(User::curValue('lang'),Acid::get('lang:available')) ? User::curValue('lang') : Acid::get('lang:default');
+			Acid::set('lang:current',$acid_user_lang);
+		}
 	}
 
 	//Langue pré-définie
@@ -238,8 +241,10 @@ include (SITE_PATH.'sys/dynamic.php');
 include (Acid::outPath('functions.php'));
 
 //initialisation de l'utilisateur
-User::initUser();
-User::updateInstance();
+if (Acid::get('session:enable')) {
+	User::initUser();
+	User::updateInstance();
+}
 
 //routage par défaut
 AcidRouter::addDefaultRoute('index',new AcidRoute('default',array('controller'=>'PageController','action'=>'home')));

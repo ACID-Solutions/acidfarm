@@ -2,7 +2,7 @@
 
 /**
  * AcidFarm - Yet Another Framework
- * 
+ *
  * Requires PHP version 5.3
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
@@ -35,19 +35,19 @@ class AcidDialog {
 	 *  Initialise le paramètre de dialogue en session.
 	 */
 	public static function initDialog(){
-	
+
 		if (Acid::get('session:enable')) {
-		
-			
+
+
 			$sess = AcidSession::getInstance();
-			
+
 			if (!isset($sess->data['dialog'])) {
 				$sess->data['dialog'] = array();
 			}
 			elseif (!is_array($sess->data['dialog'])) {
 				$sess->data['dialog'] = array();
 			}
-			
+
 			return true;
 		}
 		return false;
@@ -55,28 +55,28 @@ class AcidDialog {
 
 	/**
 	 *  Ajoute un élement de dialogue en session
-	 *  
+	 *
 	 * @param string $type
 	 * @param string $str
 	 */
 	public static function add($type,$str) {
-		
+
 		self::initDialog();
-		
+
 		$sess = AcidSession::getInstance();
-		
+
 		$dialog = &$sess->data['dialog'];
-		
-		
+
+
 		$tab = array('str'=>$str,'type'=>$type);
 		$dialog[] = $tab;
-		
+
 	}
-	
+
 	/**
 	 * Récupère les éléments de dialogue en session mis en forme.
 	 *
-	 * @param array $blacklister liste des types de dialogue à exclure 
+	 * @param array $blacklister liste des types de dialogue à exclure
 	 * @param array $tag conteneur HTML
 	 *
 	 * @return string
@@ -96,8 +96,8 @@ class AcidDialog {
 				}
 			}
 		}
-		
-		
+
+
 		return $output;
 	}
 
@@ -109,12 +109,11 @@ class AcidDialog {
 	 * @return mixed
 	 */
 	public static function getFiltredDialog($shift_mode=true,$filter=null,$blacklister=array()) {
-	
 		$output = '';
 		$tab_dialog = array();
-		
+
 		if (self::initDialog()) {
-				
+
 			$sess = AcidSession::getInstance();
 			if ($shift_mode) {
 				$dialog = &$sess->data['dialog'];
@@ -124,37 +123,37 @@ class AcidDialog {
 
 			$output = '';
 			if ($dialog) {
-				
+
 				while ($info = array_shift($dialog)){
-				
+
 					if (!in_array($info['type'],$blacklister)) {
 						$output .=	'<p class="dialog_'.$info['type'].'">' .
 						$info['str'] .
 		            				'</p>' . "\n";
-						
+
 						if ($filter) {
-							
+
 							if ((!is_array($filter)) || (in_array($info['type'],$filter))) {
-								
+
 								$tab_dialog[$info['type']][] = $info['str'];
-								
+
 							}
 						}
 					}
 				}
 			}
 		}
-		
 
-		
+
+
 		if ($filter) {
- 
+
 			return $tab_dialog;
-			
+
 		}else{
 			return $output;
 		}
-	
+
 	}
 
 	/**
@@ -164,7 +163,7 @@ class AcidDialog {
 	 * @return string
 	 */
 	public static function printDialog() {
-		
+
 		$content = self::getDialog();
 
 		$output = '';
@@ -172,7 +171,7 @@ class AcidDialog {
 		if (!empty($content)) {
 			$output =	'<div id="dialog">'. $content . '</div>' . "\n" .	'';
 		}
-		
+
 		return $output;
 	}
 

@@ -65,9 +65,12 @@ class AcidUrl
      *
      * @param string $url
      */
-    public static function redirection301($url) {
+    public static function redirection301($url,$max_age=86400) {
         header($_SERVER['SERVER_PROTOCOL'].' 301 Moved Permanently');
         header('Status: 301 Moved Permanently');
+        if ($max_age) {
+        	header('Cache-Control', 'max-age='.$max_age);
+        }
         header('Location: '.$url);
         Acid::log('url','AcidUrl::redirection301 : ' . $url);
         include ACID_PATH . 'stop.php';

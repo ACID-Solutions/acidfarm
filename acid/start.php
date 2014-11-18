@@ -94,6 +94,9 @@ function AcidAutoLoader($class_name) {
 	return false;
 }
 $GLOBALS['acid'] = $acid;
+$GLOBALS['sess'] = !isset($GLOBALS['sess']) ? array() : $GLOBALS['sess'];
+
+
 spl_autoload_register('AcidAutoLoader');
 
 

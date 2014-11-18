@@ -44,8 +44,11 @@ if (isset($_POST['search_form'])){
    AcidRouter::directlyRun('searchPageX', new AcidRoute('@search',array('controller'=>'SearchController'),1),null,$_POST['search_form']);
 }
 
-Acid::mod('User')->exePost();
-Acid::mod('User')->exeUser();
+if (Acid::get('session:enable')) {
+	Acid::mod('User')->exePost();
+	Acid::mod('User')->exeUser();
+}
+
 $exclued = array('User');
 
 //Hooks
