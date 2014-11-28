@@ -61,11 +61,8 @@ class Lang {
 	}
 
 	/**
-	 * Retourne le code html du drapeau de la langue en entrée
-	 * @param string $lang code langue
-	 * @param string $style style css
-	 * @param array $attr attributs html
-	 * @param bool true pour appliquer l'effet de selection
+	 * Retourne le tableau de traduction de la langue courante
+	 * @param string $show
 	 * @return string
 	 */
 	public static function debugTrad($show=true) {
@@ -87,6 +84,36 @@ class Lang {
 			$content .= '</table>' ;
 		}
 		$content .= '</div>';
+
+		if ($show) {
+			echo $content;
+		}
+
+		return $content;
+	}
+
+	/**
+	 * Retourne le tableau de traduction des routers
+	 * @param string $show
+	 * @return string
+	 */
+	public static function debugRouterTrad($show=true) {
+		$content = '';
+		$content .= '<div style="text-align:center;">' ;
+
+		foreach (Acid::get('router','lang') as $key => $tab) {
+			$content .= '<h2>'.$key.'</h2>' ;
+
+			$content .= '<table style="border-collapse:collapse; margin:auto;" >' ;
+			foreach ($tab as $lang => $values) {
+				foreach ($values as $vk =>$vv) {
+					$content .= '<tr><th style=" background-color:#CCCCCC; text-align:left; border:1px solid; padding:1px 2px; color:#000000;">'.htmlspecialchars($vk).' '.htmlspecialchars($lang).'</th><td style="text-align:left; padding:1px 2px; border:1px solid; background-color:#EFEFEF; color:#000000; ">'.htmlspecialchars($vv).'</td></tr>';
+
+				}
+			}
+			$content .= '</table>' ;
+		}
+		$content .= '</div>' ;
 
 		if ($show) {
 			echo $content;
@@ -202,8 +229,8 @@ class Lang {
 			require($router_lang_path);
 		}
 
-		if ( file_exists($site_lang_path) ) {
-			require($site_lang_path);
+		if ( file_exists($acid_lang_path) ) {
+			require($acid_lang_path);
 		}
 
 		if ( file_exists($site_lang_path) ) {
