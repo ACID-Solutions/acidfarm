@@ -260,7 +260,8 @@ class Contact {
 					//sending email
 					if (Mailer::send($from_name,$from_email,$to_email,$subject,$body,true,array(),$function_tab)) {
 						Acid::sessKill('contact_form');
-						AcidDialog::add('info',Acid::trad('contact_post_msg_sent'));
+						$stats_contact = '<div id="stats_content">'. Acid::executeTpl(SITE_PATH . 'sys/stats/contact.tpl') . '</div>';
+						AcidDialog::add('info',Acid::trad('contact_post_msg_sent').$stats_contact);
 					}
 				}
 				// no recipient address

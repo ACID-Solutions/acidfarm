@@ -46,7 +46,7 @@ class MyTemplate extends AcidTemplate {
 	 */
 	public function getFooter() {
 		$v =	array();
-		$stats =  '<div id="stats_content">'. file_get_contents(SITE_PATH . 'sys/stats.tpl') . '</div>';
+		$stats =  '<div id="stats_content">'. Acid::executeTpl(SITE_PATH . 'sys/stats/stats.tpl') . '</div>';
 		return Acid::tpl('footer.tpl',$v,$this).$stats;
 	}
 

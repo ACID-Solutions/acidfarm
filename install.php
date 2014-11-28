@@ -388,21 +388,21 @@ HTACC;
 
 		}
 
-		//ADDING IGNORED FILES
-		$file_to_add = array('/sys/stats.tpl','/sys/update/cur_version.txt','/sys/upgrade/cur_version.txt');
-		foreach ($file_to_add as $fta) {
-			$fa_path = __DIR__.$fta;
-			if (!file_exists($fa_path)) {
-				file_put_contents($fa_path,'');
-			}
-		}
-
 		//ADDING IGNORED PATHS
-		$path_to_add = array('/files','/files/users','/files/tmp','/files/home','/files/photo','/upload','/logs');
+		$path_to_add = array('/sys/stats','/files','/files/users','/files/tmp','/files/home','/files/photo','/upload','/logs');
 		foreach ($path_to_add as $pta) {
 			$pa_path = __DIR__.$pta;
 			if (!file_exists($pa_path)) {
 				mkdir($pa_path);
+			}
+		}
+
+		//ADDING IGNORED FILES
+		$file_to_add = array('/sys/stats/stats.tpl','/sys/stats/contact.tpl','/sys/update/cur_version.txt','/sys/upgrade/cur_version.txt');
+		foreach ($file_to_add as $fta) {
+			$fa_path = __DIR__.$fta;
+			if (!file_exists($fa_path)) {
+				file_put_contents($fa_path,'');
 			}
 		}
 

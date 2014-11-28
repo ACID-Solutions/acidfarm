@@ -5,7 +5,7 @@
 
 # acidfarm
 /sys/server.php
-/sys/stats.tpl
+/sys/stats/
 /sys/update/cur_version.txt
 /sys/upgrade/cur_version.txt
 

@@ -90,7 +90,6 @@ AcidRouter::addRoute('page',new AcidRoute(':page_key',array('controller'=>'PageC
 //Si pas de page définie, affichage de la home
 AcidRouter::addDefaultRoute('index',new AcidRoute('default',array('controller'=>'PageController','action'=>'home')));
 
-
 //Lancement du Router
 AcidRouter::run();
 
