@@ -349,8 +349,10 @@ class Page extends AcidModule {
 
 
 		$js = '';
- 		foreach (Acid::get('lang:available') as $l) {
- 			$js .= "Acid.Tools.fieldNormalize('[name=".$this->langKey('title',$l)."]','[name=".$this->langKey('ident',$l)."]','.admin_form');" . "\n" ;
+ 		if (Conf::get('page:autoident')) {
+	 		foreach (Acid::get('lang:available') as $l) {
+	 			$js .= "Acid.Tools.fieldNormalize('[name=".$this->langKey('title',$l)."]','[name=".$this->langKey('ident',$l)."]','.admin_form');" . "\n" ;
+	 		}
  		}
 
 		return parent::printAdminForm($do) .Lib::getJsCaller($js);
