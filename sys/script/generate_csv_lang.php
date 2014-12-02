@@ -18,11 +18,27 @@
  * Régénère les fichiers liés au module Photos
  */
 
-$opt = getopt('c::');
+$opt = getopt('c::t:p:');
 if (isset($opt['c'])) {
 
 	$acid_custom_log = '[SCRIPT]';
 	include pathinfo(__FILE__,PATHINFO_DIRNAME ).'/../glue.php';
+
+	//langs
+	$lang_to = isset($_GET['to']) ? explode(';',$_GET['to']) : Acid::get('lang:available');
+	if (isset($opt['t'])) {
+		$lang_to = explode(';',$opt['t']);
+	}
+
+	//path
+	$dir_to = isset($_GET['path']) ? $_GET['path'] : (__DIR__.'/trad/');
+	if (isset($opt['p'])) {
+		$dir_to = $opt['p'];
+	}
+
+	if (!file_exists($dir_to)) {
+		mkdir($dir_to);
+	}
 
 
 	$lang_tab = array();
@@ -63,11 +79,59 @@ if (isset($opt['c'])) {
 		}
 	}
 
-	print_r($lang_csv); exit();
+	//Trad
+	$csv = new AcidCSV();
+	$csv->setConfig(';');
+
+	$head = array_merge(array('variable'),$lang_to);
+	$csv->setHead(array_flip($head));
+
+	$rows = array();
+	foreach ($lang_csv as $key =>$tab) {
+		$line = array();
+		$line[$csv->getCol('variable')] = $tab['key'];
+		foreach ($lang_to as $l) {
+			$line[$csv->getCol($l)] = $tab[$l];
+		}
+		$rows[] = $line;
+	}
+
+	$csv->setRows($rows);
+	$csv->writeFile($dir_to.'trad.csv');
+
+
+	//Router
+	$csvrouter = new AcidCSV();
+	$csvrouter->setConfig(';');
+
+	$headr = array('key');
+	foreach ($lang_to as $lang) {
+		$headr[] = 'name_'.$lang;
+		$headr[] = 'key_'.$lang;
+	}
+	$csvrouter->setHead(array_flip($headr));
+
+	$rowsr = array();
+	foreach ($lang_router as $key => $langs) {
+		$line = array();
+		$line[$csvrouter->getCol('key')] = $key;
+		foreach ($lang_to as $l) {
+			$line[$csvrouter->getCol('name_'.$l)] = $langs[$l]['name'];
+			$line[$csvrouter->getCol('key_'.$l)] = $langs[$l]['key'];
+		}
+		$rowsr[] = $line;
+	}
+
+	$csvrouter->setRows($rowsr);
+	$csvrouter->writeFile($dir_to.'tradrouter.csv');
+
+	exit();
 
 
 
 }else{
 	echo "Pour effectuer l'opération, merci d'ajouter l'argument -c  à la commande actuelle." . "\n"  ;
+	echo "-p [dossier de destination]=__DIR__.'/trad/' : chemin dans lequel seront mis les dossiers (optionnel)" . "\n" ;
+	echo "-t [langues du csv]=Acid::get('lang:available') : les langues pour le csv séparées d'un ;  (optionnel)" . "\n" ;
 	exit();
 }
