@@ -91,7 +91,7 @@ if (isset($opt['c'])) {
 		$line = array();
 		$line[$csv->getCol('variable')] = $tab['key'];
 		foreach ($lang_to as $l) {
-			$line[$csv->getCol($l)] = $tab[$l];
+			$line[$csv->getCol($l)] = isset($tab[$l]) ? $tab[$l] : '';
 		}
 		$rows[] = $line;
 	}
@@ -116,8 +116,8 @@ if (isset($opt['c'])) {
 		$line = array();
 		$line[$csvrouter->getCol('key')] = $key;
 		foreach ($lang_to as $l) {
-			$line[$csvrouter->getCol('name_'.$l)] = $langs[$l]['name'];
-			$line[$csvrouter->getCol('key_'.$l)] = $langs[$l]['key'];
+			$line[$csvrouter->getCol('name_'.$l)] = isset($langs[$l]['name']) ? $langs[$l]['name'] : '';
+			$line[$csvrouter->getCol('key_'.$l)] = isset($langs[$l]['key']) ? $langs[$l]['key'] : '';
 		}
 		$rowsr[] = $line;
 	}
