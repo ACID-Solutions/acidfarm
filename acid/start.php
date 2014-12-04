@@ -137,16 +137,14 @@ if ($acid['phplog']['enable']) {
 
 // PHP error screen
 $debug_report = isset($acid['error_report']['debug']) ? $acid['error_report']['debug'] : E_ALL;
-$prod_report = isset($acid['error_report']['prod']) ? $acid['error_report']['prod'] : 0;
+$prod_report = isset($acid['error_report']['prod']) ? $acid['error_report']['prod'] : E_ALL;
 
 if ($acid['debug']) {
 	error_reporting($debug_report);
 	ini_set('display_errors', 'On');
 } else {
 	error_reporting($prod_report);
-	if ($prod_report) {
-		ini_set('display_errors', 'On');
-	}
+	ini_set('display_errors', 'Off');
 }
 
 
