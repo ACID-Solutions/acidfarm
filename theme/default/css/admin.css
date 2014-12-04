@@ -84,7 +84,21 @@ hr{ height:1px; border: 0px solid #999999; color:#999999;  background-color:#999
 .radioswitch label input[type=radio], .radioswitch label .radio_label{ display:none; }
 #admin_site .radioswitch label input[type=radio] { display:none; }
 
-#admin_site input.head_field, #admin_site .admin_form input.head_field{ height:25px; line-height:25px; font-size:17px; }
+#admin_site input.head_field, #admin_site .admin_form input.head_field{ height:25px; line-height:25px; font-size:17px; padding:0px 3px; }
+
+
+#admin_site .admin_form tr.form_spaced > td{ padding-top:12px; }
+
+#admin_site .admin_form .show_field{ font-size:17px; color:#999999;  padding:0px 3px; display:block;  }
+#admin_site .admin_form .form_value input[type=text], 
+#admin_site .admin_form  .form_value textarea {
+	width:100%; 
+ 	-webkit-box-sizing: border-box;
+ 	-moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+#admin_site .admin_form .form_value .form_subline input[type=text],
+#admin_site .admin_form .form_value input[name=pos] { width:auto; }
 
 #admin_site .form_subline{ 
 	padding:5px 10px; 
@@ -155,6 +169,7 @@ hr{ height:1px; border: 0px solid #999999; color:#999999;  background-color:#999
 #admin_site  .submit_bg.update:hover input{
 	color:#E6E6E6; 
 } 
+
 /* 
  * Structure générale
  */
@@ -738,7 +753,6 @@ img{
 	padding-left:10px;
     background-color:#FFFFFF;
 }
-
 
 /**************************************/
 

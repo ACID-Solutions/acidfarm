@@ -30,6 +30,15 @@ class Actu extends AcidModule {
 	 */
 	public function __construct($init_id=null) {
 
+		$photo_format 		=	array(
+				'src'=>array(	'size' => array(0,0,false), 'suffix' => '', 'effect' => array() ),
+				'large'=>array(	'size' => array(500,500,false),	'suffix' => '_l', 'effect' => array() ),
+				'diapo'=>array(	'size' => array(180,180,true),	'suffix' => '_diapo', 'effect' => array() ),
+				'mini'=>array(	'size' => array(48,48,true), 'suffix' => '_s', 'effect' => array()	)
+		);
+
+		$config = array('format'=>$photo_format,'admin_format'=>'mini');
+
 		$this->vars['id_actu'] = new AcidVarInt($this->modTrad('id_actu'),true);
 
 		if ($langs = Acid::get('lang:available')) {
@@ -45,12 +54,16 @@ class Actu extends AcidModule {
 				$this->vars['title'.$ks] = new AcidVarString($this->modTrad('title').$ds,60);
 				$this->vars['head'.$ks] = new AcidVarText($this->modTrad('head').$ds);
 				$this->vars['content'.$ks] = new AcidVarText($this->modTrad('content').$ds);
+				$this->vars['seo_title'.$ks] =  new AcidVarString($this->modTrad('seo_title').$ds,60);
+				$this->vars['seo_desc'.$ks] =  new AcidVarString($this->modTrad('seo_desc').$ds,60);
+				$this->vars['seo_keys'.$ks] = new AcidVarString($this->modTrad('seo_keys').$ds,60);
 				//CONFIGURATION
 				$this->config['print']['head'.$ks] = $this->config['print']['content'.$ks] = array('type'=>'split');
 			}
 			$this->config['multilingual']['flags']['default']  = !empty($have_lang_keys);
 		}
 
+		$this->vars['src'] 	= 	new AcidVarImage( self::modTrad('src'), Acid::get('path:files').'actu/', $config);
 		$this->vars['adate'] = new AcidVarDateTime($this->modTrad('adate'));
 		$this->vars['active'] = new AcidVarBool($this->modTrad('active'));
 
@@ -61,6 +74,23 @@ class Actu extends AcidModule {
 		//$this->config['print']['active']= array('type'=>'bool');
 		$this->config['print']['active']= array('type'=>'toggle','ajax'=>true);
 
+	}
+
+	/**
+	 * Rerourne l'url de l'image en entrée au format $format
+	 * @param string $url url de l'image source
+	 * @param string $format la format pour l'url retournée
+	 */
+	public static function genUrlSrc($url=null,$format=null) {
+		return self::genUrlKey('src',$url,$format);
+	}
+
+	/**
+	 * Retourne l'url de l'image associée à l'objet au format saisi en entrée
+	 * @param string $format format pour l'url retournée
+	 */
+	public function urlSrc($format=null) {
+		return $this->genUrlSrc($this->get('src'),$format);
 	}
 
 	/**
@@ -94,7 +124,7 @@ class Actu extends AcidModule {
 	 */
 	public function printAdminConfigure($do='default',$conf=array()) {
 
-		$this->config['admin']['list']['keys'] = array('id_actu',$this->langKey('title'),$this->langKey('head'),$this->langKey('content'),'adate','active');
+		$this->config['admin']['list']['keys'] = array('id_actu','src',$this->langKey('title'),$this->langKey('head'),$this->langKey('content'),'adate','active');
 		$this->config['admin']['list']['order'] = array('adate'=>'DESC');
 
 		return parent::printAdminConfigure($do,$conf);
@@ -115,7 +145,19 @@ class Actu extends AcidModule {
 	 * @see AcidModuleCore::printAdminForm()
 	 */
 	public function printAdminForm($type) {
-		$this->config['admin']['add']['keys'] = $this->config['admin']['update']['keys'] = array_merge($this->langKeyDecline('title'),$this->langKeyDecline('head'),$this->langKeyDecline('content'));
+
+		$seo_keys = User::curLevel(Conf::get('lvl:seo')) ?
+						array_merge($this->langKeyDecline('seo_title'),$this->langKeyDecline('seo_desc'),$this->langKeyDecline('seo_keys'))
+						: array();
+
+		$this->config['admin']['add']['keys'] =
+		$this->config['admin']['update']['keys'] = array_merge(
+														$this->langKeyDecline('title'),
+														$this->langKeyDecline('head'),
+														array('src'),
+														$this->langKeyDecline('content'),
+														$seo_keys
+		);
 
 		foreach ($this->langKeyDecline('title') as $lk) {
 			$this->config['admin'][$type]['params'][$lk] = array('class'=>'head_field');
@@ -126,6 +168,7 @@ class Actu extends AcidModule {
 		foreach ($this->langKeyDecline('content') as $lk) {
 			$id_name = $lk.'_textarea';
 			$this->config['admin'][$type]['params'][$lk] = array('id'=>$id_name);
+			$this->config['admin'][$type]['body_attrs'][$lk] = array('class'=>'form_spaced');
 			$GLOBALS['tinymce']['ids'][] = $id_name;
 		}
 

@@ -344,6 +344,12 @@ class AcidVar {
 		}
 
 		switch ($this->form['type']) {
+
+			case 'show' :
+				$stop = $stop . '<label class="show_field">' . htmlspecialchars($this->getVal()) . '</label>';
+				$form->addHidden($this->getLabel(), $key, $this->getVal(), $params, $start, $stop,$body_attrs);
+			break;
+
 			case 'hidden' :
 				$form->addHidden('', $key, $this->getVal(), $params, $start, $stop,$body_attrs);
 			break;
@@ -406,6 +412,12 @@ class AcidVar {
 	public function setForm($type, $config=array()) {
 
 		switch ($type) {
+
+			case 'show' :
+				$this->form['type'] = 'show';
+				$this->form['maxlength'] = isset($config['maxlength']) ? $config['maxlength'] : null;
+			break;
+
 			case 'hidden' :
 				$this->form['type'] = 'hidden';
 				$this->form['maxlength'] = isset($config['maxlength']) ? $config['maxlength'] : null;

@@ -326,7 +326,7 @@ var Acid = {
 			
 			$(parent).each(function(){
 				$(this).find(write).attr("readonly", "readonly");
-				$(this).find(write).css("background-color", "#F9F9F8");
+				$(this).find(write).css("background-color", "#F0F0EE");
 				$(this).find(read).on('textchange',function(){
 					var text = $(this).val();
 					text = Acid.Tools.urlNormalize(text);
@@ -352,6 +352,11 @@ var Acid = {
 						    .replace(/\s+/g, '-') // collapse whitespace and replace by -
 						    .replace(/-+/g, '-'); // collapse dashes
 			
+							// remove last "-" if the last caracter is an invalid char
+                            if(str.substring(str.length-1) === '-'){
+                                str = str.substring(0, str.length-1);
+                            }
+                            
 							return str;
 						}
 							

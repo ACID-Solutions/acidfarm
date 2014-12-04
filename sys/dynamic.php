@@ -67,5 +67,11 @@ foreach ($acid['user']['levels'] as $lvl => $value) {
 	Acid::set('user:levels:'.$lvl,Acid::get('lvl:'.$level_assoc[$lvl],'lang'));
 }
 
+//traduction des catégories de pages
+foreach ($acidconf['page']['categories'] as $key => $tradvalue) {
+	$acidconf['page']['categories'][$key] = Acid::trad($tradvalue);
+}
+
+
 // Hooks
 AcidHook::call('dynamic');

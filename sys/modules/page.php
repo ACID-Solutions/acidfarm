@@ -30,6 +30,7 @@ class Page extends AcidModule {
 	public function __construct($init_id=null) {
 
 		$this->vars['id_page'] = new AcidVarInt($this->modTrad('id_page'));
+		$this->vars['id_page_category'] = new AcidVarList($this->modTrad('id_page_category'),Conf::get('page:categories'),0);
 
 		if ($langs = Acid::get('lang:available')) {
 			/*AUTODETECTION DU MULTILINGUE*/
@@ -44,6 +45,9 @@ class Page extends AcidModule {
 				$this->vars['ident'.$ks] =  new AcidVarString($this->modTrad('ident').$ds);
 				$this->vars['title'.$ks] =  new AcidVarString($this->modTrad('title').$ds,50);
 				$this->vars['content'.$ks] = new AcidVarTextarea($this->modTrad('content').$ds,80,30);
+				$this->vars['seo_title'.$ks] =  new AcidVarString($this->modTrad('seo_title').$ds);
+				$this->vars['seo_desc'.$ks] =  new AcidVarString($this->modTrad('seo_desc').$ds);
+				$this->vars['seo_keys'.$ks] = new AcidVarString($this->modTrad('seo_keys').$ds);
 				//CONFIGURATION
 				$this->config['print']['content'.$ks] = array('type'=>'split','size'=>100);
 			}
@@ -298,7 +302,7 @@ class Page extends AcidModule {
 	 * @see AcidModuleCore::printAdminList()
 	 */
 	public function printAdminList($conf=array()) {
-		$this->config['admin']['list']['keys'] = array('id_page',$this->langKey('title'),$this->langKey('ident'),$this->langKey('content'),'active');
+		$this->config['admin']['list']['keys'] = array('id_page',$this->langKey('title'),$this->langKey('ident'),$this->langKey('content'),'id_page_category','active');
 		$this->config['admin']['list']['limit'] = 50;
 		$this->config['admin']['list']['order'] = array('()'=>'LOWER('.$this->langKey('title').')');
 
@@ -345,15 +349,37 @@ class Page extends AcidModule {
 			$this->config['admin'][$do]['params'][$lk] = array('class'=>'head_field');
 		}
 
-		$this->config['admin'][$do]['keys'] = array_merge($this->langKeyDecline('title'),$this->langKeyDecline('ident'),$this->langKeyDecline('content'));
+		foreach ($this->langKeyDecline('content') as $lk) {
+			$this->config['admin'][$do]['body_attrs'][$lk] = array('class'=>'form_spaced');
+		}
+
+		$seo_keys = User::curLevel(Conf::get('lvl:seo')) ?
+						array_merge($this->langKeyDecline('seo_title'),$this->langKeyDecline('seo_desc'),$this->langKeyDecline('seo_keys'))
+						: array();
+
+		$this->config['admin'][$do]['keys'] = array_merge($this->langKeyDecline('title'),$this->langKeyDecline('ident'),$this->langKeyDecline('content'),$seo_keys);
+
+
 
 
 		$js = '';
- 		if (Conf::get('page:autoident')) {
-	 		foreach (Acid::get('lang:available') as $l) {
-	 			$js .= "Acid.Tools.fieldNormalize('[name=".$this->langKey('title',$l)."]','[name=".$this->langKey('ident',$l)."]','.admin_form');" . "\n" ;
+
+		if (is_array(Conf::get('page:special')) && in_array($this->get($this->langKey('ident',Acid::get('lang:default'))),Conf::get('page:special'))) {
+
+			foreach ($this->langKeyDecline('ident') as $identlkey) {
+		 		$this->vars[$identlkey]->setForm('show');
+		 		$this->config['admin'][$do][$identlkey]['stop'] = 'bla';
+		 	}
+
+		}else{
+
+	 		if (Conf::get('page:autoident')) {
+		 		foreach (Acid::get('lang:available') as $l) {
+		 			$js .= "Acid.Tools.fieldNormalize('[name=".$this->langKey('title',$l)."]','[name=".$this->langKey('ident',$l)."]','.admin_form');" . "\n" ;
+		 		}
 	 		}
- 		}
+
+		}
 
 		return parent::printAdminForm($do) .Lib::getJsCaller($js);
 	}

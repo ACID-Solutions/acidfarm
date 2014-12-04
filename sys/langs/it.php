@@ -69,3 +69,8 @@ $lang['trad']['creation']			= 'creazione';
 
 $lang['trad']['next']			= 'Prossimo';
 $lang['trad']['previous']		= 'Precedente';
+
+$lang['trad']['alt_image'] = 'Image';
+
+$lang['trad']['page_standard'] = 'Standard';
+$lang['trad']['page_special'] = 'Special';

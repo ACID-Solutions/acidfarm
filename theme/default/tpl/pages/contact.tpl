@@ -10,29 +10,29 @@
 
 			<div class="input_double row">
 				<div class="input_left" >
-					<div class="label"><?php echo Acid::trad('contact_form_firstname'); ?></div>
+					<div class="label"><label for="input_firstname"><?php echo Acid::trad('contact_form_firstname'); ?></label></div>
 					<input id="input_firstname" type="text" name="firstname" value="<?php echo Contact::getSession('firstname'); ?>" />
 				</div>
 				<div class="input_right" >
-					<div class="label"><?php echo Acid::trad('contact_form_lastname'); ?></div>
+					<div class="label"><label for="input_name"><?php echo Acid::trad('contact_form_lastname'); ?></label></div>
 					<input id="input_name"  type="text" name="lastname" value="<?php echo Contact::getSession('lastname'); ?>" />
 				</div>
 				<div class="clear"></div>
 			</div>
 			<div class="input row" >
-				<div class="label"><?php echo Acid::trad('contact_form_address'); ?></div>
+				<div class="label"><label for="input_address"><?php echo Acid::trad('contact_form_address'); ?></label></div>
 				<input id="input_address"  type="text" name="address" value="<?php echo Contact::getSession('address'); ?>" />
 			</div>
 			<div class="input row" >
-				<div class="label"><?php echo Acid::trad('contact_form_phone'); ?></div>
+				<div class="label"><label for="input_tel"><?php echo Acid::trad('contact_form_phone'); ?></label></div>
 				<input id="input_tel"  type="text" name="phone" value="<?php echo Contact::getSession('phone'); ?>" />
 			</div>
 			<div class="input row" >
-				<div class="label"><?php echo Acid::trad('contact_form_email'); ?></div>
+				<div class="label"><label for="input_mail"><?php echo Acid::trad('contact_form_email'); ?></label></div>
 				<input id="input_mail"  type="text" name="email" value="<?php echo Contact::getSession('email'); ?>" />
 			</div>
 			<div class="input row" >
-				<div class="label"><?php echo Acid::trad('contact_form_message'); ?></div>
+				<div class="label"><label for="input_mess"><?php echo Acid::trad('contact_form_message'); ?></label></div>
 				<textarea id="input_mess"  name="message" cols="30" rows="2" ><?php echo Contact::getSession('message'); ?></textarea>
 			</div>
 

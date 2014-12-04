@@ -315,29 +315,38 @@ $lang['mod']['actu']['id_actu'] = 'Id';
 $lang['mod']['actu']['content'] = 'Contenu';
 $lang['mod']['actu']['title'] 	= 'Titre';
 $lang['mod']['actu']['head']	= 'Chapeau';
+$lang['mod']['actu']['seo_title'] = 'SEO Titre';
+$lang['mod']['actu']['seo_desc'] = 'SEO Description';
+$lang['mod']['actu']['seo_keys'] = 'SEO Keywords';
 $lang['mod']['actu']['adate']   = 'Date et Heure';
+$lang['mod']['actu']['src']    = 'Image';
 $lang['mod']['actu']['active']  = 'Actif';
 
 //--page
 $lang['mod']['page']['id_page'] = 'Id';
+$lang['mod']['page']['id_page_category'] = 'Type';
 $lang['mod']['page']['ident']   = 'Identifiant';
 $lang['mod']['page']['title']   = 'Titre';
 $lang['mod']['page']['content'] = 'Contenu';
+$lang['mod']['page']['seo_title'] = 'SEO Titre';
+$lang['mod']['page']['seo_desc'] = 'SEO Description';
+$lang['mod']['page']['seo_keys'] = 'SEO Keywords';
 $lang['mod']['page']['adate']   = 'Date et Heure';
+$lang['mod']['page']['src']    = 'Image';
 $lang['mod']['page']['active']   = 'Actif';
 
 //--photo
 $lang['mod']['photo']['id_photo'] = 'Id';
 $lang['mod']['photo']['name']	  = 'Nom';
 $lang['mod']['photo']['position'] = 'Position';
-$lang['mod']['photo']['image']    = 'Image';
+$lang['mod']['photo']['src']    = 'Image';
 $lang['mod']['photo']['active']  = 'Actif';
 
 //--photo home
 $lang['mod']['photo_home']['id_photo'] = 'Id';
 $lang['mod']['photo_home']['name']	   = 'Nom';
 $lang['mod']['photo_home']['position'] = 'Position';
-$lang['mod']['photo_home']['image']    = 'Image';
+$lang['mod']['photo_home']['src']    = 'Image';
 $lang['mod']['photo_home']['active']  = 'Actif';
 
 //--contact

@@ -79,11 +79,16 @@ $acid['permission_active']		=  empty($permission_active) ? false : true;
 $acidconf['root_keys'] = array('sitemap.xml','robots.txt');
 $acidconf['site_keys'] = array('news','gallery','search','contact');
 
+$acidconf['lvl']['seo'] = $acid['lvl']['dev'] ;
+
 
 $acid['def_theme'] = 'default';
 $acid['theme'] = empty($acid['server_theme']) ?  $acid['def_theme'] : $acid['server_theme'];
 
+$acidconf['page']['categories'] = array(0=>'page_standard',1=>'page_special'); //traduit dans /sys/dynamic.php
+
 $acidconf['page']['autoident'] = true;
+$acidconf['page']['special'] = array('home');
 
 $acidconf['photo']['limit'] = 12;
 $acidconf['photo_home']['limit'] = null;

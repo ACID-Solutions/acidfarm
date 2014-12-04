@@ -3,18 +3,33 @@ ALTER TABLE `acid_actu`
 ADD `title_fr` VARCHAR( 100 ) NOT NULL AFTER `id_actu` ,
 ADD `head_fr` TEXT NOT NULL AFTER `title_fr` ,
 ADD `content_fr` LONGTEXT NOT NULL AFTER `head_fr` ,
-ADD `title_en` VARCHAR( 100 ) NOT NULL AFTER `content_fr` ,
+ADD `seo_title_fr` VARCHAR( 100 ) NOT NULL AFTER `content_fr` ,
+ADD `seo_desc_fr` VARCHAR( 255 ) NOT NULL AFTER `seo_title_fr` ,
+ADD `seo_keys_fr` VARCHAR( 255 ) NOT NULL AFTER `seo_desc_fr` ,
+ADD `title_en` VARCHAR( 100 ) NOT NULL AFTER `seo_keys_fr` ,
 ADD `head_en` TEXT NOT NULL AFTER `title_en` ,
 ADD `content_en` LONGTEXT NOT NULL AFTER `head_en` ,
-ADD `title_es` VARCHAR( 100 ) NOT NULL AFTER `content_en` ,
+ADD `seo_title_en` VARCHAR( 100 ) NOT NULL AFTER `content_en` ,
+ADD `seo_desc_en` VARCHAR( 255 ) NOT NULL AFTER `seo_title_en` ,
+ADD `seo_keys_en` VARCHAR( 255 ) NOT NULL AFTER `seo_desc_en` ,
+ADD `title_es` VARCHAR( 100 ) NOT NULL AFTER `seo_keys_en` ,
 ADD `head_es` TEXT NOT NULL AFTER `title_es` ,
 ADD `content_es` LONGTEXT NOT NULL AFTER `head_es` ,
-ADD `title_de` VARCHAR( 100 ) NOT NULL AFTER `content_es` ,
+ADD `seo_title_es` VARCHAR( 100 ) NOT NULL AFTER `content_es` ,
+ADD `seo_desc_es` VARCHAR( 255 ) NOT NULL AFTER `seo_title_es` ,
+ADD `seo_keys_es` VARCHAR( 255 ) NOT NULL AFTER `seo_desc_es` ,
+ADD `title_de` VARCHAR( 100 ) NOT NULL AFTER `seo_keys_es` ,
 ADD `head_de` TEXT NOT NULL AFTER `title_de` ,
 ADD `content_de` LONGTEXT NOT NULL AFTER `head_de` ,
-ADD `title_it` VARCHAR( 100 ) NOT NULL AFTER `content_de` ,
+ADD `seo_title_de` VARCHAR( 100 ) NOT NULL AFTER `content_de` ,
+ADD `seo_desc_de` VARCHAR( 255 ) NOT NULL AFTER `seo_title_de` ,
+ADD `seo_keys_de` VARCHAR( 255 ) NOT NULL AFTER `seo_desc_de` ,
+ADD `title_it` VARCHAR( 100 ) NOT NULL AFTER `seo_keys_de` ,
 ADD `head_it` TEXT NOT NULL AFTER `title_it` ,
-ADD `content_it` LONGTEXT NOT NULL AFTER `head_it` ;
+ADD `content_it` LONGTEXT NOT NULL AFTER `head_it`,
+ADD `seo_title_it` VARCHAR( 100 ) NOT NULL AFTER `content_it` ,
+ADD `seo_desc_it` VARCHAR( 255 ) NOT NULL AFTER `seo_title_it` ,
+ADD `seo_keys_it` VARCHAR( 255 ) NOT NULL AFTER `seo_desc_it`  ;
 
 COMMIT; 
 
@@ -33,7 +48,22 @@ UPDATE `acid_actu`  SET
 `content_en`=`content`, 
 `content_es`=`content`, 
 `content_de`=`content`, 
-`content_it`=`content`;
+`content_it`=`content`,
+`seo_title_fr`=`seo_title`, 
+`seo_title_en`=`seo_title`, 
+`seo_title_es`=`seo_title`, 
+`seo_title_de`=`seo_title`, 
+`seo_title_it`=`seo_title`,
+`seo_desc_fr`=`seo_desc`, 
+`seo_desc_en`=`seo_desc`, 
+`seo_desc_es`=`seo_desc`, 
+`seo_desc_de`=`seo_desc`, 
+`seo_desc_it`=`seo_desc`,
+`seo_keys_fr`=`seo_keys`, 
+`seo_keys_en`=`seo_keys`, 
+`seo_keys_es`=`seo_keys`, 
+`seo_keys_de`=`seo_keys`, 
+`seo_keys_it`=`seo_keys`;
 
 COMMIT;
 
@@ -50,18 +80,33 @@ ALTER TABLE `acid_page`
 ADD `ident_fr` VARCHAR( 255 ) NOT NULL AFTER `id_page` ,
 ADD `title_fr` VARCHAR( 100 ) NOT NULL AFTER `ident_fr` ,
 ADD `content_fr` TEXT NOT NULL AFTER `title_fr` ,
-ADD `ident_en` VARCHAR( 255 ) NOT NULL AFTER `content_fr` ,
+ADD `seo_title_fr` VARCHAR( 100 ) NOT NULL AFTER `content_fr` ,
+ADD `seo_desc_fr` VARCHAR( 255 ) NOT NULL AFTER `seo_title_fr` ,
+ADD `seo_keys_fr` VARCHAR( 255 ) NOT NULL AFTER `seo_desc_fr` ,
+ADD `ident_en` VARCHAR( 255 ) NOT NULL AFTER `seo_keys_fr` ,
 ADD `title_en` VARCHAR( 100 ) NOT NULL AFTER `ident_en` ,
 ADD `content_en` TEXT NOT NULL AFTER `title_en` ,
-ADD `ident_es` VARCHAR( 255 ) NOT NULL AFTER `content_en` ,
+ADD `seo_title_en` VARCHAR( 100 ) NOT NULL AFTER `content_en` ,
+ADD `seo_desc_en` VARCHAR( 255 ) NOT NULL AFTER `seo_title_en` ,
+ADD `seo_keys_en` VARCHAR( 255 ) NOT NULL AFTER `seo_desc_en` ,
+ADD `ident_es` VARCHAR( 255 ) NOT NULL AFTER `seo_keys_en` ,
 ADD `title_es` VARCHAR( 100 ) NOT NULL AFTER `ident_es` ,
 ADD `content_es` TEXT NOT NULL AFTER `title_es` ,
-ADD `ident_de` VARCHAR( 255 ) NOT NULL AFTER `content_es` ,
+ADD `seo_title_es` VARCHAR( 100 ) NOT NULL AFTER `content_es` ,
+ADD `seo_desc_es` VARCHAR( 255 ) NOT NULL AFTER `seo_title_es` ,
+ADD `seo_keys_es` VARCHAR( 255 ) NOT NULL AFTER `seo_desc_es` ,
+ADD `ident_de` VARCHAR( 255 ) NOT NULL AFTER `seo_keys_es` ,
 ADD `title_de` VARCHAR( 100 ) NOT NULL AFTER `ident_de` ,
 ADD `content_de` TEXT NOT NULL AFTER `title_de` ,
-ADD `ident_it` VARCHAR( 255 ) NOT NULL AFTER `content_de` ,
+ADD `seo_title_de` VARCHAR( 100 ) NOT NULL AFTER `content_de` ,
+ADD `seo_desc_de` VARCHAR( 255 ) NOT NULL AFTER `seo_title_de` ,
+ADD `seo_keys_de` VARCHAR( 255 ) NOT NULL AFTER `seo_desc_de` ,
+ADD `ident_it` VARCHAR( 255 ) NOT NULL AFTER `seo_keys_de` ,
 ADD `title_it` VARCHAR( 100 ) NOT NULL AFTER `ident_it` ,
-ADD `content_it` TEXT NOT NULL AFTER `title_it` ;
+ADD `content_it` TEXT NOT NULL AFTER `title_it` ,
+ADD `seo_title_it` VARCHAR( 100 ) NOT NULL AFTER `content_it` ,
+ADD `seo_desc_it` VARCHAR( 255 ) NOT NULL AFTER `seo_title_it` ,
+ADD `seo_keys_it` VARCHAR( 255 ) NOT NULL AFTER `seo_desc_it`  ;
 
 COMMIT; 
 
@@ -80,7 +125,22 @@ UPDATE `acid_page`  SET
 `content_en`=`content`, 
 `content_es`=`content`, 
 `content_de`=`content`, 
-`content_it`=`content`;
+`content_it`=`content`,
+`seo_title_fr`=`seo_title`, 
+`seo_title_en`=`seo_title`, 
+`seo_title_es`=`seo_title`, 
+`seo_title_de`=`seo_title`, 
+`seo_title_it`=`seo_title`,
+`seo_desc_fr`=`seo_desc`, 
+`seo_desc_en`=`seo_desc`, 
+`seo_desc_es`=`seo_desc`, 
+`seo_desc_de`=`seo_desc`, 
+`seo_desc_it`=`seo_desc`,
+`seo_keys_fr`=`seo_keys`, 
+`seo_keys_en`=`seo_keys`, 
+`seo_keys_es`=`seo_keys`, 
+`seo_keys_de`=`seo_keys`, 
+`seo_keys_it`=`seo_keys`;
 
 COMMIT;
 
@@ -140,4 +200,3 @@ ALTER TABLE `acid_photo_home`
   DROP `name`;
 
 COMMIT; 
-
