@@ -86,6 +86,7 @@ else {
 					'configuration'     	=> array('level'=>$def_level,'separator'=>true,'label'=>Acid::trad('admin_menu_my_config'),'display'=>true,'unclickable'=>true,'color'=>$color[1]),
 						'config'           	 => array('level'=>User::curLevel(), 'label'=>Acid::trad('admin_menu_infos'),'display'=>true,'parent'=>'configuration'),
     					'siteconfig'       	 => array('level'=>$def_level,'margin'=>0, 'label'=>Acid::trad('admin_menu_config'),'display'=>true,'parent'=>'configuration'),
+						'seo'       		 => array('level'=>$dev_level,'mod'=>'Seo','margin'=>0, 'label'=>Acid::trad('admin_menu_seo'),'display'=>true,'parent'=>'configuration'),
 
     				'user_configuration'   	=> array('level'=>$dev_level,'separator'=>true,'label'=>Acid::trad('admin_menu_user_config'),'display'=>true,'unclickable'=>true,'color'=>$color[2]),
     					'user'            	 => array('level'=>$dev_level,'mod'=>'User','margin'=>0, 'label'=>Acid::trad('admin_menu_user'),'display'=>true,'parent'=>'user_configuration'),

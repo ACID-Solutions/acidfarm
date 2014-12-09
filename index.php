@@ -27,8 +27,8 @@ $acid['ariane'] = array();
 //Metas
 $page_title = '';
 $page_title_alone = false;
-Acid::set('title:left',Acid::get('site:name').' - ');
-Acid::set('title:right','');
+Acid::set('title:right',' - '.Acid::get('site:name'));
+Acid::set('title:left','');
 
 $check_for_keywords = 3;
 
@@ -91,6 +91,6 @@ AcidRouter::addRoute('page',new AcidRoute(':page_key',array('controller'=>'PageC
 AcidRouter::addDefaultRoute('index',new AcidRoute('default',array('controller'=>'PageController','action'=>'home')));
 
 //Lancement du Router
-AcidRouter::run();
+AcidRouter::before('*',function() { Seo::prepare(); })->run();
 
 require 'sys/stop.php';

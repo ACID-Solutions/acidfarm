@@ -70,7 +70,10 @@ COMMIT;
 ALTER TABLE `acid_actu`
   DROP `title`,
   DROP `head`,
-  DROP `content`;
+  DROP `content`,
+  DROP `seo_title`,
+  DROP `seo_desc`,
+  DROP `seo_keys`;
 
 COMMIT; 
 
@@ -147,7 +150,10 @@ COMMIT;
 ALTER TABLE `acid_page`
   DROP `title`,
   DROP `ident`,
-  DROP `content`;
+  DROP `content`,
+  DROP `seo_title`,
+  DROP `seo_desc`,
+  DROP `seo_keys`;
 
 COMMIT; 
 
@@ -198,5 +204,51 @@ COMMIT;
 
 ALTER TABLE `acid_photo_home`
   DROP `name`;
+
+COMMIT; 
+
+#SEO
+ALTER TABLE `acid_seo` 
+ADD `seo_title_fr` VARCHAR( 100 ) NOT NULL AFTER `url` ,
+ADD `seo_desc_fr` VARCHAR( 255 ) NOT NULL AFTER `seo_title_fr` ,
+ADD `seo_keys_fr` VARCHAR( 255 ) NOT NULL AFTER `seo_desc_fr` ,
+ADD `seo_title_en` VARCHAR( 100 ) NOT NULL AFTER `seo_keys_fr` ,
+ADD `seo_desc_en` VARCHAR( 255 ) NOT NULL AFTER `seo_title_en` ,
+ADD `seo_keys_en` VARCHAR( 255 ) NOT NULL AFTER `seo_desc_en` ,
+ADD `seo_title_es` VARCHAR( 100 ) NOT NULL AFTER `seo_keys_en` ,
+ADD `seo_desc_es` VARCHAR( 255 ) NOT NULL AFTER `seo_title_es` ,
+ADD `seo_keys_es` VARCHAR( 255 ) NOT NULL AFTER `seo_desc_es` ,
+ADD `seo_title_de` VARCHAR( 100 ) NOT NULL AFTER `seo_keys_es` ,
+ADD `seo_desc_de` VARCHAR( 255 ) NOT NULL AFTER `seo_title_de` ,
+ADD `seo_keys_de` VARCHAR( 255 ) NOT NULL AFTER `seo_desc_de` ,
+ADD `seo_title_it` VARCHAR( 100 ) NOT NULL AFTER `seo_keys_de` ,
+ADD `seo_desc_it` VARCHAR( 255 ) NOT NULL AFTER `seo_title_it` ,
+ADD `seo_keys_it` VARCHAR( 255 ) NOT NULL AFTER `seo_desc_it`  ;
+
+COMMIT; 
+
+UPDATE `acid_seo`  SET 
+`seo_title_fr`=`seo_title`, 
+`seo_title_en`=`seo_title`, 
+`seo_title_es`=`seo_title`, 
+`seo_title_de`=`seo_title`, 
+`seo_title_it`=`seo_title`,
+`seo_desc_fr`=`seo_desc`, 
+`seo_desc_en`=`seo_desc`, 
+`seo_desc_es`=`seo_desc`, 
+`seo_desc_de`=`seo_desc`, 
+`seo_desc_it`=`seo_desc`,
+`seo_keys_fr`=`seo_keys`, 
+`seo_keys_en`=`seo_keys`, 
+`seo_keys_es`=`seo_keys`, 
+`seo_keys_de`=`seo_keys`, 
+`seo_keys_it`=`seo_keys`;
+
+COMMIT;
+
+ALTER TABLE `acid_seo`
+  DROP `seo_title`,
+  DROP `seo_desc`,
+  DROP `seo_keys`;
 
 COMMIT; 

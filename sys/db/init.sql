@@ -80,6 +80,29 @@ INSERT INTO `acid_page` (`id_page`, `id_page_category`, `title`, `ident`, `adate
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `acid_seo`
+--
+
+CREATE TABLE IF NOT EXISTS `acid_seo` (
+  `id_seo` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `routename` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `seo_title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `seo_desc` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `seo_keys` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `strict_mode` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id_seo`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Contenu de la table `acid_seo`
+--
+
+
+
+--
 -- Structure de la table `acid_session`
 --
 

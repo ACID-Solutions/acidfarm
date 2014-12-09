@@ -188,6 +188,7 @@ $lang['trad']['no_content_available']	 = 'No content available';
 $lang['trad']['admin_menu_home']         = 'Inicio';
 $lang['trad']['admin_menu_infos']        = 'My Profile';
 $lang['trad']['admin_menu_config']       = 'Configuración';
+$lang['trad']['admin_menu_seo']      	 = 'SEO';
 
 $lang['trad']['admin_menu_user']        		= 'Usuarios';
 $lang['trad']['admin_menu_user_group']        	= 'User Groups';
@@ -308,6 +309,14 @@ $lang['trad']['mail_footer_contact_form'] = 'el formulario de contacto';
 $lang['trad']['mail_footer_staff_generation'] = 'El correo electrónico enviado por __LINK__.';
 
 //Modules
+//--seo
+$lang['mod']['seo']['id_seo'] = 'Id';
+$lang['mod']['seo']['routename'] = 'Route Name';
+$lang['mod']['seo']['url'] 	= 'URL';
+$lang['mod']['seo']['seo_title'] = 'SEO Title';
+$lang['mod']['seo']['seo_desc'] = 'SEO Desc';
+$lang['mod']['seo']['seo_keys'] = 'SEO Keywords';
+$lang['mod']['seo']['strict_mode']  = 'Strict Mode?';
 
 //--actu
 $lang['mod']['actu']['id_actu']      = 'Id';
