@@ -34,7 +34,6 @@ class PageController{
 		   Conf::addToContent(Acid::tpl($tpl_path));
 	       Conf::addToAriane( (Conf::getPageTitle() ? Conf::getPageTitle() : $page_key)  ,$_SERVER['REQUEST_URI']);
 
-
         }else{
 
 	        $my_page = new Page();
@@ -42,21 +41,23 @@ class PageController{
 
 	        Acid::set('tmp_current_object',$my_page);
 
-	        if ($my_page->trad('title')) {
-	        	Conf::addToMetaKeys($my_page->trad('title'));
-	        }
-
 	        if (count(AcidRouter::getParams()) == 1 && $my_page->get('active')) {
-	            Conf::addToAriane($my_page->trad('title'),$my_page->url());
 
-	            Conf::addToContent($my_page->printPage());
+	        	//add to ariane
+	        	Conf::addToAriane($my_page->trad('title'),$my_page->url());
 
-	            $meta_desc = (AcidVarString::split($my_page->trad('content'),100) . ' - ' .Acid::get('site:name'));
+	            //set meta tags
+	            $meta_desc = $my_page->trad('seo_desc')  ? $my_page->hscTrad('seo_desc')  : (AcidVarString::split($my_page->trad('content'),100) . ' - ' .Acid::get('site:name'));
 	        	Conf::setMetaDesc($meta_desc);
 
 	            if (!Conf::getPageTitle()) {
-	          		Conf::setPageTitle($my_page->hscTrad('title'));
+	          		Conf::setPageTitle($my_page->trad('seo_title') ? $my_page->hscTrad('seo_title') : $my_page->hscTrad('title'));
 	          	}
+
+	          	Conf::addToMetaKeys($my_page->trad('seo_keys') ? explode(',',$my_page->trad('seo_keys')) : $my_page->trad('title'));
+
+	          	//add to HTML
+	          	Conf::addToContent($my_page->printPage());
 
 	        } else {
 	            AcidUrl::error404();

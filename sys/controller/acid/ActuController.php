@@ -36,7 +36,7 @@ class ActuController {
 
              // SEO settings
 //              $title = array(
-//              		'fr'=>'Actualités',
+//              	'fr'=>'Actualités',
 // 					'en'=>'News',
 // 					'es'=>'Noticias',
 // 					'it'=>'Notizie',
@@ -79,31 +79,9 @@ class ActuController {
                         Conf::addToAriane($actu->trad('title'),$actu->url());
 
                         //set meta tags
-                        Conf::setPageTitle($actu->hscTrad('title'));
-                        Conf::addToMetaKeys($actu->hscTrad('title'));
-                        Conf::setMetadesc(AcidVarString::split($actu->trad('content'),100) . ' - '. Conf::getMetaDesc());
-
-                        // SEO settings
-		//              $title = array(
-		//              	'fr'=>$actu->get('title_fr'),
-		// 					'en'=>$actu->get('title_en'),
-		// 					'es'=>$actu->get('title_es'),
-		// 					'it'=>$actu->get('title_it'),
-		// 					'de'=>$actu->get('title_de')
-		//              );
-		//              $desc = array(
-		//              		'fr' => $actu->split('head_fr',180),
-		//              		'en' => $actu->split('head_en',180),
-		//              		'es' => $actu->split('head_es',180),
-		//              		'it' => $actu->split('head_it',180),
-		//              		'de' => $actu->split('head_de',180)
-		//              );
-		//              $meta_img_url = Acid::get('url:img').'site/logo.png';
-		//              $use_default_kewords = false;
-		//              $added_keywords = array();
-		//              $generate_keywords_from_text = $actu->trad('head').' '.$actu->trad('content');
-		//              Conf::SEOGen($title, $desc, $meta_img_url, $use_default_kewords, $added_keywords, $generate_keywords_from_text);
-
+                        Conf::setPageTitle($actu->trad('seo_title') ? $actu->hscTrad('seo_title') : $actu->hscTrad('title'));
+                        Conf::addToMetaKeys($actu->trad('seo_keys') ? explode(',',$actu->trad('seo_keys')) : $actu->hscTrad('title'));
+                        Conf::setMetadesc($actu->trad('seo_desc') ? $actu->hscTrad('seo_desc')  : (AcidVarString::split($actu->trad('content'),100) . ' - '. Conf::getMetaDesc()));
 
                         //add to HTML
                         Conf::addToContent($actu->printActu());

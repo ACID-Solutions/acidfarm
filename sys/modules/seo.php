@@ -131,12 +131,7 @@ class Seo extends AcidModule {
 					}
 
 					if ($seo->trad('seo_keys')) {
-						$keywords = explode(',',$seo->trad('seo_keys'));
-						if ($keywords) {
-							foreach ($keywords as $key) {
-								Conf::addToMetaKeys($key);
-							}
-						}
+						Conf::addToMetaKeys(explode(',',$seo->trad('seo_keys')));
 					}
 
 					return true;

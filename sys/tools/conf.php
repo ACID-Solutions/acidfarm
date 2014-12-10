@@ -265,6 +265,14 @@ class Conf {
 	 * @param mixed $value valeur
 	 */
 	public static function addToMetaKeys($value) {
+		if (is_array($value) && $value) {
+			$return = true;
+			foreach ($value as $keyword) {
+				self::addToMetaKeys($keyword);
+			}
+			return $return;
+		}
+
 		return  self::setMetaKeys($value,true);
 	}
 
