@@ -69,7 +69,7 @@ class AcidUrl
         header($_SERVER['SERVER_PROTOCOL'].' 301 Moved Permanently');
         header('Status: 301 Moved Permanently');
         if ($max_age) {
-        	header('Cache-Control', 'max-age='.$max_age);
+        	header("Cache-Control: max-age=".$max_age);
         }
         header('Location: '.$url);
         Acid::log('url','AcidUrl::redirection301 : ' . $url);
