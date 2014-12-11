@@ -52,6 +52,12 @@ class AcidRoute{
     protected $action           = null;
 
     /**
+     * @var string HTTP Methods de liaison
+     * NULL / GET / POST / PUT / DELETE / HEAD / PATCH / OPTIONS
+     */
+    protected $method           = null;
+
+    /**
      * @var array Paramètres obligatoires
      */
     protected $params           = array();
@@ -84,13 +90,14 @@ class AcidRoute{
      * @param int $partial_stop
      * @param array $params
      */
-    public function __construct($URI,$controller=array(),$partial_start=null,$partial_stop=null,$params=null){
+    public function __construct($URI,$controller=array(),$partial_start=null,$partial_stop=null,$params=null,$method=null){
         $this->params = $params;
         $this->URI              = $URI;
         $this->_partitional_URI = explode(AcidRouter::URI_DELIMITER,$URI);
         $this->module           = (isset($controller['module']))    ? $controller['module']     : AcidRouter::DEFAULT_MODULE;
         $this->controller       = (isset($controller['controller']))? $controller['controller'] : AcidRouter::DEFAULT_CONTROLLER;
         $this->action           = (isset($controller['action']))    ? $controller['action']     : AcidRouter::DEFAULT_ACTION;
+        $this->method           = $method;
         if(isset($partial_start)){
             $this->partial['start'] = (is_int($partial_start))? $partial_start:null;
              if(isset($partial_stop)){
@@ -114,6 +121,23 @@ class AcidRoute{
      */
     public function getName(){
     	return $this->name;
+    }
+
+    /**
+     * Définit la méthode de la route
+     * @param mixed $val : NULL / GET / POST / PUT / DELETE / HEAD / PATCH / OPTIONS / ARRAY(GET,POST,..)
+     * @return string
+     */
+    public function setMethod($val){
+    	return $this->method = $val;
+    }
+
+    /**
+     * Retourne le nom de la route
+     * @return string
+     */
+    public function getMethod(){
+    	return $this->method;
     }
 
     /**
@@ -162,6 +186,17 @@ class AcidRoute{
         }
 
 
+		if ($this->method) {
+			if ($http_method=$_SERVER['REQUEST_METHOD']) {
+				if (is_array($this->method)) {
+					if (!in_array($http_method,$this->method)) {
+						return false;
+					}
+				}elseif ($this->method != $http_method){
+					return false;
+				}
+			}
+		}
 
         foreach ($path as $key => $value) {
 			$value = urldecode($value);

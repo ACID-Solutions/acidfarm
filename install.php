@@ -126,6 +126,7 @@ $action = $_POST;
 
 $dir_path = __DIR__.'/sys/server.php';
 $htaccess_path = __DIR__.'/.htaccess';
+$htaccess_path_rest = __DIR__.'/rest/.htaccess';
 $db_path = __DIR__.'/sys/db/init.sql';
 $dbml_path = __DIR__.'/sys/db/multilingual.sql';
 
@@ -353,8 +354,27 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ {$folder}index.php?acid_nav=$1 [L,QSA]
 HTACC;
 
+		$htaccessrest = <<< HTACC
+# Charset
+AddDefaultCharset UTF-8
+
+$htaccessOVH
+
+# URL Rewriting
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ {$folder}rest/index.php?acid_nav=$1 [L,QSA]
+HTACC;
+
+
+
 		$h = fopen($htaccess_path,'w');
 		$eh = fwrite($h, $htaccess);
+		fclose($h);
+
+		$h = fopen($htaccess_path_rest,'w');
+		$eh = fwrite($h, $htaccessrest);
 		fclose($h);
 
 		if ($db_init) {

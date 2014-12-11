@@ -16,3 +16,4 @@
 
 # acifarm htaccess
 /.htaccess
+/rest/.htaccess

@@ -63,6 +63,7 @@ class Page extends AcidModule {
 
 		$this->config['admin']['add']['def'] = array('adate'=>date('Y-m-d H:i:s'));
 
+		$this->config['rest']['active'] = true;
 
 		return parent::__construct($init_id);
 	}

@@ -2164,6 +2164,23 @@ abstract class AcidModuleCore {
 	}
 
 	/**
+	 * Listing à retourner lors d'un GET REST
+	 * @param array $config
+	 */
+	public function restGet($config=array()) {
+		if (!empty($this->config['rest']['active'])) {
+			$filter = isset($config['filter']) ?  $config['filter'] : array();
+			$order = isset($config['order']) ?  $config['order'] : array();
+			$limit = isset($config['limit']) ?  $config['limit'] : array();
+			$count =  isset($config['count']) ?  $config['count'] :false;
+			return $this->dbList($filter,$order,$limit,$count);
+		}else{
+			AcidUrl::error403();
+		}
+	}
+
+
+	/**
 	* Définit une session relative à la table SQL associée à l'objet
 	* Si $id est renseigné, définit une session propre à l'identifiant correspondant
 	*

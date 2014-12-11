@@ -74,6 +74,8 @@ class Actu extends AcidModule {
 		//$this->config['print']['active']= array('type'=>'bool');
 		$this->config['print']['active']= array('type'=>'toggle','ajax'=>true);
 
+		$this->config['rest']['active'] = true;
+
 	}
 
 	/**

@@ -56,7 +56,6 @@ if (Conf::defaultPageTitle($searched_key)) {
     Conf::setPageTitle(Conf::defaultPageTitle($searched_key));
 }
 
-
 //Définitions des Routes Controller
 
 //Hooks

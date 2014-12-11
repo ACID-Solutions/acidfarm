@@ -307,6 +307,83 @@ class AcidRouter implements Acid_Router_Interface{
      }
 
      /**
+      * Ajoute une route GET
+      * @param string $name
+      * @param AcidRoute $route
+      */
+     public static function addGet($name,AcidRoute $route){
+     	$route->setName($name);
+     	$route->setMethod('GET');
+     	self::getInstance()->_routes[$name] = $route;
+     }
+
+     /**
+      * Ajoute une route POST
+      * @param string $name
+      * @param AcidRoute $route
+      */
+     public static function addPost($name,AcidRoute $route){
+     	$route->setName($name);
+     	$route->setMethod('POST');
+     	self::getInstance()->_routes[$name] = $route;
+     }
+
+     /**
+      * Ajoute une route PUT
+      * @param string $name
+      * @param AcidRoute $route
+      */
+     public static function addPut($name,AcidRoute $route){
+     	$route->setName($name);
+     	$route->setMethod('PUT');
+     	self::getInstance()->_routes[$name] = $route;
+     }
+
+     /**
+      * Ajoute une route DELETE
+      * @param string $name
+      * @param AcidRoute $route
+      */
+     public static function addDelete($name,AcidRoute $route){
+     	$route->setName($name);
+     	$route->setMethod('DELETE');
+     	self::getInstance()->_routes[$name] = $route;
+     }
+
+     /**
+      * Ajoute une route Head
+      * @param string $name
+      * @param AcidRoute $route
+      */
+     public static function addHead($name,AcidRoute $route){
+     	$route->setName($name);
+     	$route->setMethod('HEAD');
+     	self::getInstance()->_routes[$name] = $route;
+     }
+
+     /**
+      * Ajoute une route PATCH
+      * @param string $name
+      * @param AcidRoute $route
+      */
+     public static function addPatch($name,AcidRoute $route){
+     	$route->setName($name);
+     	$route->setMethod('PATCH');
+     	self::getInstance()->_routes[$name] = $route;
+     }
+
+     /**
+      * Ajoute une route OPTION
+      * @param string $name
+      * @param AcidRoute $route
+      */
+     public static function addOption($name,AcidRoute $route){
+     	$route->setName($name);
+     	$route->setMethod('OPTION');
+     	self::getInstance()->_routes[$name] = $route;
+     }
+
+     /**
       * Définit la route par défaut
       * @param string $name
       * @param AcidRoute $route
