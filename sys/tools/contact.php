@@ -51,6 +51,9 @@ class Contact {
 	 */
 	public static  function formExcluedKeys() {
 		$def_exclued = array('contact_do','module_do','x','y');
+		if (Conf::get('contact:shield_key')) {
+			$def_exclued[] = Conf::get('contact:shield_key');
+		}
 		return Conf::exist('contact_form:exclude') ? Conf::get('contact_form:exclude') : $def_exclued;
 	}
 
