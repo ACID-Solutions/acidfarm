@@ -76,6 +76,14 @@ class Lib {
 			foreach ($searches as $search) {
 
 				if ((stripos($_SERVER['HTTP_USER_AGENT'],$search) !== false)) {
+
+					if ($search=='MSIE') {
+						$match = array();
+						if(preg_match('/(?i)msie ([1-8])/',$_SERVER['HTTP_USER_AGENT'],$match))	{
+							return "MSIE-".$match[1];
+						}
+					}
+
 					return $search;
 				}
 			}

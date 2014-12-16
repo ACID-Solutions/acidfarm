@@ -28,7 +28,12 @@ class RestController{
 		$module = AcidRouter::getParam('module');
 		if (Acid::get('includes:'.$module)) {
 			$m = new $module();
-			Conf::addToContent(json_encode($m->restGet()));
+			if ($res = $m->restGet()) {
+				Rest::status200($res);
+			}else{
+				Rest::status204();
+			}
+
 		}
     }
 
@@ -36,28 +41,28 @@ class RestController{
      * POST
      */
     public function post(){
-		AcidUrl::error403();
+		Rest::status403();
     }
 
     /**
      * PUT
      */
     public function put(){
-    	AcidUrl::error403();
+    		Rest::status403();
     }
 
     /**
      * DELETE
      */
     public function delete(){
-    	AcidUrl::error403();
+    	Rest::status403();
     }
 
     /**
      * 404
      */
     public function call404(){
-    	AcidUrl::error404();
+    	Rest::status404();
     }
 
 }

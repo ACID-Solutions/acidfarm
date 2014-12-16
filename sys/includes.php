@@ -35,7 +35,9 @@ $acid['includes']['Lib'] 		  = 'sys/tools/lib.php';
 $acid['includes']['Lang'] 		  = 'sys/tools/lang.php';
 $acid['includes']['Conf'] 		  = 'sys/tools/conf.php';
 $acid['includes']['Ajax'] 	 	  = 'sys/tools/ajax.php';
+$acid['includes']['Rest'] 		  = 'sys/tools/rest.php';
 $acid['includes']['Route'] 	 	  = 'sys/tools/route.php';
+
 
 // Admin Config
 $acid['includes']['SiteConfig']	  = 'sys/modules/config.php';
