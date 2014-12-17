@@ -154,6 +154,7 @@ z-index: 1005;
 	top:0;
 	width:100%;	
 	text-align:center;
+	z-index: 990;	
 }
 
 #dialog_banner_bg {
