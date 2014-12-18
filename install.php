@@ -306,7 +306,7 @@ $lprod_quote\$acid['log']['type']          	= 'daily'; // single / daily
 //\$acid['log']['colorize']         = array();
 $lprod_quote\$acid['debug']		         	= false;
 $lprod_quote\$acid['error_report']['debug']	= E_ALL & ~E_STRICT;
-$lprod_quote\$acid['error_report']['prod']	= 0;
+$lprod_quote\$acid['error_report']['prod']	= E_ALL & ~E_STRICT;
 
 // Maintenance
 \$acid['maintenance']           	= false;

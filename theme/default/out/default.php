@@ -55,6 +55,8 @@ $output .=  <<<OUTPUT
 
 {$this->getDialog()}
 {$this->getBwin()}
+{$this->getCookieWarning()}
+
 
 <$bhead id="header" >
     {$this->getHeader()}

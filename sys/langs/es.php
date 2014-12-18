@@ -16,6 +16,7 @@
  */
 
 //$lang['trad']['universal_keyword'] = 'trad';
+$lang['trad']['cookie_legacy'] = 'Al continuar su visita a este sitio, usted acepta el uso de cookies para ofrecer contenido y servicios adaptados a sus intereses.';
 
 $lang['trad']['admin_form_title']  				= 'CONNECTION TO THE ACIDFARM MANAGER';
 $lang['trad']['admin_form_login']  				= 'LOGIN';

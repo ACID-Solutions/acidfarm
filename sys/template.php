@@ -84,6 +84,17 @@ class MyTemplate extends AcidTemplate {
 		return $banner . $popup;
 	}
 
+	/**
+	 * Retourne le corps de la pop-in du template
+	 */
+	public function getCookieWarning() {
+		if (Acid::get('session:enable')) {
+			if (empty($_COOKIE['cookie_warning'])) {
+				AcidCookie::setcookie('cookie_warning',1);
+				return Acid::tpl('screens/notification.tpl',array('ident'=>'cookie','content'=>Acid::trad('cookie_legacy')));
+			}
+		}
+	}
 
 	/**
 	 * Retourne le corps de la pop-in du template
