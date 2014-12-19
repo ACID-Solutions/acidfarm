@@ -90,7 +90,7 @@ class MyTemplate extends AcidTemplate {
 	public function getCookieWarning() {
 		if (Acid::get('session:enable')) {
 			if (empty($_COOKIE['cookie_warning'])) {
-				AcidCookie::setcookie('cookie_warning',1);
+				AcidCookie::setcookie('cookie_warning',1,(time()+60*60*24*365));
 				return Acid::tpl('screens/notification.tpl',array('ident'=>'cookie','content'=>Acid::trad('cookie_legacy')));
 			}
 		}
