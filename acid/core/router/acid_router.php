@@ -100,13 +100,14 @@ class AcidRouter implements Acid_Router_Interface{
         $_server = $_SERVER["SERVER_NAME"];
         $_uri_total= parse_url($_SERVER["REQUEST_URI"],PHP_URL_PATH);
         self::getInstance()->_site = Acid::get('url:system');
-        self::getInstance()->_folder = Acid::get('url:folder');
+        self::getInstance()->_folder = Acid::get('url:folder').Acid::get('router:folder');
         $formated_path = substr($_uri_total, 1, strlen($_uri_total)-1);
         $formated_path = explode(AcidRouter::URI_DELIMITER, $formated_path);
         $root_keys = false;
         $indexstep = strpos(self::getInstance()->_folder,AcidRouter::URI_DELIMITER)!==false ? (count(explode(AcidRouter::URI_DELIMITER, self::getInstance()->_folder)) - 2) : 0;
 
-        if(Acid::get('lang:use_nav_0')){
+        $lang_use_nav_0 = Acid::get('router:use_lang')===null ? Acid::get('lang:use_nav_0') : Acid::get('router:use_lang');
+        if ($lang_use_nav_0){
 
         	if(self::getInstance()->_folder!=''&&self::getInstance()->_folder!='/'){
                 self::getInstance()->_currentLang = $formated_path[$indexstep];

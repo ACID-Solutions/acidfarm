@@ -84,6 +84,8 @@ if (!empty($acid_custom_log)) {
 	Acid::set('log:custom', $acid_custom_log);
 }
 
+$rest_mode = (!empty($acid_page_type)) && ($acid_page_type=='rest');
+
 //Chargement de la configuration Bdd du site
 $site_config = new SiteConfig();
 $site_config->getInstance();
@@ -100,7 +102,7 @@ if (Acid::get('maintenance')) {
 }
 
 // Activation des sessions
-if (Acid::get('session:enable')) {
+if ( (Acid::get('session:enable')) && (!$rest_mode)) {
 	$sess = &AcidSession::getInstance()->data;
 }
 
@@ -240,35 +242,41 @@ include (SITE_PATH.'sys/dynamic.php');
 //Chargement des librairies utilitaires
 include (Acid::outPath('functions.php'));
 
-//initialisation de l'utilisateur
-if (Acid::get('session:enable')) {
-	User::initUser();
-	User::updateInstance();
-}
 
-//routage par défaut
-AcidRouter::addDefaultRoute('index',new AcidRoute('default',array('controller'=>'PageController','action'=>'home')));
+//Si on est pas en mode REST
+if (!$rest_mode) {
 
-// Traitements des actions formulaires
-if (!empty($_POST)) {
-
-	require 'post.php';
-
-    if (!isset($_POST['dontreload'])) {
-
-
-		if (isset($_POST['next_page'])) {
-			$next_page = $_POST['next_page'];
-		}
-		else {
-			$next_page = $_SERVER['REQUEST_URI'];
-		}
-		$next_page = str_replace('&amp;','&',$next_page);
-
-		header('HTTP/1.1 204 No Content');
-		AcidUrl::redirection($next_page);
-
+	//initialisation de l'utilisateur
+	if (Acid::get('session:enable')) {
+		User::initUser();
+		User::updateInstance();
 	}
+
+	//routage par défaut
+	AcidRouter::addDefaultRoute('index',new AcidRoute('default',array('controller'=>'PageController','action'=>'home')));
+
+	// Traitements des actions formulaires
+	if (!empty($_POST)) {
+
+		require 'post.php';
+
+	    if (!isset($_POST['dontreload'])) {
+
+
+			if (isset($_POST['next_page'])) {
+				$next_page = $_POST['next_page'];
+			}
+			else {
+				$next_page = $_SERVER['REQUEST_URI'];
+			}
+			$next_page = str_replace('&amp;','&',$next_page);
+
+			header('HTTP/1.1 204 No Content');
+			AcidUrl::redirection($next_page);
+
+		}
+	}
+
 }
 
 //FULL STACK

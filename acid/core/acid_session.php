@@ -101,7 +101,9 @@ class AcidSession {
 	 *
 	 * @return object
 	 */
-	public static function getInstance() {
+	public static function getInstance($cookie=null,$savecookie=true) {
+
+		$cookie = $cookie===null ? $_COOKIE : $cookie;
 
 		try {
 			if (Acid::get('session:enable')) {
@@ -113,9 +115,11 @@ class AcidSession {
 					self::$_session->expire = time()+Acid::get('session:expire');
 
 					// First connexion or cookie disable
-					if (!isset($_COOKIE[Acid::get('session:name')])) {
-						AcidCookie::setcookie(  Acid::get('session:name'),$hash,time()+Acid::get('session:expire'),Acid::get('cookie:folder'),
-						Acid::get('cookie:domain'),Acid::get('session:secure'),Acid::get('session:httponly'));
+					if (!isset($cookie[Acid::get('session:name')])) {
+						if ($savecookie) {
+							AcidCookie::setcookie(  Acid::get('session:name'),$hash,time()+Acid::get('session:expire'),Acid::get('cookie:folder'),
+							Acid::get('cookie:domain'),Acid::get('session:secure'),Acid::get('session:httponly'));
+						}
 						//self::$_session = false;
 						$sess_id = $hash;
 						$sess = false;
@@ -124,9 +128,9 @@ class AcidSession {
 					// Session founded
 					else {
 						$sess = AcidDB::query(	"SELECT * FROM " . Acid::get('session:table') .
-		                    					" WHERE id='".addslashes($_COOKIE[Acid::get('session:name')])."'")->fetch(PDO::FETCH_ASSOC);
+		                    					" WHERE id='".addslashes($cookie[Acid::get('session:name')])."'")->fetch(PDO::FETCH_ASSOC);
 
-						$sess_id = $_COOKIE[Acid::get('session:name')];
+						$sess_id = $cookie[Acid::get('session:name')];
 
 						// Récupération des valeurs en BDD
 						if ($sess) {
@@ -170,7 +174,10 @@ class AcidSession {
 
 						Acid::log('session','Session created in DB '.time());
 					}
-					self::cookieUpdate();
+
+					if ($savecookie) {
+						self::cookieUpdate();
+					}
 
 					Acid::log('session','Initialazing session');
 				}
@@ -185,6 +192,14 @@ class AcidSession {
 		} catch (Exception $e) {
 			trigger_error("AcidSession use not allowed",E_USER_ERROR);
 		}
+	}
+
+	/**
+	 * Retourne true si une session est définie
+	 * @return object
+	 */
+	public static function instanceExists() {
+		return !empty(self::$_session);
 	}
 
 	/**
@@ -206,8 +221,8 @@ class AcidSession {
 	/**
 	 * Met à jour la session en base de données.
 	 */
-	public static function dbUpdate() {
-		$s = self::getInstance();
+	public static function dbUpdate($cookie=null) {
+		$s = self::getInstance($cookie);
 		if ($s->in_db) {
 			// NOTE : When PHP >= 5.3, use json_encode($str,JSON_HEX_APOS)
 			if ($s->db_data !== $s->data) {

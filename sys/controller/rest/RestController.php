@@ -21,20 +21,38 @@
  */
 class RestController{
 
+
 	/**
-	 * GET
+	 * List
 	 */
-    public function get(){
+    public function getList(){
 		$module = AcidRouter::getParam('module');
 		if (Acid::get('includes:'.$module)) {
 			$m = new $module();
-			if ($res = $m->restGet()) {
+			if ($res = $m->restList()) {
 				Rest::status200($res);
 			}else{
 				Rest::status204();
 			}
 
 		}
+    }
+
+    /**
+     * GET
+     */
+    public function get(){
+    	$module = AcidRouter::getParam('module');
+    	$id = AcidRouter::getParam('id_module');
+    	if (Acid::get('includes:'.$module)) {
+    		$m = new $module($id);
+    		if ($res = $m->restGet()) {
+    			Rest::status200($res);
+    		}else{
+    			Rest::status204();
+    		}
+
+    	}
     }
 
     /**

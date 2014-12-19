@@ -2169,6 +2169,18 @@ abstract class AcidModuleCore {
 	 */
 	public function restGet($config=array()) {
 		if (!empty($this->config['rest']['active'])) {
+			return $this->getVals();
+		}else{
+			AcidUrl::error403();
+		}
+	}
+
+	/**
+	 * Listing à retourner lors d'un GET REST
+	 * @param array $config
+	 */
+	public function restList($config=array()) {
+		if (!empty($this->config['rest']['active'])) {
 			$filter = isset($config['filter']) ?  $config['filter'] : array();
 			$order = isset($config['order']) ?  $config['order'] : array();
 			$limit = isset($config['limit']) ?  $config['limit'] : array();

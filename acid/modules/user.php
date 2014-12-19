@@ -1448,11 +1448,13 @@ abstract class AcidUser extends AcidModule {
 	 * @param int $id Identifiant. Par défaut : NULL
 	 * @param bool $connexion_auto
 	 */
-	public function sessionMake($id=null,$connexion_auto=false) {
+	public function sessionMake($id=null,$connexion_auto=false,$cookie=true) {
 		parent::sessionMake($id);
 
 		if (User::curLevel($this->getLevelBeforeActivation())) {
-			$this->setCookie($connexion_auto);
+			if ($cookie) {
+				$this->setCookie($connexion_auto);
+			}
 	    }
 	}
 
