@@ -104,7 +104,7 @@ else {
 				);
 
 	//hook controller set
-	AcidHook::call('admin_conroller_done');
+	AcidHook::call('admin_controller_done');
 
 
 	//Checking for User Access
@@ -171,7 +171,7 @@ else {
 		default:
 
 			//hook for case
-			AcidHook::call('admin_conroller_case');
+			AcidHook::call('admin_controller_case');
 
 			//modules
 			if ($module) {
