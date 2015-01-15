@@ -211,7 +211,7 @@ class AcidSession {
 			Acid::get('session:name'),
 			$s->id,
 			$s->expire,
-			Acid::get('cookie:folder'),
+			Acid::get('cookie:path'),
 			Acid::get('cookie:domain'),
 			Acid::get('session:secure'),
 			Acid::get('session:httponly'));
@@ -258,7 +258,7 @@ class AcidSession {
 		Acid::get('session:name'),
 		0,
 		time()-63072000,
-		Acid::get('cookie:folder'),
+		Acid::get('cookie:path'),
 		Acid::get('cookie:domain'),
 		Acid::get('session:secure'),
 		Acid::get('session:httponly')
