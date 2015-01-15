@@ -26,29 +26,29 @@ class SiteConfig extends AcidModule {
 	/**
 	 * @var array liste des clés de variables "obligatoires" (elles apparaitront dans le formulaire de configuration)
 	 */
-	protected $controlled_keys=array(); 
-	
+	protected $controlled_keys=array();
+
 	/**
 	* @var array liste des clés de variables "libres" (ces variables pourront être employées dans un formulaire dont le config_do vaut remote_update)
 	*/
-	protected $controlled_remote_keys=array(); 
-	
+	protected $controlled_remote_keys=array();
+
 	/**
 	 * @var array liste des clés à ne pas considérer comme des variables
 	 */
 	protected $exclued_keys=array();
-	
+
 	/**
 	 * @var bool si vrai, alors on permet à l'utilisateur de créer ses propres variables
 	 */
 	protected $free_mode;
-	
+
 	/**
 	 * @var array les instances
 	 */
 	protected $instance=array();
-	
-	
+
+
 	/**
 	 * Constructeur
 	 * @param mixed $init_id
@@ -56,27 +56,27 @@ class SiteConfig extends AcidModule {
 	 * @return boolean
 	 */
 	public function __construct($init_id=null,$free_mode=false) {
-		
+
 		$this->vars['id_config'] = new AcidVarInt($this->modTrad('id_config'),true);
 		$this->vars['name'] = new AcidVarString($this->modTrad('name'));
 		$this->vars['value'] = new AcidVarString($this->modTrad('value'));
-		
+
 		$success = parent::__construct($init_id);
-		
-		
+
+
 		$this->free_mode = $free_mode;
-		
-		$this->addControl(array('email','contact','address','cp','city','phone','fax','website'));
+
+		$this->addControl(array('email','contact','address','cp','city','coords','phone','fax','website'));
 		//$this->addRemoteControl(array('key1','key2'));
-		
+
 		$this->addExclued(array(self::preKey('do'),'submit','next_page'));
-		
+
 		$this->setConfig('assoc:index', 'name');
 		$this->setConfig('assoc:value', 'id_config');
-		
+
 		return $success;
 	}
-	
+
 	/**
 	 * Ajoute des clés à la liste des variables associées à l'objet
 	 * @param array $tab
@@ -88,7 +88,7 @@ class SiteConfig extends AcidModule {
 			}
 		}
 	}
-	
+
 	/**
 	 * Ajoute des clés à la liste des variables libres associées à l'objet
 	 * @param array $tab
@@ -100,7 +100,7 @@ class SiteConfig extends AcidModule {
 			}
 		}
 	}
-	
+
 	/**
 	 * Ajoute des clés d'exclusion associées à l'objet
 	 * @param array $tab
@@ -112,7 +112,7 @@ class SiteConfig extends AcidModule {
 			}
 		}
 	}
-	
+
 	/**
 	 * Récupère la liste des variables associées à l'objet
 	 * @return array
@@ -128,7 +128,7 @@ class SiteConfig extends AcidModule {
 	public function controlledRemoteKeys() {
 		return $this->controlled_remote_keys;
 	}
-	
+
 	/**
 	 * Récupère la liste des variables et variables libres associées à l'objet
 	 * @return array
@@ -136,7 +136,7 @@ class SiteConfig extends AcidModule {
 	public function allControlledKeys() {
 		return array_merge($this->controlledRemoteKeys(),$this->controlledKeys());
 	}
-	
+
 	/**
 	 * Récupère la liste des exclusions associées à l'objet
 	 * @return array
@@ -144,7 +144,7 @@ class SiteConfig extends AcidModule {
 	public function excluedKeys() {
 		return $this->exclued_keys;
 	}
-	
+
 	/**
 	 * retourne l'instance
 	 * @return array
@@ -152,7 +152,7 @@ class SiteConfig extends AcidModule {
 	public function getInstance() {
 		return $this->instance = $this->getTab();
 	}
-	
+
 	/**
 	 * Assigne l'instance dans une variable globale si elle n'est pas déjà créée puis retourne cette dernière
 	 * @return array
@@ -165,7 +165,7 @@ class SiteConfig extends AcidModule {
 		}
 		return $GLOBALS['site_config'];
 	}
-	
+
 	/**
 	 * Retourne la valeur d'une variable, null si elle n'existe pas
 	 * @param string $name nom de la variable
@@ -174,7 +174,7 @@ class SiteConfig extends AcidModule {
 	public function getConf($name) {
 		return isset($this->instance[$name]) ? $this->instance[$name] : null;
 	}
-	
+
 	/**
 	 * Retourne la valeur d'une variable après lui avoir affecté htmlspecialchars
 	 * @param string $name nom d ela variable
@@ -183,19 +183,19 @@ class SiteConfig extends AcidModule {
 	public function hscConf($name) {
 		return htmlspecialchars($this->getConf($name));
 	}
-	
+
 	/**
 	 * Retourne un tableau contenant tous les variables de configuration
 	 * @return array
 	 */
 	public function getTab() {
 		$res = $this->dbList();
-		
+
 		$tab = array();
 		foreach ($res as $elt) {
 			$tab[$elt['name']] = $elt['value'];
 		}
-		
+
 		return $tab;
 	}
 
@@ -205,17 +205,17 @@ class SiteConfig extends AcidModule {
 	 */
 	public function debug(){
 		$tab = $this->getTab();
-	
+
 		$vars =  array();
 		foreach ($tab as $k => $v) {
 			$field = new AcidVarText();
 			$field->setVal($v);
 			$vars[$k] = $field;
 		}
-		
+
 		return Acid::tpl('core/debug.tpl',array('vars'=>$vars),$this);
 	}
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @param array $conf
@@ -224,23 +224,23 @@ class SiteConfig extends AcidModule {
 	public function printAdminInterface($conf=array()) {
 		return $this->printAdminBody($this->printAdminUpdateForm(),null);
 	}
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @param string $do
 	 * @see AcidModuleCore::printAdminForm()
 	 */
 	public function printAdminForm($do) {
-		
-		$tab = $this->getTab();		
+
+		$tab = $this->getTab();
 		$controlled = $this->controlledKeys();
-		
-		
+
+
 		$add = '';
 		$js = '';
 		$rem_form = '';
 		if ($this->free_mode) {
-			$assoc = $this->getAssoc();	
+			$assoc = $this->getAssoc();
 			$add ='<hr /><h4>'.Acid::trad('config_add_conf').'</h4>'.parent::printAdminForm('add');
 			foreach ($assoc as $name => $id) {
 				$rem_form .= '<form method="post" action="" id="remove_form_'.$id.'" class="remove_form">'.
@@ -250,19 +250,19 @@ class SiteConfig extends AcidModule {
 							'<input type="submit" value="'.Acid::trad('config_delete_conf',array('__NAME__'=>htmlspecialchars($name))).'" />' .
 							'</form>';
 			}
-			
+
 			$js = Lib::getJsCaller('$(".remove_form").hide();');
 		}
-		
-		
+
+
 		$form = new AcidForm('post','');
 		$form->setFormParams(array('class'=>$this::TBL_NAME.' '.$this->preKey('do').' admin_form'));
-		
+
 		$form->addhidden('',self::preKey('do'),'update');
 		$form->addhidden('','module_do',self::getClass());
-		
+
 		$form->tableStart();
-			
+
 		if ($this->free_mode) {
 			foreach ($tab as $name=>$value) {
 				$jsr = 'if (confirm(\''.Acid::trad('config_ask_delete_conf',array('__NAME__'=>htmlspecialchars($name),"\\"=>"\\\\","'"=>"\\'")).'\')) { $(\'#remove_form_'.$assoc[$name].'\').submit(); }';
@@ -274,15 +274,15 @@ class SiteConfig extends AcidModule {
 				$form->addText($this->modTrad($key),$key,$value);
 			}
 		}
-		
+
 		$form->tableStop();
-		
+
 		$form->addsubmit('',Acid::trad('config_btn_validate'));
-		
+
 		return $form->html() . $rem_form . $add . $js;
-		
+
 	}
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @see AcidModuleCore::exePost()
@@ -290,43 +290,43 @@ class SiteConfig extends AcidModule {
 	public function exePost() {
 		$do = $_POST[self::preKey('do')];
 		$acl = $this->getACL($do);
-		
+
 		if (User::curLevel($acl)) {
 			switch ($do) {
 				case 'update' :
 					return $this->postUpdate($_POST);
 				break;
-				
+
 				case 'add' :
 					if ($this->free_mode) {
 						$this->postAdd($_POST);
 					}
 				break;
-				
+
 				case 'remote_update' :
 					return $this->postRemoteUpdate($_POST);
 				break;
-				
+
 				default :
 					return parent::exePost();
 				break;
 			}
 		}
 	}
-	
+
 	/**
 	 * Processus de mise à jour des variables libres
 	 * @param array $vals
 	 */
 	public function postRemoteUpdate($vals) {
-		
+
 		$assoc = self::getAssoc();
 		$treat = array();
-		
+
 		$controlled_key = $this->allControlledKeys();
 		$exclued_key = $this->excluedKeys();
-		
-		
+
+
 		foreach ($vals as $key => $val) {
 			if (!in_array($key,$exclued_key)) {
 				if (($this->free_mode) || (in_array($key,$controlled_key))) {
@@ -340,15 +340,15 @@ class SiteConfig extends AcidModule {
 							$new->dbAdd();
 							$assoc[$key]=$new->getId();
 						}
-	
+
 					}
-					
+
 				}
 			}
 		}
-		
+
 	}
-	
+
 	/**
 	 * (non-PHPdoc)
 	 * @param array $vals les données à traiter
@@ -356,20 +356,20 @@ class SiteConfig extends AcidModule {
 	 * @see AcidModuleCore::postUpdate()
 	 */
 	public function postUpdate($vals,$dialog=null) {
-		
+
 		$assoc = self::getAssoc();
 		$treat = array();
-		
+
 		$controlled_key = $this->controlledKeys();
 		$exclued_key = $this->excluedKeys();
-		
-		
+
+
 		foreach ($vals as $key => $val) {
 			if (!in_array($key,$exclued_key)) {
 				if (($this->free_mode) || (in_array($key,$controlled_key))) {
-					
+
 					$treat[$key] = $key;
-					
+
 					if (isset($assoc[$key])) {
 						AcidDb::exec("UPDATE ".$this->tbl()." SET `value`='".addslashes($val)."' WHERE `id_config`='".$assoc[$key]."'");
 					}else{
@@ -380,11 +380,11 @@ class SiteConfig extends AcidModule {
 							$assoc[$key]=$new->getId();
 						}
 					}
-					
+
 				}
 			}
 		}
-		
+
 		foreach ($assoc as $key => $id) {
 			if (!isset($treat[$key])) {
 				if (($this->free_mode) || in_array($key,$controlled_key)) {
@@ -392,8 +392,8 @@ class SiteConfig extends AcidModule {
 				}
 			}
 		}
-		
-	}	
+
+	}
 
 	/**
 	 * Exemple de formulaire de mise à jour de variables libres
@@ -410,6 +410,6 @@ class SiteConfig extends AcidModule {
 		return $form->html();
 		*/
 	}
-	
-	
+
+
 }

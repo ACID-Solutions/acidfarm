@@ -178,7 +178,7 @@ class AcidGMap {
 
 			var '.$content_div.'_myOptions = {
 			    zoom: '.$zoom.',
-			    center: '.$content_div.'_latlng,
+			    center: '.$content_div.($center ? '_latlngpos': '_latlng').',
 			    mapTypeId: '.$map_type.',
 			    draggable: '.($draggable ? 'true' : 'false') . ',
 				scrollwheel: '.($scrollable ? 'true' : 'false') .'

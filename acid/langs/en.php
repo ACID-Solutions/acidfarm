@@ -368,10 +368,12 @@ $lang['mod']['config']['value']      = 'Value';
 
 $lang['mod']['config']['email']      = 'Email';
 $lang['mod']['config']['contact']    = 'Contact';
-$lang['mod']['config']['address']    = 'Address';
 
+$lang['mod']['config']['address']    = 'Address';
 $lang['mod']['config']['cp']     	 = 'Zip code';
 $lang['mod']['config']['city']  	 = 'City';
+$lang['mod']['config']['coords']  	 = 'Lat,Long';
+
 $lang['mod']['config']['phone'] 	 = 'Phone';
 $lang['mod']['config']['fax']        = 'Fax';
 $lang['mod']['config']['website']    = 'Website';
