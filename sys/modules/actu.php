@@ -120,6 +120,44 @@ class Actu extends AcidModule {
 	}
 
 	/**
+	 * Retourne l'actu d'après
+	 * @return object
+	 */
+	public function getNext() {
+		$filter = array(array('active','=','1'),array('adate','>',$this->get('adate')));
+		$filter_like = array(array('active','=','1'),array('adate','=',$this->get('adate')),array('id_actu','>',$this->getId()));
+		$order = array('adate'=>'ASC','id_actu'=>'ASC');
+		if (Actu::dbCount($filter_like)) {
+			$elts = Actu::dbList($filter_like,$order,1);
+		}else{
+			$elts = Actu::dbList($filter,$order,1);
+		}
+
+		if ($elts) {
+			return new Actu($elts[0]);
+		}
+	}
+
+	/**
+	 * Retourne l'actu d'avant
+	 * @return object
+	 */
+	public function getPrev() {
+		$filter = array(array('active','=','1'),array('adate','<',$this->get('adate')));
+		$filter_like = array(array('active','=','1'),array('adate','=',$this->get('adate')),array('id_actu','<',$this->getId()));
+		$order = array('adate'=>'DESC','id_actu'=>'DESC');
+		if (Actu::dbCount($filter_like)) {
+			$elts = Actu::dbList($filter_like,$order,1);
+		}else{
+			$elts = Actu::dbList($filter,$order,1);
+		}
+
+		if ($elts) {
+			return new Actu($elts[0]);
+		}
+	}
+
+	/**
 	 * (non-PHPdoc)
 	 * @param array $conf
 	 * @see AcidModuleCore::printAdminList()
