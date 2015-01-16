@@ -123,7 +123,7 @@ class AcidHook {
 	 * Execute un hook
 	 * @param string $hook
 	 */
-	public function hook($hook) {
+	public function hook($hook,$params=array()) {
 		if ($this->parser===null) {
 			$this->parse();
 		}
@@ -143,8 +143,8 @@ class AcidHook {
 	 * Alias statique de Hook::getInstance()->hook($hook);
 	 * @param string $hook Nom du point d'ancrage
 	 */
-	public static function call($hook) {
-		return self::getInstance()->hook($hook);
+	public static function call($hook,$params=array()) {
+		return self::getInstance()->hook($hook,$params);
 	}
 
 }
