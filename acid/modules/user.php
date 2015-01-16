@@ -295,9 +295,9 @@ abstract class AcidUser extends AcidModule {
 	 * Supprime les cookies de l'utilisateur.
 	 */
 	public static function unsetCookie() {
-		AcidCookie::setcookie(	'user[id]','',time() - 63072000,Acid::get('cookie:folder'), Acid::get('cookie:domain'),
+		AcidCookie::unsetcookie('user[id]',Acid::get('cookie:path'), Acid::get('cookie:domain'),
 					Acid::get('session:secure'),Acid::get('session:httponly'));
-		AcidCookie::setcookie(	'user[code]','',time() - 63072000,Acid::get('cookie:folder'), Acid::get('cookie:domain'),
+		AcidCookie::unsetcookie('user[code]',Acid::get('cookie:path'), Acid::get('cookie:domain'),
 					Acid::get('session:secure'),Acid::get('session:httponly'));
 	}
 
@@ -361,6 +361,8 @@ abstract class AcidUser extends AcidModule {
 		}
 
 		$my_user->dbAdd();
+
+		AcidHook::call('user_create',array('user'=>$my_user));
 
 		User::newInscription($login,$email,$pass,$my_user);
 

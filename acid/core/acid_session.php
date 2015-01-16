@@ -254,10 +254,8 @@ class AcidSession {
 	 */
 	public static function destroy() {
 		$sess = self::getInstance();
-		AcidCookie::setcookie(
+		AcidCookie::unsetcookie(
 		Acid::get('session:name'),
-		0,
-		time()-63072000,
 		Acid::get('cookie:path'),
 		Acid::get('cookie:domain'),
 		Acid::get('session:secure'),
