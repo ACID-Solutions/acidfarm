@@ -303,7 +303,7 @@ $theme_quote\$acid['server_theme'] 	= '$server_theme';
 $lpp_quote\$acid['log']['keys']          	= array('START','SQL','SESSION','INFO','POSTINFO','URL','USER','DEPRECATED','ROUTER','PERMISSION','HACK','ERROR','PAYPAL','PAYMENT','MAINTENANCE','FILE'); //Preprod
 $lprod_quote\$acid['log']['keys']          	= array('INFO','POSTINFO','URL','DEPRECATED','HACK','ERROR','PAYMENT','MAINTENANCE','FILE'); //Prod
 $lprod_quote\$acid['log']['type']          	= 'daily'; // single / daily
-//\$acid['log']['colorize']         = array();
+//\$acid['log']['colorize']         = array(); // array('HACK'=>'red','DEBUG'=>'yellow')
 $lprod_quote\$acid['debug']		         	= false;
 $lprod_quote\$acid['error_report']['debug']	= E_ALL & ~E_STRICT;
 $lprod_quote\$acid['error_report']['prod']	= E_ALL & ~E_STRICT;

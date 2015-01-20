@@ -23,6 +23,28 @@ foreach ($keys as $elt) {
 }
 
 
+//HTACCESS FOR FILES CONTROLE
+
+$mod = new Controle();
+$classname = $mod->getClass();
+
+$path = Acid::get('url:folder');
+$htaccess_path = SITE_PATH.Acid::get('path:files').$mod->checkTbl().'/.htaccess';
+
+$htaccess = <<<HTFILE
+
+# Charset
+AddDefaultCharset UTF-8
+
+# URL Rewriting
+RewriteEngine on
+RewriteRule ^(.*)$ ${path}dl/${classname}/$1 [L,QSA]
+
+HTFILE;
+
+file_put_contents($htaccess_path,$htaccess);
+
+
 //INSTALL PAYMENT
 <?php 
 
