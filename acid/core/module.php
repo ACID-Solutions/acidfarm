@@ -842,9 +842,23 @@ abstract class AcidModuleCore {
 	public static function dbGenerateOrder($order) {
 		$order_string = '';
 
+		//requête en chaine de caractères
 		if (!is_array($order)){
 			$order_string = $order;
-		} else {
+		}
+		//tri selon un ordre défini
+		elseif ($val && is_array($val) && is_array($val[0]) && $val[0]) {
+
+			$way = isset($val[1]) ? $val[1] : 0;
+
+			if (is_bool($val)) {
+				$way = $way ? 'DESC':'ASC';
+			}
+
+			$order_string .= " FIELD(" . addslashes($key) . ",".addslashes(implode(',',$val[0])). ") ". $way . ", ";
+		}
+		//tri par valeur
+		else {
 			foreach ($order as $key=>$val) {
 				if ($key === "()") {
 					$order_string .= $val . ", ";
