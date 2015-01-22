@@ -178,6 +178,10 @@ class Acid {
 				$color_key = 'log:colorize:'.strtoupper($type);
 				$print_type = Acid::exist($color_key) ? AcidBash::shColorText($type, Acid::get($color_key)) : $type ;
 
+				if ( (!is_string($message)) && (!is_numeric($message)) ) {
+					$message = json_encode($message);
+				}
+
 				$line = $uniq_code . ' ' .
 						Acid::get('include:mode') . ' ' .
 						date(Acid::get('log:date_format')) . ' - ' .
