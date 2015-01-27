@@ -138,7 +138,10 @@ if (Acid::get('include:mode')=='full_stack') {
 	} else {
 
 		$file_request = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-		$local_path = str_replace(Acid::get('url:folder'),'',$file_request);
+		$local_path = $file_request;
+		if (strpos($local_path,Acid::get('url:folder'))===0) {
+			$local_path = substr($local_path,strlen(Acid::get('url:folder')));
+		}
 		$file_path = SITE_PATH . $local_path;
 
 		$spage = 'index';
