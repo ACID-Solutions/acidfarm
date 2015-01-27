@@ -177,6 +177,42 @@ class User extends AcidUser {
 			unset($sess_form['password']);
 			AcidSession::tmpSet(self::preKey($do),$sess_form);
 		}
+
+		//Décommenter pour simplifier la liste des accès utilisateur
+		//$filter_levels = array(Acid::get('lvl:member'),Acid::get('lvl:admin'),Acid::get('lvl:dev'));
+
+		if (!empty($filter_levels)) {
+
+			$levels = array();
+
+			//Création du tableau associatif du formulaire
+			foreach($filter_levels as $num) {
+				$levels[$num] = Acid::get('user:levels:'.$num);
+			}
+
+			//On autorise le level dev qu'à un dev
+			if (!User::curLevel(Acid::get('lvl:dev'))) {
+				unset($levels[Acid::get('lvl:dev')]);
+			}
+
+			//Si l'accès n'est pas dans la liste filtrée, on l'ajoute
+			if ($this->get('level') && !isset($levels[$this->get('level')])) {
+				$levels[$this->get('level')] = Acid::get('user:levels:'.$this->get('level'));
+			}
+
+			//On applique le filtre les accès utilisateur
+			$this->vars['level']->setElts($levels);
+		}
+
+		//des champs uniquement informatifs
+		$this->vars['date_activation']->setForm('info');
+		$this->vars['date_deactivation']->setForm('info');
+		$this->vars['date_connexion']->setForm('info');
+		$this->vars['date_creation']->setForm('info');
+		$this->vars['ip']->setForm('info');
+
+		$this->config['admin']['list']['keys_exclued'] = array('date_activation','date_deactivation','date_connexion');
+
 	}
 
 	/**

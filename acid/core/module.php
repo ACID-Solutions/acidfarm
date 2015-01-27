@@ -526,6 +526,8 @@ abstract class AcidModuleCore {
 		$def_label = null;
 		if (isset($this->vars[$key])) {
 			$def_label = $this->vars[$key]->getLabel();
+		}elseif (isset($this->vars[$this->dbPref($key)]) ) {
+			$def_label = $this->vars[$this->dbPref($key)]->getLabel();
 		}
 
 		if (isset($this->config['admin']['head'][$key])){
@@ -846,28 +848,32 @@ abstract class AcidModuleCore {
 		if (!is_array($order)){
 			$order_string = $order;
 		}
-		//tri selon un ordre défini
-		elseif ($val && is_array($val) && is_array($val[0]) && $val[0]) {
 
-			$way = isset($val[1]) ? $val[1] : 0;
-
-			if (is_bool($val)) {
-				$way = $way ? 'DESC':'ASC';
-			}
-
-			$order_string .= " FIELD(" . addslashes($key) . ",".addslashes(implode(',',$val[0])). ") ". $way . ", ";
-		}
 		//tri par valeur
 		else {
 			foreach ($order as $key=>$val) {
+
 				if ($key === "()") {
 					$order_string .= $val . ", ";
+				}
+				//tri selon un ordre défini par un tableau de valeurs
+				elseif ($val && is_array($val) && is_array($val[0]) && $val[0]) {
+
+					$way = isset($val[1]) ? $val[1] : 0;
+
+					if (is_bool($val)) {
+						$way = $way ? 'DESC':'ASC';
+					}
+
+					$order_string .= " FIELD(" . addslashes($key) . ",".addslashes(implode(',',$val[0])). ") ". $way . ", ";
+
 				} else {
 					if (is_bool($val)) {
 						$val = $val ? 'DESC':'ASC';
 					}
 					$order_string .= "`".addslashes($key)."` " . $val . ", ";
 				}
+
 			}
 			$order_string = substr($order_string,0,-2);
 		}

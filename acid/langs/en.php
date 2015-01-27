@@ -170,6 +170,7 @@ $lang['trad']['admin_title']           = 'Administration';
 $lang['trad']['admin_welcom']          = 'Hello __USER__, ';
 $lang['trad']['admin_welcom_to_space'] = 'Welcome in the administration field';
 $lang['trad']['admin_no_permission']	= 'You do not have permission to access this page.';
+$lang['trad']['admin_no_permission_user']	= 'You do not have permission to manage this page.';
 
 //--General
 $lang['trad']['yes'] = 'yes';

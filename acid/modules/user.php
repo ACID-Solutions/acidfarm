@@ -1186,6 +1186,8 @@ abstract class AcidUser extends AcidModule {
 		$this->initVars(array('password'=>''));
 		if (User::curLevel($this->get('level'))) {
 			return parent::printAdminUpdate();
+		}else{
+			return Acid::trad('admin_no_permission_user');
 		}
 	}
 

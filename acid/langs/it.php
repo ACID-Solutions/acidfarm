@@ -170,6 +170,7 @@ $lang['trad']['admin_title']           = 'Amministrazione';
 $lang['trad']['admin_welcom']          = 'Salve __USER__, ';
 $lang['trad']['admin_welcom_to_space'] = 'Bienvenuto/a nel vostro spazio amministrativo';
 $lang['trad']['admin_no_permission']	= 'You do not have permission to access this page.';
+$lang['trad']['admin_no_permission_user']	= 'La modifica di questa non può spiegare i diritti inssufisants.';
 
 //--General
 $lang['trad']['yes'] = 'si';
