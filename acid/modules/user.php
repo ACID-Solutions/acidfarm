@@ -277,15 +277,15 @@ abstract class AcidUser extends AcidModule {
 		$ident = !is_array($ident) ? array($ident) : $ident;
 
 		AcidCookie::setcookie(	'user[login]',$this->get($ident[0]), $expire,
-					Acid::get('cookie:folder'), Acid::get('cookie:domain'),
+					Acid::get('cookie:path'), Acid::get('cookie:domain'),
 		            Acid::get('session:secure'),Acid::get('session:httponly'));
 
 		if ($autolog || isset($_COOKIE['user']['id'])) {
 			AcidCookie::setcookie(	'user[id]',$this->get('id_user'), $expire,
-						Acid::get('cookie:folder'), Acid::get('cookie:domain'),
+						Acid::get('cookie:path'), Acid::get('cookie:domain'),
 		                Acid::get('session:secure'),Acid::get('session:httponly'));
 		   AcidCookie::setcookie(	'user[code]',$this->getCookieCode(), $expire,
-		    			Acid::get('cookie:folder'), Acid::get('cookie:domain'),
+		    			Acid::get('cookie:path'), Acid::get('cookie:domain'),
 		                Acid::get('session:secure'),Acid::get('session:httponly'));
 		}
 	}
