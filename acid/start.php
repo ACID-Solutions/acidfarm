@@ -49,26 +49,28 @@ if (!file_exists($acid['log']['path'])) {
  *
  *****************************************************************************/
 
-$acid['includes']['AcidBrowser']   = $acid['folder'].'tools/browser.php';
-$acid['includes']['AcidCookie']   = $acid['folder'].'tools/cookie.php';
-$acid['includes']['AcidForm']      = $acid['folder'].'tools/form.php';
-$acid['includes']['AcidFs']        = $acid['folder'].'tools/fs.php';
-$acid['includes']['AcidMail']      = $acid['folder'].'tools/mail.php';
-$acid['includes']['AcidPagination']= $acid['folder'].'tools/pagination.php';
-$acid['includes']['AcidRss']       = $acid['folder'].'tools/rss.php';
-$acid['includes']['AcidSitemap']   = $acid['folder'].'tools/sitemap.php';
-$acid['includes']['AcidTable']     = $acid['folder'].'tools/table.php';
-$acid['includes']['AcidTemplate']  = $acid['folder'].'tools/template.php';
-$acid['includes']['AcidTime']      = $acid['folder'].'tools/time.php';
-$acid['includes']['AcidTimer']     = $acid['folder'].'tools/timer.php';
-$acid['includes']['AcidUrl']       = $acid['folder'].'tools/url.php';
-$acid['includes']['AcidCSV']       = $acid['folder'].'tools/csv.php';
-$acid['includes']['AcidGMap']      = $acid['folder'].'tools/gmap.php';
-$acid['includes']['AcidPaypal']    = $acid['folder'].'tools/paypal.php';
-$acid['includes']['AcidFacebook']  = $acid['folder'].'/tools/facebook.php';
-$acid['includes']['AcidTwitter']   = $acid['folder'].'/tools/twitter.php';
-$acid['includes']['AcidZip']   	   = $acid['folder'].'/tools/zip.php';
-$acid['includes']['AcidBash']      = $acid['folder'].'/tools/bash.php';
+$acid['includes']['AcidBrowser']     = $acid['folder'].'tools/browser.php';
+$acid['includes']['AcidCookie']      = $acid['folder'].'tools/cookie.php';
+$acid['includes']['AcidForm']        = $acid['folder'].'tools/form.php';
+$acid['includes']['AcidFs']          = $acid['folder'].'tools/fs.php';
+$acid['includes']['AcidMail']        = $acid['folder'].'tools/mail.php';
+$acid['includes']['AcidPagination']  = $acid['folder'].'tools/pagination.php';
+$acid['includes']['AcidRss']         = $acid['folder'].'tools/rss.php';
+$acid['includes']['AcidSitemap']     = $acid['folder'].'tools/sitemap.php';
+$acid['includes']['AcidTable']       = $acid['folder'].'tools/table.php';
+$acid['includes']['AcidTemplate']    = $acid['folder'].'tools/template.php';
+$acid['includes']['AcidTime']        = $acid['folder'].'tools/time.php';
+$acid['includes']['AcidTimer']       = $acid['folder'].'tools/timer.php';
+$acid['includes']['AcidUrl']         = $acid['folder'].'tools/url.php';
+$acid['includes']['AcidCSV']         = $acid['folder'].'tools/csv.php';
+$acid['includes']['AcidGMap']        = $acid['folder'].'tools/gmap.php';
+$acid['includes']['AcidPaypal']      = $acid['folder'].'tools/paypal.php';
+$acid['includes']['AcidFacebook']    = $acid['folder'].'/tools/facebook.php';
+$acid['includes']['AcidTwitter']     = $acid['folder'].'/tools/twitter.php';
+$acid['includes']['AcidZip']   	     = $acid['folder'].'/tools/zip.php';
+$acid['includes']['AcidBash']      	 = $acid['folder'].'/tools/bash.php';
+$acid['includes']['AcidExport']   	 = $acid['folder'].'/tools/export.php';
+$acid['includes']['AcidMediatheque'] = $acid['folder'].'/tools/mediatheque.php';
 
 
 /**
