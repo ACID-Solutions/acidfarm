@@ -270,8 +270,17 @@ class Acid {
 	public static function themePath($file,$sources=null,$relative=false) {
 		$path = null;
 
+
 		//on teste l'existance des fichiers dans l'ordre défini par $sources
 		$sources = ($sources===null) ? array('current','default','acid') : (is_array($sources) ? $sources : array($sources));
+
+		//on recherche l'existence de cache
+		$cache_key = 'tmp_theme_path:'.md5($file).'-'.md5(implode(',',$sources)).'-'.md5($relative ? 'rel':'abs');
+		if ($return = Acid::get($cache_key)) {
+			return $return;
+		}
+
+		//On parcourt les sources
 		foreach ($sources as $source) {
 
 			switch ($source) {
@@ -303,7 +312,9 @@ class Acid {
 
 		}
 
-		return $relative ? $url : $path;
+		$return = $relative ? $url : $path;
+		Acid::set($cache_key, $return);
+		return $return;
 	}
 
 	/**

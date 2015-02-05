@@ -82,7 +82,7 @@ class AcidBrowser {
 	 * @param string $acl acl personnalisé
 	 * @param string $plugin
 	 */
-	public function __construct($path,$absolute=false,$acl=null,$plugin=null) {
+	public function __construct($path,$absolute=false,$acl=null,$plugin=null,$key=null,$img_path=null) {
 		global $acid,$css_theme;
 		if(substr($path,-1) != '/') {
 			$path .= '/';
@@ -91,8 +91,8 @@ class AcidBrowser {
 		$this->acl = ($acl === null) ? Acid::get('browser:acl') : $acl;
 		$this->base_path = ($absolute?'':SITE_PATH) . $path;
 		$this->files_path = $path;
-		$this->img = $acid['url']['img'].'admin/fsb/';
-		$this->key = 'fsb';
+		$this->img = $img_path===null ? ($acid['url']['img'].'admin/fsb/') : $img_path;
+		$this->key = $key===null ? 'fsb' : $key;
 		$this->setJS();
 		$this->setPlugin($plugin);
 	}

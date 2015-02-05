@@ -26,6 +26,7 @@ require 'sys/start.php';
 
 Acid::set('out','siteadmin');
 
+
 Conf::setPageTitle('Admin');
 
 $GLOBALS['tinymce']['active'] = true;
@@ -43,6 +44,8 @@ $access_level	 = Acid::get('lvl:admin');
 // Log Form
 if (!User::curLevel($access_level)) {
 
+	Acid::set('admin:content_only',true);
+
 	if  (isset($_GET['pass_oublie'])) {
 		$forget = $_GET['pass_oublie'];
 		$html .= Acid::mod('User')->printPasswordForgotten($forget,$_SERVER['PHP_SELF']);
@@ -51,7 +54,6 @@ if (!User::curLevel($access_level)) {
 		$msg = $cur_user->getId() ? Acid::trad('admin_no_permission') : null;
 
 		$html .= Acid::mod('User')->printAdminLogginForm($msg);
-
 	}
 
 }
@@ -133,6 +135,7 @@ else {
 
 
 	switch($p) {
+
 		//configuration
 		case 'config' :
 			Acid::set('admin_title',Acid::trad('admin_menu_infos'));
@@ -187,17 +190,18 @@ else {
 
 	}
 
-	//generating menu
-	$menu = Acid::tpl('admin/siteadmin-menu.tpl',array('siteadmin_cat'=>$siteadmin_cat,'controller'=>$controller,'page'=>$p,'def_level'=>$def_level),User::curUser());
 
 	//generating admin body
 	Acid::set('admin:contact','');
 	Acid::set('admin:website','');
+	Acid::set('admin:menu_config',array('siteadmin_cat'=>$siteadmin_cat,'controller'=>$controller,'page'=>$p,'def_level'=>$def_level));
+	Acid::set('admin:content_only',$content_only);
 
-	$html .= $content_only ? $content : Acid::tpl('admin/siteadmin-body.tpl',array('menu'=>$menu,'content'=>$content),User::curUser());
+
+	$html .= $content;
 
 }
 
-
 require 'sys/stop.php';
+
 ?>

@@ -104,7 +104,6 @@ class MyTemplate extends AcidTemplate {
 		return '';
 	}
 
-
 	/**
 	 * Renvoie le contenu du stop.tpl, lequel contient le JavaScript
 	 * à mettre en fin de page.
@@ -113,6 +112,13 @@ class MyTemplate extends AcidTemplate {
 		return Acid::tpl('stop.tpl');
 	}
 
+	/**
+	 * Renvoie le contenu du admin/stop.tpl, lequel contient le JavaScript
+	 * à mettre en fin de page.
+	 */
+	public function callAdminStop(){
+		return Acid::tpl('admin/stop.tpl');
+	}
 
 	/**
 	 * Active le plugin tiny_mce pour les contenus dynamiques
@@ -245,36 +251,51 @@ class MyTemplate extends AcidTemplate {
 
 	}
 
-
 	/**
-	 * Template de l'admin
+	 * Template par défaut
 	 */
 	public function print_siteadmin () {
-		global $tps_gen_page;
 
-		$this->addCSS(Acid::themeUrl('css/admin.css'));
-		$this->addCSS(Acid::themeUrl('css/admin-form.css'));
+		include Acid::outPath('siteadmin-includes.php');
 
-		$this->addCSS(Acid::themeUrl('css/dialog.css'));
+		include Acid::outPath();
 
-		$this->jQuery();
-		$this->jqueryUI();
-		$this->tinyMCE();
-		$this->plupload();
-
-		$this->dependencies();
-
-
-		$this->output =	$this->jsVars() .
-		'' . $this->getDialog() . "\n" .
-		'	<div id="site" class="admin">' . "\n" .
-		$this->output .
-		'	</div>' . "\n" .
-		Acid::tpl('admin/stop.tpl') .
-		'';
+		$this->output = $this->jsVars() . $this->output ;
+		$this->output .= $this->callAdminStop();
 
 		$this->print_html();
+
 	}
+
+// 	/**
+// 	 * Template de l'admin
+// 	 */
+// 	public function print_siteadmin () {
+// 		global $tps_gen_page;
+
+// 		$this->addCSS(Acid::themeUrl('css/admin.css'));
+// 		$this->addCSS(Acid::themeUrl('css/admin-form.css'));
+
+// 		$this->addCSS(Acid::themeUrl('css/dialog.css'));
+
+// 		$this->jQuery();
+// 		$this->jqueryUI();
+// 		$this->tinyMCE();
+// 		$this->plupload();
+
+// 		$this->dependencies();
+
+
+// 		$this->output =	$this->jsVars() .
+// 		'' . $this->getDialog() . "\n" .
+// 		'	<div id="site" class="admin">' . "\n" .
+// 		$this->output .
+// 		'	</div>' . "\n" .
+// 		Acid::tpl('admin/stop.tpl') .
+// 		'';
+
+// 		$this->print_html();
+// 	}
 
 
 }

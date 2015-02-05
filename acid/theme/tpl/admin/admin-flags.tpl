@@ -4,7 +4,7 @@
 ?>
 	<a href="#" onclick="AcidLang.selectLang('<?php echo $l; ?>'); return false;" >
 		<img
-			src="<?php echo Acid::get('url:img'); ?>langs/<?php echo $l; ?>_sel.png"
+			src="<?php echo Acid::themeUrl('img/langs/'.$l.'_sel.png'); ?>"
 			alt="<?php echo $l; ?>"
 			title="<?php echo $l; ?>"
 			class="lang_flag lang_flag_<?php echo $l; ?>"

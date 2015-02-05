@@ -92,7 +92,7 @@ class SitemapController{
 			Lang::rollback();
 		}
 
-		Conf::addToContent(AcidSitemap::printSitemap($this->xml_content,!Acid::get('lang:use_nav_0')));
+		Conf::addToContent(AcidSitemap::printSitemap($this->xml_content,false));
 
 	}
 

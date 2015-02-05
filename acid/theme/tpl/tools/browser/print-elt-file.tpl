@@ -5,7 +5,7 @@
 		</a>
 	</div>
 	<div class="fsb_belt_file_name">
-		<?php 
+		<?php
 		$ext = '.'.AcidFs::getExtension($v['attrs']['name']);
 		$name = AcidVarString::split(basename($v['attrs']['name'],$ext),30,'~'); ?>
 		<a href="<?php echo $v['link']; ?>"> <?php echo $name.$ext; ?> </a>
@@ -13,18 +13,18 @@
 	<div class="fsb_belt_file_action">
 		<div class="fsb_belt_file_action_eng">
 			<a href="#" title="<?php echo Acid::trad('browser_delete'); ?>" onclick="fsbDelete('<?php echo $v['key']; ?>_delete_form','<?php echo $v['attrs']['path']; ?>','file'); return false;">
-				<img src="<?php echo Acid::get('url:img');?>admin/fsb/delete_m.png" alt="" />
+				<img src="<?php echo Acid::themeUrl('img/admin/fsb/delete_m.png'); ?>" alt="" />
 				<?php echo Acid::trad('browser_delete'); ?>
 			</a>
-			 - 
+			 -
 			<a href="#" title="<?php echo Acid::trad('browser_change_name'); ?>" onclick="fsbChangeName('<?php echo $v['key']; ?>_new_name_form','<?php echo $v['attrs']['name']; ?>','file');return false;">
-				<img src="<?php echo Acid::get('url:img');?>admin/fsb/update_m.png" alt="" />
+				<img src="<?php echo Acid::themeUrl('img/admin/fsb/update_m.png'); ?>" alt="" />
 				<?php echo Acid::trad('browser_change_btn'); ?>
 			</a>
 			<?php if ($o->getPlugin()=='tinymce') { ?>
-			 - 
+			 -
 			<a href="#" title="<?php echo Acid::trad('browser_choose_btn'); ?>" onclick="fsbChooseFile('<?php echo addslashes($v['link']); ?>');return false;">
-				<img src="<?php echo Acid::get('url:img');?>admin/fsb/tick_m.png" alt="" />
+				<img src="<?php echo Acid::themeUrl('img/admin/fsb/tick_m.png'); ?>" alt="" />
 				<?php echo Acid::trad('browser_choose_btn'); ?>
 			</a>
 			<?php } ?>

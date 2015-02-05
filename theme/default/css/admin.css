@@ -44,6 +44,13 @@ hr{ height:1px; border: 0px solid #999999; color:#999999;  background-color:#999
 
 .clear{position:relative; height:0px; clear:both;}
 
+.content_only #site { 
+	 padding:1px 0px; 
+	 -webkit-box-sizing: border-box;
+	 -moz-box-sizing: border-box;
+	 box-sizing: border-box;
+} 
+
 #admin_site input[type=submit], 
 #admin_site  input[type=button],
 #admin_site input[type=image] {  

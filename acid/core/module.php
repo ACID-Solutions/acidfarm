@@ -2600,7 +2600,7 @@ abstract class AcidModuleCore {
 
 		return  array(
 					'link'=>AcidUrl::build(array(static::preKey('do')=>'print',static::preKey('id')=>$ident)),
-					'image'=>Acid::get('url:img').'admin/btn_afficher.png',
+					'image'=>Acid::themeUrl('img/admin/btn_afficher.png'),
 					'title'=>Acid::trad('admin_action_print'),
 					'click'=>null
 				);
@@ -2618,7 +2618,7 @@ abstract class AcidModuleCore {
 
 		return  array(
 				'link'=>AcidUrl::build(array(static::preKey('do')=>'update',static::preKey('id')=>$ident)),
-				'image'=>Acid::get('url:img').'admin/btn_modifier.png',
+				'image'=>Acid::themeUrl('img/admin/btn_modifier.png'),
 				'title'=>Acid::trad('admin_action_update'),
 				'click'=>null
 				);
@@ -2638,7 +2638,7 @@ abstract class AcidModuleCore {
 
 		return array(
 				'link'=>'#',
-				'image'=>Acid::get('url:img').'admin/btn_supprimer.png',
+				'image'=>Acid::themeUrl('img/admin/btn_supprimer.png'),
 				'title'=>Acid::trad('admin_action_remove'),
 				'click'=>'if (confirm(\'Supprimer ?\')){window.document.getElementById(\''.static::preKey($ident).'_delform\').submit()};return false;',
 				'script'=>$del_form
@@ -4080,7 +4080,7 @@ abstract class AcidModuleCore {
 		$real_key = self::dbPrefRemove($key);
 
 		if ($ajax) {
-			$loader = htmlspecialchars('<img style="margin-left:30px; display:inline; vertical-align:middle;" src="'.(Acid::get('url:img').'admin/loading.gif').'" alt="..." title="'.Acid::trad('loading').'" />');
+			$loader = htmlspecialchars('<img style="margin-left:30px; display:inline; vertical-align:middle;" src="'.Acid::themeUrl('img/admin/loading.gif').'" alt="..." title="'.Acid::trad('loading').'" />');
 			$onclick=
 					"$('.".$ident."').find('[type=submit]').attr('disabled','disabled'); ".
 					"$('.".$ident."').find('.loader').html('".$loader."');".
