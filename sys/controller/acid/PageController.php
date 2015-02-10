@@ -71,8 +71,9 @@ class PageController{
      */
     public function home(){
         Conf::setPageTitleAlone(true);
-        Conf::setPageTitle(Acid::get('site:name'));
-
+        if (!Conf::getPageTitle()) {
+        	Conf::setPageTitle(Acid::get('site:name'));
+        }
   		Conf::setAriane(array());
 
         if (isset($_GET['search'])) {

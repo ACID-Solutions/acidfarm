@@ -226,6 +226,20 @@ class Lib {
 			$words = array_count_values($tab);
 		}
 
+		$excluded_file = SITE_PATH.'sys/kw_excluded.txt';
+		if ($words && file_exists($excluded_file)) {
+			$excluded = file_get_contents($excluded_file);
+			$excluded = explode("\n", $excluded);
+
+			$new_words = array();
+			foreach ($words as $word => $count) {
+				if (!in_array(mb_strtoupper($word, 'UTF-8'), $excluded)) {
+					$new_words[$word] = $count;
+				}
+			}
+			$words = $new_words;
+		}
+
 		if (count($words)) {
 			if (($min_lenght) || ($get_above)) {
 				$new_words = array();
