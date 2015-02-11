@@ -2801,11 +2801,13 @@ abstract class AcidModuleCore {
 	* @param string $key_val Le nom du champ du module qui doit servir de valeur pour le tableau associatif (ex: title)
 	* @param string $key_index Le nom du champ du module qui doit servir de clé pour le tableau associatif (ex: id_module)
 	* @param string $hsc_if_value
+	* @param string $order
+	* @param string $filter
 	*
 	* @return array Le tableau associatif
 	*/
-	public static function getAssoc($key_val=null,$key_index=null, $hsc_if_value=true) {
-		$elts = static::dbList();
+	public static function getAssoc($key_val=null,$key_index=null, $hsc_if_value=true,$order=array(),$filter=array()) {
+		$elts = static::dbList($filter,$order);
 		$mod = static::build();
 
 		$def_key_index = $mod->getConfig('assoc:index') ? $mod->getConfig('assoc:index') : static::tblId();
