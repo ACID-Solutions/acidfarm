@@ -5,7 +5,7 @@ function changeDisplay(node_id){
 	if (my_window.style.display == 'none') my_window.style.display = '';
 	else my_window.style.display = 'none';
 }
-	
+
 function fsbNewDir(id_form) {
 	var dirName = prompt('<?php echo Acid::trad('browser_ask_new_folder',$trad_tab); ?>','<?php echo Acid::trad('browser_new_folder',$trad_tab); ?>')
 	if (dirName) {
@@ -23,10 +23,10 @@ function fsbNewDir(id_form) {
 }
 
 function getExtension(file_name) {
-	
+
 	var elts = file_name.split('.');
 	elts.reverse();
-	
+
 	if(elts[0] == 'gz' && elts[1] == 'tar')
 		return elts[1]+'.'+elts[0];
 	else
@@ -36,12 +36,12 @@ function getExtension(file_name) {
 function fsbChangeName(id_form,current_name,ftype) {
 	if (ftype == 'file'){
 		extension = getExtension(current_name);
-		
+
 		current_name = current_name.replace(RegExp('\.'+extension+'$'),'');
 		question = '<?php echo Acid::trad('browser_ask_new_name',$trad_tab); ?> (.'+extension+') : ';
 	}else
 		question = '<?php echo Acid::trad('browser_ask_new_name',$trad_tab); ?> : ';
-	
+
 	var dirName = prompt(question,current_name)
 	if (dirName) {
 		var my_form = document.getElementById(id_form);
@@ -52,11 +52,11 @@ function fsbChangeName(id_form,current_name,ftype) {
 			}
 			else {
 				var new_name = dirName;
-			} 
-			
+			}
+
 			var inputs = my_form.getElementsByTagName('input');
 			var i;
-			
+
 			for (i=0;i<inputs.length;i++) {
 				if (inputs[i].getAttribute('name') == 'name')
 					inputs[i].setAttribute('value',new_name);
@@ -71,25 +71,25 @@ function fsbChangeName(id_form,current_name,ftype) {
 }
 
 function fsbChooseFile(URL) {
-	<?php $rm_sh =   isset($g['tinymce']['remove_script_host']) ?  $g['tinymce']['remove_script_host'] : true;   ?>
-	
-	var prefix = (tinyMCEPopup.getWindowArg("rm_host")==1) ? '' : '<?php echo Acid::get('url:prefix'); ?>'; 
+	<?php $rm_sh =   isset($g['acid']['tinymce']['remove_script_host']) ?  $g['acid']['tinymce']['remove_script_host'] : true;   ?>
+
+	var prefix = (tinyMCEPopup.getWindowArg("rm_host")==1) ? '' : '<?php echo Acid::get('url:prefix'); ?>';
 	var win = tinyMCEPopup.getWindowArg("window");
 	var field = tinyMCEPopup.getWindowArg("input");
 
 	win.document.getElementById(field).value = prefix+URL;
-	
+
     if (typeof(win.ImageDialog) != "undefined") {
 		if (win.ImageDialog.getImageData) {
 			win.ImageDialog.getImageData();
 		}
 		if (win.ImageDialog.showPreviewImage)  {
 			win.ImageDialog.showPreviewImage(URL);
-		}	
-	} 
+		}
+	}
 
     tinyMCEPopup.close();
-	
+
 }
 
 function fsbDelete(id_form,file_path,ftype) {

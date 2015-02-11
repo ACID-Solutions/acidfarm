@@ -15,22 +15,30 @@
  * @link      http://www.acidfarm.net
  */
 
-
+//préconfiguration de l'appel d'acidfarm
 $admin_page=true;
 $permission_active = true;
 $acid_page_type = 'admin';
 
+//activation forcée des sessions
 $GLOBALS['acid']['session']['enable'] = true;
 
+//appel d'acidfarm
 require 'sys/start.php';
 
+//on utilisera le controller comme librairie
+$acid['includes']['AdminController'] 	 	  = 'sys/controller/admin/AdminController.php';
+
+//l'affichage siteadmin est choisi
 Acid::set('out','siteadmin');
 
-
+//on définit le page Title
 Conf::setPageTitle('Admin');
 
-$GLOBALS['tinymce']['active'] = true;
-$GLOBALS['tinymce']['all'] = true;
+
+//on active tinymce pour toutes
+Acid::set('tinymce:active', true);
+Acid::set('tinymce:all', true);
 
 Conf::set('plupload:active', true);
 Conf::set('plupload:all', true);
@@ -46,23 +54,17 @@ if (!User::curLevel($access_level)) {
 
 	Acid::set('admin:content_only',true);
 
-	if  (isset($_GET['pass_oublie'])) {
-		$forget = $_GET['pass_oublie'];
-		$html .= Acid::mod('User')->printPasswordForgotten($forget,$_SERVER['PHP_SELF']);
-	}else{
-		$cur_user = User::curUser();
-		$msg = $cur_user->getId() ? Acid::trad('admin_no_permission') : null;
+	//Si pas de page définie, affichage de la home
+	AcidRouter::addDefaultRoute('index',new AcidRoute('default',array('controller'=>'AdminController','action'=>'login','module'=>'admin')));
 
-		$html .= Acid::mod('User')->printAdminLogginForm($msg);
-	}
-
+	//Lancement du Router
+	AcidRouter::run();
 }
 
 // Admin Interface
 else {
 
 	//Init.
-	$content = '';
 	$p = isset($_GET['page']) ? $_GET['page'] : '';
 	$s = ' class="selected"';
 
@@ -77,128 +79,103 @@ else {
     				8=>'#009245',	// Vert foncé
     				9=>'#8CC63F',	// Vert acid
     				10=>'#F7931E');	// Orange
+	Acid::set('admin_colors',$color);
 
 	//Setting controller
 	$def_level	 = $access_level; // $acid['lvl']['admin'];
 	$dev_level	 = $acid['lvl']['dev'];
 	$siteadmin_cat = array('default','configuration','user_configuration','web','tools');
-	$controller  = array(
-					'default'  => array('level'=>$def_level,'separator'=>true,'margin'=>0, 'label'=>Acid::trad('admin_menu_home'),'display'=>true),
 
-					'configuration'     	=> array('level'=>$def_level,'separator'=>true,'label'=>Acid::trad('admin_menu_my_config'),'display'=>true,'unclickable'=>true,'color'=>$color[1]),
-						'config'           	 => array('level'=>User::curLevel(), 'label'=>Acid::trad('admin_menu_infos'),'display'=>true,'parent'=>'configuration'),
-    					'siteconfig'       	 => array('level'=>$def_level,'margin'=>0, 'label'=>Acid::trad('admin_menu_config'),'display'=>true,'parent'=>'configuration'),
-						'seo'       		 => array('level'=>$dev_level,'mod'=>'Seo','margin'=>0, 'label'=>Acid::trad('admin_menu_seo'),'display'=>true,'parent'=>'configuration'),
-
-    				'user_configuration'   	=> array('level'=>$dev_level,'separator'=>true,'label'=>Acid::trad('admin_menu_user_config'),'display'=>true,'unclickable'=>true,'color'=>$color[2]),
-    					'user'            	 => array('level'=>$dev_level,'mod'=>'User','margin'=>0, 'label'=>Acid::trad('admin_menu_user'),'display'=>true,'parent'=>'user_configuration'),
-    					'user_group'       	 => array('level'=>$dev_level,'mod'=>'UserGroup','margin'=>0, 'label'=>Acid::trad('admin_menu_user_group'),'display'=>true,'parent'=>'user_configuration'),
-    					'user_permission'  	 => array('level'=>$dev_level,'mod'=>'UserPermission','margin'=>0, 'label'=>Acid::trad('admin_menu_user_permission'),'display'=>true,'parent'=>'user_configuration'),
-
-   				    'web'     				=> array('level'=>$def_level,'separator'=>true,'label'=>Acid::trad('admin_menu_web'),'display'=>true,'unclickable'=>true,'color'=>$color[3]),
-						'actu'            	 => array('level'=>$def_level,'mod'=>'Actu','label'=>Acid::trad('admin_menu_news'),'display'=>true,'parent'=>'web'),
-    					'photo_home'       	 => array('level'=>$def_level,'mod'=>'PhotoHome','label'=>Acid::trad('admin_menu_photo_home'),'display'=>true,'parent'=>'web'),
-    					'photo'            	 => array('level'=>$def_level,'mod'=>'Photo','label'=>Acid::trad('admin_menu_photo'),'display'=>true,'parent'=>'web'),
-    					'page'             	 => array('level'=>$def_level,'mod'=>'Page','margin'=>0, 'label'=>Acid::trad('admin_menu_page'),'display'=>true,'parent'=>'web'),
-
-    				'tools'     			=> array('level'=>$def_level,'separator'=>false,'label'=>Acid::trad('admin_menu_tools'),'display'=>true,'unclickable'=>true,'color'=>$color[4]),
-    				    'medias'          	 => array('level'=>$def_level,'separator'=>false,'margin'=>0, 'label'=>Acid::trad('admin_menu_browser'),'display'=>true,'parent'=>'tools'),
-				);
-
-	//hook controller set
-	AcidHook::call('admin_controller_done');
+	//les catégories
 
 
-	//Checking for User Access
-	$module = null;
-	$check_key = $p ? $p : 'default';
+	//MENUS ET CONTROLLEURS
 
-	//Controller exists
-	if ( (!isset($controller[$check_key])) ) {
-		$p = 'default';
-		$module = null;
-	}
-	//Standard Access Refused
-	elseif ( (!User::curLevel($controller[$check_key]['level'])) ) {
+	//Accueil
+	AdminController::addMenuCat('default',Acid::trad('admin_menu_home'),array(),$def_level);
 
-		//Permissions
-		$module = isset($controller[$check_key]['mod']) ? $controller[$check_key]['mod'] : null;
-		if (!Acid::mod($module)->getUserAccess()) {
-			$p = 'default';
-			$module = null;
-		}
-	}
-	//Standard Access Accepted
-	else{
-		$module = isset($controller[$check_key]['mod']) ? $controller[$check_key]['mod'] : null;
-	}
+	//Configuration
+
+	//-configuration
+	AdminController::addMenuCat('configuration',Acid::trad('admin_menu_my_config'),array('unclickable'=>true,'color'=>$color[1]),$def_level);
+
+	//--mes infos
+	AdminController::addMenu('config','configuration',Acid::trad('admin_menu_infos'),User::curLevel());
+	AdminController::addAccess('config',User::curLevel());
+
+	//--configuration
+	AdminController::addMenu('siteconfig','configuration',Acid::trad('admin_menu_config'),$def_level);
+	AdminController::addAccess('siteconfig',$def_level);
+
+	//--seo
+	AdminController::addMenu('seo','configuration',Acid::trad('admin_menu_seo'),$dev_level);
+	AdminController::addAccess('seo',$dev_level,'Seo');
 
 
-	switch($p) {
+	//User Configuration
 
-		//configuration
-		case 'config' :
-			Acid::set('admin_title',Acid::trad('admin_menu_infos'));
-			$content .= Acid::mod('User')->printAdminBody(User::printAdminUserForms(),$my_onglets) ;
-		break;
+	//-utilisateurs
+	AdminController::addMenuCat('user_configuration',Acid::trad('admin_menu_user_config'),array('unclickable'=>true,'color'=>$color[2]),$dev_level);
 
-		case 'siteconfig' :
-			Acid::set('admin_title',Acid::trad('admin_menu_config'));
-			$GLOBALS['tinymce']['all'] = false;
-			$content .= Acid::mod('SiteConfig')->printAdminInterface();
-		break;
+	//--utilisateurs
+	AdminController::addMenu('user','user_configuration',Acid::trad('admin_menu_user'),$dev_level);
+	AdminController::addAccess('user',$dev_level,'User');
 
-		//tools
-		case 'medias' :
+	//--groupes utilisateurs
+	AdminController::addMenu('user_group','user_configuration',Acid::trad('admin_menu_user_group'),$dev_level);
+	AdminController::addAccess('user_group',$dev_level,'UserGroup');
 
-			Conf::set('plupload:active',true);
-
-			Acid::set('admin_title',Acid::trad('admin_menu_browser'));
-			Acid::set('admin_title_attr',array('style'=>'color:'.$color[4].';'));
-
-			$plugin = isset($_GET['plugin']) ? $_GET['plugin'] : '';
-			$dir = isset($_GET['fsb_path']) ? $_GET['fsb_path'] : '';
+	//--permissions utilisateurs
+	AdminController::addMenu('user_permission','user_configuration',Acid::trad('admin_menu_user_permission'),$dev_level);
+	AdminController::addAccess('user_permission',$dev_level,'UserPermission');
 
 
-			if ($plugin=='tinymce') {
-				$GLOBALS['tinymce']['popup'] = true;
-				$content_only = true;
-			}
+	//Web
 
-			$fb = new AcidBrowser(Acid::get('path:uploads'),false,null,$plugin);
+	//-site web
+	AdminController::addMenuCat('web',Acid::trad('admin_menu_web'),array('unclickable'=>true,'color'=>$color[3]),$def_level);
 
-			$content .= Acid::mod('User')->printAdminBody($fb->printDir($dir),null);
-		break;
+	//--actualites
+	AdminController::addMenu('actu','web',Acid::trad('admin_menu_news'),$def_level);
+	AdminController::addAccess('actu',$def_level,'Actu');
 
-		//general
-		default:
+	//--photos accueil
+	AdminController::addMenu('photo_home','web',Acid::trad('admin_menu_photo_home'),$def_level);
+	AdminController::addAccess('photo_home',$def_level,'PhotoHome');
 
-			//hook for case
-			AcidHook::call('admin_controller_case');
+	//--photos
+	AdminController::addMenu('photo','web',Acid::trad('admin_menu_photo'),$def_level);
+	AdminController::addAccess('photo',$def_level,'Photo');
 
-			//modules
-			if ($module) {
-				$content .= Acid::mod($module)->printAdminInterface();
-			}
-			//welcome
-			else{
-				$default_content = 	'Bonjour'.(isset($sess['user']['username']) ? ' '.$sess['user']['username'] : '' ) . ',' . "\n" .
-									'<br />Vous voici dans votre espace d\'administration';
-				$content .= Acid::mod('User')->printAdminBody($default_content,$my_onglets);
-			}
-		break;
+	//--pages
+	AdminController::addMenu('page','web',Acid::trad('admin_menu_page'),$def_level);
+	AdminController::addAccess('page',$def_level,'Page');
 
-	}
+	//Tools
+
+	//-outils
+	AdminController::addMenuCat('tools',Acid::trad('admin_menu_tools'),array('unclickable'=>true,'color'=>$color[4]),$def_level);
+
+	//--mediatheque
+	AdminController::addMenu('medias','tools',Acid::trad('admin_menu_browser'),$def_level);
+	AdminController::addAccess('medias',$def_level);
 
 
-	//generating admin body
+
+	//Ajout d'un hook une fois les controlleurs définis
+	AcidHook::call('admin_controller_config_done');
+
+	//Définition du routeur principal
+	AcidRouter::addDefaultRoute('index',new AcidRoute('default',array('controller'=>'AdminController','action'=>'index','module'=>'admin')));
+
+	//Lancement du Router
+	AcidRouter::run();
+
+	//Generation du corps de l'admin
 	Acid::set('admin:contact','');
 	Acid::set('admin:website','');
-	Acid::set('admin:menu_config',array('siteadmin_cat'=>$siteadmin_cat,'controller'=>$controller,'page'=>$p,'def_level'=>$def_level));
+	Acid::set('admin:menu_config',array('siteadmin_cat'=>AdminController::$menucat,'controller'=>AdminController::$menu,'page'=>$p,'def_level'=>$def_level));
 	Acid::set('admin:content_only',$content_only);
-
-
-	$html .= $content;
 
 }
 

@@ -369,7 +369,6 @@ class Page extends AcidModule {
 
 			foreach ($this->langKeyDecline('ident') as $identlkey) {
 		 		$this->vars[$identlkey]->setForm('show');
-		 		$this->config['admin'][$do][$identlkey]['stop'] = 'bla';
 		 	}
 
 		}else{

@@ -125,9 +125,9 @@ class MyTemplate extends AcidTemplate {
 	 */
 	public function tinyMCE() {
 
-		if (isset($GLOBALS['tinymce']['active'])) {
+		if (isset($GLOBALS['acid']['tinymce']['active'])) {
 
-			if (isset($GLOBALS['tinymce']['popup'])) {
+			if (isset($GLOBALS['acid']['tinymce']['popup'])) {
 				$this->addJS(Acid::get('url:folder').'js/tiny_mce/tiny_mce_popup.js');
 				//$this->addJS(Acid::get('url:folder').'js/tiny_mce_417/tiny_mce_popup.js');
 			}
@@ -136,9 +136,9 @@ class MyTemplate extends AcidTemplate {
 			//$this->addJS(Acid::get('url:folder').'js/tiny_mce_417/tinymce.min.js');
 
 
-			$ids = isset($GLOBALS['tinymce']['ids']) ? $GLOBALS['tinymce']['ids'] : array();
-			$tpl = isset($GLOBALS['tinymce']['tpl']) ? $GLOBALS['tinymce']['tpl'] : 'tools/tiny-mce.tpl';
-			//$tpl = isset($GLOBALS['tinymce']['tpl']) ? $GLOBALS['tinymce']['tpl'] : 'tools/tiny-mce-417.tpl';
+			$ids = isset($GLOBALS['acid']['tinymce']['ids']) ? $GLOBALS['acid']['tinymce']['ids'] : array();
+			$tpl = isset($GLOBALS['acid']['tinymce']['tpl']) ? $GLOBALS['acid']['tinymce']['tpl'] : 'tools/tiny-mce.tpl';
+			//$tpl = isset($GLOBALS['acid']['tinymce']['tpl']) ? $GLOBALS['acid']['tinymce']['tpl'] : 'tools/tiny-mce-417.tpl';
 			$my_js = Acid::tpl($tpl,array('ids'=>$ids),$this);
 
 			$this->add( $my_js . "\n" );

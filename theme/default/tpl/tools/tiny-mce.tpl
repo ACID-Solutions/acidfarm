@@ -1,11 +1,11 @@
-<?php $rm_sh =   isset($g['tinymce']['remove_script_host']) ?  $g['tinymce']['remove_script_host'] : true;   ?>
+<?php $rm_sh =   isset($g['acid']['tinymce']['remove_script_host']) ?  $g['acid']['tinymce']['remove_script_host'] : true;   ?>
 
 <script type="text/javascript">
 <!--
 
 
 tinyMCE.init({
-			mode : "<?php echo (!empty($g['tinymce']['all'])?  'textareas':'none'); ?>",
+			mode : "<?php echo (!empty($g['acid']['tinymce']['all'])?  'textareas':'none'); ?>",
 			theme : "advanced",
 			convert_urls : true,
 			relative_urls : false,
