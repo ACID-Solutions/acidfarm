@@ -2,6 +2,6 @@
 <?php echo PhotoHome::printGallery(); ?>
 </div>
 
-<article>
+<article class="content_body">
     <?php echo $v['welcome']; ?>
 </article>

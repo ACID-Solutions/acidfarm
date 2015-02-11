@@ -7,6 +7,6 @@
     <?php if ($o->get('src')) {?>
     <div class="block_content_img"><?php echo Func::callImg($o->urlSrc('large'),Acid::trad('image'),$o->hscTrad('title'));?></div>
     <?php } ?>
-    <div class="block_content_text"><?php echo $o->trad('content');?></div>
+    <div class="block_content_text content_body"><?php echo $o->trad('content');?></div>
     <div class="clear"></div>
 </article>
