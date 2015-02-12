@@ -66,6 +66,19 @@ class AcidTime {
 	}
 
 	/**
+	 * Retourne le mois renseigné par la date en entrée.
+	 *
+	 * @param string $date
+	 * @param boolean $small
+	 * @return string
+	 */
+	public static function monthName($date,$small=false) {
+		$month = date('m',strtotime($date));
+		$key = $small ? 'month_s' : 'month';
+		return Acid::get('date:'.$key.':'.((int)$month),'lang');
+	}
+
+	/**
 	 * Retourne une version formatée de la date en entrée.
 	 *
 	 * @param string $date
@@ -74,8 +87,9 @@ class AcidTime {
 	 */
 	public static function dateName($date) {
 		if ($date != '0000-00-00') {
-			list($year,$month,$day) = explode('-',$date);
-			return AcidTime::dayName($date).' '.$day.' '.Acid::get('date:month:'.((int)$month),'lang').' '.$year;
+			$parse = explode(' ',$date);
+			list($year,$month,$day) = explode('-',$parse[0]);
+			return AcidTime::dayName($date).' '.$day.' '.AcidTime::monthName($date).' '.$year;
 		} else {
 			return '00/00/00';
 		}
