@@ -18,7 +18,7 @@ tinyMCE.init({
 			theme_advanced_buttons2 : "image,advhr,media,separator,bullist,numlist,outdent,indent,separator,link,unlink,anchor,code,separator,sub,sup,charmap",
 			theme_advanced_buttons3 : "tablecontrols,styleselect,template,removeformat,pastetext",
 			theme_advanced_toolbar_location : "top",
-			extended_valid_elements : "hr[class|width|size|noshade],#p[class],#div[class],#span[class]",
+			extended_valid_elements : "hr[class|width|size|noshade],#p[class|style],#div[class|style],#span[class|style]",
 			theme_advanced_resizing : true,
 			theme_advanced_resize_horizontal : true,
 			theme_advanced_path : false,
