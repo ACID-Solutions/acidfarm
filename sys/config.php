@@ -134,7 +134,7 @@ $acidconf['keys']['reserved']=$acidconf['site_keys'];
  * Configuration des meta description de base
  */
 
-//$acidconf['meta']['keywords']['fr']		= "exemple de metadesc";
+//$acidconf['meta']['description']['fr']		= "exemple de metadesc";
 //$acidconf['meta']['description']['fr']		= "";
 //$acidconf['meta']['description']['en']		= "";
 //$acidconf['meta']['description']['es']		= "";
