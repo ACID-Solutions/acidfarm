@@ -153,12 +153,13 @@ $().ready( function() {
 $style = array(	'featureType' => "all", 'stylers'=> array(array('saturation'=>-100),array('gamma'=> 0.50)));
 $address = trim($g['site_config']->hscConf('address') .' '.$g['site_config']->hscConf('cp').' '.$g['site_config']->hscConf('city'));
 $coords = trim($g['site_config']->hscConf('coords'));
+$zoom = intval($g['site_config']->getConf('zoom')) ? intval($g['site_config']->getConf('zoom')) : 8;
 
 $gmap_config = array(
 	//'init_address'=>$address,
 	'address'=>$address,
 	//'center'=>($coords ? $coords : '0,0'),
-	'zoom'=>8,
+	'zoom'=>$zoom,
 	'no_inner_content'=>false,
 	//'icon'=>$g['acid']['url']['img'].'langs/'.$g['acid']['lang']['current'].'_sel.png',
 	//'style'=>$style,
@@ -166,6 +167,8 @@ $gmap_config = array(
 
 if ($coords) {
 	$gmap_config['coords'] = $coords;
+}else{
+	$gmap_config['init_address'] = $address;
 }
 
 //Affichage de la Google Map

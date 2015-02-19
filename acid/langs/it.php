@@ -373,7 +373,9 @@ $lang['mod']['config']['contact']    = 'Contact';
 $lang['mod']['config']['address']    = 'Address';
 $lang['mod']['config']['cp']     	 = 'Zip code';
 $lang['mod']['config']['city']  	 = 'City';
+
 $lang['mod']['config']['coords']  	 = 'Lat,Long';
+$lang['mod']['config']['zoom']  	 = 'Zoom';
 
 $lang['mod']['config']['phone'] 	 = 'Phone';
 $lang['mod']['config']['fax']        = 'Fax';

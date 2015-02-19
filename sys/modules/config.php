@@ -22,7 +22,7 @@
 class SiteConfig extends AcidModule {
 	const TBL_NAME = 'config';
 	const TBL_PRIMARY = 'id_config';
-	
+
 	/**
 	 * @var array liste des clés de variables "obligatoires" (elles apparaitront dans le formulaire de configuration)
 	 */
@@ -66,7 +66,7 @@ class SiteConfig extends AcidModule {
 
 		$this->free_mode = $free_mode;
 
-		$this->addControl(array('email','contact','address','cp','city','coords','phone','fax','website'));
+		$this->addControl(array('email','contact','address','cp','city','coords','zoom','phone','fax','website'));
 		//$this->addRemoteControl(array('key1','key2'));
 
 		$this->addExclued(array(self::preKey('do'),'submit','next_page'));
