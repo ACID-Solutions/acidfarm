@@ -91,6 +91,7 @@ $lang['trad']['user_error_log']                     = 'Erreur d\'identifiant ou 
 $lang['trad']['user_error_pass_dismatch']           = 'Les deux mots de passe ne sont pas identiques';
 $lang['trad']['user_error_email_dismatch']          = 'Aucun compte ne correspond à cet e-mail';
 $lang['trad']['user_error_user_exists']             = 'Nom d\'utilisateur déjà existant';
+$lang['trad']['user_error_ident_exists']             = 'L\'identifiant existe déjà';
 $lang['trad']['user_error_login_too_long']          = 'Login trop long';
 $lang['trad']['user_error_email_invalid_format']    = 'Format d\'e-mail incorrect';
 $lang['trad']['user_error_pass_nbc']                = 'Votre mot de passe doit comporter au moins __NUM__ caractères';

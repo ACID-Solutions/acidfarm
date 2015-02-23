@@ -82,29 +82,29 @@ abstract class AcidUser extends AcidModule {
 		return $res;
 	}
 
-
-
 	/**
 	 * Retourne true si la chaîne de caractères en entrée est déjà associée à un nom d'utilisateur, false sinon.
 	 *
 	 * @param string $name
+	 * @param array  $exclued
 	 */
-	public function usernameExists($name) {
-		return $this->dbCount(array(array('username','=',$name)));
+	public function usernameExists($name,$exclued=array()) {
+		return $this->dbCount(array(array('username','=',$name),array($this->tblId(),'not in',$exclued)));
 	}
 
 	/**
 	 * Retourne true si la chaîne de caractères en entrée est déjà associée à un nom d'utilisateur, false sinon.
 	 *
 	 * @param string $login
+	 * @param array  $exclued
 	 */
-	public function loginExists($login) {
+	public function loginExists($login,$exclued=array()) {
 		$keys = $this->getConfig('identification');
 		$keys = is_array($keys) ? $keys : array($keys);
 
 		$count = 0;
 		foreach($keys as $key) {
-			$count += $this->dbCount(array(array($key,'=',$login)));
+			$count += $this->dbCount(array(array($key,'=',$login),array($this->tblId(),'not in',$exclued)));
 		}
 
 		return $count;
@@ -1080,6 +1080,80 @@ abstract class AcidUser extends AcidModule {
 		}
 
 		return	$valid_user;
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see AcidModuleCore::getControlledKeys()
+	 */
+	protected function getControlledKeys($do) {
+		$keys = $this->getConfig('identification');
+		$keys = is_array($keys) ? $keys : array($keys);
+
+		return array_unique(array_merge($keys,array()));
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see AcidModuleCore::checkVals()
+	 */
+	protected function checkVals($tab,$do) {
+
+		//récupération des clés controllées
+		$controlled_keys[$do] =  $this->getControlledKeys($do);
+
+		//creation des sessions
+		$session_time[$do]  = 100;
+		AcidSession::tmpSet(static::preKey($do),$tab,$session_time[$do]);
+
+		//initialisation
+		$missing = array();
+
+		$login_keys = $this->getConfig('identification');
+		$login_keys = is_array($login_keys) ? $login_keys : array($login_keys);
+		$login_exclued = (($do!='add') && isset($tab[$this->tblId()])) ? array($tab[$this->tblId()]) : array();
+
+		$missing_error = '';
+		$text_error = '';
+		foreach ($controlled_keys[$do] as $key) {
+			switch ($key) {
+				default :
+
+					if (in_array($key,$login_keys)) {
+
+						//identifiant obligatoire
+						if (empty($tab[$key])) {
+							$missing[] = $key;
+							$missing_error .= $this->checkLabel($key) . '<br />';
+						}
+						//identifiant unique
+						elseif ($this->loginExists($tab[$key],$login_exclued)) {
+							$missing[] = $key;
+							$text_error .= $this->checkLabel($key) . ' : '.Acid::trad('user_error_ident_exists').' <br />';
+						}
+
+					}else{
+						if (empty($tab[$key])) {
+							$missing[] = $key;
+							$missing_error .= $this->checkLabel($key) . '<br />';
+						}
+					}
+				break;
+			}
+		}
+
+		//s'il n'y a pas d'erreurs
+		if (!$missing) {
+			AcidSession::tmpKill(static::preKey($do));
+			return $tab;
+		}
+		//en cas d'erreurs
+		else{
+			$error = ($missing_error? Acid::trad('checkvals_error_plur').'<br />' . $missing_error : '') .
+					 '<br />' . $text_error;
+			AcidDialog::add('banner',$error);
+			return false;
+		}
 	}
 
 
