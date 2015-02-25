@@ -44,7 +44,7 @@ Conf::set('plupload:active', true);
 Conf::set('plupload:all', true);
 
 $my_onglets = null;
-$content_only = false;
+Acid::set('admin:content_only',false);
 
 //Access Controller
 $access_level	 = Acid::get('lvl:admin');
@@ -175,7 +175,7 @@ else {
 	Acid::set('admin:contact','');
 	Acid::set('admin:website','');
 	Acid::set('admin:menu_config',array('siteadmin_cat'=>AdminController::$menucat,'controller'=>AdminController::$menu,'page'=>$p,'def_level'=>$def_level));
-	Acid::set('admin:content_only',$content_only);
+	//Acid::set('admin:content_only',true);
 
 }
 

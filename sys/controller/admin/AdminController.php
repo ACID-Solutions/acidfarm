@@ -181,7 +181,7 @@ class AdminController{
 
     	if ($plugin=='tinymce') {
     		$GLOBALS['acid']['tinymce']['popup'] = true;
-    		$content_only = true;
+    		Acid::set('admin:content_only',true);
     	}
 
     	$fb = new AcidBrowser(Acid::get('path:uploads'),false,null,$plugin);
