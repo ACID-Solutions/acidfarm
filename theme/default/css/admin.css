@@ -12,6 +12,11 @@ body{
 	min-width:1000px;
 }
 
+body.content_only{ min-width:950px; }
+.content_only .content_display{ 
+	border:0px solid #FFFFFF;
+}
+
 a {
 	text-decoration:none;	
 }
