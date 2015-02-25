@@ -12,7 +12,7 @@ tinyMCE.init({
 			fix_list_elements : true,
 			remove_script_host : <?php echo $rm_sh ?  'true':'false'; ?>,
 			document_base_url : "<?php echo Acid::get('url:system'); ?>",
-			file_browser_callback : "tinyFileBrowser",
+			file_browser_callback : tinyFileBrowser,
 			extended_valid_elements : "hr[class|width|size|noshade]",
 			selector: "textarea",
 		    plugins: [
