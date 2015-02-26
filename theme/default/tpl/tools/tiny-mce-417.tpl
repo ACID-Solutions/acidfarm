@@ -20,7 +20,8 @@ tinyMCE.init({
 		        "searchreplace visualblocks code fullscreen",
 		        "insertdatetime media table contextmenu paste"
 		    ],
-		    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+			fontsize_formats: "8px 11px 12px 13px 14px 16px 18px 22px 24px 26px 32px 48px",
+		    toolbar: "insertfile undo redo | styleselect fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
 			body_class : "content_body",
 			content_css : "<?php echo Acid::themeUrl('css/tiny-mce.css'); ?>"
 			/*
@@ -42,10 +43,10 @@ tinyMCE.init({
 		        url_img : "<?php echo Acid::get('url:img_abs'); ?>",
 	        	site_name : "<?php echo Acid::get('site:name'); ?>"
 		    },
-		    template_templates: [
+		    templates: [
                {
                    title : "Gabarit",
-                   src : "<?php echo Acid::get('url:tpl'); ?>tiny_mce/gabarit.htm",
+                   url : "<?php echo Acid::get('url:tpl'); ?>tiny_mce/gabarit.htm",
                    description : "Gabarit de newsletter"
                }
 			]
