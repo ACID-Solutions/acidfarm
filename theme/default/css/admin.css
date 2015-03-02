@@ -761,10 +761,12 @@ img{
 
 .generic_elts_list th {
 	/*min-width:100px;*/
-	text-align:center;
-	padding-left:10px;
+	text-align:left;
+	padding-left:5px;
     background-color:#FFFFFF;
 }
+
+.generic_elts_list th.head_std_actions{ text-align:center; }
 
 /**************************************/
 
