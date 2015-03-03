@@ -15,7 +15,7 @@ class AcidExport {
 	 * @param string $delimiter
 	 * @param string $enclosure
 	 */
-	public static function sqlModule2CSV($module,$select='',$filter='',$order='',$limit='',$mods=array(),$delimiter=';',$enclosure='"') {
+	public static function sqlModule2CSV($module,$select='',$filter='',$order='',$limit='',$mods=array(),$assoc=array(),$delimiter=';',$enclosure='"') {
 
 		//On peut appeler un objet en paramètres
 		$mod = is_string($module) ? $module::build() : $module;
@@ -87,6 +87,7 @@ class AcidExport {
 
 			//Si on a des valeurs fichiers
 			$files_keys = array_keys($mod->getUploadVars());
+			$date_keys = array_keys($mod->getVarsByType(array('AcidVarDate')));
 
 			foreach ( $results as $data ) {
 
@@ -104,6 +105,30 @@ class AcidExport {
 						}
 					}
 				}
+
+				//On retravaille les dates pour plus de lisibilité
+				if ($date_keys) {
+					foreach ($date_keys as $key) {
+						$skey = isset($data[$key]) ? $key : (isset($data[$mod::dbPref($key)]) ? $mod::dbPref($key) : false);
+						if ($skey) {
+							if ($data[$skey]) {
+								$data[$skey] = AcidTime::conv($data[$skey]);
+							}
+						}
+					}
+				}
+
+				//Si des valeurs associatives sont renseignée, on les utilise
+				if ($assoc) {
+					foreach ($assoc as $key => $subassoc) {
+						if (isset($data[$key])) {
+							if (isset($subassoc[$data[$key]])) {
+								$data[$key] = $subassoc[$data[$key]];
+							}
+						}
+					}
+				}
+
 
 				fputcsv($handler, $data, $delimiter, $enclosure);
 			}
