@@ -39,7 +39,7 @@ class Mailer extends AcidMail {
 	 *
 	 * @return boolean
 	 */
-	public static function send($from_name,$from_email,$to_email,$subject,$body,$is_html=true,$attached=array(),$functions=array(),$tpl=null) {
+	public static function send($from_name,$from_email,$to_email,$subject,$body,$is_html=true,$attached=array(),$stream=array(),$functions=array(),$tpl=null) {
 
 		$tpl = $tpl===null ? 'mail/body.tpl' : $tpl;
 
@@ -47,7 +47,7 @@ class Mailer extends AcidMail {
 			$body = Acid::tpl($tpl,array('content'=>$body),User::curUser());
 		}
 
-		return parent::send($from_name,$from_email,$to_email,$subject,$body,$is_html,$attached,$functions);
+		return parent::send($from_name,$from_email,$to_email,$subject,$body,$is_html,$attached,$stream,$functions);
 
 	}
 
@@ -62,7 +62,7 @@ class Mailer extends AcidMail {
 	 *
 	 * @return boolean
 	 */
-	public static function sendStaff($subject,$body,$is_html=true,$attached=array(),$functions=array(),$tpl=null) {
+	public static function sendStaff($subject,$body,$is_html=true,$attached=array(),$stream=array(),$functions=array(),$tpl=null) {
 
 		$tpl = $tpl===null ? 'mail/staff.tpl' : $tpl;
 
@@ -70,7 +70,7 @@ class Mailer extends AcidMail {
 		$from_email = Acid::get('site:email');
 		$to_email = Acid::get('site:email');
 
-		return self::send($from_name,$from_email,$to_email,$subject,$body,$is_html,$attached,$functions,$tpl);
+		return self::send($from_name,$from_email,$to_email,$subject,$body,$is_html,$attached,$stream,$functions,$tpl);
 
 	}
 

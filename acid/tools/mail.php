@@ -38,7 +38,7 @@ class AcidMail {
 	 *
 	 * @return bool
 	 */
-	public static function send($from_name,$from_email,$to_email,$subject,$body,$is_html=false,$attached=array(),$functions=array()) {
+	public static function send($from_name,$from_email,$to_email,$subject,$body,$is_html=false,$attached=array(),$stream=array(),$functions=array()) {
 	    Acid::load(Acid::get('externals:phpmailer:path:phpmailer'));
 	    Acid::load(Acid::get('externals:phpmailer:path:smtp'));
 
@@ -92,6 +92,10 @@ class AcidMail {
 				$mail->AddAttachment($elt,utf8_decode($name));
 			}
 
+			foreach ($stream as $name=>$elt) {
+				$mail->AddStringAttachment($elt,utf8_decode($name));
+			}
+
 	   		if (!empty($functions)) {
 				$keys = array_keys($functions);
 
@@ -137,7 +141,7 @@ class AcidMail {
 	 * @param array $functions liste de fonctions à appliquer à l'objet PHPMAILER
 	 * @return boolean
 	 */
-	public static function sendStaff($subject,$body,$is_html=true,$attached=array(),$functions=array()) {
+	public static function sendStaff($subject,$body,$is_html=true,$attached=array(),$stream=array(),$functions=array()) {
 
 		$tpl = $tpl===null ? 'mail/staff.tpl' : $tpl;
 
@@ -145,7 +149,7 @@ class AcidMail {
 		$from_email = Acid::get('site:email');
 		$to_email = Acid::get('site:email');
 
-		return self::send($from_name,$from_email,$to_email,$subject,$body,$is_html,$attached,$functions);
+		return self::send($from_name,$from_email,$to_email,$subject,$body,$is_html,$attached,$stream,$functions);
 
 	}
 
