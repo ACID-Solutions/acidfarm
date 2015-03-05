@@ -5,7 +5,6 @@
 
 
 tinyMCE.init({
-			mode : "<?php echo (!empty($g['acid']['tinymce']['all'])?  'textareas':'none'); ?>",
 			theme : "modern",
 			convert_urls : true,
 			relative_urls : false,
@@ -14,7 +13,7 @@ tinyMCE.init({
 			document_base_url : "<?php echo Acid::get('url:system'); ?>",
 			file_browser_callback : tinyFileBrowser,
 			extended_valid_elements : "hr[class|width|size|noshade]",
-			selector: "textarea",
+			selector: "textarea.acidtinymce<?php echo $g['acid']['tinymce']['all'] ? ', textarea' : ''; ?>",
 		    plugins: [
 		        "advlist autolink lists link image charmap print preview anchor template",
 		        "searchreplace visualblocks code fullscreen",
