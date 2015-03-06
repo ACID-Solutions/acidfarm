@@ -274,7 +274,7 @@ class Actu extends AcidModule {
 	 */
 	public function printActu() {
 
-		$v = array(  );
+		$v = array( 'next'=>$this->getNext(),'prev'=>$this->getPrev() );
 
 
 		return Acid::tpl('pages/actu.tpl',$v,$this);

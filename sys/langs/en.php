@@ -70,6 +70,7 @@ $lang['trad']['creation']			= 'creation';
 
 $lang['trad']['next']			= 'Next';
 $lang['trad']['previous']		= 'Previous';
+$lang['trad']['all_news']		= 'All news';
 
 $lang['trad']['alt_image'] = 'Image';
 
