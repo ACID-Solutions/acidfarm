@@ -87,7 +87,7 @@ class AcidExport {
 
 			//Si on a des valeurs fichiers
 			$files_keys = array_keys($mod->getUploadVars());
-			$date_keys = array_keys($mod->getVarsByType(array('AcidVarDate')));
+			$date_keys = array_keys($mod->getVarsByType(array('AcidVarDate','AcidVarDateTime')));
 
 			foreach ( $results as $data ) {
 
