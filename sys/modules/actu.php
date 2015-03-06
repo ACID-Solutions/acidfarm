@@ -203,13 +203,14 @@ class Actu extends AcidModule {
 			$this->config['admin'][$type]['params'][$lk] = array('class'=>'head_field');
 		}
 
-		$GLOBALS['acid']['tinymce']['all'] = false;
-		$GLOBALS['acid']['tinymce']['ids'] = array();
+		Acid::set('tinymce:all',false);
+		Acid::set('tinymce:ids',array());
+
 		foreach ($this->langKeyDecline('content') as $lk) {
 			$id_name = $lk.'_textarea';
 			$this->config['admin'][$type]['params'][$lk] = array('id'=>$id_name);
 			$this->config['admin'][$type]['body_attrs'][$lk] = array('class'=>'form_spaced');
-			$GLOBALS['acid']['tinymce']['ids'][] = $id_name;
+			Acid::add('tinymce:ids',$id_name);
 		}
 
 		//$this->vars['adate']->setForm('hidden');
