@@ -16,6 +16,7 @@
 
 #sass
 /theme/*/css/scss_cache/
+*.css.map
 
 # acifarm htaccess
 /.htaccess
