@@ -84,7 +84,6 @@ else {
 	//Setting controller
 	$def_level	 = $access_level; // $acid['lvl']['admin'];
 	$dev_level	 = $acid['lvl']['dev'];
-	$siteadmin_cat = array('default','configuration','user_configuration','web','tools');
 
 	//les catégories
 
