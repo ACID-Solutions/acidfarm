@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * AcidFarm - Yet Another Framework
  *
@@ -79,10 +79,10 @@ function buildClassName($tbl) {
 				$classname .= ucfirst($str);
 			}
 		}
-		
+
 		return $classname;
 	}
-	
+
 	return $tbl;
 }
 
@@ -94,19 +94,19 @@ function buildClassName($tbl) {
  */
 function buildFromTbl($row,$tbl) {
 	$info = explode(')',$row['Type']);
-	$attributes = trim(implode(')',array_slice($info,1)));	
-	
+	$attributes = trim(implode(')',array_slice($info,1)));
+
 	$t = explode('(',$info[0]);
 	$type = strtolower(trim($t[0]));
 	$type_size = trim(implode('(',array_slice($t,1)));
 	$def = trim($row['Default']);
 	$key = trim($row['Field']);
 	$extra =trim($row['Extra']);
-	
+
 	$config = '';
 	$val = null;
 	Acid::log('SCRIPT','Generating '.$key . ' => ' . $type . ',  '. $type_size . ' => '. $attributes . ' => ' . $def .' => '.$extra);
-	
+
 	switch ($type) {
 		//AcidVarInt
 		case 'int' :
@@ -127,20 +127,20 @@ function buildFromTbl($row,$tbl) {
 			$val = 'new AcidVarFloat($this->modTrad(\''.$key.'\'),'.$unsigned.$default.')';
 		break;
 		//AcidVarString / AcidVarImage / AcidVarFile
-		case 'varchar' : 
+		case 'varchar' :
 			if ((strpos($key,'src')===0) || (strpos($key,'file')===0)) {
 				$val = 'new AcidVarFile($this->modTrad(\''.$key.'\'),Acid::get(\'path:files\').\''.$tbl.'/\', array() , \'__ID__-'.$key.'\')';
 			}elseif((strpos($key,'img')===0) || (strpos($key,'avatar')===0) || (strpos($key,'image')===0)){
 				$config = <<<'EOF'
 
-		$img_format 		=	array(	
+		$img_format 		=	array(
 							'src'=>array(	'size' => array(0,0,false), 'suffix' => '', 'effect' => array() ),
 							'large'=>array(	'size' => array(500,500,false),	'suffix' => '_l', 'effect' => array() ),
 							'medium'=>array( 'size' => array(180,180,true),	'suffix' => '_m', 'effect' => array() ),
 							'small'=>array(	'size' => array(48,48,true), 'suffix' => '_s', 'effect' => array()	)
 						);
 		$img_config = array('format'=>$img_format,'admin_format'=>'small');
-				
+
 EOF;
 				$val = 'new AcidVarImage($this->modTrad(\''.$key.'\'),Acid::get(\'path:files\').\''.$tbl.'/\', $img_config, \'__ID__-'.$key.'\')';
 			}else{
@@ -183,10 +183,10 @@ EOF;
 			}
 		break;
 	}
-	 
+
 	$config = $config ? ($config . "\n" . '		') : '';
 	$val = $config.'$this->vars[\''.$key.'\']	=	'.(!$val ? 'null' : $val) .';' ;
-	
+
 	Acid::log('SCRIPT','Built :  '.$val);
 	return $val;
 }
@@ -198,11 +198,11 @@ if ($table) {
 		$tables[] = array('table'=>$table,'class_to'=>$class_to,'file_to'=>$file_to);
 	}else{
 		$req = AcidDB::query('SHOW TABLES')->fetchAll(PDO::FETCH_ASSOC);
-		
+
 		$tblname = '';
 		foreach ($req as $key => $value) {
-			
-			
+
+
 			$ta = $value['Tables_in_'.Acid::get('db:base')];
 			if (strpos($ta,$tbl_pref)===0){
 				$has_no_pref = false;
@@ -214,32 +214,33 @@ if ($table) {
 			$tables[] = array('table'=>$ta,'has_no_pref'=>$has_no_pref);
 		}
 	}
-	
+
 	if ($tables) {
 		$include_txt = '';
 		$include_lang = '';
-		foreach ($tables as $tbl_config) {	
-			$table  = empty($tbl_config['table']) ? '' : $tbl_config['table']; 
-		
-			
+		foreach ($tables as $tbl_config) {
+			$table  = empty($tbl_config['table']) ? '' : $tbl_config['table'];
+
+
 			if ($table) {
 				$class_to = empty($tbl_config['class_to']) ? buildClassName($table) : $tbl_config['class_to'];
 				$file_to = empty($tbl_config['file_to']) ? $table.'.php' : $tbl_config['file_to'];
 				$has_no_pref = empty($tbl_config['has_no_pref']) ? false : $tbl_config['has_no_pref'];
-				
+
 				$include_txt .= '$acid[\'includes\'][\''.$class_to.'\'] 			= \'sys/modules/'.$table.'.php\';' . "\n" ;
-				
+
 				$reqpref = $has_no_pref ? $table : $tbl_pref.$table;
 				Acid::log('SCRIPT','Building '.$class_to.' from '.$reqpref.$table.' in file '.$file_to);
-				
+
 				$result = AcidDB::query("SHOW FIELDS FROM ".addslashes($reqpref))->fetchAll(PDO::FETCH_ASSOC);
-				
+
 				$i = 1;
 				$primary = '';
 				$builder = array();
-				
+
 				$include_lang .= '//--'.$class_to . "\n";
-				foreach ($result as $row) { 
+				$include_lang .= '$lang[\'mod\'][\''.$table.'\'][\'__NAME__\'] = \''.ucfirst(str_replace('_',' ',addslashes($class_to))).'\';' . "\n" ;
+				foreach ($result as $row) {
 					// [Field]
 			    	// [Type]
 			    	// [Null]
@@ -252,13 +253,13 @@ if ($table) {
 				 	 	$primary = $key;
 				 	 	Acid::log('SCRIPT',$primary . ' is PRIMARY');
 				 	 }
-					
+
 				 	 $builder[$key] = buildFromTbl($row,$table);
 				 	 $include_lang .= '$lang[\'mod\'][\''.$table.'\'][\''.$key.'\'] = \''.ucfirst(str_replace('_',' ',addslashes($key))).'\';' . "\n" ;
-				 	
+
 				}
 				$include_lang .= "\n";
-				
+
 				$print_vars = implode("\n".'		',$builder);
 			$class_content = <<<EOF
 <?php
@@ -266,17 +267,17 @@ if ($table) {
 class $class_to extends AcidModule {
 	const TBL_NAME = '$table';
 	const TBL_PRIMARY = '$primary';
-	
+
 	public function __construct(\$init_id=null) {
-		
+
 		$print_vars
-	
+
 		parent::__construct(\$init_id);
 
 	}
 
 }
-		
+
 EOF;
 			$handle = fopen($dir.$file_to, 'w+');
 			flock($handle, LOCK_EX);
@@ -286,18 +287,18 @@ EOF;
 
 			}
 		}
-		
+
 		$handle = fopen($dir.'_includer.txt', 'w+');
 		flock($handle, LOCK_EX);
 		fwrite($handle, $include_txt);
 		flock($handle, LOCK_UN);
 		fclose($handle);
-		
+
 		$handle = fopen($dir.'_lang.txt', 'w+');
 		flock($handle, LOCK_EX);
 		fwrite($handle, $include_lang);
 		flock($handle, LOCK_UN);
 		fclose($handle);
-	
+
 	}
 }

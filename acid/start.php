@@ -153,6 +153,7 @@ if ($acid['debug']) {
 
 global $lang;
 require ACID_PATH . 'langs/'.$acid['lang']['current'].'.php';
+require ACID_PATH . 'langs/module_'.$acid['lang']['current'].'.php';
 require ACID_PATH . 'tools/bash.php';
 
 /**

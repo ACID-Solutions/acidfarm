@@ -220,6 +220,7 @@ class Lang {
 		$language = $language===null ? Acid::get('lang:default') : $language;
 
 		$acid_lang_path 	 =  ACID_PATH . 'langs/'.$language.'.php';
+		$acid_mod_lang_path  =  ACID_PATH . 'langs/module_'.$language.'.php';
 		$router_lang_path 	 =  SITE_PATH . 'sys/langs/router/lang_router.php';
 		$site_lang_path 	 =  SITE_PATH . 'sys/langs/'.$language.'.php';
 		$mod_lang_path  	 =  SITE_PATH . 'sys/langs/module_'.$language.'.php';
@@ -231,6 +232,10 @@ class Lang {
 
 		if ( file_exists($acid_lang_path) ) {
 			require($acid_lang_path);
+		}
+
+		if ( file_exists($acid_mod_lang_path) ) {
+			require($acid_mod_lang_path);
 		}
 
 		if ( file_exists($site_lang_path) ) {
