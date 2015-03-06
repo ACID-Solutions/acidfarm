@@ -227,12 +227,12 @@ $acid['files']['ext_assoc']['archive']		= 7; // 7 Archives
 $acid['files']['ext'] = array(
 
 							$acid['files']['ext_assoc']['img']		 	=> array('jpg','jpeg','png','gif'),
-							$acid['files']['ext_assoc']['img_print'] 	=> array('bmp','psd','eps','tiff'),
+							$acid['files']['ext_assoc']['img_print'] 	=> array('bmp','psd','eps','tiff','ai'),
 							$acid['files']['ext_assoc']['sound']		=> array('mp3','wav','mpc','ogg','wma'),
-							$acid['files']['ext_assoc']['movie'] 		=> array('avi','mpg','mpeg','wmv','flv'),
+							$acid['files']['ext_assoc']['movie'] 		=> array('avi','mpg','mpeg','wmv','flv','mp4'),
 							$acid['files']['ext_assoc']['pdf']		 	=> array('pdf'),
-							$acid['files']['ext_assoc']['text'] 		=> array('txt','doc','odt','rtf'),
-							$acid['files']['ext_assoc']['calc']		 	=> array('xls','ods'),
+							$acid['files']['ext_assoc']['text'] 		=> array('txt','doc','odt','rtf','docx'),
+							$acid['files']['ext_assoc']['calc']		 	=> array('xls','ods','xlsx'),
 							$acid['files']['ext_assoc']['archive']		=> array('zip','rar','ace','tar.gz','bzip','gz','bzip2','tgz')
 
 						);
