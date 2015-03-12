@@ -312,4 +312,8 @@ $acid['css']['dynamic']['active'] = false;		//generate css file referring to php
 $acid['css']['dynamic']['files'] = array(); 	//path to php file
 $acid['css']['dynamic']['mode'] = 'default';	//debug (always), default (if not exists)
 
+//Versioning
+$acid['versioning']['file'] = 'sys/versioning.txt';
+$acid['versioning']['val'] = ''; //if value, override versionning file
+
 ?>

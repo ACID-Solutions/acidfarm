@@ -2,7 +2,7 @@
 
 /**
  * AcidFarm - Yet Another Framework
- * 
+ *
  * Requires PHP version 5.3
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
@@ -21,68 +21,68 @@
  * @package   Tool
  */
 class AcidTemplate {
-	
+
 	/**
 	 * @var string doctype
 	 */
 	protected $doctype      = '';
-	
+
 	/**
 	 * @var string Header others (favicon, ...)
 	 */
 	protected $head         = '';
-	
+
 	/**
 	 * @var string Titre de la page
 	 */
-	protected $head_title   = '';   
-	
+	protected $head_title   = '';
+
 	/**
 	 * @var string Favicon
 	 */
-	protected $head_favicon = '';           
-	
+	protected $head_favicon = '';
+
 	/**
 	 * @var array Liens vers fichiers CSS
 	 */
-	protected $head_css     = array();		
-	
+	protected $head_css     = array();
+
 	/**
 	 * @var array  Liens vers fichiers JavaScript
 	 */
-	protected $head_js      = array();	
-	
+	protected $head_js      = array();
+
 	/**
 	 * @var array  Liens vers les flux RSS
 	 */
-	protected $head_rss     = array();	   
-	
+	protected $head_rss     = array();
+
 	/**
 	 * @var array Tableau d'attributs de <body>
 	 */
 	protected $body_attrs   = array();
-	
+
 	/**
 	 * @var string Contenu de la page via $html en php
 	 */
-	protected $output  = '';				
-			
+	protected $output  = '';
+
 	/**
 	 * @var string Contenu de la page
 	 */
 	protected $body_corpus  = '';
-	
+
 	const XHTML_10_STRICT =
 		'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
-	
+
 	const XHTML_10_TRANSITIONAL =
 		'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
-	
+
 	const XHTM_11 =
 		'<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">';
 
 	const HTML_STD =	'<!DOCTYPE html>';
-	
+
 	/**
 	 * Constructeur AcidTemplate
 	 * Attribue son Doctype et son Title à l'objet.
@@ -91,7 +91,7 @@ class AcidTemplate {
 
 		$this->setDoctype();
 		$this->setTitle();
-		 
+
 	}
 
 	/**
@@ -110,7 +110,7 @@ class AcidTemplate {
 	 * @param bool $alone True si on ajoute ni préfixe, ni suffixe au titre.
 	 */
 	public function setTitle ($title=null,$alone=true) {
-		
+
 		if ($title === null) {
 			$this->head_title = Acid::get('site:name');
 		} else {
@@ -122,7 +122,42 @@ class AcidTemplate {
 		}
 
 	}
-	
+
+	/**
+	 * Recupère le numéro de versioning
+	 * @return mixed
+	 */
+	public static function versioningVal() {
+		if (!Acid::get('versioning:val')) {
+			if (Acid::get('versioning:file')) {
+				if (file_exists(SITE_PATH.Acid::get('versioning:file'))) {
+					$value = file_get_contents(SITE_PATH.Acid::get('versioning:file'));
+					$value = $value ? AcidUrl::normalize($value) : 0;
+					Acid::set('versioning:val',$value);
+				}
+			}
+		}
+
+		return Acid::get('versioning:val');
+	}
+
+	/**
+	 * Ajoute la version à l'url si possible
+	 * @param string $url
+	 * @return string
+	 */
+	public static function versioningUrl($url) {
+		$version = '';
+
+		if (strpos($url,'?')===false) {
+			if ($version = self::versioningVal()) {
+				$url .='?version='.$version;
+			}
+		}
+
+		return $url;
+	}
+
 	/**
 	 * Transforme une feuille de style php en css en fonction des configurations
 	 */
@@ -132,7 +167,7 @@ class AcidTemplate {
 			$mode =  Acid::get('css:dynamic:mode');
 			if ($files) {
 				foreach ($files as $phpf) {
-					
+
 					//$config
 					if (is_array($phpf)) {
 						$to = isset($phpf['to']) ? $phpf['to'] : null;
@@ -143,12 +178,12 @@ class AcidTemplate {
 						$from = $phpf;
 						$vars = array();
 					}
-					
+
 					//execution
 					if (file_exists($from)) {
 						$cssf = $to ? $to : AcidFs::removeExtension($from).'.css';
 						$has_css = file_exists($cssf);
-	
+
 						if ((!$has_css) || ($mode=='debug')) {
 							$css = Acid::executeTpl($from,$vars);
 							$handle = fopen($cssf, 'w+');
@@ -162,7 +197,7 @@ class AcidTemplate {
 			}
 		}
 	}
-	
+
 	/**
 	 * Associe une feuille de style au template.
 	 *
@@ -171,7 +206,7 @@ class AcidTemplate {
 	public function addCSS($url) {
 		if (!in_array($url,$this->head_css)) {
 			$this->head_css[] = $url;
-			$this->head .= '	<link href="'.$url.'" rel="stylesheet" type="text/css"/>' . "\n";
+			$this->head .= '	<link href="'.static::versioningUrl($url).'" rel="stylesheet" type="text/css"/>' . "\n";
 		}
 	}
 
@@ -194,7 +229,7 @@ class AcidTemplate {
 	public function addJS($url) {
 		if (!in_array($url,$this->head_js)) {
 			$this->head_js[] = $url;
-			$this->head .= '	<script type="text/javascript" src="'.$url.'"></script>' . "\n";
+			$this->head .= '	<script type="text/javascript" src="'.static::versioningUrl($url).'"></script>' . "\n";
 		}
 	}
 
@@ -217,7 +252,6 @@ class AcidTemplate {
 		$this->head .= "\t" . $str . "\n";
 	}
 
-
 	/**
 	 * Définit les attributs du body
 	 * @param array $tab ([attributs]=>[valeurs])
@@ -238,8 +272,6 @@ class AcidTemplate {
 		$this->output .= $str;
 	}
 
-
-
 	/**
 	 * Retourne l'entête HTML du template
 	 *
@@ -248,22 +280,22 @@ class AcidTemplate {
 	 */
 	protected function getHead() {
 		$doc_std = false;
-		
+
 		switch ($this->doctype) {
 			case self::HTML_STD :
 				$doc = '<meta charset="UTF-8">';
 				$doc_std = true;
 			break;
-			
+
 			default:
 				$doc = '	<meta http-equiv="Content-Language" content="'.Acid::get('lang:current').'" />' . "\n" .
 					   '	<meta http-equiv="Content-type" content="application/xhtml+xml; charset=UTF-8" />' ;
-			break;	
+			break;
 		}
-		
+
 		$output =   '<head>' . "\n" .
 					$doc . "\n\n" .
-					'	<title>'.$this->head_title.'</title>' . "\n\n" ; 
+					'	<title>'.$this->head_title.'</title>' . "\n\n" ;
 
 		foreach (Acid::get('meta') as $key => $val) {
 			if (!empty($val)) {
@@ -273,7 +305,7 @@ class AcidTemplate {
 				$output .= '	<meta name="'.$key.'" content="'.htmlspecialchars($val).'" />' . "\n";
 			}
 		}
-		
+
 		if ($_SERVER['REQUEST_URI'] === Acid::get('url:folder')) {
 			if (!$doc_std) {
 				$output .= '	<meta name="identifier-url" content="'.Acid::get('url:system').'"/>' . "\n";
@@ -281,7 +313,7 @@ class AcidTemplate {
 		}
 
 		$output .= "\n";
-		
+
 		/*
 		foreach ($this->head_css as $url) {
 			$output .= '	<link href="'.$url.'" rel="stylesheet" type="text/css"/>' . "\n";
@@ -302,8 +334,8 @@ class AcidTemplate {
 
 		$output .=	"\n" .
 					$this->head .
-					'</head>' . "\n\n"; 
-			
+					'</head>' . "\n\n";
+
 		return $output;
 	}
 
@@ -378,9 +410,9 @@ class AcidTemplate {
 
 
 	// Méthodes d'affichage
-	
-	
-	
+
+
+
 	/**
 	 * Affiche le template sous sa forme XML
 	 */
@@ -389,7 +421,7 @@ class AcidTemplate {
 		echo 	'<?xml version="1.0" encoding="UTF-8"?>' . "\n";
 		echo	$this->output;
 	}
-	
+
 	/**
 	 * Affiche le template sous sa forme Text
 	 */
@@ -397,21 +429,21 @@ class AcidTemplate {
 		header("Content-Type: text/plain");
 		echo $this->output;
 	}
-	
+
 	/**
 	 * Affiche le corps du template
 	 */
 	public function print_empty() {
 		echo $this->output;
 	}
-	
+
 	/**
 	 * Affiche le corps du template
 	 */
 	public function print_default() {
 		echo $this->print_empty();
 	}
-	
+
 	/**
 	 * Affiche le template sous sa forme HTML
 	 */
@@ -419,9 +451,9 @@ class AcidTemplate {
 		echo 		$this->doctype . "\n" .
 					'<html xmlns="http://www.w3.org/1999/xhtml" ' .
 						'xml:lang="'.Acid::get('lang:current').'" lang="'.Acid::get('lang:current').'">' . "\n" .
-			
+
 		$this->getHead() .
-			
+
 						'<body'.$this->getBodyAttrs().'>' . "\n" .
 		$this->output .
 						'</body>' . "\n" .
@@ -433,10 +465,10 @@ class AcidTemplate {
 
 	/**
 	 * Affiche la page au format renseigné par $GLOBALS['acid']['out'].
-	 * 
+	 *
 	 * Cette méthode utilise la variable globale $GLOBALS['acid']['out']
 	 */
-	public function printPage() { 
+	public function printPage() {
 		if (!method_exists($this,'print_'.Acid::get('out'))) {
 // 			Acid::set('out','empty');
 // 			trigger_error('Le template spécifié n\'existe pas !',E_USER_WARNING);
