@@ -80,6 +80,9 @@ AcidRouter::addRoute('userspace',new AcidRoute('@account',array('controller'=>'U
 AcidRouter::addRoute('sitemap', new AcidRoute('sitemap.xml',array('controller'=>'SitemapController')));
 AcidRouter::addRoute('robots',new AcidRoute('robots.txt',array('controller'=>'RobotsController','action'=>'index')));
 
+// Routes RSS
+AcidRouter::addRoute('rss',new AcidRoute('@rss',array('controller'=>'RssController','action'=>'index')));
+
 // Route vers la page search
 AcidRouter::addRoute('searchPage', new AcidRoute('@search',array('controller'=>'SearchController'),1));
 

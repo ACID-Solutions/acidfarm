@@ -71,6 +71,14 @@ $lang['router']['contact'] 	= array(
 								'de'=>array('key'=>'kontakt','name'=>'Kontakt')
 						 	);
 
+$lang['router']['rss'] 	= array(
+								'fr'=>array('key'=>'rss','name'=>'RSS'),
+								'en'=>array('key'=>'rss','name'=>'RSS'),
+								'es'=>array('key'=>'rss','name'=>'RSS'),
+								'it'=>array('key'=>'rss','name'=>'RSS'),
+								'de'=>array('key'=>'rss','name'=>'RSS')
+);
+
 $lang['router']['pagination_key'] 	= array(
 		'fr'=>array('key'=>'page','name'=>'Page'),
 		'en'=>array('key'=>'page','name'=>'Page'),

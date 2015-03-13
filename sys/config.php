@@ -76,7 +76,7 @@ $acid['lang']['current']      	= $acid['lang']['default'];
 
 $acid['permission_active']		=  empty($permission_active) ? false : true;
 
-$acidconf['root_keys'] = array('sitemap.xml','robots.txt');
+$acidconf['root_keys'] = array('sitemap.xml','robots.txt','rss');
 $acidconf['site_keys'] = array('news','gallery','search','contact');
 
 $acidconf['lvl']['seo'] = $acid['lvl']['dev'] ;

@@ -104,16 +104,22 @@ class Actu extends AcidModule {
 		return Route::buildUrl(static::checkTbl().'_list',array('page'=>$page));
 	}
 
+
 	/**
-	 * Retourn la dernière actualité sous forme d'objet
-	 * @return object
+	 * Retourne la dernière actualité sous forme d'objet
+	 * @param number $limit
+	 * @return multitype:Actu |NULL
 	 */
-	public static function getLast() {
-		$elts = Acid::mod('Actu')->dbList(array(array('active','=','1')),array('adate'=>'DESC'),1);
-		if (count($elts)) {
-			$a = new Actu();
-			$a->initVars($elts[0]);
-			return $a;
+	public static function getLast($limit=1) {
+
+		if ($elts = Acid::mod('Actu')->dbList(array(array('active','=','1')),array('adate'=>'DESC'),$limit)) {
+			$return = array();
+			foreach ($elts as $elt) {
+				$a = new Actu($elt);
+				$return[]= $a;
+			}
+
+			return $limit === 1 ? $return[0] : $return;
 		}else{
 			return null;
 		}
