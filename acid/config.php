@@ -316,4 +316,8 @@ $acid['css']['dynamic']['mode'] = 'default';	//debug (always), default (if not e
 $acid['versioning']['file'] = 'sys/versioning.txt';
 $acid['versioning']['val'] = ''; //if value, override versionning file
 
+// Sass
+$acid['sass']['enable'] = false;
+$acid['sass']['mode'] = 'dev';
+
 ?>

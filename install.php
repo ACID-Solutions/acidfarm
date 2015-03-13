@@ -328,6 +328,14 @@ $lprod_quote\$acid['error_report']['prod']	= E_ALL & ~E_STRICT;
 \$acid['css']['dynamic']['active'] = false;	//generate css file referring to php file
 \$acid['css']['dynamic']['mode'] = '$cssdyn_mode';	//debug (always), default (if not exists)
 
+//Versioning
+//\$acid['versioning']['file'] = 'sys/versioning.txt';
+//\$acid['versioning']['val'] = ''; //if value, override versionning file
+
+// Sass
+\$acid['sass']['enable'] = true;
+$ldev_quote\$acid['sass']['mode'] = 'dev';
+
 EOT;
 
 

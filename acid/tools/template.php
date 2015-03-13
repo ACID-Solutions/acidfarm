@@ -199,6 +199,19 @@ class AcidTemplate {
 	}
 
 	/**
+	 *	Retourne le lien sass ou non en fonction du context
+	 */
+	public function sassUrl($what) {
+		if (Acid::get('sass:enable')) {
+			if (Acid::get('sass:mode')=='dev') {
+				return Acid::get('url:css').'sass.php/sass/'.$what.'.scss';
+			}
+		}
+
+		return  Acid::get('url:css').$what.'.css';
+	}
+
+	/**
 	 * Associe une feuille de style au template.
 	 *
 	 * @param string $url

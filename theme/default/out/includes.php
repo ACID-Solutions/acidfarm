@@ -1,6 +1,8 @@
 <?php
+
 $this->addCSS(Acid::themeUrl('css/'.Acid::get('css:theme').'.css'));
 $this->addCSS(Acid::themeUrl('css/'.Acid::get('css:dialog').'.css'));
+//$this->addCSS($this->sassUrl('test'));
 
 $this->jQuery();
 $this->jQueryLightBox();
