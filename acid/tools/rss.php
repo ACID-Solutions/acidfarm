@@ -165,9 +165,14 @@ class AcidRss {
 	 */
 	public function add($title, $link, $guid, $description, $pubDate, $img=null, $media_mode=null, $gmt=null) {
 
-		if(file_exists($img)){
-			$size = filesize($img);
-			$type = exif_imagetype($img);
+		$img_path = SITE_PATH.AcidFs::removeBasePath($img);
+		$img_url = Acid::get('url:system_lang').AcidFs::removeBasePath($img);
+
+		if($img && file_exists($img_path)){
+
+			$size = filesize($img_path);
+			$type = exif_imagetype($img_path);
+
 			switch($type){
 				case IMAGETYPE_GIF:
 					$ext = "gif";
@@ -182,12 +187,12 @@ class AcidRss {
 
 			if ($media_mode=='yahoo')  {
 				$media = '<media:content
-						 	url="'.Acid::get("url:prefix").Actu::genUrlKey("img", $img, "bloc").'"
+						 	url="'.$img_url.'"
 						  	fileSize="'.$size.'"
 						  	type= "image/'.$ext.'"
 						  />' . "\n";
 			}else{
-				$media = '<enclosure url="'.Acid::get("url:scheme").Acid::get("url:domain").Actu::genUrlKey("img", $img, "bloc").'" length="'.$size.'" type= "image/'.$ext.'" ></enclosure>'. "\n";
+				$media = '<enclosure url="'.$img_url.'" length="'.$size.'" type= "image/'.$ext.'" ></enclosure>'. "\n";
 			}
 
 		}

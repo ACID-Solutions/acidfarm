@@ -57,6 +57,30 @@ class AcidFs
 	    return $name;
     }
 
+    /**
+     * Retourne le nom du fichier delesté du basepath le cas échéant
+     *
+     * @param string $file_name
+     *
+     * @return string
+     */
+    public static function removeBasePath($file_name) {
+
+    	if (strpos($file_name,Acid::get('url:system_lang'))===0) {
+			return substr($file_name,strlen(Acid::get('url:system_lang')));
+    	}
+
+    	if (strpos($file_name,SITE_PATH.Acid::get('url:folder_lang'))===0) {
+    		return substr($file_name,strlen(SITE_PATH.Acid::get('url:folder_lang')));
+    	}
+
+    	if (strpos($file_name,Acid::get('url:folder_lang'))===0) {
+    		return substr($file_name,strlen(Acid::get('url:folder_lang')));
+    	}
+
+
+    	return $file_name;
+    }
 
     /**
      * Retourne le couple (largeur, hauteur) correspondant à l'encoffrage d'une image de dimension $w x $h dans $mw x $mh.

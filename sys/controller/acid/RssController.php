@@ -72,7 +72,7 @@ class RSSController {
 
 			$rssDate = $actu->get ( 'adate' );
 
-			$rss_flux->add ( $title, $url, $url, $desc, $rssDate, $img, null );
+			$rss_flux->add ( $title, $url, $url, $desc, $rssDate, $img );
 
 		}
 

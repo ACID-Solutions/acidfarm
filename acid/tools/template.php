@@ -203,10 +203,10 @@ class AcidTemplate {
 	 *
 	 * @param string $url
 	 */
-	public function addCSS($url) {
+	public function addCSS($url,$versioning=true) {
 		if (!in_array($url,$this->head_css)) {
 			$this->head_css[] = $url;
-			$this->head .= '	<link href="'.static::versioningUrl($url).'" rel="stylesheet" type="text/css"/>' . "\n";
+			$this->head .= '	<link href="'.($versioning ? static::versioningUrl($url) : $url).'" rel="stylesheet" type="text/css"/>' . "\n";
 		}
 	}
 
@@ -226,10 +226,10 @@ class AcidTemplate {
 	 *
 	 * @param string $url
 	 */
-	public function addJS($url) {
+	public function addJS($url,$versioning=true) {
 		if (!in_array($url,$this->head_js)) {
 			$this->head_js[] = $url;
-			$this->head .= '	<script type="text/javascript" src="'.static::versioningUrl($url).'"></script>' . "\n";
+			$this->head .= '	<script type="text/javascript" src="'.($versioning ? static::versioningUrl($url) : $url).'"></script>' . "\n";
 		}
 	}
 
