@@ -12,7 +12,7 @@
 
     <div class="block_content_text content_body">
     	<?php echo $o->trad('content');?>
-    	<div class="clear"></div
+    	<div class="clear"></div>
     </div>
 
     <?php /*
