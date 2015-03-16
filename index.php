@@ -93,6 +93,6 @@ AcidRouter::addRoute('page',new AcidRoute(':page_key',array('controller'=>'PageC
 AcidRouter::addDefaultRoute('index',new AcidRoute('default',array('controller'=>'PageController','action'=>'home')));
 
 //Lancement du Router
-AcidRouter::before('*',function() { Seo::prepare(); })->run();
+AcidRouter::after('*',function() { Seo::prepare(); })->run();
 
 require 'sys/stop.php';

@@ -65,6 +65,24 @@ class Seo extends AcidModule {
 
 	}
 
+	/**
+	 * (non-PHPdoc)
+	 * @see AcidModuleCore::printAdminForm()
+	 */
+	public function printAdminForm($do) {
+
+		$help = '<ul style="margin-top:50px; padding:10px; font-size:11px; line-height:18px;" >' . "\n" .
+				'<li><b>' . $this->modTrad('url') .'</b> : __LANG__ </li>' . "\n" .
+				'<li><b>' . $this->modTrad('seo_title') .', '.$this->modTrad('seo_desc').', '.$this->modTrad('seo_keys').'</b> : '.
+							' __SITENAME__, __ROUTENAME__, __PARAM:key__ , __OBJ:key__</li>' . "\n" .
+				'</ul>' . "\n" ;
+
+		return parent::printAdminForm($do). $help;
+	}
+
+	/**
+	 * Retourne l'instance SEO
+	 */
 	public static function getInstance() {
 		if (static::$_instance===null) {
 			static::$_instance = static::build();
@@ -74,6 +92,106 @@ class Seo extends AcidModule {
 		return static::$_instance;
 	}
 
+	/**
+	 * Retourne l'url après traitement des variables magiques
+	 * @param string $url
+	 * @return string
+	 */
+	public static function treatUrl($url) {
+		$parse = explode('/',str_replace('__LANG__',Acid::get('lang:current'),$url));
+		$params = AcidRouter::getParams();
+
+		foreach ($parse as $k=>$v) {
+			if (strpos($v,'@')===0) {
+				$parse[$k] = AcidRouter::getKey(substr($v,1));
+			}elseif (strpos($v,':')===0) {
+				if (isset($params[substr($v,1)])) {
+					$parse[$k] = $params[substr($v,1)];
+				}
+			}
+		}
+
+		return implode('/',$parse);
+	}
+
+	/**
+	 * Retourne la chaine de caractères SEO après traitement des variables magiques
+	 * @param string $value
+	 * @return mixed
+	 */
+	public static function treatSEO($value) {
+
+		//s'il y a une variable magique
+		if (  strpos($value,'__')!==false ) {
+
+			//s'il y a un objet associé à la page courante
+			if (  $obj = Acid::get('tmp_current_object') ) {
+
+				//si on fait appel à une valeur de l'objet
+				if (  strpos($value,'__OBJ')!==false ) {
+
+					$objvals = $obj->getVals();
+
+					$results = array();
+
+					if (preg_match_all("/__OBJ:[a-zA-Z0-9_]*__/",$value,$results)) {
+
+						if (!empty($results[0])) {
+
+							foreach ($results[0] as $exp) {
+								$sparse = explode(':',str_replace('__', '', $exp));
+								if (count($sparse) > 1)  {
+									if (isset($objvals[$obj->langKey($sparse[1])])) {
+										$value = str_replace($exp,htmlspecialchars($objvals[$obj->langKey($sparse[1])]),$value);
+									}
+								}
+							}
+
+						}
+
+					}
+
+				}
+			}
+
+			//si on fait appel un paramètre router
+			if (  strpos($value,'__PARAM')!==false ) {
+				if ($params = AcidRouter::getParams())  {
+
+					foreach ($params as $pk=>$pv) {
+						$value = str_replace('__PARAM:'.$pk.'__',$pv,$value);
+					}
+
+				}
+			}
+
+			//si on fait appel à un nom lié au router
+			if (  strpos($value,'__ROUTENAME')!==false ) {
+
+				$value = str_replace('__ROUTENAME__',AcidRouter::getName(AcidRouter::getCurrentRouteName()),$value);
+
+				if ($routekeys = Acid::get('router','lang')) {
+					foreach ($routekeys as $pk=>$pv) {
+
+						$value = str_replace('__ROUTENAME:'.$pk.'__',AcidRouter::getName($pk),$value);
+					}
+				}
+
+			}
+
+			//si on demande le nom du site
+			$value = str_replace('__SITENAME__',Acid::get('site:name'),$value);
+
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Retourne true si l'url soumise match avec l'url courante
+	 * @param array $seotab
+	 * @return boolean
+	 */
 	public static function seoMatch($seotab) {
 		if (is_array($seotab)) {
 
@@ -92,8 +210,10 @@ class Seo extends AcidModule {
 
 			$url_match = false;
 			if (!empty($seotab['url'])) {
+
 				if (strpos($_SERVER['REQUEST_URI'],Acid::get('url:folder'))===0) {
 					$checkuri = substr($_SERVER['REQUEST_URI'],strlen(Acid::get('url:folder')));
+					$seotab['url'] = static::treatUrl($seotab['url']);
 
 					if ($checkuri==$seotab['url']) {
 						$url_match = true;
@@ -115,6 +235,10 @@ class Seo extends AcidModule {
 		return false;
 	}
 
+	/**
+	 * Ecrase les valeurs SEO par défaut si définit par le module
+	 * @return boolean
+	 */
 	public static function prepare() {
 		if (static::getInstance()->seos) {
 			foreach (static::getInstance()->seos as $seo_elt) {
@@ -123,15 +247,15 @@ class Seo extends AcidModule {
 					$seo = new Seo($seo_elt);
 
 					if ($seo->trad('seo_title')) {
-						Conf::setPageTitle($seo->trad('seo_title'));
+						Conf::setPageTitle(static::treatSEO($seo->trad('seo_title')));
 					}
 
 					if ($seo->trad('seo_desc')) {
-						Conf::setMetaDesc($seo->trad('seo_desc'));
+						Conf::setMetaDesc(static::treatSEO($seo->trad('seo_desc')));
 					}
 
 					if ($seo->trad('seo_keys')) {
-						Conf::addToMetaKeys(explode(',',$seo->trad('seo_keys')));
+						Conf::addToMetaKeys(explode(',',static::treatSEO($seo->trad('seo_keys'))));
 					}
 
 					return true;
@@ -139,6 +263,5 @@ class Seo extends AcidModule {
 			}
 		}
 	}
-
 
 }
