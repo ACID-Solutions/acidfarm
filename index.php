@@ -22,7 +22,10 @@ $meta_desc_start = '';
 $meta_desc_base = '';
 $meta_desc =  '';
 $meta_keys =  array();
-$acid['ariane'] = array();
+$meta_image =  '';
+
+//Ariane
+Acid::set('ariane',array());
 
 //Metas
 $page_title = '';
@@ -42,19 +45,22 @@ Conf::setMetaDescStart($meta_desc_start);
 Conf::setMetaDesc($meta_desc);
 Conf::setPageTitleAlone($page_title_alone);
 
+//Std Metas : default
+if ($page_title) {
+	Conf::set('meta:title:'.Acid::get('lang:default').':default',$page_title);
+}
+
+if ($meta_keys) {
+	Conf::set('meta:keywords:'.Acid::get('lang:default').':default',$meta_keys);
+}
+
+if ($meta_image) {
+	Conf::set('meta:image:'.Acid::get('lang:default').':default',$meta_image);
+}
+
 $searched_key = AcidRouter::searchKey($nav[0]);
+Conf::executeMetaDefault($searched_key);
 
-if (Conf::defaultMetaKeys($searched_key)) {
-    Conf::setMetaKeys(Conf::defaultMetaKeys($searched_key));
-}
-
-if (Conf::defaultMetaDesc($searched_key)) {
-    Conf::setMetaDesc(Conf::defaultMetaDesc($searched_key));
-}
-
-if (Conf::defaultPageTitle($searched_key)) {
-    Conf::setPageTitle(Conf::defaultPageTitle($searched_key));
-}
 
 //Définitions des Routes Controller
 

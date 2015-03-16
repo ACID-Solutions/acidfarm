@@ -290,6 +290,55 @@ class Conf {
 	}
 
 	/**
+	 * Retourne la meta image associés à $key
+	 * @param string $key
+	 * @return mixed
+	 */
+	public static function defaultMetaImage($key) {
+		if (Conf::exist('meta:image:'.Acid::get('lang:current').':'.$key)) {
+			return Conf::get('meta:image:'.Acid::get('lang:current').':'.$key);
+		}
+
+		return Conf::get('meta:image:'.Acid::get('lang:default').':'.$key);
+	}
+
+	/**
+	 * Définit les Metas par défaut en fonction de la clé en entrée
+	 * @param string $seo_key
+	 */
+	public static function executeMetaDefault($seo_key=null) {
+		if (Conf::defaultMetaKeys('default')) {
+	   		Conf::setMetaKeys(Conf::defaultMetaKeys('default'));
+		}
+
+		if (Conf::defaultMetaDesc('default')) {
+		    Conf::setMetaDesc(Conf::defaultMetaDesc('default'));
+		}
+
+		if (Conf::defaultPageTitle('default')) {
+		    Conf::setPageTitle(Conf::defaultPageTitle('default'));
+		}
+
+		if (Conf::defaultMetaImage('default')) {
+			Conf::setMetaImage(Conf::defaultMetaImage('default'));
+		}
+
+		if ($seo_key) {
+			if (Conf::defaultMetaKeys($seo_key)) {
+				Conf::setMetaKeys(Conf::defaultMetaKeys($seo_key));
+			}
+
+			if (Conf::defaultMetaDesc($seo_key)) {
+				Conf::setMetaDesc(Conf::defaultMetaDesc($seo_key));
+			}
+
+			if (Conf::defaultPageTitle($seo_key)) {
+				Conf::setPageTitle(Conf::defaultPageTitle($seo_key));
+			}
+		}
+	}
+
+	/**
 	 * Retourne le meta image
 	 */
 	public static function getMetaImage() {

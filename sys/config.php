@@ -120,12 +120,12 @@ $acidconf['keys']['reserved']=$acidconf['site_keys'];
  * Configuration des meta keywords de base
  */
 
-//$acidconf['meta']['keywords']['fr']		= array('exemple', 'de', 'mots-clé');
-//$acidconf['meta']['keywords']['fr']		= array();
-//$acidconf['meta']['keywords']['en']		= array();
-//$acidconf['meta']['keywords']['es']		= array();
-//$acidconf['meta']['keywords']['de']		= array();
-//$acidconf['meta']['keywords']['it']		= array();
+//$acidconf['meta']['keywords']['fr']['default']		= array('exemple', 'de', 'mots-clé');
+//$acidconf['meta']['keywords']['fr']['default']		= array();
+//$acidconf['meta']['keywords']['en']['default']		= array();
+//$acidconf['meta']['keywords']['es']['default']		= array();
+//$acidconf['meta']['keywords']['de']['default']		= array();
+//$acidconf['meta']['keywords']['it']['default']		= array();
 
 
 //--description
@@ -134,19 +134,33 @@ $acidconf['keys']['reserved']=$acidconf['site_keys'];
  * Configuration des meta description de base
  */
 
-//$acidconf['meta']['description']['fr']		= "exemple de metadesc";
-//$acidconf['meta']['description']['fr']		= "";
-//$acidconf['meta']['description']['en']		= "";
-//$acidconf['meta']['description']['es']		= "";
-//$acidconf['meta']['description']['de']		= "";
-//$acidconf['meta']['description']['it']		= "";
+//$acidconf['meta']['description']['fr']['default']		= "exemple de metadesc";
+//$acidconf['meta']['description']['fr']['default']		= "";
+//$acidconf['meta']['description']['en']['default']		= "";
+//$acidconf['meta']['description']['es']['default']		= "";
+//$acidconf['meta']['description']['de']['default']		= "";
+//$acidconf['meta']['description']['it']['default']		= "";
 
+//--image
+
+/**
+ * Configuration des meta image de base
+ */
+
+//$acidconf['meta']['image']['fr']['default']		= "/ascreen.jpg";
+//$acidconf['meta']['image']['fr']['default']		= "";
+//$acidconf['meta']['image']['en']['default']		= "";
+//$acidconf['meta']['image']['es']['default']		= "";
+//$acidconf['meta']['image']['de']['default']		= "";
+//$acidconf['meta']['image']['it']['default']		= "";
 
 //--title
 
 /**
  * Configuration des meta title de base
  */
+
+//$acidconf['meta']['title']['fr']['default']		= 'exemple';
 
 $acidconf['meta']['title']['fr']		= array(
 		'news'=>"Actualités",
