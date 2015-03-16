@@ -24,7 +24,7 @@ $template->cssPrepare();
 //Checking for SEO
 $log_meta_url = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
 
-if (!empty($check_for_keywords)) {
+if ($check_for_keywords = Conf::get('meta:check_for_keywords')) {
 	$check = is_numeric($check_for_keywords) ? $check_for_keywords : 5;
 	$tab_kw = Lib::getWordsCount($html,$check);
 	foreach ($tab_kw as $key => $elt) {

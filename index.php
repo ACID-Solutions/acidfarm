@@ -33,7 +33,8 @@ $page_title_alone = false;
 Acid::set('title:right',' - '.Acid::get('site:name'));
 Acid::set('title:left','');
 
-$check_for_keywords = 3;
+//Meta keywords autodetection
+Conf::set('meta:check_for_keywords',3);
 
 //Hook for index
 AcidHook::call('index');
