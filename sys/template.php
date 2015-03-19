@@ -134,7 +134,9 @@ class MyTemplate extends AcidTemplate {
 
 			//$this->addJS(Acid::get('url:folder').'js/tiny_mce/tiny_mce.js');
 			$this->addJS(Acid::get('url:folder').'js/tiny_mce_417/tinymce.min.js');
-
+			if (file_exists(SITE_PATH.'js/tiny_mce_417/langs/'.Acid::get('lang:current').'.js')){
+				$this->addJS(Acid::get('url:folder').'js/tiny_mce_417/langs/'.Acid::get('lang:current').'.js');
+			}
 
 			$ids = isset($GLOBALS['acid']['tinymce']['ids']) ? $GLOBALS['acid']['tinymce']['ids'] : array();
 			//$tpl = isset($GLOBALS['acid']['tinymce']['tpl']) ? $GLOBALS['acid']['tinymce']['tpl'] : 'tools/deprecated/tiny-mce.tpl';
