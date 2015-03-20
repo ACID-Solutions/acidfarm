@@ -17,6 +17,7 @@ if (isset($opt['c']) ) {
 		if (AcidFs::getExtension($file)=='scss') {
 
 			$scss = new scssc();
+			$scss->addImportPath(SITE_PATH.Acid::get('rel:css'));
 			$fname = AcidFS::removeExtension(basename($file)).'.css';
 
 			echo 'translating '.$file." to ".$path_to.$fname."\n";
