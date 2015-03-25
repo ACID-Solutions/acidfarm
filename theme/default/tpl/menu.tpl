@@ -1,5 +1,5 @@
 <nav id="nav">
-    <ul id="menu" style="padding:0;margin:0;">
+    <ul id="menu">
 	<?php
 	$my_key = AcidRouter::searchKey(AcidRouter::getParamById(0));
 	$my_key =  $my_key ? $my_key : AcidRouter::getParamById(0);
