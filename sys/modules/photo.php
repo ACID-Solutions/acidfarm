@@ -33,7 +33,7 @@ class Photo extends AcidModule {
 		$photo_format 		=	array(
 									'src'=>array(	'size' => array(0,0,false), 'suffix' => '', 'effect' => array() ),
 									'large'=>array(	'size' => array(500,500,false),	'suffix' => '_l', 'effect' => array() ),
-									'diapo'=>array(	'size' => array(180,180,true),	'suffix' => '_diapo', 'effect' => array() ),
+									'diapo'=>array(	'size' => array(240,240,true),	'suffix' => '_diapo', 'effect' => array() ),
 									'mini'=>array(	'size' => array(48,48,true), 'suffix' => '_s', 'effect' => array()	)
 								);
 
@@ -143,7 +143,7 @@ class Photo extends AcidModule {
 	 */
 	public static function printGallery() {
 		$elts = Acid::mod('Photo')->dbList(array(array('active','=',1)),array('pos'=>'ASC'));
-		return Acid::tpl('tools/wall.tpl',array('elts'=>$elts),Acid::mod('Photo'));
+		return Acid::tpl('pages/gallery.tpl',array('elts'=>$elts),Acid::mod('Photo'));
 	}
 
 }

@@ -32,8 +32,8 @@ class PhotoHome extends AcidModule {
 
 		$photo_format 		=	array(
 									'src'=>array(	'size' => array(0,0,false), 'suffix' => '', 'effect' => array() ),
-									'diapo'=>array(	'size' => array(780,320,true),	'suffix' => '_diapo', 'effect' => array() ),
-									'mini'=>array(	'size' => array(78,32,true), 'suffix' => '_s', 'effect' => array()	)
+									'diapo'=>array(	'size' => array(960,400,true),	'suffix' => '_diapo', 'effect' => array() ),
+									'mini'=>array(	'size' => array(96,40,true), 'suffix' => '_s', 'effect' => array()	)
 								);
 
 

@@ -1,11 +1,22 @@
 @import '/sass/config';
 
 $blanc:#FFFFFF;
-$noir:#000000;
+$noir:#1C1C1C;
 $vert1:#96c11f;
 $vert2:#3f570a;
 $gris1:#C0C0C0;
 $gris2:#7a7a7a;
+
+$bgcolor:$gris1;
+$sitecolor:$noir;
+$fontcolor:$noir;
+$titlecolor:$noir;
+$linkcolor:$vert2;
+$linkhovercolor:$gris2;
+
+$site_width:1000px;
+$content_padding:20px;
+$content_width:$site_width - (2*$content_padding);
 
 //-----GENERAL-----
 
@@ -15,7 +26,8 @@ html, body {
   padding:0px; 
   font-size:9pt; 
   font-family: arial; 
-  background-color:#C0C0C0; 
+  background-color:$bgcolor; 
+  color:$fontcolor;
 }
 
 body{ 
@@ -23,7 +35,7 @@ body{
 }
 
 a {
-  color:#3F570A;
+  color:$linkcolor;
   
   &:focus{
     outline:none;
@@ -34,7 +46,7 @@ a {
   }
   
   &:hover{
-    color:#7A7A7A;
+    color:$linkhovercolor;
   }
 }
 
@@ -50,7 +62,9 @@ img{
 }
 
 .clear{position:relative; height:0px; clear:both;}
+
 .first{margin-top:0px;}
+
 .without_margin{margin:0px;}
 
 
@@ -58,7 +72,7 @@ img{
   
   #{$tag} {
     &, & a{
-      color:#1C1C1C;
+      color:$titlecolor;
     }
   }
   
@@ -93,10 +107,10 @@ p{
 }
 
 hr{ 
-  border:0px solid #000000; 
+  border:0px solid $fontcolor; 
   height:1px; 
-  background-color:#000000; 
-  color:#000000;  
+  background-color:$fontcolor; 
+  color:$fontcolor;  
 }
 
 
@@ -107,13 +121,13 @@ hr{
   top:0px; 
   height:180px;
   min-width:100%;  
-  background-color:#1C1C1C; 
+  background-color:$sitecolor; 
   text-align:center; 
-  color:#FFFFFF;
+  color:$blanc;
   
   #header_content{
-    width:780px;  
-    padding:10px 20px;  
+    width:$content_width;  
+    padding:10px $content_padding;  
     margin:auto;
     
     #header_logo_link{
@@ -122,7 +136,7 @@ hr{
       #header_logo{
         margin:10px 0px;
       }
-    }
+    }    
   }
 }
 
@@ -134,11 +148,11 @@ hr{
     padding-bottom:100px;
     
     #content{
-      width:780px;  
-      padding:20px 20px;  
+      width:$content_width;  
+      padding:20px $content_padding;   
       margin:auto;
-      border:1px solid #1C1C1C; 
-      background-color:#FFFFFF;   
+      border:1px solid $noir; 
+      background-color:$blanc;   
       min-height:100px;
     }
     
@@ -151,21 +165,21 @@ hr{
   margin-top:-50px; 
   height:50px; 
   min-width:100%; 
-  background-color:#1C1C1C; 
+  background-color:$sitecolor; 
   text-align:center; 
-  color:#FFFFFF;
+  color:$blanc;
   
   #footer_content{
-   width:780px;  
-   padding:10px 20px;
+   width:$content_width;  
+   padding:10px $content_padding;  
    line-height:30px;  
    margin:0px auto;
     
    a{
-      color:#96C11F;
+      color:$vert1;
       
       &:hover{
-        color:#7A7A7A
+        color:$linkhovercolor;
       }
     }
     
@@ -203,16 +217,17 @@ hr{
       li{
         &:nth-child(n+1){
           &:before{
-            color:#000000; 
-            padding-left:5px; 
-            padding-right:5px; 
-            content: "-";
+            color:$blanc; 
+            padding-left:8px; 
+            padding-right:8px; 
+            content: "";
           }
         }
         &:first-child{
           &:before{
-            color:#000000;  
+            color:$blanc;  
             content: "";
+            padding:0px;
           } 
         }
       }      
@@ -221,16 +236,16 @@ hr{
   
   .menu{
     &, a{
-      color:#FFFFFF;
+      color:$blanc;
       
       &:hover{
-         color:#7A7A7A;
+         color:$linkhovercolor;
       }
     } 
     
     &.selected {
       &, a{
-        color:#96c11f;
+        color:$vert1;
       }  
     }
   }
@@ -241,7 +256,7 @@ hr{
 //-----ARIANE-----
 
 #ariane{ 
-  background-color:rgba(28,28,28,0.2); 
+  background-color:rgba($noir,0.2); 
   height:20px; 
   line-height:20px; 
   font-size:11px; 
@@ -252,10 +267,10 @@ hr{
   margin-top:10px; 
   
   a{
-    color:#4F4F4F;
+    color:$sitecolor;
     
     &:hover{
-      color:#7A7A7A;
+      color:$gris2;
     }
   }
 }
@@ -268,7 +283,7 @@ hr{
   text-align:center; 
   padding-top:15px; 
   margin-top:15px;  
-  border:0px solid #000000; 
+  border:0px solid $noir; 
   border-top-width:1px;  
 }
 
@@ -288,7 +303,7 @@ header{
   background:none; 
   padding:0px; 
   text-align:left; 
-  color:#000000;
+  color:$fontcolor;
 }
 
 section {
@@ -388,48 +403,87 @@ section {
 //-----CONTACT-----
 
 #contact{
-  #contact_left{ 
+  #contact_left{
+    @include border-box(); 
     float:left; 
-    width:300px;
+    width:50%;
+    padding-right:2%;
   }
   #contact_right{
+    @include border-box();
     float:right; 
-    width:400px;
+    width:50%;
+    padding-left:2%;
   }
   #block_gmap{ 
-    height:200px; 
-    width:250px; 
+    @include border-box();
+    height:300px; 
+    width:100%; 
+  }
+  #contact_form{
+    input, textarea{
+      @include border-box();
+      width:100%;
+    }
   }
 }
 
 
 //-----WALLART-----
-
+$nb_per_row:4;
+$wall_width:960px;
+$wall_elt_width:$wall_width/4;
 #gallery_wall{ 
-  width:720px; 
+  width:$wall_width; 
   margin:auto; 
   
   .wall_elt{
-    float:left; 
-    width:180px; 
-    height:180px; 
-    background-color:#FFFFFF;
+    float:left;
+    position:relative; 
+    width:$wall_elt_width; 
+    height:$wall_elt_width; 
+    background-color:$blanc;
+    .wall_elt_overlay{
+      display:none;
+      position:absolute; 
+      top:0px;
+      left:0px;
+      right:0px;
+      bottom:0px;
+      background-color:rgba($noir,0.8);
+    }
+   
+    &:hover .wall_elt_overlay{
+      display:table;
+      width:$wall_elt_width; 
+      height:$wall_elt_width; 
+      .wall_elt_overlay_content{
+         display:table-cell;
+         height:100%;
+         width:100%;
+         vertical-align:middle;
+         color:$blanc;
+         font-weight:bold;
+      }    
+    }
+    
   }
   .wall_elt_bg{
     display:table; 
-    width:180px; 
-    height:180px;
+    width:$wall_elt_width; 
+    height:$wall_elt_width;
     text-align:center; 
     vertical-align:middle;
   }
   .wall_elt_body{
     display:table-cell; 
-    width:180px; 
-    height:180px; 
+    width:$wall_elt_width; 
+    height:$wall_elt_width; 
     text-align:center; 
     vertical-align:middle;
   }
   .wall_elt_img{
     margin:auto;
   }
+
 }

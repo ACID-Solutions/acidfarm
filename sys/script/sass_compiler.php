@@ -40,7 +40,9 @@ if (isset($opt['c']) ) {
 			if (is_dir($path_to)) {
 				if ($dh = opendir($path_from)) {
 					while (($file = readdir($dh)) !== false) {
-						sass_compilation_from_file($path_from.$file,$path_to);
+						if (strpos(basename($file),'_')!==0) {
+							sass_compilation_from_file($path_from.$file,$path_to);
+						}
 					}
 					closedir($dh);
 				}
