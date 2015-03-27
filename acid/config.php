@@ -197,7 +197,7 @@ $acid['upgrade']['path']['upgrade']			= SITE_PATH.'sys/upgrade/';
 $acid['upgrade']['db']['sample_prefix']		= array('acid_','af_');
 
 $acid['upgrade']['mode']			= 'off'; // dev / prod / off
-$acid['upgrade']['exclued']			= array('files'=>array(),'folders'=>array('.svn'));
+$acid['upgrade']['excluded']			= array('files'=>array(),'folders'=>array('.svn'));
 
 //PHP error logs
 $acid['debug']                  = true;

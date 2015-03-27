@@ -3351,10 +3351,10 @@ abstract class AcidModuleCore {
 				}
 			}
 
-			if (isset($this->config['admin']['list']['keys_exclued'])) {
-				foreach ($this->config['admin']['list']['keys_exclued'] as $tk => $tkey) {
+			if (isset($this->config['admin']['list']['keys_excluded'])) {
+				foreach ($this->config['admin']['list']['keys_excluded'] as $tk => $tkey) {
 					if (strpos($tkey,'.')==false) {
-						$this->config['admin']['list']['keys_exclued'][$tk] = self::dbPref($tkey);
+						$this->config['admin']['list']['keys_excluded'][$tk] = self::dbPref($tkey);
 					}
 				}
 			}
@@ -3364,9 +3364,9 @@ abstract class AcidModuleCore {
 		$def_vars = !$modules ? $this->vars : $mod_champs;
 		if (isset($this->config['admin']['list']['keys'])) {
 			$t_champs = $this->config['admin']['list']['keys'];
-		}elseif (!empty($this->config['admin']['list']['keys_exclued'])) {
+		}elseif (!empty($this->config['admin']['list']['keys_excluded'])) {
 			$t_champs = $def_vars;
-			foreach ($this->config['admin']['list']['keys_exclued'] as $kdel) {
+			foreach ($this->config['admin']['list']['keys_excluded'] as $kdel) {
 				unset($t_champs[$kdel]);
 			}
 			$t_champs = array_keys($t_champs);
@@ -3820,7 +3820,7 @@ abstract class AcidModuleCore {
 		$images_keys = array_keys($this->getVarsImages());
 		$files_keys = array_keys($this->getVarsFiles());
 
-		$exclued_keys = isset($this->config['admin'][$do]['keys_exclued']) ? $this->config['admin'][$do]['keys_exclued'] : array();
+		$excluded_keys = isset($this->config['admin'][$do]['keys_excluded']) ? $this->config['admin'][$do]['keys_excluded'] : array();
 
 		$next_page = isset($this->config['admin'][$do]['next_page']) ? $this->config['admin'][$do]['next_page'] : null;
 		$action_page = isset($this->config['admin'][$do]['action']) ? $this->config['admin'][$do]['action'] : '';
@@ -3859,7 +3859,7 @@ abstract class AcidModuleCore {
 		if ($keys) {
 			foreach ($keys as $key) {
 				if (isset($this->vars[$key])) {
-					if (!in_array($key,$exclued_keys)) {
+					if (!in_array($key,$excluded_keys)) {
 						$params = isset($this->config['admin'][$do]['params'][$key]) ? $this->config['admin'][$do]['params'][$key] : array();
 						$start = isset($this->config['admin'][$do]['start'][$key]) ? $this->config['admin'][$do]['start'][$key] : '';
 						$stop = isset($this->config['admin'][$do]['stop'][$key]) ? $this->config['admin'][$do]['stop'][$key] : '';

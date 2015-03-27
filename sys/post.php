@@ -49,7 +49,7 @@ if (Acid::get('session:enable')) {
 	Acid::mod('User')->exeUser();
 }
 
-$exclued = array('User');
+$excluded = array('User');
 
 //Hooks
 AcidHook::call('post');
@@ -64,7 +64,7 @@ if (isset($_POST['module_do'])) {
 			break;
 
 			default:
-				if (!in_array($mod,$exclued)) {
+				if (!in_array($mod,$excluded)) {
 					$module = new $_POST['module_do']();
 					if (isset($_POST[$module->preKey('do')])) {
 						$module->exePostProcess();

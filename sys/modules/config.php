@@ -36,7 +36,7 @@ class SiteConfig extends AcidModule {
 	/**
 	 * @var array liste des clés à ne pas considérer comme des variables
 	 */
-	protected $exclued_keys=array();
+	protected $excluded_keys=array();
 
 	/**
 	 * @var bool si vrai, alors on permet à l'utilisateur de créer ses propres variables
@@ -69,7 +69,7 @@ class SiteConfig extends AcidModule {
 		$this->addControl(array('email','contact','address','cp','city','coords','zoom','phone','fax','website'));
 		//$this->addRemoteControl(array('key1','key2'));
 
-		$this->addExclued(array(self::preKey('do'),'submit','next_page'));
+		$this->addExcluded(array(self::preKey('do'),'submit','next_page'));
 
 		$this->setConfig('assoc:index', 'name');
 		$this->setConfig('assoc:value', 'id_config');
@@ -105,10 +105,10 @@ class SiteConfig extends AcidModule {
 	 * Ajoute des clés d'exclusion associées à l'objet
 	 * @param array $tab
 	 */
-	public function addExclued($tab) {
+	public function addExcluded($tab) {
 		foreach ($tab as $key) {
-			if (!in_array($key,$this->exclued_keys)) {
-				$this->exclued_keys[] = $key;
+			if (!in_array($key,$this->excluded_keys)) {
+				$this->excluded_keys[] = $key;
 			}
 		}
 	}
@@ -141,8 +141,8 @@ class SiteConfig extends AcidModule {
 	 * Récupère la liste des exclusions associées à l'objet
 	 * @return array
 	 */
-	public function excluedKeys() {
-		return $this->exclued_keys;
+	public function excludedKeys() {
+		return $this->excluded_keys;
 	}
 
 	/**
@@ -324,11 +324,11 @@ class SiteConfig extends AcidModule {
 		$treat = array();
 
 		$controlled_key = $this->allControlledKeys();
-		$exclued_key = $this->excluedKeys();
+		$excluded_key = $this->excludedKeys();
 
 
 		foreach ($vals as $key => $val) {
-			if (!in_array($key,$exclued_key)) {
+			if (!in_array($key,$excluded_key)) {
 				if (($this->free_mode) || (in_array($key,$controlled_key))) {
 
 					if (isset($assoc[$key])) {
@@ -361,11 +361,11 @@ class SiteConfig extends AcidModule {
 		$treat = array();
 
 		$controlled_key = $this->controlledKeys();
-		$exclued_key = $this->excluedKeys();
+		$excluded_key = $this->excludedKeys();
 
 
 		foreach ($vals as $key => $val) {
-			if (!in_array($key,$exclued_key)) {
+			if (!in_array($key,$excluded_key)) {
 				if (($this->free_mode) || (in_array($key,$controlled_key))) {
 
 					$treat[$key] = $key;

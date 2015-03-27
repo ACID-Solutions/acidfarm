@@ -49,12 +49,12 @@ class Contact {
 	 * Retourne les clés à ne pas prendre en compte dans les traitement du formulaire
 	 * @return array()
 	 */
-	public static  function formExcluedKeys() {
-		$def_exclued = array('contact_do','module_do','x','y');
+	public static  function formExcludedKeys() {
+		$def_excluded = array('contact_do','module_do','x','y');
 		if (Conf::get('contact:shield_key')) {
-			$def_exclued[] = Conf::get('contact:shield_key');
+			$def_excluded[] = Conf::get('contact:shield_key');
 		}
-		return Conf::exist('contact_form:exclude') ? Conf::get('contact_form:exclude') : $def_exclued;
+		return Conf::exist('contact_form:exclude') ? Conf::get('contact_form:exclude') : $def_excluded;
 	}
 
 	/**
@@ -157,7 +157,7 @@ class Contact {
 	public static function exeForm() {
 
 		//init keys
-		$form_exclued_keys=self::formExcluedKeys();
+		$form_excluded_keys=self::formExcludedKeys();
 		$form_control_keys=self::formControlKeys();
 		$form_optional_keys=self::formOptionalKeys();
 
@@ -184,7 +184,7 @@ class Contact {
 		foreach ($_POST as $name => $val) {
 
 			//session
-			if (!in_array($name,$form_exclued_keys)) {
+			if (!in_array($name,$form_excluded_keys)) {
 				Acid::sessSet('contact_form:'.$name,$val);
 				$add[$name]=$val;
 			}

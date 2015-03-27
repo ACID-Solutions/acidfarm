@@ -68,7 +68,7 @@ class PhotoHome extends AcidModule {
 
 		parent::__construct($init_id);
 
-		//$this->config['admin']['list']['keys_exclued'] = array('id_photo_home','name','pos');
+		//$this->config['admin']['list']['keys_excluded'] = array('id_photo_home','name','pos');
 
 		$this->config['print']['src']= array('type'=>'img','view'=>'src','size'=>'mini');
 

@@ -86,25 +86,25 @@ abstract class AcidUser extends AcidModule {
 	 * Retourne true si la chaîne de caractères en entrée est déjà associée à un nom d'utilisateur, false sinon.
 	 *
 	 * @param string $name
-	 * @param array  $exclued
+	 * @param array  $excluded
 	 */
-	public function usernameExists($name,$exclued=array()) {
-		return $this->dbCount(array(array('username','=',$name),array($this->tblId(),'not in',$exclued)));
+	public function usernameExists($name,$excluded=array()) {
+		return $this->dbCount(array(array('username','=',$name),array($this->tblId(),'not in',$excluded)));
 	}
 
 	/**
 	 * Retourne true si la chaîne de caractères en entrée est déjà associée à un nom d'utilisateur, false sinon.
 	 *
 	 * @param string $login
-	 * @param array  $exclued
+	 * @param array  $excluded
 	 */
-	public function loginExists($login,$exclued=array()) {
+	public function loginExists($login,$excluded=array()) {
 		$keys = $this->getConfig('identification');
 		$keys = is_array($keys) ? $keys : array($keys);
 
 		$count = 0;
 		foreach($keys as $key) {
-			$count += $this->dbCount(array(array($key,'=',$login),array($this->tblId(),'not in',$exclued)));
+			$count += $this->dbCount(array(array($key,'=',$login),array($this->tblId(),'not in',$excluded)));
 		}
 
 		return $count;
@@ -313,8 +313,8 @@ abstract class AcidUser extends AcidModule {
 	 */
 	public static function exeUserCreateKeys() {
 		//$mod = self::build();
-		//$exclued = array('id_user','id_group','user_salt','username','password','email','level','date_creation','date_activation','ip');
-		//return array_diff($mod->getKeys(),$exclued);
+		//$excluded = array('id_user','id_group','user_salt','username','password','email','level','date_creation','date_activation','ip');
+		//return array_diff($mod->getKeys(),$excluded);
 		return array('firstname','lastname','address','cp','city','country','phone','lang');
 	}
 
@@ -1111,7 +1111,7 @@ abstract class AcidUser extends AcidModule {
 
 		$login_keys = $this->getConfig('identification');
 		$login_keys = is_array($login_keys) ? $login_keys : array($login_keys);
-		$login_exclued = (($do!='add') && isset($tab[$this->tblId()])) ? array($tab[$this->tblId()]) : array();
+		$login_excluded = (($do!='add') && isset($tab[$this->tblId()])) ? array($tab[$this->tblId()]) : array();
 
 		$missing_error = '';
 		$text_error = '';
@@ -1127,7 +1127,7 @@ abstract class AcidUser extends AcidModule {
 							$missing_error .= $this->checkLabel($key) . '<br />';
 						}
 						//identifiant unique
-						elseif ($this->loginExists($tab[$key],$login_exclued)) {
+						elseif ($this->loginExists($tab[$key],$login_excluded)) {
 							$missing[] = $key;
 							$text_error .= $this->checkLabel($key) . ' : '.Acid::trad('user_error_ident_exists').' <br />';
 						}

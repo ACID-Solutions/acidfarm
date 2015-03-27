@@ -211,7 +211,7 @@ class User extends AcidUser {
 		$this->vars['date_creation']->setForm('info');
 		$this->vars['ip']->setForm('info');
 
-		$this->config['admin']['list']['keys_exclued'] = array('date_activation','date_deactivation','date_connexion');
+		$this->config['admin']['list']['keys_excluded'] = array('date_activation','date_deactivation','date_connexion');
 
 	}
 
