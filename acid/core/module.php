@@ -3294,6 +3294,10 @@ abstract class AcidModuleCore {
 			$elts = $this->dbList($filter,$order,$limit);
 		}
 
+		if ($filter_head_content = $this->genAdminListHeadFilter($conf)) {
+			$content .= $filter_head_content;
+		}
+
 		if ($elts) {
 			$conf['req_elts'] = $elts;
 			$content .= $this->genAdminListContent($elts,$conf);
@@ -3315,6 +3319,27 @@ abstract class AcidModuleCore {
 		//Appel du fichier template
 		$tpl = isset($conf['tpl']['body']) ? $conf['tpl']['body'] : 'admin/admin-body-list.tpl';
 		return	Acid::tpl($tpl,array('infos'=>$infos,'nav'=>$nav,'content'=>$content),$this);
+	}
+
+	/**
+	 * Retourne des listes de filtrages dans le listing d'administration
+	 * @param array $conf
+	 * @return string
+	 */
+	public function genAdminListHeadFilter($conf=array()) {
+		$content = '';
+
+		$def_filter_head = isset($this->config['admin']['list']['head_filters']) ? $this->config['admin']['list']['head_filters'] : array();
+		$filter_head = isset($conf['head_filters']) ? $conf['head_filters'] : $def_filter_head;
+		if (!empty($filter_head)) {
+			foreach ($filter_head as $key=>$elts) {
+				$nav=$this->getAdminCurNav();
+				$current = isset($nav[$this->preKey('fv_'.$key)]) ? $nav[$this->preKey('fv_'.$key)] : null;
+				$content .= Acid::tpl('admin/admin-list-filter.tpl',array('current'=>$current,'elts'=>$elts,'key'=>$key),$this);
+			}
+		}
+
+		return $content;
 	}
 
 	/**

@@ -177,6 +177,10 @@ $lang['trad']['admin_no_permission_user']	= 'Modification de ce compte impossibl
 $lang['trad']['yes'] = 'oui';
 $lang['trad']['no']  = 'non';
 
+$lang['trad']['all']  = 'tout';
+$lang['trad']['show_all']  = 'afficher tout';
+$lang['trad']['filter_show_all']  = 'Tout voir';
+
 $lang['trad']['user']                    = 'Utilistateur';
 $lang['trad']['login']                   = 'Identifiant';
 $lang['trad']['mail']                    = 'E-mail';

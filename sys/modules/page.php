@@ -312,6 +312,9 @@ class Page extends AcidModule {
 
 		$this->config['admin']['list']['actions'] = array('print','update','delete');
 
+		//$this->config['admin']['list']['head_filters'] = array('id_page_category'=>$this->vars['id_page_category']->getElts(),'active'=>$this->vars['active']->getElts());
+
+
 		/*
 		$other = array(
 				'link'=>AcidUrl::build(array($this->preKey('do')=>'view')),

@@ -177,6 +177,10 @@ $lang['trad']['admin_no_permission_user']	= 'You do not have permission to manag
 $lang['trad']['yes'] = 'yes';
 $lang['trad']['no']  = 'no';
 
+$lang['trad']['all']  = 'all';
+$lang['trad']['show_all']  = 'show all';
+$lang['trad']['filter_show_all']  = 'All';
+
 $lang['trad']['user']                    = 'User';
 $lang['trad']['login']                   = 'User name';
 $lang['trad']['mail']                    = 'E-mail';

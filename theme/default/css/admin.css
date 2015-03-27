@@ -527,6 +527,28 @@ ul#menu_body {
 .generic_elt_print .even_line{ /*background-color:#E6E6E6;*/ }
 .generic_elt_print tr:hover, .generic_elt_print tr.even_line:hover, .generic_elt_print tr.odd_line:hover{ background-color: #D9D9D9; }
 
+.admin_list_head_filter{
+	padding:10px 0px;
+	line-height:20px;
+	border:0px solid #CCCCCC;
+	border-top-width:1px; 
+}
+
+.admin_list_head_filter a.selected{
+	font-weight:bold;
+}
+
+.admin_list_head_filter a:before{
+	content:"-";
+	padding:0px 5px;
+	font-weight:normal;
+}
+
+.admin_list_head_filter a:first-child:before{
+	content:"";
+	padding:0px;
+}
+
 /******************************************
  * Dialog
  ******************************************/

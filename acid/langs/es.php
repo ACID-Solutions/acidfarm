@@ -177,6 +177,10 @@ $lang['trad']['admin_no_permission_user']	= 'El cambio de este no puede dar cuen
 $lang['trad']['yes'] = 'sí';
 $lang['trad']['no']  = 'no';
 
+$lang['trad']['all']  = 'Todos';
+$lang['trad']['show_all']  = 'mostrar todos';
+$lang['trad']['filter_show_all']  = 'Mostrar todos';
+
 $lang['trad']['user']                    = 'Usuario';
 $lang['trad']['login']                   = 'Nombre de usuario';
 $lang['trad']['mail']                    = 'E-mail';
