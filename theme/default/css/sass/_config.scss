@@ -1,4 +1,4 @@
-$basepath: "/theme/default/";
+@import '/sass/_dynamic/environement';
 
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;

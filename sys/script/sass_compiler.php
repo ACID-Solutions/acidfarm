@@ -12,16 +12,34 @@ if (isset($opt['c']) ) {
 
 	$path_unique = empty($opt['p']) ? (false) : (SITE_PATH.$opt['p']) ;
 
+	function sass_prepare_files() {
+
+		$tpl_path = SITE_PATH.Acid::get('rel:tpl').'sass/';
+
+		if (is_dir($tpl_path)) {
+			if ($dh = opendir($tpl_path)) {
+				while (($file = readdir($dh)) !== false) {
+					if (AcidFs::getExtension($file)=='tpl') {
+						$scss_name = SITE_PATH.Acid::get('rel:css').'/sass/_dynamic/'.AcidFs::removeExtension($file).'.scss';
+						file_put_contents($scss_name,Acid::tpl('sass/'.$file));
+					}
+				}
+				closedir($dh);
+			}
+		}
+	}
 
 	function sass_compilation_from_file($file,$path_to) {
 		if (AcidFs::getExtension($file)=='scss') {
 
 			$scss = new scssc();
 			$scss->addImportPath(SITE_PATH.Acid::get('rel:css'));
+
+			echo 'preparing environement...'."\n";
+			sass_prepare_files();
+
 			$fname = AcidFS::removeExtension(basename($file)).'.css';
-
 			echo 'translating '.$file." to ".$path_to.$fname."\n";
-
 			file_put_contents($path_to.$fname, $scss->compile(file_get_contents($file)));
 
 		}

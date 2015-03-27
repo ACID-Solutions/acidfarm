@@ -1,3 +1,5 @@
+/*----GENERAL----*/
+
 html, body {
 	height: 100%;
 	margin: 0px;
@@ -104,6 +106,9 @@ hr {
 	color: #1c1c1c;
 }
 
+
+/*----STRUCTURE----*/
+
 #header {
 	position: absolute;
 	top: 0px;
@@ -188,6 +193,9 @@ hr {
 	left: 0px;
 }
 
+
+/*----MENU----*/
+
 #menu_block {
 	padding: 15px 0px;
 	font-size: 16px;
@@ -223,6 +231,9 @@ hr {
 	color: #96c11f;
 }
 
+
+/*----ARIANE----*/
+
 #ariane {
 	background-color: rgba(28, 28, 28, 0.2);
 	height: 20px;
@@ -242,6 +253,9 @@ hr {
 #ariane a:hover {
 	color: #7a7a7a;
 }
+
+
+/*----PAGINATION----*/
 
 .pagination {
 	width: 100%;
@@ -313,6 +327,9 @@ nav .navigation_unselected {
 	font-weight: bold;
 }
 
+
+/*----DIAPORAMA----*/
+
 #home_diaporama {
 	margin-bottom: 15px;
 }
@@ -351,6 +368,9 @@ nav .navigation_unselected {
 	bottom: 0px;
 }
 
+
+/*----CONTACT----*/
+
 #contact #contact_left {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -383,6 +403,9 @@ nav .navigation_unselected {
 	box-sizing: border-box;
 	width: 100%;
 }
+
+
+/*----GALERIE----*/
 
 #gallery_wall {
 	width: 960px;
