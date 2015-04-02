@@ -10,6 +10,7 @@ $lang['mod']['seo']['url'] 	= 'URL';
 $lang['mod']['seo']['seo_title'] = 'SEO Title';
 $lang['mod']['seo']['seo_desc'] = 'SEO Desc';
 $lang['mod']['seo']['seo_keys'] = 'SEO Keywords';
+$lang['mod']['seo']['seo_img'] = 'SEO Image';
 $lang['mod']['seo']['strict_mode']  = 'Strict Mode?';
 
 //--actu

@@ -126,15 +126,20 @@ class Page extends AcidModule {
 
 		$ident = $vals[$key];
 		$class = get_called_class();
+
+		$current = '';
+		if (isset($vals[$this->tblId()]) && $vals[$this->tblId()]) {
+			$obj = new $class($vals[$this->tblId()]);
+			$current = $obj->get($key);
+		}
+
+		$is_current = $current && ($ident == $current);
+
 		if (!empty($ident)) {
-			if (!in_array($ident,Conf::get('keys:reserved'))) {
+			if ($is_current || !in_array($ident,Conf::get('keys:reserved')) ) {
 				if (preg_match('`^[-/a-z0-9]+$`',$ident)) {
-					$current = '';
-					if (isset($vals[$this->tblId()]) && $vals[$this->tblId()]) {
-						$obj = new $class($vals[$this->tblId()]);
-						$current = $obj->get($key);
-					}
-					if ($ident == $current || !$this->dbCount(array(array($key,'=',$ident)))){
+
+					if ($is_current || !$this->dbCount(array(array($key,'=',$ident)))){
 						AcidSession::getInstance()->data['page_form'] = array();
 						return true;
 					} else {

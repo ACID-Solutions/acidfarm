@@ -97,6 +97,8 @@ $acidconf['contact']['shield'] = true;
 $acidconf['contact']['shield_key'] = 'form_who_i_am';
 $acidconf['contact']['shield_value'] = 'human';
 
+$acid['sass']['path']['compiled'] = 'compiled/';
+
 //$acid['plupload']['runtimes'] = array('html5','flash');
 
 // PAGE CONTROLLER

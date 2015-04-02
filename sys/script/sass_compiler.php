@@ -8,7 +8,7 @@ if (isset($opt['c']) ) {
 
 	$path_from = empty($opt['f']) ? (SITE_PATH.Acid::get('rel:css') . 'sass/') : (SITE_PATH.$opt['f']) ;
 
-	$path_to = empty($opt['t']) ? (SITE_PATH.Acid::get('rel:css')) : (SITE_PATH.$opt['t']) ;
+	$path_to = empty($opt['t']) ? (SITE_PATH.Acid::get('rel:css').Acid::get('sass:path:compiled')) : (SITE_PATH.$opt['t']) ;
 
 	$path_unique = empty($opt['p']) ? (false) : (SITE_PATH.$opt['p']) ;
 
@@ -43,6 +43,10 @@ if (isset($opt['c']) ) {
 			file_put_contents($path_to.$fname, $scss->compile(file_get_contents($file)));
 
 		}
+	}
+
+	if (!is_dir($path_to)) {
+		mkdir($path_to);
 	}
 
 	if ($path_unique) {

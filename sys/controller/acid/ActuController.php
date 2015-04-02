@@ -82,6 +82,9 @@ class ActuController {
                         Conf::setPageTitle($actu->trad('seo_title') ? $actu->hscTrad('seo_title') : $actu->hscTrad('title'));
                         Conf::addToMetaKeys($actu->trad('seo_keys') ? explode(',',$actu->trad('seo_keys')) : $actu->hscTrad('title'));
                         Conf::setMetadesc($actu->trad('seo_desc') ? $actu->hscTrad('seo_desc')  : (AcidVarString::split($actu->trad('content'),100) . ' - '. Conf::getMetaDesc()));
+                        if ($actu->get('src')) {
+                        	Conf::setMetaImage($actu->urlSrc('diapo'));
+                        }
 
                         //add to HTML
                         Conf::addToContent($actu->printActu());

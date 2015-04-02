@@ -318,6 +318,7 @@ $acid['versioning']['val'] = ''; //if value, override versionning file
 
 // Sass
 $acid['sass']['enable'] = false;
+$acid['sass']['path']['compiled'] = '';
 $acid['sass']['mode'] = 'dev';
 
 ?>

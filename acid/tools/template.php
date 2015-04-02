@@ -208,7 +208,7 @@ class AcidTemplate {
 			}
 		}
 
-		return  Acid::get('url:css').$what.'.css';
+		return  Acid::get('url:css').Acid::get('sass:path:compiled').$what.'.css';
 	}
 
 	/**

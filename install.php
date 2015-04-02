@@ -417,7 +417,7 @@ HTACC;
 		}
 
 		//ADDING IGNORED PATHS
-		$path_to_add = array('/sys/stats','/files','/files/users','/files/tmp','/files/home','/files/actu','/files/page','/files/photo','/upload','/logs');
+		$path_to_add = array('/sys/stats','/files','/files/users','/files/tmp','/files/home','/files/actu','/files/page','/files/photo','/files/seo','/upload','/logs');
 		foreach ($path_to_add as $pta) {
 			$pa_path = __DIR__.$pta;
 			if (!file_exists($pa_path)) {

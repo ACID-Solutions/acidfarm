@@ -90,6 +90,7 @@ CREATE TABLE IF NOT EXISTS `acid_seo` (
   `seo_title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `seo_desc` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `seo_keys` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `seo_img` VARCHAR( 255 ) COLLATE utf8_unicode_ci NOT NULL,
   `strict_mode` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id_seo`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -252,4 +253,4 @@ CREATE TABLE IF NOT EXISTS `acid_photo` (
   `src` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `active` ENUM( '0', '1' ) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id_photo`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;

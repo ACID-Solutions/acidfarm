@@ -52,8 +52,17 @@ class Seo extends AcidModule {
 				$this->vars['seo_desc'.$ks] =  new AcidVarString($this->modTrad('seo_desc').$ds,60);
 				$this->vars['seo_keys'.$ks] = new AcidVarString($this->modTrad('seo_keys').$ds,60);
 			}
+
 			$this->config['multilingual']['flags']['default']  = !empty($have_lang_keys);
 		}
+
+		$photo_format 		=	array(
+				'src'=>array(	'size' => array(0,0,false), 'suffix' => '', 'effect' => array() ),
+				'seo'=>array(	'size' => array(300,300,false),	'suffix' => '_l', 'effect' => array() ),
+				'mini'=>array(	'size' => array(60,60,true), 'suffix' => '_s', 'effect' => array()	)
+		);
+		$config = array('format'=>$photo_format,'admin_format'=>'mini');
+		$this->vars['seo_img'] 	= 	new AcidVarImage( self::modTrad('seo_img'), Acid::get('path:files').'seo/', $config);
 
 		$this->vars['strict_mode'] = new AcidVarBool($this->modTrad('strict_mode'));
 
@@ -63,6 +72,23 @@ class Seo extends AcidModule {
 		$this->config['print']['strict_mode']= array('type'=>'toggle','ajax'=>true);
 		$this->config['acl']['default'] = Acid::get('lvl:dev');
 
+	}
+
+	/**
+	 * Rerourne l'url de l'image en entrée au format $format
+	 * @param string $url url de l'image source
+	 * @param string $format la format pour l'url retournée
+	 */
+	public static function genUrlImg($url=null,$format=null) {
+		return self::genUrlKey('seo_img',$url,$format);
+	}
+
+	/**
+	 * Retourne l'url de l'image associée à l'objet au format saisi en entrée
+	 * @param string $format format pour l'url retournée
+	 */
+	public function urlImg($format=null) {
+		return $this->genUrlImg($this->get('seo_img'),$format);
 	}
 
 	/**
@@ -256,6 +282,10 @@ class Seo extends AcidModule {
 
 					if ($seo->trad('seo_keys')) {
 						Conf::addToMetaKeys(explode(',',static::treatSEO($seo->trad('seo_keys'))));
+					}
+
+					if ($seo->trad('seo_img')) {
+						Conf::setMetaImage($seo->urlImg('seo'));
 					}
 
 					return true;
