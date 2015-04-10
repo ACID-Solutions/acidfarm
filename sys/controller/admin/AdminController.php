@@ -199,9 +199,14 @@ class AdminController{
 
     	$default_content = 	'Bonjour'.(isset($sess['user']['username']) ? ' '.$sess['user']['username'] : '' ) . ',' . "\n" .
     			'<br />Vous voici dans votre espace d\'administration';
-    	$content .= Acid::mod('User')->printAdminBody($default_content,null);
+    	$content .= $default_content;
 
-    	Conf::addToContent($content);
+    	ob_start();
+		include(SITE_PATH.'registration/registration.php');
+		$content .= ob_get_clean();
+
+		Conf::addToContent(Acid::mod('User')->printAdminBody($content,null));
+
     }
 
 

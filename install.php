@@ -130,7 +130,6 @@ $htaccess_path_rest = __DIR__.'/rest/.htaccess';
 $db_path = __DIR__.'/sys/db/init.sql';
 $dbml_path = __DIR__.'/sys/db/multilingual.sql';
 
-
 include(__DIR__.'/acid/core/acid_db.php');
 
 $css = <<< CSS
@@ -447,11 +446,14 @@ HTACC;
 
 
 		echo $css. "\n" .'<div class="corpus">';
+
 		if ((!$ec) || (!$eh)) {
 			echo 'An error happened.';
 		}else{
 			echo 'Install complete<br /><br />'.'<a href="'.$scheme.$domain.$folder.'">Go to your website.</a>';
 		}
+
+
 		echo '</div>';
 
 	}elseif (isset($action['acidfarm_do']) && ($action['acidfarm_do']=='check_database')) {
@@ -557,7 +559,7 @@ HTACC;
 	password : <input type="password" id="db_password" name="db_password" value="" /><br />
 	database : <input type="text" id="db_name" name="db_name" value="" /><br />
 	prefix : <input type="text" id="db_pref" name="db_pref" value="acid_" /><br />
-	<a href="#" onclick="InstallTools.checkDB(); return false;" >Check Database</a> : <span id="check_data_base_result"></span><br />
+	<a href="#" onclick="InstallTools.checkDB(); return false;" >Check Database</a> : <span id="check_data_base_result"></span>
 	</div>
 	<input class="btn" type="submit" value="Install">
 

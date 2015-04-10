@@ -150,6 +150,10 @@ else {
 	AdminController::addMenu('page','web',Acid::trad('admin_menu_page'),$def_level);
 	AdminController::addAccess('page',$def_level,'Page');
 
+	//--sample
+	//AdminController::addMenu(Sample::TBL_NAME,'web',Sample::modTrad('__NAME__'),$def_level);
+	//AdminController::addAccess(Sample::TBL_NAME,$def_level,'Sample');
+
 	//Tools
 
 	//-outils

@@ -9,6 +9,9 @@
 /sys/update/cur_version.txt
 /sys/upgrade/cur_version.txt
 
+#registration
+/registration/maintenance.json
+
 # acidfarm folders
 /logs/
 /upload/
