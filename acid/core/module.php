@@ -2338,6 +2338,7 @@ abstract class AcidModuleCore {
 	*/
 	protected function removeGet ($name) {
 		$get_key = static::preKey($name);
+		$get_key = str_replace('.','_', $get_key);
 		if (isset($_GET[$get_key])) {
 			$this->admin_nav[$name] = $_GET[$get_key];
 			unset($_GET[$get_key]);
@@ -2377,6 +2378,32 @@ abstract class AcidModuleCore {
 	}
 
 	/**
+	 * Etend le champ d'action de AdminNav avec le dbPref des champs issus des modules en entrée
+	 * @param string $mods
+	 */
+	public function extendAdminNav ($mods=null) {
+		if ($mods ===null) {
+			$mods = array();
+			if ($listmods = $this->getConfig('admin:list:mods')) {
+				$mods = array_keys($listmods);
+			}
+		}
+
+		if ($mods) {
+			foreach ($mods as $mod) {
+				foreach ($mod::build()->getVals() as $mkey=>$val) {
+					$key = urlencode($mod::dbPref($mkey));
+					$this->removeGet('fm_'.$key);	// Filter method
+					$this->removeGet('fv_'.$key);	// Filter val
+					$this->config['admin']['curnav']['extended_keys'][] = $key;
+				}
+			}
+		}
+
+		return $this->admin_nav;
+	}
+
+	/**
 	* Retourne l'url courante, gérée par acidfarm, de l'adminsitration.
 	*
 	*
@@ -2386,7 +2413,13 @@ abstract class AcidModuleCore {
 		$gets = array();
 		$fv = static::preKey('fv_');
 		$fm = static::preKey('fm_');
-		foreach ($this->vars as $key=>$val) {
+
+		$gkeys = array_keys($this->vars);
+		if ($extend = $this->getConfig('admin:curnav:extended_keys')) {
+			$gkeys = array_merge($gkeys,$extend);
+		}
+
+		foreach ($gkeys as $key) {
 			if (	isset($this->admin_nav['fv_'.$key]) && isset($this->admin_nav['fm_'.$key])) {
 				if ($this->admin_nav['fm_'.$key] != 'unused' && strlen($this->admin_nav['fv_'.$key])) {
 					$gets[$fv.$key] = $this->admin_nav['fv_'.$key];
@@ -2394,6 +2427,7 @@ abstract class AcidModuleCore {
 				}
 			}
 		}
+
 		$keys = array(	'do',	// Action
 						'id',	// ID Elt
 						'lo',	// List Order
@@ -2401,11 +2435,13 @@ abstract class AcidModuleCore {
 						'll',	// List limit
 						'lp'	// List page
 		);
+
 		foreach ($keys as $key) {
 			if (isset($this->admin_nav[$key])) {
 				$gets[static::preKey($key)] = $this->admin_nav[$key];
 			}
 		}
+
 		return $gets;
 	}
 
@@ -3169,11 +3205,18 @@ abstract class AcidModuleCore {
 
 		$gets = $this->admin_nav;
 
+		$gkeys = array_keys($this->vars);
+		if ($extend = $this->getConfig('admin:curnav:extended_keys')) {
+			$gkeys = array_merge($gkeys,$extend);
+		}
+
 		// chaîne WHERE
-		foreach ($this->vars as $key=>$var) {
+		foreach ($gkeys as $key) {
 			if (isset($gets['fm_'.$key]) && isset($gets['fv_'.$key]) && strlen($gets['fv_'.$key])) {
 				$search_val = html_entity_decode($gets['fv_'.$key]);
 				$key_filter = !$mods ? $key : $this->dbPref($key);
+				$key_filter = ($extend && (in_array($key,$extend))) ? $key : $key_filter;
+
 				switch($gets['fm_'.$key]) {
 					case 'contain' :	$filter[] = array($key_filter,'LIKE',$search_val,'%','%');	break;
 					case 'start' :		$filter[] = array($key_filter,'LIKE',$search_val,'','%');	break;
