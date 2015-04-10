@@ -539,7 +539,11 @@ ul#menu_body {
 }
 
 .admin_list_head_filter a:before{
-	content:"-";
+	
+}
+
+.admin_list_head_filter .admin_list_head_filter_title + a:before{
+	content:"";
 	padding:0px 5px;
 	font-weight:normal;
 }
