@@ -1035,6 +1035,30 @@ class AcidVarPassword extends AcidVarString {
 		$this->setForm('password',array('size'=>$this->form['size'],'maxlength'=>$this->form['maxlength']));
 	}
 
+	public static function random($size=8) {
+		$numbers = '0123456789';
+		$chars = 'aeiouy';
+		$charsb = 'bcdfghjklmnpqrstvwxz';
+
+		$check[0] = $chars.$chars.$chars.$charsb.$numbers;
+		$check[1] = $chars.$chars.$charsb.$charsb.$charsb.$numbers;
+		$check[2] = $numbers.$numbers;
+
+		$nbchars[0] = strlen($check[0]);
+		$nbchars[1] = strlen($check[1]);
+		$nbchars[2] = strlen($check[2]);
+
+		$init_end = $size-rand(0,3);
+
+		$my_pass = '';
+		for ($i=0;$i<$size;$i++) {
+			$indice = ($i>=$init_end) ? 2 : (($i%2===0) ? 1 : 0);
+			$my_pass .= $check[$indice][rand(0,$nbchars[$indice]-1)];
+		}
+
+		return $my_pass;
+	}
+
 }
 
 /**
