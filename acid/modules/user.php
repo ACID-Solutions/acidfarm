@@ -1090,7 +1090,7 @@ abstract class AcidUser extends AcidModule {
 		$keys = $this->getConfig('identification');
 		$keys = is_array($keys) ? $keys : array($keys);
 
-		if (!empty($_POST['user_toggle'])) {
+		if (!empty($_POST[$this->preKey('toggle')])) {
 			$keys = array_intersect(array_keys($_POST),$keys);
 		}
 
