@@ -9,7 +9,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<div id="menu_block"><?php echo Func::getMenu(); ?></div>
+				<div id="menu_block" ><?php echo Func::getMenu(); ?></div>
 			</div>
 		</div>
 	</div>

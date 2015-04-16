@@ -1,11 +1,54 @@
-.clear{position:relative; height:0px; clear:both;}
+.clear {
+  position: relative;
+  height: 0px;
+  clear: both; }
 
-body { padding-top:150px; }
+body {
+  padding-top: 150px; }
 
-#header{ height:150px; }
+#header {
+  height: 150px; }
 
-#menu_block{ display:table; margin:auto; }
+#menu_block {
+  display: block;
+  margin: auto;
+  text-align: center; }
+  #menu_block .navbar-header {
+    float: none;
+    margin: 0px -15px; }
+    #menu_block .navbar-header .navbar-brand {
+      float: none;
+      display: inline-block; }
+  #menu_block .collapse.in, #menu_block .collapsing {
+    display: block;
+    float: none;
+    border: 1px solid #000;
+    background-color: #fff;
+    margin: 0px;
+    top: 40px;
+    left: 0px;
+    position: absolute;
+    width: 100%;
+    max-height: auto; }
+    #menu_block .collapse.in a, #menu_block .collapsing a {
+      display: block;
+      float: none;
+      border: 0px solid #000;
+      border-bottom-width: 1px;
+      margin: 0px;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box; }
 
-#block_gmap{ width:300px; height:150px; }
-#contact_content .label{ color:#000000; min-width:100px; display:inline-block; text-align:left; }
-#contact_form_submit{ margin-top:10px; }
+#block_gmap {
+  width: 300px;
+  height: 150px; }
+
+#contact_content .label {
+  color: #000;
+  min-width: 100px;
+  display: inline-block;
+  text-align: left; }
+
+#contact_form_submit {
+  margin-top: 10px; }

@@ -1,4 +1,5 @@
 <div class="navbar-header">
+
 	 <button data-target=".navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
 	     <span class="sr-only"><?php echo Acid::trad('toggle'); ?></span>
 	     <span class="icon-bar"></span>
@@ -6,6 +7,7 @@
 	     <span class="icon-bar"></span>
 	 </button>
 
+	<div class="navbar-collapse collapse" >
 	<?php
 	$my_key = AcidRouter::searchKey(AcidRouter::getParamById(0));
 	$my_key =  $my_key ? $my_key : AcidRouter::getParamById(0);
@@ -28,4 +30,5 @@
 	}
 	//FIN BOUCLE
 	?>
+	</div>
 </div>

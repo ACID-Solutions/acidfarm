@@ -1,0 +1,48 @@
+@import '/sass/_dynamic/environement';
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+@mixin box-shadow($top, $left, $blur, $color, $inset:"") {
+ -webkit-box-shadow:$top $left $blur $color #{$inset};
+  -moz-box-shadow:$top $left $blur $color #{$inset};
+      box-shadow:$top $left $blur $color #{$inset};
+}
+
+@mixin opacity($opacity) {
+  opacity:$opacity;
+  filter:alpha(opacity=#{100*$opacity});
+}
+
+@mixin box-sizing($sizing) {
+   -webkit-box-sizing: $sizing;
+    -moz-box-sizing:   $sizing;
+         box-sizing:   $sizing;
+}
+
+@mixin border-box() {
+   @include box-sizing(border-box)
+}
+
+@mixin placeholdercolor($color) {
+  ::-webkit-input-placeholder {
+   color:#{$color};
+  }
+  
+  :-moz-placeholder { /* Firefox 18- */
+   color:#{$color};
+  }
+  
+  ::-moz-placeholder {  /* Firefox 19+ */
+   color:#{$color};
+  }
+  
+  :-ms-input-placeholder {  
+   color:#{$color};
+  }
+
+}
