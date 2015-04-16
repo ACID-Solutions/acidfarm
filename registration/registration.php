@@ -1,6 +1,6 @@
 <?php
-
-$maintenanceurl = 'http://10.11.1.61/plateforme-acidfarm/rest/registration';
+$maintenancebaseurl = 'http://10.11.1.61/plateforme-acidfarm/';
+$maintenanceurl = $maintenancebaseurl.'rest/registration';
 $maintenancefile = __DIR__.'/maintenance.json';
 $acid_path = __DIR__.'/../acid';
 $version_path = __DIR__.'/../version.txt';
@@ -78,6 +78,7 @@ if (!file_exists($maintenancefile)) {
 			file_put_contents($maintenancefile,json_encode(array('allowed'=>false)));
 		}
 
+		AcidUrl::redirection(AcidUrl::build());
 	}else{
 ?>
 	<form style="margin:30px 0px;"  action="" method="POST">
@@ -96,15 +97,71 @@ if (!file_exists($maintenancefile)) {
 	}
 }else{
 	$maintenance = json_decode(file_get_contents($maintenancefile),true);
+	$maintenanceinfo = $maintenancebaseurl.'rest/information/'.$maintenance['id_client'].'/'.$maintenance['public'];
 	if ($maintenance['allowed']) {
+
+		try {
+			//open connection
+			$ch = curl_init();
+
+			//set the url, number of POST vars, POST data
+			curl_setopt($ch,CURLOPT_URL, $maintenanceinfo);
+			curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+
+			//execute post
+			$result = curl_exec($ch);
+			$returninfo = json_decode($result,true);
+
+		}catch(Exception $e) {
+
+		}
 ?>
-	<div>
+	<div id="maintenance_box" style="float:right; padding:30px; height:100%; border:1px solid #000000;"  >
+
 		<p>
 		Version : <?php echo $maintenance['version']; ?><br />
 		Numéro d'enregistrement : <?php echo $maintenance['id_client']; ?><br />
 		Url enregistrée : <?php echo $maintenance['url']; ?>
 		</p>
+		<div id="maintenance_info" >
+
+		</div>
+		<script type="text/javascript">
+		<!--
+			var Maintenance = {
+				get : function() {
+					$.get('<?php echo $maintenanceinfo; ?>',function(res) {
+						if (res.response!=undefined) {
+							if (res.response=='success') {
+								var msg = '';
+
+								if (res.maj.length) {
+									msg = msg + '<p>Des mises à jour sont disponibles.</p>';
+								}else{
+									msg = msg + '<p>Aucune mise à jour disponible.</p>';
+								}
+
+								if (res.info_message) {
+									msg = msg + res.info_message;
+								}
+
+								if (msg) {
+									$('#maintenance_info').html(msg);
+								}
+							}
+						}
+					});
+				}
+			}
+		$().ready(function() {
+			Maintenance.get();
+		});
+		-->
+		</script>
+
 	</div>
+	<div class="clear"></div>
+
 <?php
 	}
 }
