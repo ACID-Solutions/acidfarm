@@ -23,3 +23,5 @@
 # acifarm htaccess
 /.htaccess
 /rest/.htaccess
+
+/registration

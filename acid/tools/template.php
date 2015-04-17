@@ -201,7 +201,7 @@ class AcidTemplate {
 	/**
 	 *	Retourne le lien sass ou non en fonction du context
 	 */
-	public function sassUrl($what) {
+	public static function sassUrl($what) {
 		if (Acid::get('sass:enable')) {
 			if (Acid::get('sass:mode')=='dev') {
 				return Acid::get('url:css').'sass.php/sass/'.$what.'.scss';
