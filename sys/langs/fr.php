@@ -51,6 +51,7 @@ $lang['trad']['contact_form_address']   = 'Adresse :';
 $lang['trad']['contact_form_phone'] 	= 'Téléphone :';
 $lang['trad']['contact_form_email'] 	= 'Email :';
 $lang['trad']['contact_form_message'] 	= 'Message :';
+$lang['trad']['contact_form_nl'] 		= 'Recevoir la newsletter ?';
 
 $lang['trad']['contact_page_map'] 		= 'Carte';
 $lang['trad']['contact_page_coords'] 	= 'Coordonnées';

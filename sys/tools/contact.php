@@ -68,7 +68,8 @@ class Contact {
 
 										'cause_1'				=>array('label'=>Acid::trad('contact_post_cause_1'),'regex'=>''),
 										'cause_2'				=>array('label'=>Acid::trad('contact_post_cause_2'),'regex'=>''),
-										'cause_3'				=>array('label'=>Acid::trad('contact_post_cause_3'),'regex'=>'')
+										'cause_3'				=>array('label'=>Acid::trad('contact_post_cause_3'),'regex'=>''),
+										'get_newsletter'		=>array('label'=>Acid::trad('contact_post_get_newsletter'),'regex'=>'')
 
 
 									);
@@ -265,6 +266,9 @@ class Contact {
 						Acid::sessKill('contact_form');
 						$stats_contact = '<div id="stats_content">'. Acid::executeTpl(SITE_PATH . 'sys/stats/contact.tpl') . '</div>';
 						AcidDialog::add('info',Acid::trad('contact_post_msg_sent').$stats_contact);
+
+						AcidHook::call('contact_success');
+
 					}
 				}
 				// no recipient address

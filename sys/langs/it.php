@@ -51,6 +51,7 @@ $lang['trad']['contact_form_address']   = 'Address:';
 $lang['trad']['contact_form_phone'] 	= 'Phone:';
 $lang['trad']['contact_form_email'] 	= 'Email:';
 $lang['trad']['contact_form_message'] 	= 'Message:';
+$lang['trad']['contact_form_nl'] 		= 'Ricevi newsletter?';
 
 $lang['trad']['contact_page_map'] 		= 'Map';
 $lang['trad']['contact_page_coords'] 	= 'Coords';
