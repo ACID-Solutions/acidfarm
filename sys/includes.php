@@ -28,7 +28,8 @@ $acid['includes']['Photo']	  	  		 = 'sys/modules/photo.php';
 $acid['includes']['Seo']	  	  		 = 'sys/modules/seo.php';
 
 //Tools
-$acid['includes']['Contact']	  = 'sys/tools/contact.php';
+$acid['includes']['Contact']	 			 = 'sys/tools/contact.php';
+$acid['includes']['AcidRegistration'] 	 	 = 'registration/lib.php';
 
 // Libraries
 $acid['includes']['Lib'] 		  = 'sys/tools/lib.php';

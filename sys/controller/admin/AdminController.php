@@ -197,13 +197,14 @@ class AdminController{
     public static function board(){
     	$content ='';
 
-    	$default_content = 	'Bonjour'.(isset($sess['user']['username']) ? ' '.$sess['user']['username'] : '' ) . ',' . "\n" .
-    			'<br />Vous voici dans votre espace d\'administration';
-    	$content .= $default_content;
-
     	ob_start();
 		include(SITE_PATH.'registration/registration.php');
-		$content .= ob_get_clean();
+		$registration = ob_get_clean();
+
+		$expire_date = time() + Acid::get('session:expire') - (60*5);
+		$stats['users'] = AcidDB::query('SELECT COUNT(*) as count FROM '.Acid::get('session:table').' WHERE `expire` > '.$expire_date)->fetch(PDO::FETCH_ASSOC);
+
+		$content = Acid::tpl('admin/admin-board.tpl',array('registration'=>$registration,'stats'=>$stats));
 
 		Conf::addToContent(Acid::mod('User')->printAdminBody($content,null));
 

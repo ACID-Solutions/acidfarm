@@ -1,84 +1,13 @@
 <?php
-$maintenancebaseurl = 'http://10.11.1.61/plateforme-acidfarm/';
-$maintenanceurl = $maintenancebaseurl.'rest/registration';
-$maintenancefile = __DIR__.'/maintenance.json';
-$acid_path = __DIR__.'/../acid';
-$version_path = __DIR__.'/../version.txt';
 
-function md5_dir($dir) {
-	if (is_dir($dir)) {
-		$sum = '';
-		if ($tree = scandir($dir)) {
-			foreach ($tree as $file) {
-				if (!in_array($file, array('.','..'))) {
-					$filepath = realpath($dir.'/'.$file);
-					if (!is_link($filepath)) {
-						if (is_dir($filepath)) {
-							$sum.= md5_dir($filepath).'<br />';
-						}else{
-							$sum.= md5_file($filepath).'<br />';
-						}
-					}
-				}
-			}
-		}
-		return md5($sum);
-	}
-}
+if (!file_exists(AcidRegistration::file())) {
 
-if (!file_exists($maintenancefile)) {
+
 	if (!empty($_POST['registration'])) {
 
-		if (!empty($_POST['registration']['allowed'])) {
-
-
-			$fields = array();
-			$fields_string = '';
-
-			foreach ($_POST['registration'] as $key =>$val) {	$fields[$key] = $val;}
-
-			$fields['public'] = md5((rand(0,1000)*rand(0,1000)).(rand(0,1000)*rand(0,1000)).(rand(0,1000)*rand(0,1000)).(rand(0,1000)*rand(0,1000)));
-
-			if (is_dir($acid_path)) {
-				$fields['acid_path_code'] = md5_dir($acid_path);
-			}
-
-			if (file_exists($version_path)) {
-				$fields['version'] = file_get_contents($version_path);
-			}
-
-			//url-ify the data for the POST
-			foreach($fields as $key=>$value) { $fields_string .= $key.'='.urlencode($value).'&'; }
-			rtrim($fields_string, '&');
-
-			//open connection
-			$ch = curl_init();
-
-			//set the url, number of POST vars, POST data
-			curl_setopt($ch,CURLOPT_URL, $maintenanceurl);
-			curl_setopt($ch,CURLOPT_POST, count($fields));
-			curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-			curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
-
-			//execute post
-			$result = curl_exec($ch);
-			$return = json_decode($result,true);
-
-			$return['init_request'] = $fields;
-			$return['allowed'] = true;
-
-			file_put_contents($maintenancefile,json_encode($return));
-
-
-			//close connection
-			curl_close($ch);
-
-
-		}else{
-			file_put_contents($maintenancefile,json_encode(array('allowed'=>false)));
-		}
-
+		AcidRegistration::executeRegistration();
 		AcidUrl::redirection(AcidUrl::build());
+
 	}else{
 ?>
 	<form style="margin:30px 0px;"  action="" method="POST">
@@ -93,35 +22,29 @@ if (!file_exists($maintenancefile)) {
 		<input type="submit" />
 	</div>
 	</form>
+
 <?php
 	}
+
 }else{
-	$maintenance = json_decode(file_get_contents($maintenancefile),true);
-	$maintenanceinfo = $maintenancebaseurl.'rest/information/'.$maintenance['id_client'].'/'.$maintenance['public'];
-	if ($maintenance['allowed']) {
 
-		try {
-			//open connection
-			$ch = curl_init();
+	if (AcidRegistration::datas('allowed')) {
 
-			//set the url, number of POST vars, POST data
-			curl_setopt($ch,CURLOPT_URL, $maintenanceinfo);
-			curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+		$public = AcidRegistration::datas('public');
+		$version = AcidRegistration::datas('version');
+		$real_version = AcidRegistration::realversion();
+		$client_id = AcidRegistration::datas('id_client');
+		$url = AcidRegistration::datas('url');
 
-			//execute post
-			$result = curl_exec($ch);
-			$returninfo = json_decode($result,true);
+		$maintenanceinfo = AcidRegistration::infoUrl();
 
-		}catch(Exception $e) {
-
-		}
 ?>
-	<div id="maintenance_box" style="float:right; padding:30px; height:100%; border:1px solid #000000;"  >
-
+	<div id="maintenance_box" >
 		<p>
-		Version : <?php echo $maintenance['version']; ?><br />
-		Numéro d'enregistrement : <?php echo $maintenance['id_client']; ?><br />
-		Url enregistrée : <?php echo $maintenance['url']; ?>
+		Version : <?php echo $version; ?><br />
+		Version complète : <?php echo $real_version; ?><br />
+		Numéro d'enregistrement : <?php echo $client_id; ?><br />
+		Url enregistrée : <?php echo $url; ?>
 		</p>
 		<div id="maintenance_info" >
 
@@ -130,6 +53,7 @@ if (!file_exists($maintenancefile)) {
 		<!--
 			var Maintenance = {
 				get : function() {
+					$('#maintenance_info').html('recherche de mise à jour...');
 					$.get('<?php echo $maintenanceinfo; ?>',function(res) {
 						if (res.response!=undefined) {
 							if (res.response=='success') {

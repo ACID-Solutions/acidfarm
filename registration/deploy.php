@@ -2,6 +2,8 @@
 
 include pathinfo(__FILE__,PATHINFO_DIRNAME ).'/../sys/glue.php';
 
+
+
 $maintenancefile = __DIR__.'/maintenance.json';
 
 if (file_exists($maintenancefile)) {
