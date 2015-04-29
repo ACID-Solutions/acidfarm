@@ -22,7 +22,8 @@ tinyMCE.init({
 			fontsize_formats: "8px 11px 12px 13px 14px 16px 18px 22px 24px 26px 32px 48px",
 		    toolbar: "insertfile undo redo | styleselect fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
 			body_class : "content_body",
-			content_css : "<?php echo Acid::themeUrl('css/tiny-mce.css'); ?>"
+			content_css : "<?php echo Acid::themeUrl('css/tiny-mce.css'); ?>",
+			// content_css : "<?php echo AcidTemplate::sassUrl('tiny-mce'); ?>",
 			/*
 			,style_formats: [
 				{title: 'Titre 1', block: 'h2', styles: {color: '#FF8A00', fontSize: '25px', fontWeight :'normal', margin:'0px', marginnBottom:'15px'}},
