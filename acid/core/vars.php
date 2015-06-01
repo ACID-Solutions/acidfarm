@@ -343,6 +343,14 @@ class AcidVar {
 			$form = new AcidForm('','');
 		}
 
+		if (isset($this->form['override_start'])) {
+			$start = $this->form['override_start'];
+		}
+
+		if (isset($this->form['override_stop'])) {
+			$stop = $this->form['override_stop'];
+		}
+
 		switch ($this->form['type']) {
 
 			case 'show' :
@@ -410,6 +418,14 @@ class AcidVar {
 	 * @param array $config  configuration
 	 */
 	public function setForm($type, $config=array()) {
+
+		if (isset($config['override_start'])) {
+			$this->form['override_start'] = $config['override_start'];
+		}
+
+		if (isset($config['override_stop'])) {
+			$this->form['override_stop'] = $config['override_stop'];
+		}
 
 		switch ($type) {
 
