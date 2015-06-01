@@ -241,7 +241,9 @@ class Seo extends AcidModule {
 					$checkuri = substr($_SERVER['REQUEST_URI'],strlen(Acid::get('url:folder')));
 					$seotab['url'] = static::treatUrl($seotab['url']);
 
-					if ($checkuri==$seotab['url']) {
+					if ($seotab['url']=='*') {
+						$url_match = true;
+					}elseif ($checkuri==$seotab['url']) {
 						$url_match = true;
 					}elseif (empty($seotab['strict_mode'])) {
 						if (substr($checkuri,-1)!='/') {
