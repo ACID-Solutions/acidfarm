@@ -38,6 +38,11 @@ class AcidRegistration {
 		return static::url().'rest/information/'.static::datas('id_client').'/'.static::datas('public').'/'.static::realversion();
 	}
 
+	public static function dlUrl($version=null) {
+		$version = $version===null ? static::realversion() : $version;
+		return static::url().'rest/download/'.static::datas('id_client').'/'.static::datas('public').'/'.$version;
+	}
+
 	public static function registerUrl() {
 		return static::url().'rest/registration';
 	}

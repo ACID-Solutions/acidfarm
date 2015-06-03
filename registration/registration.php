@@ -37,6 +37,7 @@ if (!file_exists(AcidRegistration::file())) {
 		$url = AcidRegistration::datas('url');
 
 		$maintenanceinfo = AcidRegistration::infoUrl();
+		$downloadinfo = AcidRegistration::dlUrl('');
 
 ?>
 	<div id="maintenance_box" >
@@ -60,7 +61,7 @@ if (!file_exists(AcidRegistration::file())) {
 								var msg = '';
 
 								if (res.maj.length) {
-									msg = msg + '<p>Des mises à jour sont disponibles.</p>';
+									msg = msg + '<p>Des mises à jour sont disponibles, <a href="<?php echo $downloadinfo.$version; ?>.'+res.maj[0]+'">ici</a>.</p>';
 								}else{
 									msg = msg + '<p>Aucune mise à jour disponible.</p>';
 								}
