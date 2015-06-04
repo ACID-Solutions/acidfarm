@@ -1,6 +1,6 @@
 <div>
 
-<table style="width:100%; padding:30px;">
+<table style="width:100%; padding:30px; table-layout: fixed;">
 	<tr>
 		<td colspan="3" style="vertical-align:top;  padding-bottom:25px; height:100px;  border-bottom:1px solid #CCCCCC;" >
 			<p>
@@ -19,10 +19,10 @@
 			</div>
 
 			<table>
-				<tr><td>Nom du site : </td><td><b><?php echo Acid::get('site:name');?></b></td></tr>
-				<tr><td>Email du site : </td><td><b><?php echo Acid::get('site:email');?></b></td></tr>
-				<tr><td>Email du formulaire : </td><td><b><?php echo SiteConfig::getCurrent()->hscConf('email');?></b></td></tr>
-				<tr><td>Url du site : </td><td><a href="<?php echo Acid::get('url:system_lang');?>"><b><?php echo Acid::get('url:system_lang');?></b></a></td></tr>
+				<tr><td style="vertical-align:top; white-space:nowrap; padding-right:15px;" >Nom du site : </td><td><b><?php echo Acid::get('site:name');?></b></td></tr>
+				<tr><td style="vertical-align:top; white-space:nowrap; padding-right:15px;">Email du site : </td><td><b><?php echo Acid::get('site:email');?></b></td></tr>
+				<tr><td style="vertical-align:top; white-space:nowrap; padding-right:15px;">Email du formulaire : </td><td><b><?php echo SiteConfig::getCurrent()->hscConf('email');?></b></td></tr>
+				<tr><td style="vertical-align:top; white-space:nowrap; padding-right:15px;">Url du site : </td><td><a href="<?php echo Acid::get('url:system_lang');?>"><b><?php echo Acid::get('url:system_lang');?></b></a></td></tr>
 			</table>
 
 		</td>
