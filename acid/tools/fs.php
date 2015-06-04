@@ -83,6 +83,28 @@ class AcidFs
     }
 
     /**
+     * Copie un dossier de manière recursive
+     * @param string $src
+     * @param string $dst
+     */
+    public static function recurseCopy($src,$dst) {
+    	if ($dir = opendir($src)) {
+    		@mkdir($dst);
+    		while(false !== ( $file = readdir($dir)) ) {
+    			if (( $file != '.' ) && ( $file != '..' )) {
+    				if ( is_dir($src . '/' . $file) ) {
+    					self::recurseCopy($src . '/' . $file,$dst . '/' . $file);
+    				}
+    				else {
+    					copy($src . '/' . $file,$dst . '/' . $file);
+    				}
+    			}
+    		}
+    		closedir($dir);
+    	}
+    }
+
+    /**
      * Retourne le couple (largeur, hauteur) correspondant à l'encoffrage d'une image de dimension $w x $h dans $mw x $mh.
      *
      * @param int $w Largeur à traiter.
