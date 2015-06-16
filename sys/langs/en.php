@@ -44,6 +44,37 @@ $lang['trad']['admin_menu_user_config'] = 'Users';
 $lang['trad']['admin_menu_web'] 		= 'Web Site';
 $lang['trad']['admin_menu_tools'] 		= 'Tools';
 
+$lang['trad']['admin_board_welcome'] 		= 'Welcome <b>__NAME__</b>,<br />Here you are in your backoffice.';
+
+$lang['trad']['admin_board_site_title'] 		= 'Website';
+$lang['trad']['admin_board_site_name'] 				= 'Website name :';
+$lang['trad']['admin_board_site_email'] 			= 'Website email : ';
+$lang['trad']['admin_board_form_email'] 			= 'Contact form email : ';
+$lang['trad']['admin_board_site_url'] 				= 'Website url :';
+
+$lang['trad']['admin_board_stats_title'] 		= 'Stats';
+$lang['trad']['admin_board_stats_sessions'] 		= '<b>__NB__</b> active session(s)';
+$lang['trad']['admin_board_stats_lastnews'] 		= 'Your last news is dated from <b>__DATE__</b>';
+
+$lang['trad']['admin_board_version_title'] 		= 'Framework version';
+$lang['trad']['admin_board_version_v'] 						= 'Version :';
+$lang['trad']['admin_board_version_vc'] 					= 'Full version :';
+$lang['trad']['admin_board_version_number'] 				= 'Registration number :';
+$lang['trad']['admin_board_version_url'] 					= 'Registration url :';
+$lang['trad']['admin_board_version_maj_available'] 			= 'Update available, ';
+$lang['trad']['admin_board_version_maj_available_here'] 	= 'here';
+$lang['trad']['admin_board_version_maj_unavailable'] 		= 'Update unavailable.';
+
+$lang['trad']['admin_registration_title'] 		= 'Registration';
+$lang['trad']['admin_registration_check'] 		= 'Subscribe to Acidfarm\'s recording service';
+$lang['trad']['admin_registration_domain'] 		= 'registration domain :';
+$lang['trad']['admin_registration_contact'] 	= 'registration contact :';
+$lang['trad']['admin_registration_email'] 		= 'registration email :';
+$lang['trad']['admin_registration_phone'] 		= 'registration phone :';
+$lang['trad']['admin_registration_sample'] 		= 'sample :';
+
+$lang['trad']['admin_registration_submit'] 		= 'Submit';
+
 $lang['trad']['contact_form_please']	= 'Please enter:';
 $lang['trad']['contact_form_firstname']	= 'Firstname:';
 $lang['trad']['contact_form_lastname'] 	= 'Lastname:';

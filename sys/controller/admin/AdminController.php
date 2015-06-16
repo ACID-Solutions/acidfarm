@@ -204,7 +204,12 @@ class AdminController{
 		$expire_date = time() + Acid::get('session:expire') - (60*5);
 		$stats['users'] = AcidDB::query('SELECT COUNT(*) as count FROM '.Acid::get('session:table').' WHERE `expire` > '.$expire_date)->fetch(PDO::FETCH_ASSOC);
 
-		$content = Acid::tpl('admin/admin-board.tpl',array('registration'=>$registration,'stats'=>$stats));
+		$last_actu = null;
+		if (is_callable('Actu::getLast')) {
+			$last_actu = Actu::getLast(1);
+		}
+
+		$content = Acid::tpl('admin/admin-board.tpl',array('registration'=>$registration,'stats'=>$stats,'lastactu'=>$last_actu));
 
 		Conf::addToContent(Acid::mod('User')->printAdminBody($content,null));
 

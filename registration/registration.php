@@ -13,13 +13,14 @@ if (!file_exists(AcidRegistration::file())) {
 	<form style="margin:30px 0px;"  action="" method="POST">
 	<div>
 		<input type="hidden"  name="dontreload" value="1" />
-		<h2>Registration</h2>
-		<label>Subscribe to Acidfarm's recording service <input type="checkbox" name="registration[allowed]"  value="1" checked="checked" /></label><br />
-		registration domain : <input size="30" type="text" id="registration_url"  name="registration[url]" value="<?php echo empty($_SERVER['HTTPS']) ? 'http' : 'https'; ?>://<?php echo $_SERVER['HTTP_HOST']; ?><?php echo implode('/',array_slice(explode('/',$_SERVER['PHP_SELF']),0,-1)); ?>/" /> (ex : http://www.acid-solutions.fr)<br />
-		registration contact : <input type="text" id="registration_contact" name="registration[contact]" value="" /><br />
-		registration email : <input type="text" id="registration_email" name="registration[email]" value="" /><br />
-		registration phone : <input type="text" id="registration_phone" name="registration[phone]" value="" /><br />
-		<input type="submit" />
+		<h4><?php echo Acid::trad('admin_registration_title'); ?></h4>
+		<label><?php echo Acid::trad('admin_registration_check'); ?></span> <input type="checkbox" name="registration[allowed]"  value="1" checked="checked" /></label><br /><br />
+		<span><?php echo Acid::trad('admin_registration_domain'); ?></span> <input size="30" type="text" id="registration_url"  name="registration[url]" value="<?php echo empty($_SERVER['HTTPS']) ? 'http' : 'https'; ?>://<?php echo $_SERVER['HTTP_HOST']; ?><?php echo implode('/',array_slice(explode('/',$_SERVER['PHP_SELF']),0,-1)); ?>/" />
+		<br /><i><?php echo Acid::trad('admin_registration_sample'); ?> http://www.acid-solutions.fr</i><br /><br />
+		<span><?php echo Acid::trad('admin_registration_contact'); ?></span> <input type="text" id="registration_contact" name="registration[contact]" value="" /><br />
+		<span><?php echo Acid::trad('admin_registration_email'); ?></span> <input type="text" id="registration_email" name="registration[email]" value="" /><br />
+		<span><?php echo Acid::trad('admin_registration_phone'); ?></span> <input type="text" id="registration_phone" name="registration[phone]" value="" /><br /><br />
+		<input type="submit" value="<?php echo Acid::trad('admin_registration_submit'); ?>" />
 	</div>
 	</form>
 
@@ -42,10 +43,10 @@ if (!file_exists(AcidRegistration::file())) {
 ?>
 	<div id="maintenance_box" >
 		<p>
-		Version : <?php echo $version; ?><br />
-		Version complète : <?php echo $real_version; ?><br />
-		Numéro d'enregistrement : <?php echo $client_id; ?><br />
-		Url enregistrée : <?php echo $url; ?>
+		<?php echo Acid::trad('admin_board_version_v'); ?> <?php echo $version; ?><br />
+		<?php echo Acid::trad('admin_board_version_vc'); ?> <?php echo $real_version; ?><br />
+		<?php echo Acid::trad('admin_board_version_number'); ?> <?php echo $client_id; ?><br />
+		<?php echo Acid::trad('admin_board_version_url'); ?> <?php echo $url; ?>
 		</p>
 		<div id="maintenance_info" >
 
@@ -61,9 +62,9 @@ if (!file_exists(AcidRegistration::file())) {
 								var msg = '';
 
 								if (res.maj.length) {
-									msg = msg + '<p>Des mises à jour sont disponibles, <a href="<?php echo $downloadinfo.$version; ?>.'+res.maj[0]+'">ici</a>.</p>';
+									msg = msg + '<p><?php echo Acid::trad('admin_board_version_maj_available'); ?> <a href="<?php echo $downloadinfo.$version; ?>.'+res.maj[0]+'"><?php echo Acid::trad('admin_board_version_maj_available_here'); ?></a>.</p>';
 								}else{
-									msg = msg + '<p>Aucune mise à jour disponible.</p>';
+									msg = msg + '<p><?php echo Acid::trad('admin_board_version_maj_unavailable'); ?></p>';
 								}
 
 								if (res.info_message) {

@@ -44,6 +44,37 @@ $lang['trad']['admin_menu_user_config'] = 'Utilisateurs';
 $lang['trad']['admin_menu_web'] 		= 'Site Web';
 $lang['trad']['admin_menu_tools'] 		= 'Outils';
 
+$lang['trad']['admin_board_welcome'] 		= 'Bonjour <b>__NAME__</b>,<br />Vous voici dans votre espace d\'administration.';
+
+$lang['trad']['admin_board_site_title'] 		= 'Votre site';
+$lang['trad']['admin_board_site_name'] 				= 'Nom du site :';
+$lang['trad']['admin_board_site_email'] 			= 'Email du site : ';
+$lang['trad']['admin_board_form_email'] 			= 'Email du formulaire : ';
+$lang['trad']['admin_board_site_url'] 				= 'Url du site :';
+
+$lang['trad']['admin_board_stats_title'] 		= 'Statistiques';
+$lang['trad']['admin_board_stats_sessions'] 		= '<b>__NB__</b> session(s) active(s)';
+$lang['trad']['admin_board_stats_lastnews'] 		= 'Votre dernière actualité remonte au <b>__DATE__</b>';
+
+$lang['trad']['admin_board_version_title'] 		= 'Version logicielle';
+$lang['trad']['admin_board_version_v'] 						= 'Version :';
+$lang['trad']['admin_board_version_vc'] 					= 'Version complète :';
+$lang['trad']['admin_board_version_number'] 				= 'Numéro d\'enregistrement :';
+$lang['trad']['admin_board_version_url'] 					= 'Url enregistrée :';
+$lang['trad']['admin_board_version_maj_available'] 			= 'Des mises à jour sont disponibles, ';
+$lang['trad']['admin_board_version_maj_available_here'] 	= 'ici';
+$lang['trad']['admin_board_version_maj_unavailable'] 		= 'Aucune mise à jour disponible.';
+
+$lang['trad']['admin_registration_title'] 		= 'Enregistrement';
+$lang['trad']['admin_registration_check'] 		= 'S\'inscrire au service d\'enregistrement Acidfarm';
+$lang['trad']['admin_registration_domain'] 		= 'Nom de domaine : ';
+$lang['trad']['admin_registration_contact'] 	= 'Contact :';
+$lang['trad']['admin_registration_email'] 		= 'Email :';
+$lang['trad']['admin_registration_phone'] 		= 'Téléphone :';
+$lang['trad']['admin_registration_sample'] 		= 'exemple :';
+
+$lang['trad']['admin_registration_submit'] 		= 'Valider';
+
 $lang['trad']['contact_form_please']	= 'Merci de saisir :';
 $lang['trad']['contact_form_firstname']	= 'Prénom :';
 $lang['trad']['contact_form_lastname'] 	= 'Nom :';
