@@ -24,6 +24,7 @@ $lang['mod']['actu']['seo_keys'] = 'SEO Keywords';
 $lang['mod']['actu']['adate']   = 'Datum und Uhrzeit';
 $lang['mod']['actu']['src']    = 'Bild';
 $lang['mod']['actu']['active']  = 'Aktiv';
+$lang['mod']['actu']['cache_time']  = 'Cache-Anzeige';
 
 //--page
 $lang['mod']['page']['__NAME__'] = 'Seiten';
@@ -38,6 +39,7 @@ $lang['mod']['page']['seo_keys'] = 'SEO Keywords';
 $lang['mod']['page']['adate']   = 'Datum und Uhrzeit';
 $lang['mod']['page']['src']    = 'Bild';
 $lang['mod']['page']['active']   = 'Aktiv';
+$lang['mod']['page']['cache_time']  = 'Cache-Anzeige';
 
 //--photo
 $lang['mod']['photo']['__NAME__'] = 'Fotos';
@@ -46,6 +48,7 @@ $lang['mod']['photo']['name']	  = 'Anrede';
 $lang['mod']['photo']['position'] = 'Position';
 $lang['mod']['photo']['src']    = 'Bild';
 $lang['mod']['photo']['active']  = 'Aktiv';
+$lang['mod']['photo']['cache_time']  = 'Cache-Anzeige';
 
 //--photo home
 $lang['mod']['photo_home']['__NAME__'] = 'Fotos empfang';
@@ -54,6 +57,7 @@ $lang['mod']['photo_home']['name']	   = 'Anrede';
 $lang['mod']['photo_home']['position'] = 'Position';
 $lang['mod']['photo_home']['src']    = 'Bild';
 $lang['mod']['photo_home']['active']  = 'Aktiv';
+$lang['mod']['photo_home']['cache_time']  = 'Cache-Anzeige';
 
 //--contact
 $lang['mod']['contact']['__NAME__'] = 'Kontakt';
