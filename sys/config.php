@@ -31,8 +31,11 @@ $server_file = SITE_PATH.'sys/server.php';
 if (file_exists($server_file)) {
 	include ($server_file);
 }else{
+
+	$base_folder = substr(__DIR__,strlen($_SERVER['DOCUMENT_ROOT']),(-1*strlen('/sys')));
+
 	echo 	'<div style="margin-top:250px; text-align:center;">'. "\n" .
-			'	<h2>AcidFarm</h2>You must configure your website ( by running <b><a href="install.php">install.php</a></b> / or by including file <b>'.$server_file . '</b> )' . "\n" .
+			'	<h2>AcidFarm</h2>You must configure your website ( by running <b><a href="'.$base_folder.'/install.php">install.php</a></b> / or by including file <b>'.$server_file . '</b> )' . "\n" .
 			'</div>' ;
 	exit();
 }
