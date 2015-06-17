@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS `acid_actu` (
   `adate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `active` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
   `src` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `cache_time` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id_actu`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
@@ -44,8 +45,8 @@ CREATE TABLE IF NOT EXISTS `acid_actu` (
 -- Contenu de la table `af_actu`
 --
 
-INSERT INTO `acid_actu` (`id_actu`, `title`, `head`, `content`, `seo_title`, `seo_desc`, `seo_keys`, `adate`, `active`,`src`) VALUES
-(1, 'AcidFarm is working', 'Here my news head.', '<p>Here my news content.</p>', '','','', NOW(), '1','');
+INSERT INTO `acid_actu` (`id_actu`, `title`, `head`, `content`, `seo_title`, `seo_desc`, `seo_keys`, `adate`, `active`,`src`,`cache_time`) VALUES
+(1, 'AcidFarm is working', 'Here my news head.', '<p>Here my news content.</p>', '','','', NOW(), '1','','');
 
 -- --------------------------------------------------------
 
@@ -65,6 +66,7 @@ CREATE TABLE IF NOT EXISTS `acid_page` (
   `seo_keys` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `active` tinyint(1) unsigned NOT NULL,
   `src` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `cache_time` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id_page`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
@@ -72,9 +74,9 @@ CREATE TABLE IF NOT EXISTS `acid_page` (
 -- Contenu de la table `acid_page`
 --
 
-INSERT INTO `acid_page` (`id_page`, `id_page_category`, `title`, `ident`, `adate`, `content`, `seo_title`, `seo_desc`, `seo_keys`, `active`,`src`) VALUES
-(1, 1, 'Home Page', 'home', '2011-12-08 12:55:33', '<p style="text-align: left;"><span id="result_box" lang="en"><strong><span class="hps">Welcome to</span> <span class="hps">the home page</span> <span class="hps">AcidFarm</span> !</strong><br /> <span class="hps">Thank you for choosing</span> <span class="hps">our solution.</span></span></p>','','','', 0, ''),
-(2, 0, 'AcidFarm', 'acidfarm', '2011-03-01 11:50:09', '<p>AcidFarm is a open source framework developped by Acid-Solutions SARL.</p>\r\n<p>Primarily developed for web developers who want to build a PHP Website more easily, Acidfarm was made in jully 2010.</p>\r\n<p>AcidFarm in few words :</p>\r\n<ul>\r\n<li>A Securized FrameWork</li>\r\n<li>A Lightweight FrameWork</li>\r\n<li>A Flexible Framework</li>\r\n</ul>', '','','', 1, '');
+INSERT INTO `acid_page` (`id_page`, `id_page_category`, `title`, `ident`, `adate`, `content`, `seo_title`, `seo_desc`, `seo_keys`, `active`,`src`,`cache_time`) VALUES
+(1, 1, 'Home Page', 'home', '2011-12-08 12:55:33', '<p style="text-align: left;"><span id="result_box" lang="en"><strong><span class="hps">Welcome to</span> <span class="hps">the home page</span> <span class="hps">AcidFarm</span> !</strong><br /> <span class="hps">Thank you for choosing</span> <span class="hps">our solution.</span></span></p>','','','', 0, '', ''),
+(2, 0, 'AcidFarm', 'acidfarm', '2011-03-01 11:50:09', '<p>AcidFarm is a open source framework developped by Acid-Solutions SARL.</p>\r\n<p>Primarily developed for web developers who want to build a PHP Website more easily, Acidfarm was made in jully 2010.</p>\r\n<p>AcidFarm in few words :</p>\r\n<ul>\r\n<li>A Securized FrameWork</li>\r\n<li>A Lightweight FrameWork</li>\r\n<li>A Flexible Framework</li>\r\n</ul>', '','','', 1, '', '');
 
 
 -- --------------------------------------------------------
@@ -233,6 +235,7 @@ CREATE TABLE IF NOT EXISTS `acid_photo_home` (
   `pos` int(11) NOT NULL,
   `src` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `active` ENUM( '0', '1' ) NOT NULL DEFAULT '1',
+  `cache_time` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id_photo_home`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
@@ -252,5 +255,6 @@ CREATE TABLE IF NOT EXISTS `acid_photo` (
   `pos` int(11) NOT NULL,
   `src` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `active` ENUM( '0', '1' ) NOT NULL DEFAULT '1',
+  `cache_time` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id_photo`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;

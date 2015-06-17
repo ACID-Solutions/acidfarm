@@ -1473,22 +1473,70 @@ abstract class AcidModuleCore {
 	}
 
 	/**
+	 * Retourne le nom de la variable correspondant au cache time
+	 */
+	public static function cacheTimeKey() {
+		return Acid::get('modcache:key_time') ? Acid::get('modcache:key_time') : 'cache_time';
+	}
+
+	/**
+	 * Retourne un timestamp de référence pour le cache
+	 * @param string $force force une valeur à time() si aucune configuration
+	 */
+	public function getCacheTime($force=null) {
+
+		$force = $force !==null ? $force : (Acid::exist('modcache:force_time') ? Acid::get('modcache:force_time') : false);
+		$key = static::cacheTimeKey();
+
+		if (isset($this->vars[$key])) {
+			return $this->get($key);
+		}
+
+		return $force ? time() : null;
+	}
+
+	/**
+	 * Met à jour la variable cache time
+	 * @param string $value si non définie, retroune time()
+	 */
+	public function updateCacheTime($value=null) {
+
+		if (isset($this->vars[static::cacheTimeKey()])) {
+			$value = $value===null ? time() : $value;
+			$changes = $this->initVars(array(static::cacheTimeKey()=>$value));
+			$this->dbUpdate($changes);
+			return $value;
+		}
+
+	}
+
+	/**
 	* Formate l'url en fonction de l'AcidVar de la clé saisi en entrée
 	* @param string $key nom du paramètre
 	* @param string $url pour forcer l'url
 	* @param string $format format à appliquer à l'url
 	*/
-	public static function genUrlKey($key,$url=null,$format=null) {
+	public static function genUrlKey($key,$url=null,$format=null,$cache_time=null) {
 
 		$class = get_called_class();
 		$module = new $class();
 		if (isset($module->vars[$key])) {
+
 			$module->initVars(array($key=>$url));
+
 			if ($format===null) {
-				return $module->vars[$key]->getUrl();
+				$resurl = $module->vars[$key]->getUrl();
 			}else{
-				return $module->vars[$key]->getUrl($format);
+				$resurl = $module->vars[$key]->getUrl($format);
 			}
+
+			if ($cache_time) {
+				$cachetimekey = Acid::get('modcache:key_time_name') ? Acid::get('modcache:key_time_name') : 'cache_time';
+				$resurl .= (strpos($resurl, '?')===false) ? ('?'.$cachetimekey.'='.$cache_time) : '';
+			}
+
+			return $resurl;
+
 		}else{
 			trigger_error('genUrlKey : unable to find module\'s key : '. $key . ' in ' . $class,E_USER_ERROR);
 		}
@@ -1501,7 +1549,7 @@ abstract class AcidModuleCore {
 	* @param string $format
 	*/
 	public function getUrlKey($key,$format=null) {
-		return $this->genUrlKey($key,$this->get($key),$format);
+		return $this->genUrlKey($key,$this->get($key),$format,$this->getCacheTime());
 	}
 
 	/**
@@ -1634,6 +1682,12 @@ abstract class AcidModuleCore {
 	* @return boolean
 	*/
 	public function postSuccess($vals=array(),$do=null) {
+
+		//cache time
+		if (in_array($do, array('add','update'))) {
+			$this->updateCacheTime();
+		}
+
 		return true;
 	}
 

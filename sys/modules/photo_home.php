@@ -63,7 +63,7 @@ class PhotoHome extends AcidModule {
 
 		$this->vars['active'] = new AcidVarBool($this->modTrad('active'),true);
 
-
+		$this->vars['cache_time'] = new AcidVarInfo(self::modTrad('cache_time'));
 
 
 		parent::__construct($init_id);
@@ -78,9 +78,10 @@ class PhotoHome extends AcidModule {
 	 * Rerourne l'url de l'image en entrée au format $format
 	 * @param string $url url de l'image source
 	 * @param string $format la format pour l'url retournée
+	 * @param string $cache_time valeur cache
 	 */
-	public static function genUrlSrc($url=null,$format=null) {
-		return self::genUrlKey('src',$url,$format);
+	public static function genUrlSrc($url=null,$format=null,$cache_time=null) {
+		return self::genUrlKey('src',$url,$format,$cache_time);
 	}
 
 	/**
@@ -88,7 +89,7 @@ class PhotoHome extends AcidModule {
 	 * @param string $format format pour l'url retournée
 	 */
 	public function urlSrc($format=null) {
-		return $this->genUrlSrc($this->get('src'),$format);
+		return $this->getUrlKey('src',$format);
 	}
 
 	/**

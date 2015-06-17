@@ -57,7 +57,7 @@ class Page extends AcidModule {
 
 		$this->vars['adate']	= new AcidVarDateTime($this->modTrad('adate'));
 		$this->vars['active']	= new AcidVarBool($this->modTrad('active'));
-
+		$this->vars['cache_time'] = new AcidVarInfo(self::modTrad('cache_time'));
 
 		/*--- CONFIGURATION ---*/
 
