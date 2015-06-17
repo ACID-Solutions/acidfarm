@@ -1697,6 +1697,8 @@ abstract class AcidModuleCore {
 		$obj = new $class($vals[static::tblId()]);
 		$obj->postConfigure($vals,'update',$this->getConfig());
 
+		$old = $obj;
+
 		if ($obj->getId()) {
 
 			$changes = $obj->initVars($vals);
@@ -1714,6 +1716,7 @@ abstract class AcidModuleCore {
 				AcidDialog::add('banner', $this->getDialogMessage('update',$dialog));
 			}
 
+			$vals['obj_before'] = $old;
 			if ($obj->postSuccess($vals,'update')) {
 				return  $obj;
 			}else{
