@@ -46,3 +46,39 @@
   }
 
 }
+
+@mixin arrow-bottom($color, $width, $height) {
+  display:block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: #{$height} #{$width/2} 0px #{$width/2};
+  border-color: #{$color} transparent transparent transparent;
+}
+
+@mixin arrow-top($color, $width, $height) {
+  display:block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0px #{$width/2} #{$height} #{$width/2};
+  border-color: transparent transparent #{$color} transparent;
+}
+
+@mixin arrow-left($color, $width, $height) {
+  display:block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: #{$width/2} #{$height} #{$width/2} 0px;
+  border-color:transparent #{$color} transparent transparent;
+}
+
+@mixin arrow-right($color, $width, $height) {
+  display:block;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: #{$width/2} 0px #{$width/2}  #{$height};
+  border-color:transparent  transparent transparent #{$color};
+}
