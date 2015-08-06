@@ -109,6 +109,9 @@ class AcidRegistration {
 			$fields['version'] = file_get_contents($version_path);
 		}
 
+		if (!extension_loaded('curl')) {
+			TODO;
+		}
 
 		//url-ify the data for the POST
 		foreach($fields as $key=>$value) { $fields_string .= $key.'='.urlencode($value).'&'; }
