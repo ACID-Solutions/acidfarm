@@ -80,7 +80,7 @@ class AcidVar {
 		if ($regex !== null) $this->_regex = (string)$regex;
 
 		if ($this->validEntry($def) || $force_def) {
-		    $this->_val = $this->_def = $def;
+			$this->_val = $this->_def = $def;
 		}
 
 		//else trigger_error('Acid : Unvalid default "'.$def.'" for regex "'.$regex.'" of '. get_class($this).'',E_USER_WARNING);
@@ -291,10 +291,10 @@ class AcidVar {
 	 */
 	public function validEntry($val) {
 		return	$this->_regex === null ? true : (
-					is_array($val) ? false : (
-						$val === null ? $this->_is_null : (
-							preg_match($this->_regex,$val)
-				)));
+		is_array($val) ? false : (
+		$val === null ? $this->_is_null : (
+		preg_match($this->_regex,$val)
+		)));
 	}
 
 	/**
@@ -356,56 +356,56 @@ class AcidVar {
 			case 'show' :
 				$stop = $stop . '<label class="show_field">' . htmlspecialchars($this->getVal()) . '</label>';
 				$form->addHidden($this->getLabel(), $key, $this->getVal(), $params, $start, $stop,$body_attrs);
-			break;
+				break;
 
 			case 'hidden' :
 				$form->addHidden('', $key, $this->getVal(), $params, $start, $stop,$body_attrs);
-			break;
+				break;
 
 			case 'text' :
 				$form->addText($this->getLabel(),$key,($print?$this->getVal():''),$this->form['size'],$this->form['maxlength'],$params,$start,$stop,$body_attrs);
-			break;
+				break;
 
 			case 'password' :
 				$form->addPassword($this->getLabel(),$key,($print?$this->getVal():$this->getDef()),$this->form['size'],$this->form['maxlength'],$params,$start,$stop,$body_attrs);
-			break;
+				break;
 
 			case 'textarea' :
 				$form->addTextarea($this->getLabel(), $key, ($print?$this->getVal():''), $this->form['cols'], $this->form['rows'],$params, $start, $stop,$body_attrs);
-			break;
+				break;
 
 			case 'file' :
 				$form->addFile($this->getLabel(), $key, $this->config['max_file_size'], $params, $start, $stop,$body_attrs);
-			break;
+				break;
 
 			case 'select' :
 				$form->addSelect($this->getLabel(), $key, ($print?$this->getVal():$this->getDef()),$this->elts, $this->form['size'], $this->form['multiple'],$params,$start,$stop,$body_attrs);
-			break;
+				break;
 
 			case 'radio' :
 				$form->addRadio($this->getLabel(),$key,($print?$this->getVal():$this->getDef()),$this->elts, $params,$start,$stop,$body_attrs);
-			break;
+				break;
 
 			case 'switch' :
 				$body_attrs['class'] = trim((!isset($body_attrs['class']) ? '' : ($body_attrs['class'])).' radioswitch');
 				$form->addRadio($this->getLabel(),$key,($print?$this->getVal():$this->getDef()),$this->elts, $params,$start,$stop,$body_attrs);
-			break;
+				break;
 
 			case 'checkbox':
 				$form->addCheckbox($this->getLabel(),$key,($print?$this->getVal():$this->getDef()),$this->form['text'],$this->form['checked'],$params,$start,$stop);
-			break;
+				break;
 
 			case 'free' :
 				$form->addFreeText($this->getLabel(),$this->form['free_value'],array(),$body_attrs,$key);
-			break;
+				break;
 
 			case 'info' :
 				return false;
-			break;
+				break;
 
 			default :
 				return false;
-			break;
+				break;
 		}
 
 		return $form->getComponent($key, 'fullhtml');
@@ -432,64 +432,64 @@ class AcidVar {
 			case 'show' :
 				$this->form['type'] = 'show';
 				$this->form['maxlength'] = isset($config['maxlength']) ? $config['maxlength'] : null;
-			break;
+				break;
 
 			case 'hidden' :
 				$this->form['type'] = 'hidden';
 				$this->form['maxlength'] = isset($config['maxlength']) ? $config['maxlength'] : null;
-			break;
+				break;
 
 			case 'text' :
 				$this->form['type'] = 'text';
 				$this->form['size'] = isset($config['size']) ? $config['size'] : 20;
 				$this->form['maxlength'] = isset($config['maxlength']) ? $config['maxlength'] : null;
-			break;
+				break;
 
 			case 'password' :
 				$this->form['type'] = 'password';
 				$this->form['size'] = isset($config['size']) ? $config['size'] : 50;
 				$this->form['maxlength'] = isset($config['maxlength']) ? $config['maxlength'] : null;
-			break;
+				break;
 
 			case 'textarea' :
 				$this->form['type'] = 'textarea';
 				$this->form['cols'] = isset($config['cols']) ? $config['cols'] : 60;
 				$this->form['rows'] = isset($config['rows']) ? $config['rows'] : 20;
-			break;
+				break;
 
 			case 'file' :
 				$this->form['type'] = 'file';
 				$this->form['max_file_size'] = isset($config['max_file_size']) ? $config['max_file_size'] : null;
-			break;
+				break;
 
 			case 'select' :
 				$this->form['type'] = 'select';
 				$this->form['size'] = isset($config['size']) ? $config['size'] : 1;
 				$this->form['multiple'] = isset($config['multiple']) ? $config['multiple'] : false;
-			break;
+				break;
 
 			case 'radio' :
 				$this->form['type'] = 'radio';
-			break;
+				break;
 
 			case 'switch' :
 				$this->form['type'] = 'switch';
-			break;
+				break;
 
 			case 'checkbox':
 				$this->form['type'] = 'checkbox';
 				$this->form['checked'] = isset($config['checked']) ? $config['checked'] : false;
 				$this->form['text'] = isset($config['text']) ? $config['text'] : '';
-			break;
+				break;
 
 			case 'free' :
 				$this->form['type'] = 'free';
 				$this->form['free_value'] = isset($config['free_value']) ? $config['free_value'] : '';
-			break;
+				break;
 
 			case 'info' :
 				$this->form['type'] = 'info';
-			break;
+				break;
 
 		}
 
@@ -543,19 +543,19 @@ class AcidVarString extends AcidVar {
 	 */
 	public static function bbcode($text) {
 
-	    $text = preg_replace('`\[img\](.+?)\[/img\]`', '<img src="$1" alt="img" />', $text);
-	    $text = preg_replace('`\[url\](.+?)\[/url\]`', '<a href="$1">$1</a>', $text);
-	    $text = preg_replace('`\[url=(.+?)\](.+?)\[\/url\]`', '<a href=$1>$2</a>', $text);
-	    $text = preg_replace('`\[b\](.+?)\[\/b\]`', '<b>$1</b>', $text);
-	    $text = preg_replace('`\[i\](.+?)\[\/i\]`', '<i>$1</i>', $text);
-	    $text = preg_replace('`\[u\](.+?)\[\/u\]`', '<u>$1</u>', $text);
+		$text = preg_replace('`\[img\](.+?)\[/img\]`', '<img src="$1" alt="img" />', $text);
+		$text = preg_replace('`\[url\](.+?)\[/url\]`', '<a href="$1">$1</a>', $text);
+		$text = preg_replace('`\[url=(.+?)\](.+?)\[\/url\]`', '<a href=$1>$2</a>', $text);
+		$text = preg_replace('`\[b\](.+?)\[\/b\]`', '<b>$1</b>', $text);
+		$text = preg_replace('`\[i\](.+?)\[\/i\]`', '<i>$1</i>', $text);
+		$text = preg_replace('`\[u\](.+?)\[\/u\]`', '<u>$1</u>', $text);
 
-	    $text = preg_replace('`\[code\](.+?)\[\/code\]`s', '<code>$1</code>', $text);
-	    $text = preg_replace('`\[quote\](.+?)\[\/quote\]`s', '<blockquote>$1</blockquote>', $text);
-	    $text = preg_replace('`\[quote=(.+?)\](.+?)\[\/quote\]`s', '<blockquote cite="$1">$2</blockquote>', $text);
-	    $text = preg_replace('`\[color=(.+?)\](.+?)\[\/color\]`s', '<span style="color:$1">$2</span>', $text);
-	    $text = nl2br($text);
-    	return $text;
+		$text = preg_replace('`\[code\](.+?)\[\/code\]`s', '<code>$1</code>', $text);
+		$text = preg_replace('`\[quote\](.+?)\[\/quote\]`s', '<blockquote>$1</blockquote>', $text);
+		$text = preg_replace('`\[quote=(.+?)\](.+?)\[\/quote\]`s', '<blockquote cite="$1">$2</blockquote>', $text);
+		$text = preg_replace('`\[color=(.+?)\](.+?)\[\/color\]`s', '<span style="color:$1">$2</span>', $text);
+		$text = nl2br($text);
+		return $text;
 	}
 
 	/**
@@ -624,8 +624,8 @@ class AcidVarString extends AcidVar {
 			 * @see http://php.net/manual/fr/function.mb-substr.php#107698
 			 */
 			$string = 	join("", array_slice(
-							preg_split("//u", $string, -1, PREG_SPLIT_NO_EMPTY), 0, $length)
-						);
+					preg_split("//u", $string, -1, PREG_SPLIT_NO_EMPTY), 0, $length)
+			);
 
 			$string .= $end;
 		}
@@ -641,30 +641,30 @@ class AcidVarString extends AcidVar {
 	public static function entityTranslator(){
 		return array(
 
-				"‚" => ",",
-				"ƒ" => "f",
-				"„" => ",,",
-				"…" => "...",
-				"†" => "T",
-				"‡" => "I",
-				"ˆ" => "^",
-				"‰" => "L",
-				"Š" => "Ŝ",
-				"‹" => "‹",
-				"Œ" => "OE",
-				"‘" => "'",
-				"’" => "'",
-				"“" => '"',
-				"”" => '"',
-				"•" => "°",
-				"–" => "_",
-				"—" => "_",
-				"˜" => "~",
-				"™" => "TM",
-				"š" => "ŝ",
-				"›" => ">",
-				"œ" => "oe",
-				"Ÿ" => "Ÿ"
+			"‚" => ",",
+			"ƒ" => "f",
+			"„" => ",,",
+			"…" => "...",
+			"†" => "T",
+			"‡" => "I",
+			"ˆ" => "^",
+			"‰" => "L",
+			"Š" => "Ŝ",
+			"‹" => "‹",
+			"Œ" => "OE",
+			"‘" => "'",
+			"’" => "'",
+			"“" => '"',
+			"”" => '"',
+			"•" => "°",
+			"–" => "_",
+			"—" => "_",
+			"˜" => "~",
+			"™" => "TM",
+			"š" => "ŝ",
+			"›" => ">",
+			"œ" => "oe",
+			"Ÿ" => "Ÿ"
 
 		);
 	}
@@ -782,7 +782,7 @@ class AcidVarInteger extends AcidVar {
 	 * @param int $val
 	 */
 	public function setVal($val) {
-	    return parent::setVal((int)$val);
+		return parent::setVal((int)$val);
 	}
 
 }
@@ -941,9 +941,9 @@ class AcidVarDate extends AcidVarString {
 	}
 
 	/**
-	* Retourne la valeur actuelle à l'instant T
-	* @return string
-	*/
+	 * Retourne la valeur actuelle à l'instant T
+	 * @return string
+	 */
 	public static function now() {
 		return date('Y-m-d');
 	}
@@ -1092,11 +1092,11 @@ class AcidVarFile extends AcidVarString {
 	 * @var array configuration
 	 */
 	var $config 	= array(
-						'max_file_size'=>null,
-						'name'=>'',
-						'print_id'=>'%d',
-						'ext'=>null
-					);
+		'max_file_size'=>null,
+		'name'=>'',
+		'print_id'=>'%d',
+		'ext'=>null
+	);
 
 	/**
 	 * Constructeur AcidVarFile
@@ -1139,7 +1139,7 @@ class AcidVarFile extends AcidVarString {
 	 * @return string
 	 */
 	public function getPath() {
-	    return SITE_PATH.$this->dir_path.pathinfo($this->getUrl(),PATHINFO_BASENAME);
+		return SITE_PATH.$this->dir_path.pathinfo($this->getUrl(),PATHINFO_BASENAME);
 	}
 
 	/**
@@ -1158,7 +1158,7 @@ class AcidVarFile extends AcidVarString {
 	 * @return string
 	 */
 	public function getFileName() {
-	    return basename($this->getUrl());
+		return basename($this->getUrl());
 	}
 
 	/*
@@ -1306,7 +1306,7 @@ class AcidVarFile extends AcidVarString {
 		if ($this->isAValidExt(AcidFs::getExtension($file_path))) {
 			return true;
 		} elseif (!empty($file_path)) {
-		    AcidDialog::add('error',Acid::trad('vars_bad_file'));
+			AcidDialog::add('error',Acid::trad('vars_bad_file'));
 		}
 		return false;
 	}
@@ -1355,7 +1355,7 @@ class AcidVarFile extends AcidVarString {
 	protected function fsAdd ($tmp_path,$final_path,$uploaded_file=true) {
 
 		if ($uploaded_file) {
-		    if (move_uploaded_file($tmp_path,$final_path)) {
+			if (move_uploaded_file($tmp_path,$final_path)) {
 				chmod($final_path,Acid::get('files:file_mode'));
 				return true;
 			}
@@ -1593,7 +1593,7 @@ class AcidVarImage extends AcidVarFile {
 	 * @return string
 	 */
 	public function getPath($format='src') {
-	    return SITE_PATH . $this->dir_path . pathinfo($this->getUrl($format),PATHINFO_BASENAME);
+		return SITE_PATH . $this->dir_path . pathinfo($this->getUrl($format),PATHINFO_BASENAME);
 	}
 
 	/**
@@ -1720,7 +1720,7 @@ class AcidVarImage extends AcidVarFile {
 
 		Acid::log('debug','Resizing ' . $this->getFileName() .' in '.$format.' format');
 
-		 if (isset($this->config['format'][$format])) {
+		if (isset($this->config['format'][$format])) {
 
 			list($max_img_w, $max_img_h, $crop) = $this->config['format'][$format]['size'];
 
@@ -1751,7 +1751,7 @@ class AcidVarImage extends AcidVarFile {
 					}
 				}
 			}
-	    }
+		}
 	}
 
 	/**
@@ -1769,9 +1769,9 @@ class AcidVarImage extends AcidVarFile {
 		foreach ($tab_format as $format => $img) {
 			if (is_file($path = $this->getValPath($format))) {
 				if (!unlink($path)) {
-    				$success = false;
-    				Acid::log('error','AcidImage::fsRemove can\'t delete ' . $path);
-    			}
+					$success = false;
+					Acid::log('error','AcidImage::fsRemove can\'t delete ' . $path);
+				}
 			}
 		}
 
@@ -1796,12 +1796,12 @@ class AcidVarImage extends AcidVarFile {
 
 		foreach ($this->config['format'] as $format => $elt) {
 			if (in_array($format,$format_filter)) {
-	    		$this->imgResize($format);
-	    		if (!empty($elt['effect'])) {
-		    		foreach ($elt['effect'] as $effect) {
-		    			$this->effectProcess($effect,$format);
-		    		}
-		    	}
+				$this->imgResize($format);
+				if (!empty($elt['effect'])) {
+					foreach ($elt['effect'] as $effect) {
+						$this->effectProcess($effect,$format);
+					}
+				}
 			}
 		}
 
@@ -1848,39 +1848,39 @@ class AcidVarImage extends AcidVarFile {
 		}else{
 
 			switch ($effect) {
-	    		case 'gray' :
-	    			AcidFs::imgGray($this->getPath($format),$this->getPath($format));
-	    		break;
+				case 'gray' :
+					AcidFs::imgGray($this->getPath($format),$this->getPath($format));
+					break;
 
-	    		case 'fill_white' :
-	    			AcidFs::fill(
-	    				$this->getPath($format),
-	    				$this->getPath($format),
-	    				$this->config['format'][$format]['size'][0],
-	    				$this->config['format'][$format]['size'][1],
-	    				array(255,255,255)
-				    );
-	    		break;
+				case 'fill_white' :
+					AcidFs::fill(
+						$this->getPath($format),
+						$this->getPath($format),
+						$this->config['format'][$format]['size'][0],
+						$this->config['format'][$format]['size'][1],
+						array(255,255,255)
+					);
+					break;
 
-	    		case 'fill_transparent' :
-	    			AcidFs::fill(
-	    			$this->getPath($format),
-	    			$this->getPath($format),
-	    			$this->config['format'][$format]['size'][0],
-	    			$this->config['format'][$format]['size'][1],
-	    			array(false,false,false)
-	    			);
-	    		break;
+				case 'fill_transparent' :
+					AcidFs::fill(
+						$this->getPath($format),
+						$this->getPath($format),
+						$this->config['format'][$format]['size'][0],
+						$this->config['format'][$format]['size'][1],
+						array(false,false,false)
+					);
+					break;
 
-	    		case 'fill_black' :
-	    			AcidFs::fill(
-	    				$this->getPath($format),
-	    				$this->getPath($format),
-	    				$this->config['format'][$format]['size'][0],
-	    				$this->config['format'][$format]['size'][1],
-	    				array(0,0,0)
-				    );
-	    		break;
+				case 'fill_black' :
+					AcidFs::fill(
+						$this->getPath($format),
+						$this->getPath($format),
+						$this->config['format'][$format]['size'][0],
+						$this->config['format'][$format]['size'][1],
+						array(0,0,0)
+					);
+					break;
 			}
 
 		}
@@ -1972,22 +1972,22 @@ class AcidVarImage extends AcidVarFile {
 	 * @param array $body_attrs attributs à appliquer au cadre
 	 */
 	public function getForm(&$form,$key,$print=true,$params=array(),$start='',$stop='',$body_attrs=array()) {
-			if ($this->getVal()) {
-				if (isset($this->config['admin_format']) && isset($this->config['format'][$this->config['admin_format']])) {
-					$start .=	'<a href="'.$this->getUrl().'">'. "\n" .
-								'	<img src="'.$this->getUrl($this->config['admin_format']).'" alt="'.$this->getFileName().'" />'. "\n" .
-								'</a><br />';
-					$stop .= '<br />'.$form->checkbox ($key.'_remove', '1', false).'Supprimer';
+		if ($this->getVal()) {
+			if (isset($this->config['admin_format']) && isset($this->config['format'][$this->config['admin_format']])) {
+				$start .=	'<a href="'.$this->getUrl().'">'. "\n" .
+					'	<img src="'.$this->getUrl($this->config['admin_format']).'" alt="'.$this->getFileName().'" />'. "\n" .
+					'</a><br />';
+				$stop .= '<br />'.$form->checkbox ($key.'_remove', '1', false).'Supprimer';
 
-					return $this->getParentForm($form,$key,$print,$params,$start,$stop,$body_attrs);
-				}
-
-				return parent::getForm($form,$key,$print,$params,$start,$stop,$body_attrs);
-			}else{
-
-				return parent::getForm($form,$key,$print,$params,$start,$stop,$body_attrs);
-
+				return $this->getParentForm($form,$key,$print,$params,$start,$stop,$body_attrs);
 			}
+
+			return parent::getForm($form,$key,$print,$params,$start,$stop,$body_attrs);
+		}else{
+
+			return parent::getForm($form,$key,$print,$params,$start,$stop,$body_attrs);
+
+		}
 	}
 
 }
@@ -2129,6 +2129,7 @@ class AcidVarList extends AcidVar {
 	 * @var booelan true si la valeur associée est une chaine
 	 */
 	protected	$use_index	= null;
+	protected	$int_index	= null;
 
 	/**
 	 * Constructeur AcidVarList
@@ -2140,16 +2141,17 @@ class AcidVarList extends AcidVar {
 	 * @param bool $use_index
 	 * @param int $size Taille du select dans le formulaire.
 	 */
-	public function __construct($label='AcidVarList',$elts=array(),$def='',$multiple=false,$use_index=true,$size=1) {
+	public function __construct($label='AcidVarList',$elts=array(),$def='',$multiple=false,$use_index=true,$size=1,$int_index=true) {
 
 		parent::__construct($label,$def,null);
 
 		$this->sql['type'] = $multiple ? 'text' :
-								($use_index ? (count($elts) < 128 ? 'tinyint(3)' : 'int(10)')
-									: 'enum('.self::getEnumInstruction($elts).')');
+			($use_index ? (count($elts) < 128 ? 'tinyint(3)' : 'int(10)')
+				: 'enum('.self::getEnumInstruction($elts).')');
 
 		$this->setForm('select',array('size'=>$size,'multiple'=>$multiple));
 		$this->use_index = $use_index;
+		$this->int_index = $int_index;
 
 		if ($use_index)  $this->elts = $elts;
 		else foreach ($elts as $elt) $this->elts[$elt] = $elt;
@@ -2176,8 +2178,15 @@ class AcidVarList extends AcidVar {
 	 * @param mixed $val
 	 */
 	public function setVal($val) {
-		if ($this->use_index) parent::setVal((int)$val);
-		else parent::setVal($val);
+		if ($this->use_index) {
+			if ($this->int_index)  {
+				parent::setVal((int)$val);
+			}else{
+				parent::setVal($val);
+			}
+		}else{
+			parent::setVal($val);
+		}
 	}
 
 	/**
@@ -2218,7 +2227,7 @@ class AcidVarRadio extends AcidVar {
 
 		// Infos sql
 		$this->sql['type'] = $use_index ? (count($elts) < 128 ? 'tinyint(3)' : 'int(10)')
-									: 'enum('.self::getEnumInstruction($elts).')';
+			: 'enum('.self::getEnumInstruction($elts).')';
 
 		// Infos form
 		$this->setForm('radio');
