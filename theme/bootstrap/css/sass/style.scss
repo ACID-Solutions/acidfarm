@@ -1,6 +1,4 @@
 @import '/sass/config';
-@import '/sass/bootstrap';
-@import '/sass/bootstrap-mincer';
 
 $header-height:150px;
 
@@ -127,4 +125,13 @@ body {
 
   }
 
+}
+
+.dropdown .dropdown-menu {
+  display: none;
+  margin-top:-8px;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
 }
