@@ -23,8 +23,11 @@ $acid_page_type = 'admin';
 //activation forcée des sessions
 $GLOBALS['acid']['session']['enable'] = true;
 
+//$acid['server_theme'] = 'bootstrap';
+
 //appel d'acidfarm
 require 'sys/start.php';
+
 
 //on utilisera le controller comme librairie
 $acid['includes']['AdminController'] 	 	  = 'sys/controller/admin/AdminController.php';

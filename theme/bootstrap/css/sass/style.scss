@@ -76,3 +76,12 @@ body {
 #contact_form_submit{ 
   margin-top:10px; 
 }
+
+.dropdown .dropdown-menu {
+  display: none;
+  margin-top:-8px;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}

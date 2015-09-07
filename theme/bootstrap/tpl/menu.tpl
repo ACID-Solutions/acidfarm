@@ -24,7 +24,6 @@
 	?>
 		<?php //echo $sep; ?>
 		<a class="menu navbar-brand <?php echo $selected; ?>" href="<?php echo $link; ?>"><?php echo $title; ?></a>
-
 	<?php
 		$i++;
 	}

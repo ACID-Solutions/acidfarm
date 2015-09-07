@@ -258,6 +258,7 @@ class Acid {
 		return $path;
 	}
 
+
 	/**
 	 *  Retourne le chemin vers le fichier theme désigné en entrée.
 	 *  Si le fichier n'existe pas dans le theme courant, on retourne le chemin vers le fichier par défaut.
