@@ -197,6 +197,7 @@ class AdminController{
     public static function board(){
     	$content ='';
 
+		$registration = '';
 //    	ob_start();
 //		include(SITE_PATH.'registration/private/registration.php');
 //		$registration = ob_get_clean();
