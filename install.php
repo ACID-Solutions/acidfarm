@@ -335,6 +335,9 @@ $lprod_quote\$acid['error_report']['prod']	= E_ALL & ~E_STRICT;
 \$acid['sass']['enable'] = true;
 $ldev_quote\$acid['sass']['mode'] = 'dev';
 
+//Disallow deploy for security patches
+//\$acid['deploy']['allowed'] = true;
+
 EOT;
 
 

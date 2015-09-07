@@ -10,7 +10,8 @@
 /sys/upgrade/cur_version.txt
 
 #registration
-/registration/maintenance.json
+/registration/private/maintenance.json
+/registration/private/backup/
 
 # acidfarm folders
 /logs/
@@ -27,4 +28,3 @@
 /.htaccess
 /rest/.htaccess
 
-/registration

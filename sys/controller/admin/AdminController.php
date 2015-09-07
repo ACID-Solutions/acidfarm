@@ -198,7 +198,7 @@ class AdminController{
     	$content ='';
 
     	ob_start();
-		include(SITE_PATH.'registration/registration.php');
+		include(SITE_PATH.'registration/private/registration.php');
 		$registration = ob_get_clean();
 
 		$expire_date = time() + Acid::get('session:expire') - (60*5);

@@ -29,7 +29,7 @@ $acid['includes']['Seo']	  	  		 = 'sys/modules/seo.php';
 
 //Tools
 $acid['includes']['Contact']	 			 = 'sys/tools/contact.php';
-$acid['includes']['AcidRegistration'] 	 	 = 'registration/lib.php';
+$acid['includes']['AcidRegistration'] 	 	 = 'registration/private/lib.php';
 
 // Libraries
 $acid['includes']['Lib'] 		  = 'sys/tools/lib.php';

@@ -75,20 +75,22 @@ $template->add(Conf::getContent());
 $template->printPage();
 
 
-$timer = new AcidTimer();
-list($usec, $sec) = explode(' ', $start_time);
-$timer->start((float)$usec + (float)$sec);
-$tps_gen_page = $timer->fetch(3)*1000;
+if (!empty($start_time)) {
+	$timer = new AcidTimer();
+	list($usec, $sec) = explode(' ', $start_time);
+	$timer->start((float)$usec + (float)$sec);
+	$tps_gen_page = $timer->fetch(3)*1000;
 
-$tdbc = Acid::timerSum('db-connect');
-$tdb = Acid::timerSum('db');
-$ttpl = Acid::timerSum('tpl');
+	$tdbc = Acid::timerSum('db-connect');
+	$tdb = Acid::timerSum('db');
+	$ttpl = Acid::timerSum('tpl');
 
-$db_c = Acid::counter('db-connect').' db connections ('.round($tdbc,3).' ms)';
-$db = Acid::counter('db').' db requests ('.round($tdb,3).' ms)';
-$tpl = Acid::counter('tpl').' tpl inclusions ('.round($ttpl,3).' ms)';
-$total = 'total : '.round($tdbc+$tdb+$ttpl).'ms / '.$tps_gen_page.'ms';
+	$db_c = Acid::counter('db-connect').' db connections ('.round($tdbc,3).' ms)';
+	$db = Acid::counter('db').' db requests ('.round($tdb,3).' ms)';
+	$tpl = Acid::counter('tpl').' tpl inclusions ('.round($ttpl,3).' ms)';
+	$total = 'total : '.round($tdbc+$tdb+$ttpl).'ms / '.$tps_gen_page.'ms';
 
-Acid::log('TIMER',$db_c.' - '.$db.' - '.$tpl.' - '.$total);
+	Acid::log('TIMER',$db_c.' - '.$db.' - '.$tpl.' - '.$total);
+}
 
 include ACID_PATH . 'stop.php';
