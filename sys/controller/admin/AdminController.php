@@ -197,9 +197,9 @@ class AdminController{
     public static function board(){
     	$content ='';
 
-    	ob_start();
-		include(SITE_PATH.'registration/private/registration.php');
-		$registration = ob_get_clean();
+//    	ob_start();
+//		include(SITE_PATH.'registration/private/registration.php');
+//		$registration = ob_get_clean();
 
 		$expire_date = time() + Acid::get('session:expire') - (60*5);
 		$stats['users'] = AcidDB::query('SELECT COUNT(*) as count FROM '.Acid::get('session:table').' WHERE `expire` > '.$expire_date)->fetch(PDO::FETCH_ASSOC);
