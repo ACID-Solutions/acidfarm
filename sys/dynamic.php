@@ -24,6 +24,7 @@ $acid['css']['dialog'] 		= 'dialog';
 
 //chemin
 $acid['rel']['theme']		= Acid::get('keys:theme') . '/' . Acid::get('theme') . '/';
+$acid['rel']['def_theme']		= Acid::get('keys:theme') . '/' . Acid::get('def_theme') . '/';
 
 $acid['rel']['img']			= Acid::get('rel:theme') . 'img/';
 $acid['rel']['css']			= Acid::get('rel:theme') . 'css/';
@@ -34,6 +35,8 @@ $acid['rel']['t_files']		= Acid::get('rel:theme') . 'files/';
 
 //urls
 $acid['url']['theme']		= Acid::get('url:folder') . $acid['rel']['theme'];
+$acid['url']['def_theme']	= Acid::get('url:folder') . $acid['rel']['def_theme'];
+
 $acid['url']['prefix']  	= Acid::get('url:scheme').Acid::get('url:domain');
 
 $acid['url']['img']			= Acid::get('url:theme') . 'img/';

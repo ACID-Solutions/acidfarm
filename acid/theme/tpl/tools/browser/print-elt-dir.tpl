@@ -1,4 +1,4 @@
-<div class="fsb_belt_dir">
+<div class="fsb_belt_dir col-xs-12 col-sm-4 col-md-1 ">
 	<div class="fsb_belt_img">
 		<a href="<?php echo $v['link']; ?>">
 			<img src="<?php echo $v['img_path']; ?>dossier.png" alt="" title="<?php echo $v['attrs']['name']; ?>" />

@@ -268,7 +268,7 @@ class Acid {
 	 * @param boolean $relative si false, chemin complet vers le fichier
 	 * @return string
 	 */
-	public static function themePath($file,$sources=null,$relative=false) {
+	public static function themePath($file,$sources=null,$relative=false,$dir=false) {
 		$path = null;
 
 
@@ -307,6 +307,15 @@ class Acid {
 
 
 			//on sort de la boucle dès qu'on trouve un chemin existant
+
+			//cas d'un dossier
+			if ($dir) {
+				if (is_dir($path)) {
+					break;
+				}
+			}
+
+			//cas d'un fichier
 			if (is_file($path)) {
 				break;
 			}
@@ -324,10 +333,19 @@ class Acid {
 	 * @param array $sources
 	 * @return Ambigous <string, NULL>
 	 */
-	public static function themeUrl($file,$sources=null) {
-		return self::themePath($file,$sources,true);
+	public static function themeUrl($file,$sources=null,$dir=false) {
+		return self::themePath($file,$sources,true,$dir);
 	}
 
+	/**
+	 * Retourne le chemin  relatif vers le dossier theme désigné en entrée.
+	 * @param string $file
+	 * @param array $sources
+	 * @return Ambigous <string, NULL>
+	 */
+	public static function themeFolder($file,$sources=null) {
+		return self::themePath($file,$sources,true,true);
+	}
 
 	/**
 	 *  Retourne le chemin vers le fichier template désigné en entrée.

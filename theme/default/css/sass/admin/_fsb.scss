@@ -1,0 +1,171 @@
+// Mediathèque
+
+.fsb_belt_dir:hover,
+.fsb_belt_file:hover{
+  background-repeat:repeat-x;
+  background-position:bottom center;
+  background-image:url('#{$basepath}/img/admin/mediatheque_elt_over_background.png');
+}
+
+.fsb_belt_dir,
+.fsb_belt_file {
+  float:left;
+  min-width:140px;
+  max-width:140px;
+  height:140px;
+  margin:5px;
+  padding:5px;
+  text-align:center;
+  vertical-align:middle;
+  position:relative;
+  /*
+  border:solid 1px #AAAAAA;
+  background-color:#FAFAFA;
+  */
+  overflow:hidden;
+}
+
+.fsb_window a:hover{ color:#999999; }
+
+.fsb_window a,
+.fsb_belt_dir a,
+.fsb_belt_file a{
+  color:#000000;
+}
+
+
+.fsb_belt_img {
+  display:table;
+  height:70px;
+  margin-top:30px;
+  width:100%;
+  background-repeat:no-repeat;
+  background-position:bottom center;
+  background-image:url('#{$basepath}/img/admin/mediatheque_elt_separateur_horizontal.png');
+}
+
+.fsb_belt_img a{
+  display:table-cell;
+  vertical-align:middle;
+  text-align:center;
+}
+
+.fsb_belt_img img {
+  max-width:100px;
+  max-height:60px;
+  min-width:1px;
+}
+
+.fsb_belt_file_name {
+  display:block;
+  height:40px;
+  line-height:20px;
+  overflow:hidden;
+  padding-top:3px;
+  word-wrap:break-word;
+}
+
+.fsb_belt_file_action {
+  /*text-align:center;*/
+  font-size:9px;
+  color:#FFFFFF;
+  position:absolute;
+  min-height:25px;
+  bottom:0px;
+  line-height:25px;
+  display:none;
+  width:140px;
+}
+
+.fsb_belt_file_action_eng{
+  display:table;
+  margin:auto;
+}
+
+.fsb_belt_dir, .fsb_belt_file {
+  .fsb_belt_file_action {
+    a {
+      &, &:link, &:visited, &:active {
+        color:#FFFFFF;
+        white-space:nowrap;
+      }
+    }
+  }
+
+  &:hover {
+    .fsb_belt_file_action  {
+      display:block;
+    }
+
+    .fsb_belt_img img{
+      opacity:0.5; filter:alpha(opacity=50);
+    }
+  }
+}
+
+.fsb_belt_file_action {
+  a {
+    color: #FFFFFF;
+
+    &:hover{
+      color:#FFFFFF;
+    }
+  }
+}
+
+.fsb_path {
+  min-height:48px;
+  line-height:48px;
+  padding:5px 0px;
+  float:left;
+
+  img{ margin-right:5px; }
+}
+
+.fsb_actions{
+  padding:5px 0px;
+  float:right;
+
+  a{
+    padding-right: 15px;
+    margin-right: 10px;
+  }
+
+  img{
+    margin-right:5px;
+  }
+
+}
+
+.fsb_head {
+
+  a{
+    font-weight:bold;
+  }
+
+  .btn_newdir{
+    margin-right : 0px;
+  }
+
+  .btn_upload{
+    background-image:url('#{$basepath}/img/admin/mediatheque_separateur_vertical.png');
+    background-position:left center;
+    background-repeat:no-repeat;
+    padding-right:0px;
+    padding-left:12px;
+  }
+}
+
+.fsb_window {
+
+  margin-left:5px;
+  margin-right:5px;
+}
+
+
+.admin_preview {
+  width:700px;
+  border:solid 1px #E0E0E0;
+  padding:5px;
+  min-height:300px;
+}

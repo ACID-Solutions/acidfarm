@@ -4,10 +4,13 @@
 			<input type="hidden" name="do" value="login" />
 			<input type="hidden" name="auto" value="1" />
 			<input type="hidden" name="no_redirect" value="1" />
-			
+
+			<div class="logo">
+				<img style="display:inline; vertical-align:middle;" src="<?php echo Acid::themeUrl('img/admin/logo.png'); ?>" alt="<?php echo Acid::get('site:name'); ?>" />
+			</div>
+
 			<div class="title" >
 			<?php echo Acid::trad('admin_form_title');?>
-			<img style="display:inline; vertical-align:middle;" src="<?php echo Acid::get('url:img'); ?>admin/logo.png" alt="<?php echo Acid::get('site:name'); ?>" />
 			</div>
 			<table>
 				<?php if  ($v['msg']) { ?>

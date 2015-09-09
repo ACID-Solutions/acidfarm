@@ -1,12 +1,12 @@
-<div class="fsb_window  <?php echo $o->getPlugin() ? 'plugin_'.$o->getPlugin() : 'no_plugin'; ?>">
+<div class="fsb_window container-fluid <?php echo $o->getPlugin() ? 'plugin_'.$o->getPlugin() : 'no_plugin'; ?>">
 
 
-	<div  class="fsb_head">
-		<div class="fsb_path">
+	<div  class="fsb_head row-fluid">
+		<div class="fsb_path col-md-8 col-xs-12">
 			<?php  echo $v['print_path']; ?>
 		</div>
 
-		<div class="fsb_actions">
+		<div class="fsb_actions col-md-4  col-xs-12">
 			<div class="fsb_belt_file_action_eng">
 				<?php  echo $v['new_dir_form']; ?>
 				<a  class="btn_newdir" href="#" onclick="fsbNewDir('<?php  echo $v['key']; ?>_new_dir_form','<?php  echo $v['cur_path']; ?>');return false;">
@@ -23,15 +23,17 @@
 			</div>
 		</div>
 		<div class="clear"></div>
-		<div class="fsb_plugin" style="position:relative;"><?php echo Acid::tpl('tools/browser/print-dir-plugin.tpl',$v,$o); ?></div>
+		<div class="fsb_plugin col-md-12" style="position:relative;"><?php echo Acid::tpl('tools/browser/print-dir-plugin.tpl',$v,$o); ?></div>
 	</div>
 
 	<hr />
 
-	<div class="fsb_forms">
+	<div class="fsb_forms row-fluid ">
 		<?php  echo $v['remove_form']; ?>
 		<?php  echo $v['change_form']; ?>
 	</div>
+
+	<div class="fsb_print row-fluid ">
 
 	<?php
 		foreach ($v['dirs'] as $dir) {
@@ -48,7 +50,9 @@
 	?>
 
 
-	<div class="clear"></div>
+		<div class="clear"></div>
+	</div>
+
 </div>
 
 <?php echo $v['js']; ?>

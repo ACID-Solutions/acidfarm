@@ -24,7 +24,7 @@ class Func extends FuncCore {
             $menu_elts = array();
 
             foreach ($config['siteadmin_cat'] as $key => $cat) {
-                $menu_elts[$key] = array('url'=>AcidUrl::build(array('page'=>$key)),'name'=>Lib::getIn('label',$cat));
+                $menu_elts[$key] = array('url'=>AcidUrl::build(array('page'=>$key)),'name'=>Lib::getIn('label',$cat),'unclickable'=>Lib::getIn('unclickable',$cat));
                 if ($elts = Lib::getIn('elts',$cat)) {
                     foreach ($elts as $skk => $sk)
                     {

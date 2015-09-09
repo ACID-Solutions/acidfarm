@@ -1,0 +1,182 @@
+@import '/sass/config';
+
+.clear{
+  position:relative;
+  height:0px;
+  clear:both;
+}
+
+.dropdown .dropdown-menu {
+  display: none;
+  margin-top:-8px;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+#admin_site{
+  .content_display{
+    min-width:unset;
+  }
+}
+
+#menu {
+
+  .navbar-toggle {
+    background: #FFFFFF;
+
+    .icon-bar {
+      background-color: #F5F5F5;
+    }
+  }
+
+
+}
+
+.content_body{
+  padding:1px 0px;
+}
+
+.generic_elt_admin{
+  padding:15px;
+
+  > hr:first-child{
+    display:none;
+  }
+}
+
+.admin_form{
+
+  td{
+    padding-top: 8px;
+  }
+
+  tr.form_spaced > td {
+    padding-top: 12px;
+  }
+
+  .show_field {
+    font-size: 17px;
+    color: #999999;
+    padding: 0px 3px;
+    display: block;
+  }
+
+  .form_value input[type=text],
+  .admin_form .form_value textarea {
+    width: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
+
+  .form_value .form_subline input[type=text],
+  .form_value input[name=pos] {
+    width: auto;
+  }
+
+}
+
+.form_subline {
+  padding: 5px 10px;
+  margin: 5px 0px;
+  background-color: #F2F2F2;
+  border: 0px solid #999999;
+  border-top-width: 1px;
+  border-bottom-width: 1px;
+}
+
+.form_subline_elt {
+  float: left;
+  padding: 5px 15px;
+  background-image: url('#{$basepath}/img/admin/mediatheque_separateur_vertical.png');
+  background-repeat: no-repeat;
+  background-position: left center;
+  min-height: 40px;
+  line-height: 40px;
+
+  &.first {
+    padding-left: 0px;
+    background-image: none;
+  }
+
+  input {
+    margin-top: -2px;
+  }
+
+  label{
+    margin:0px 5px;
+
+    input[type=radio], input[type=checkbox] {
+      vertical-align:middle;
+    }
+
+  }
+}
+
+.panel-body{
+  .nav-tabs{
+    margin:-16px;
+    margin-bottom:16px;
+  }
+
+  .content_title{
+    .h2 {
+      margin-top:0px;
+    }
+  }
+}
+
+
+@media (max-width: 640px) {
+
+  .dropdown , .menu.navbar-brand{
+    &, li, a, span {
+      display:block;
+      float:none;
+      height:auto;
+      clear:both;
+    }
+  }
+
+  .dropdown {
+
+    .dropdown-menu {
+      display:block;
+      position:relative;
+      height:auto;
+      margin:5px auto;
+    }
+
+  }
+
+  .admin_form{
+    td, th {
+      display:block;
+      padding:5px;
+    }
+    tr{
+      clear:both;
+    }
+  }
+}
+
+  $basepath:$defpath;
+
+  @import '/../../default/css/sass/admin/fsb';
+  @import '/sass/admin/fsb';
+
+  @import '/../../default/css/sass/admin/buttons';
+
+
+  //@import '/../../default/css/sass/admin/list';
+
+  //@import '/../../default/csssass/admin/menu';
+
+  //@import '/../../default/css/sass/admin/onglets';
+
+  @import '/../../default/css/sass/admin/board';
+
+  @import '/../../default/css/sass/admin/admin-form';
+

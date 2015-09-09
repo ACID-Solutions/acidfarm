@@ -1,0 +1,119 @@
+.plupload{
+  .plupload_filelist_footer {
+    min-height:22px;
+    height:auto;
+  }
+}
+
+.fsb_belt_dir,
+.fsb_belt_file {
+
+  min-width:unset;
+  max-width:none;
+  margin:0px;
+  height:auto;
+  @include border-box();
+
+}
+
+.fsb_belt_file_action_eng{
+  text-align:right;
+  display:block;
+
+  a {
+    text-align:center;
+
+    &, &.btn_upload{
+      display:inline-block;
+      text-align:center;
+      background-image:none;
+    }
+
+    img{
+      display:inline-block;
+      margin:auto;
+    }
+  }
+}
+
+.fsb_belt_file_name {
+  min-height:45px;
+  heigth:auto;
+}
+
+
+@media (max-width: 720px) {
+
+  .fsb_belt_file_action_eng,
+  .fsb_belt_file_action {
+    text-align:center;
+    font-size:13px;
+    margin-top:15px;
+  }
+
+  .fsb_path {
+    text-align:left;
+    font-size:13px;
+    margin-top:0px;
+    padding-bottom:15px;
+    border:0px solid #E6E6E6;
+    border-bottom-width:1px;
+  }
+
+
+
+  .fsb_belt_dir,
+  .fsb_belt_file {
+
+    &, &:hover{
+      background:none;
+    }
+
+
+    .fsb_belt_dir_action{
+      text-align:center;
+
+      .fsb_belt_file_action{
+        margin-top:0px;
+
+        a{
+          display:inline-block;
+          text-align:center;
+          padding:1px;
+          img{
+            display:inline-block;
+            margin:auto;
+          }
+        }
+
+
+      }
+
+    }
+
+    .fsb_belt_file_action{
+
+      margin-top:0px;
+
+      &, &:hover{
+
+        display:block;
+        width:auto;
+        height:auto;
+        background:none;
+        text-align:center;
+        margin:auto;
+        position:relative;
+
+        a{
+          &, &:active, &:visited, &:hover {
+            color: #000000 !important;
+          }
+        }
+
+      }
+    }
+
+  }
+
+}

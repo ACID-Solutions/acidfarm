@@ -1,11 +1,12 @@
 <?php
 
-$this->addCSS(Acid::themeUrl('css/'.Acid::get('css:theme').'.css'));
-$this->addCSS(Acid::themeUrl('css/'.Acid::get('css:dialog').'.css'));
-
-//$this->addCSS($this->sassUrl(Acid::get('css:theme')));
-//$this->addCSS($this->sassUrl(Acid::get('css:dialog')));
-//$this->addCSS($this->sassUrl('test'));
+if (Acid::get('sass:used')) {
+    $this->addCSS($this->sassUrl(Acid::get('css:theme')));
+    $this->addCSS($this->sassUrl(Acid::get('css:dialog')));
+}else{
+    $this->addCSS(Acid::themeUrl('css/'.Acid::get('css:theme').'.css'));
+    $this->addCSS(Acid::themeUrl('css/'.Acid::get('css:dialog').'.css'));
+}
 
 $this->jQuery();
 $this->jQueryLightBox();

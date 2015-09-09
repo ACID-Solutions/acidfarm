@@ -26,6 +26,29 @@ class AdminController{
 	public static $controller = array();
 	public static $functions = array();
 
+
+	/**
+	 * Retourne la couleur associée à la clé en entrée
+	 * @param $key
+	 * @return mixed|string
+	 */
+	public static function color($key) {
+		$color ='';
+
+		if (!empty(AdminController::$menu[$key])) {
+
+			$color = Lib::getIn('color',AdminController::$menu[$key]);
+
+			if (!$color) {
+				if ($parent =  Lib::getIn('parent',AdminController::$menu[$key])) {
+					$color = Lib::getIn('color',AdminController::$menucat[$parent]);
+				}
+			}
+		}
+
+		return $color;
+	}
+
 	/**
 	 * Contrôle des accès utilisateur
 	 * @param string $routename
@@ -81,6 +104,7 @@ class AdminController{
 
 		$config['label'] = $label;
 		$config['level'] = $level;
+		$config['parent'] = $parent;
 
 		if ($parent) {
 			AdminController::$menu[$key] = $config;
@@ -173,7 +197,7 @@ class AdminController{
     	Conf::set('plupload:active',true);
 
     	Acid::set('admin_title',Acid::trad('admin_menu_browser'));
-    	Acid::set('admin_title_attr',array('style'=>'color:'.Acid::get('admin_colors:4').';'));
+    	Acid::set('admin_title_attr',((array)Acid::get('admin_title_attr')+array('style'=>'color:'.static::color('medias').';')));
 
     	$plugin = isset($_GET['plugin']) ? $_GET['plugin'] : '';
     	$dir = isset($_GET['fsb_path']) ? $_GET['fsb_path'] : '';
@@ -184,7 +208,7 @@ class AdminController{
     		Acid::set('admin:content_only',true);
     	}
 
-    	$fb = new AcidBrowser(Acid::get('path:uploads'),false,null,$plugin);
+    	$fb = new AcidBrowser(Acid::get('path:uploads'),false,null,$plugin,null);
 
     	$content .= Acid::mod('User')->printAdminBody($fb->printDir($dir),null);
 
