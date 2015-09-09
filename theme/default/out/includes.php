@@ -12,6 +12,7 @@ $this->jQueryLightBox();
 $this->jQueryUI();
 
 $this->addCss(Acid::themeUrl('js/slick/slick.css'));
+$this->addCss(Acid::themeUrl('js/slick/slick-theme.css'));
 $this->addJs(Acid::themeUrl('js/slick/slick.min.js'));
 $this->addJs(Acid::themeUrl('js/stellar/jquery.stellar.min.js'));
 
