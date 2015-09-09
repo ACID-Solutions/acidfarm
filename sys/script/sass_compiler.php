@@ -1,27 +1,57 @@
 <?php
 
-$opt = getopt('c::f:t:p:');
+$opt = getopt('c::f:t:p:l:');
 if (isset($opt['c']) ) {
 
 	include pathinfo(__FILE__,PATHINFO_DIRNAME ).'/../glue.php';
 	Acid::load(Acid::get('externals:sass:path:lib'));
 
-	$path_from = empty($opt['f']) ? (SITE_PATH.Acid::get('rel:css') . 'sass/') : (SITE_PATH.$opt['f']) ;
+	$themes =  (empty($opt['f']) && empty($opt['t']) && empty($opt['p']) && empty($opt['b'])) ?
+						(empty($opt['l']) ? array(Acid::get('theme'),Acid::get('def_theme')) : explode(';' , $opt['p'])) : array();
 
-	$path_to = empty($opt['t']) ? (SITE_PATH.Acid::get('rel:css').Acid::get('sass:path:compiled')) : (SITE_PATH.$opt['t']) ;
+	$recursion = array();
 
-	$path_unique = empty($opt['p']) ? (false) : (SITE_PATH.$opt['p']) ;
+	if ($themes) {
 
-	function sass_prepare_files() {
+		foreach ($themes as $themekey) {
+			$base_from = Acid::get('keys:theme') . '/' . $themekey . '/css/';
+			$recursion[$themekey] = array(
+				'f'=>($base_from . 'sass/'),
+				't'=>$base_from.Acid::get('sass:path:compiled'),
+				'b'=>$themekey
+			);
+		}
 
-		$tpl_path = SITE_PATH.Acid::get('rel:tpl').'sass/';
-		$dyn_path = SITE_PATH.Acid::get('rel:css').'sass/_dynamic/';
+	}else{
+		foreach (array('f','t','p','b') as $var) {
+			if (!empty($opt[$var])) {
+				$recursion[0][$var] = $opt[$var];
+			}
+		}
+	}
+
+	function sass_prepare_files($theme=null) {
+
+		$theme = $theme===null ? Acid::get('theme') : $theme;
+		$base_from = SITE_PATH.Acid::get('keys:theme') . '/' . $theme.'/';
+
+		//sauvegarde du thème courant avant changement
+		$bktheme = Acid::get('theme');
+
+		//changement du thème courant vers le temporaire
+		Acid::set('theme',$theme);
+
+		$tpl_path = $base_from.'tpl/sass/';
+		$dyn_path = $base_from.'css/sass/_dynamic/';
 		if (!file_exists($dyn_path)) {
 			mkdir($dyn_path);
 		}
 
+
+
 		if (is_dir($tpl_path)) {
 			if ($dh = opendir($tpl_path)) {
+
 				while (($file = readdir($dh)) !== false) {
 					if (AcidFs::getExtension($file)=='tpl') {
 						$scss_name = $dyn_path.AcidFs::removeExtension($file).'.scss';
@@ -31,50 +61,74 @@ if (isset($opt['c']) ) {
 				closedir($dh);
 			}
 		}
+
+		//retour au thème courant
+		Acid::set('theme',$bktheme);
+
 	}
 
-	function sass_compilation_from_file($file,$path_to) {
+	function sass_compilation_from_file($file,$path_to,$theme=null) {
 		if (AcidFs::getExtension($file)=='scss') {
+			$theme = $theme===null ? Acid::get('theme') : $theme;
+			$base_from = SITE_PATH.Acid::get('keys:theme') . '/' . $theme.'/';
+
+			echo 'theme is '.$theme."\n";
 
 			$scss = new scssc();
-			$scss->addImportPath(SITE_PATH.Acid::get('rel:css'));
+			$scss->addImportPath($base_from.'css/');
 
 			echo 'preparing environement...'."\n";
-			sass_prepare_files();
+			sass_prepare_files($theme);
 
 			$fname = AcidFS::removeExtension(basename($file)).'.css';
 			echo 'translating '.$file." to ".$path_to.$fname."\n";
 			file_put_contents($path_to.$fname, $scss->compile(file_get_contents($file)));
 
+			echo '----------------------------------'."\n";
 		}
 	}
 
-	if (!is_dir($path_to)) {
-		mkdir($path_to);
-	}
+	foreach ($recursion as $kelt => $relt) {
 
-	if ($path_unique) {
+		$path_from = empty($relt['f']) ? (SITE_PATH.Acid::get('rel:css') . 'sass/') : (SITE_PATH.$relt['f']) ;
 
-		if (is_file($path_unique)) {
-			if (is_dir($path_to)) {
-				sass_compilation_from_file($path_unique,$path_to);
+		$path_to = empty($relt['t']) ? (SITE_PATH.Acid::get('rel:css').Acid::get('sass:path:compiled')) : (SITE_PATH.$relt['t']) ;
+
+		$path_unique = empty($relt['p']) ? (false) : (SITE_PATH.$relt['p']) ;
+
+		$theme_from = empty($relt['b']) ? null : $relt['b'] ;
+
+		echo '================='.$kelt.'================='."\n";
+
+		if (!is_dir($path_to)) {
+			mkdir($path_to);
+		}
+
+		if ($path_unique) {
+
+			if (is_file($path_unique)) {
+				if (is_dir($path_to)) {
+					sass_compilation_from_file($path_unique,$path_to,$theme_from);
+				}
 			}
-		}
 
-	}else{
-		if (is_dir($path_from)) {
-			if (is_dir($path_to)) {
-				if ($dh = opendir($path_from)) {
-					while (($file = readdir($dh)) !== false) {
-						if (strpos(basename($file),'_')!==0) {
-							sass_compilation_from_file($path_from.$file,$path_to);
+		}else{
+			if (is_dir($path_from)) {
+				if (is_dir($path_to)) {
+					if ($dh = opendir($path_from)) {
+						while (($file = readdir($dh)) !== false) {
+							if (strpos(basename($file),'_')!==0) {
+								sass_compilation_from_file($path_from.$file,$path_to,$theme_from);
+							}
 						}
+						closedir($dh);
 					}
-					closedir($dh);
 				}
 			}
 		}
+
 	}
+
 
 
 
@@ -82,7 +136,10 @@ if (isset($opt['c']) ) {
 }else{
 	echo "Pour effectuer l'opération, merci d'ajouter l'argument -c  à la commande actuelle." . "\n" .
 		 "-f chemin du dossier source scss (optionnel)" . "\n" .
-		 "-t chemin du dossier des destinations des fichiers css (optionnel)" . "\n" ;
+		 "-t chemin du dossier des destinations des fichiers css (optionnel)" . "\n" .
+		 "-p chemin vers un fichier unique (optionnel)" . "\n" .
+		 "-b base folder (optionnel)" . "\n" .
+	     "-l liste de thèmes à traiter separés de ; - choix par default si pas paramètres (optionnel)";
 	exit();
 }
 

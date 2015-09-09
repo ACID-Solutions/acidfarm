@@ -272,11 +272,12 @@ class Acid {
 		$path = null;
 
 
+
 		//on teste l'existance des fichiers dans l'ordre défini par $sources
 		$sources = ($sources===null) ? array('current','default','acid') : (is_array($sources) ? $sources : array($sources));
 
 		//on recherche l'existence de cache
-		$cache_key = 'tmp_theme_path:'.md5($file).'-'.md5(implode(',',$sources)).'-'.md5($relative ? 'rel':'abs');
+		$cache_key = 'tmp_theme_path:'.md5(Acid::get('theme')).'-'.md5(Acid::get('def_theme')).'-'.md5($file).'-'.md5(implode(',',$sources)).'-'.md5($relative ? 'rel':'abs');
 		if ($return = Acid::get($cache_key)) {
 			return $return;
 		}

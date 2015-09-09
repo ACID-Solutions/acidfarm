@@ -87,7 +87,7 @@ $acidconf['lvl']['seo'] = $acid['lvl']['dev'] ;
 
 $acid['def_theme'] = 'default';
 $acid['theme'] = empty($acid['server_theme']) ?  $acid['def_theme'] : $acid['server_theme'];
-//$acid['theme'] = 'bootstrap';
+$acid['theme'] = 'bootstrap';
 
 $acidconf['page']['categories'] = array(0=>'page_standard',1=>'page_special'); //traduit dans /sys/dynamic.php
 

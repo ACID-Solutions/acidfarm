@@ -1,4 +1,6 @@
 @import '/sass/config';
+@import '/sass/bootstrap';
+@import '/sass/bootstrap-mincer';
 
 .clear{
   position:relative;
@@ -44,6 +46,10 @@
   > hr:first-child{
     display:none;
   }
+}
+
+.generic_elts_list_actions{
+  min-width:80px;
 }
 
 .admin_form{

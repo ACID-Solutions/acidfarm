@@ -4933,85 +4933,417 @@ button.close {
   height: 0px;
   clear: both; }
 
-body {
-  padding-top: 150px; }
+.dropdown .dropdown-menu {
+  display: none;
+  margin-top: -8px; }
 
-#header {
-  height: 150px; }
+.dropdown:hover .dropdown-menu {
+  display: block; }
 
-#menu_block {
-  display: block;
-  margin: auto;
-  text-align: center; }
-  #menu_block .navbar-header {
-    float: none;
-    margin: 0px -15px; }
-  #menu_block .navbar-header .navbar-brand {
-    float: none;
-    display: inline-block; }
-  #menu_block .collapse.in, #menu_block .collapsing {
-    display: block;
-    float: none;
-    border: 1px solid #000;
-    background-color: #fff;
-    margin: 0px;
-    top: 40px;
-    left: 0px;
-    position: absolute;
+#admin_site .content_display {
+  min-width: unset; }
+
+#menu .navbar-toggle {
+  background: #fff; }
+  #menu .navbar-toggle .icon-bar {
+    background-color: #f5f5f5; }
+
+.content_body {
+  padding: 1px 0px; }
+
+.generic_elt_admin {
+  padding: 15px; }
+  .generic_elt_admin > hr:first-child {
+    display: none; }
+
+.generic_elts_list_actions {
+  min-width: 80px; }
+
+.admin_form td {
+  padding-top: 8px; }
+  .admin_form tr.form_spaced > td {
+    padding-top: 12px; }
+  .admin_form .show_field {
+    font-size: 17px;
+    color: #999;
+    padding: 0px 3px;
+    display: block; }
+  .admin_form .form_value input[type=text], .admin_form .admin_form .form_value textarea {
     width: 100%;
-    max-height: auto; }
-  #menu_block .collapse.in a, #menu_block .collapsing a {
-    display: block;
-    float: none;
-    border: 0px solid #000;
-    border-bottom-width: 1px;
-    margin: 0px;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box; }
+  .admin_form .form_value .form_subline input[type=text], .admin_form .form_value input[name=pos] {
+    width: auto; }
 
-#block_gmap {
-  width: 300px;
-  height: 150px; }
+.form_subline {
+  padding: 5px 10px;
+  margin: 5px 0px;
+  background-color: #f2f2f2;
+  border: 0px solid #999;
+  border-top-width: 1px;
+  border-bottom-width: 1px; }
 
-#contact_content .label {
-  color: #000;
-  min-width: 100px;
-  display: inline-block;
-  text-align: left; }
+.form_subline_elt {
+  float: left;
+  padding: 5px 15px;
+  background-image: url('/acidfarm-git/theme/bootstrap//img/admin/mediatheque_separateur_vertical.png');
+  background-repeat: no-repeat;
+  background-position: left center;
+  min-height: 40px;
+  line-height: 40px; }
+  .form_subline_elt.first {
+    padding-left: 0px;
+    background-image: none; }
+  .form_subline_elt input {
+    margin-top: -2px; }
+  .form_subline_elt label {
+    margin: 0px 5px; }
+  .form_subline_elt label input[type=radio], .form_subline_elt label input[type=checkbox] {
+    vertical-align: middle; }
 
-#contact_form_submit {
-  margin-top: 10px; }
+.panel-body .nav-tabs {
+  margin: -16px;
+  margin-bottom: 16px; }
+  .panel-body .content_title .h2 {
+    margin-top: 0px; }
 
-#gallery_wall {
-  margin: auto; }
-  #gallery_wall .wall_elt {
+@media (max-width: 640px) {
+  .dropdown, .menu.navbar-brand, .dropdown li, .menu.navbar-brand li, .dropdown a, .menu.navbar-brand a, .dropdown span, .menu.navbar-brand span {
+    display: block;
+    float: none;
+    height: auto;
+    clear: both; }
+
+  .dropdown .dropdown-menu {
+    display: block;
     position: relative;
-    background-color: #fff; }
-  #gallery_wall .wall_elt a {
+    height: auto;
+    margin: 5px auto; }
+
+  .admin_form td, .admin_form th {
+    display: block;
+    padding: 5px; }
+    .admin_form tr {
+      clear: both; } }
+
+.fsb_belt_dir:hover, .fsb_belt_file:hover {
+  background-repeat: repeat-x;
+  background-position: bottom center;
+  background-image: url('/acidfarm-git/theme/default//img/admin/mediatheque_elt_over_background.png'); }
+
+.fsb_belt_dir, .fsb_belt_file {
+  float: left;
+  min-width: 140px;
+  max-width: 140px;
+  height: 140px;
+  margin: 5px;
+  padding: 5px;
+  text-align: center;
+  vertical-align: middle;
+  position: relative;
+  /*
+  border:solid 1px #AAAAAA;
+  background-color:#FAFAFA;
+  */
+  overflow: hidden; }
+
+.fsb_window a:hover {
+  color: #999; }
+
+.fsb_window a, .fsb_belt_dir a, .fsb_belt_file a {
+  color: #000; }
+
+.fsb_belt_img {
+  display: table;
+  height: 70px;
+  margin-top: 30px;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-position: bottom center;
+  background-image: url('/acidfarm-git/theme/default//img/admin/mediatheque_elt_separateur_horizontal.png'); }
+
+.fsb_belt_img a {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center; }
+
+.fsb_belt_img img {
+  max-width: 100px;
+  max-height: 60px;
+  min-width: 1px; }
+
+.fsb_belt_file_name {
+  display: block;
+  height: 40px;
+  line-height: 20px;
+  overflow: hidden;
+  padding-top: 3px;
+  word-wrap: break-word; }
+
+.fsb_belt_file_action {
+  font-size: 9px;
+  color: #fff;
+  position: absolute;
+  min-height: 25px;
+  bottom: 0px;
+  line-height: 25px;
+  display: none;
+  width: 140px; }
+
+.fsb_belt_file_action_eng {
+  display: table;
+  margin: auto; }
+
+.fsb_belt_dir .fsb_belt_file_action a, .fsb_belt_file .fsb_belt_file_action a, .fsb_belt_dir .fsb_belt_file_action a:link, .fsb_belt_file .fsb_belt_file_action a:link, .fsb_belt_dir .fsb_belt_file_action a:visited, .fsb_belt_file .fsb_belt_file_action a:visited, .fsb_belt_dir .fsb_belt_file_action a:active, .fsb_belt_file .fsb_belt_file_action a:active {
+  color: #fff;
+  white-space: nowrap; }
+  .fsb_belt_dir:hover .fsb_belt_file_action, .fsb_belt_file:hover .fsb_belt_file_action {
     display: block; }
-  #gallery_wall .wall_elt .wall_elt_overlay {
-    display: none;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    right: 0px;
-    bottom: 0px;
-    background-color: rgba(0, 0, 0, 0.8); }
-  #gallery_wall .wall_elt:hover .wall_elt_overlay {
-    display: block; }
-    #gallery_wall .wall_elt:hover .wall_elt_overlay .wall_elt_overlay_content {
-      display: table;
-      height: 100%;
-      width: 100%;
-      vertical-align: middle;
-      text-align: center;
-      color: #fff;
-      font-weight: bold; }
-    #gallery_wall .wall_elt:hover .wall_elt_overlay .wall_elt_overlay_content .wall_elt_overlay_body {
-      display: table-cell;
-      height: 100%;
-      width: 100%;
-      vertical-align: middle;
-      color: #fff;
-      font-weight: bold; }
+  .fsb_belt_dir:hover .fsb_belt_img img, .fsb_belt_file:hover .fsb_belt_img img {
+    opacity: 0.5;
+    filter: alpha(opacity=50); }
+
+.fsb_belt_file_action a {
+  color: #fff; }
+  .fsb_belt_file_action a:hover {
+    color: #fff; }
+
+.fsb_path {
+  min-height: 48px;
+  line-height: 48px;
+  padding: 5px 0px;
+  float: left; }
+  .fsb_path img {
+    margin-right: 5px; }
+
+.fsb_actions {
+  padding: 5px 0px;
+  float: right; }
+  .fsb_actions a {
+    padding-right: 15px;
+    margin-right: 10px; }
+  .fsb_actions img {
+    margin-right: 5px; }
+
+.fsb_head a {
+  font-weight: bold; }
+  .fsb_head .btn_newdir {
+    margin-right : 0px; }
+  .fsb_head .btn_upload {
+    background-image: url('/acidfarm-git/theme/default//img/admin/mediatheque_separateur_vertical.png');
+    background-position: left center;
+    background-repeat: no-repeat;
+    padding-right: 0px;
+    padding-left: 12px; }
+
+.fsb_window {
+  margin-left: 5px;
+  margin-right: 5px; }
+
+.admin_preview {
+  width: 700px;
+  border: solid 1px #e0e0e0;
+  padding: 5px;
+  min-height: 300px; }
+
+.plupload .plupload_filelist_footer {
+  min-height: 22px;
+  height: auto; }
+
+.fsb_belt_dir, .fsb_belt_file {
+  min-width: unset;
+  max-width: none;
+  margin: 0px;
+  height: auto;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+
+.fsb_belt_file_action_eng {
+  text-align: right;
+  display: block; }
+  .fsb_belt_file_action_eng a {
+    text-align: center; }
+  .fsb_belt_file_action_eng a, .fsb_belt_file_action_eng a.btn_upload {
+    display: inline-block;
+    text-align: center;
+    background-image: none; }
+  .fsb_belt_file_action_eng a img {
+    display: inline-block;
+    margin: auto; }
+
+.fsb_belt_file_name {
+  min-height: 45px;
+  heigth: auto; }
+
+@media (max-width: 720px) {
+  .fsb_belt_file_action_eng, .fsb_belt_file_action {
+    text-align: center;
+    font-size: 13px;
+    margin-top: 15px; }
+
+  .fsb_path {
+    text-align: left;
+    font-size: 13px;
+    margin-top: 0px;
+    padding-bottom: 15px;
+    border: 0px solid #e6e6e6;
+    border-bottom-width: 1px; }
+
+  .fsb_belt_dir, .fsb_belt_file, .fsb_belt_dir:hover, .fsb_belt_file:hover {
+    background: none; }
+    .fsb_belt_dir .fsb_belt_dir_action, .fsb_belt_file .fsb_belt_dir_action {
+      text-align: center; }
+      .fsb_belt_dir .fsb_belt_dir_action .fsb_belt_file_action, .fsb_belt_file .fsb_belt_dir_action .fsb_belt_file_action {
+        margin-top: 0px; }
+        .fsb_belt_dir .fsb_belt_dir_action .fsb_belt_file_action a, .fsb_belt_file .fsb_belt_dir_action .fsb_belt_file_action a {
+          display: inline-block;
+          text-align: center;
+          padding: 1px; }
+          .fsb_belt_dir .fsb_belt_dir_action .fsb_belt_file_action a img, .fsb_belt_file .fsb_belt_dir_action .fsb_belt_file_action a img {
+            display: inline-block;
+            margin: auto; }
+    .fsb_belt_dir .fsb_belt_file_action, .fsb_belt_file .fsb_belt_file_action {
+      margin-top: 0px; }
+      .fsb_belt_dir .fsb_belt_file_action, .fsb_belt_file .fsb_belt_file_action, .fsb_belt_dir .fsb_belt_file_action:hover, .fsb_belt_file .fsb_belt_file_action:hover {
+        display: block;
+        width: auto;
+        height: auto;
+        background: none;
+        text-align: center;
+        margin: auto;
+        position: relative; }
+        .fsb_belt_dir .fsb_belt_file_action a, .fsb_belt_file .fsb_belt_file_action a, .fsb_belt_dir .fsb_belt_file_action:hover a, .fsb_belt_file .fsb_belt_file_action:hover a, .fsb_belt_dir .fsb_belt_file_action a:active, .fsb_belt_file .fsb_belt_file_action a:active, .fsb_belt_dir .fsb_belt_file_action:hover a:active, .fsb_belt_file .fsb_belt_file_action:hover a:active, .fsb_belt_dir .fsb_belt_file_action a:visited, .fsb_belt_file .fsb_belt_file_action a:visited, .fsb_belt_dir .fsb_belt_file_action:hover a:visited, .fsb_belt_file .fsb_belt_file_action:hover a:visited, .fsb_belt_dir .fsb_belt_file_action a:hover, .fsb_belt_file .fsb_belt_file_action a:hover, .fsb_belt_dir .fsb_belt_file_action:hover a:hover, .fsb_belt_file .fsb_belt_file_action:hover a:hover {
+          color: #000 !important; } }
+
+.to_value_0 input[type=submit], .to_value_1 input[type=submit] {
+  display: block;
+  background-color: transparent;
+  border: 0px solid #fff;
+  height: 16px;
+  width: 40px;
+  text-ident: -99px;
+  overflow: hidden;
+  color: transparent;
+  background-repeat: no-repeat;
+  background-position: center center; }
+  .to_value_0 input[type=submit]:hover, .to_value_1 input[type=submit]:hover {
+    background-color: transparent; }
+
+.to_value_0 input[type=submit] {
+  background-image: url('/acidfarm-git/theme/default//img/admin/btn_switch_on.png'); }
+
+.to_value_1 input[type=submit] {
+  background-image: url('/acidfarm-git/theme/default//img/admin/btn_switch_off.png'); }
+
+.radioswitch .radio_image {
+  display: block;
+  cursor: pointer;
+  background-color: transparent;
+  border: 0px solid #fff;
+  height: 16px;
+  width: 40px;
+  text-ident: -99px;
+  overflow: hidden;
+  color: transparent;
+  background-repeat: no-repeat;
+  background-position: center center; }
+  .radioswitch label input[type=radio][value='0'] + .radio_image {
+    background-image: url('/acidfarm-git/theme/default//img/admin/btn_switch_on.png'); }
+  .radioswitch label input[type=radio][value='1'] + .radio_image {
+    background-image: url('/acidfarm-git/theme/default//img/admin/btn_switch_off.png'); }
+  .radioswitch label input[type=radio]:checked + .radio_image {
+    display: none; }
+  .radioswitch label input[type=radio] {
+    display: none; }
+  .radioswitch label .radio_label {
+    display: none; }
+
+#admin_form {
+  width: 600px;
+  margin: 100px auto;
+  font-family: arial; }
+  #admin_form form table {
+    width: 375px;
+    margin: auto; }
+    #admin_form form table input {
+      float: right; }
+    #admin_form form table input[type=text], #admin_form form table input[type=password] {
+      width: 160px;
+      height: 20px;
+      border: 1px solid #5f5f5f; }
+    #admin_form form table td.label {
+      font-size: 18px;
+      color: #96be12;
+      font-weight: normal;
+      width: 215px;
+      padding: 5px 0px; }
+    #admin_form form table td.admin_log_msg {
+      font-size: 12px;
+      padding-bottom: 10px;
+      text-align: center; }
+  #admin_form .logo {
+    text-align: right; }
+  #admin_form .logo img {
+    margin: auto; }
+  #admin_form .title {
+    font-size: 16px;
+    color: #96be12;
+    font-weight: bold;
+    height: auto;
+    line-height: 30px;
+    padding-top: 0px;
+    margin: 52px 0px;
+    background-image: url('/acidfarm-git/theme/default//img/admin/gradient-top.png');
+    background-position: bottom center;
+    background-repeat: no-repeat;
+    text-align: center;
+    padding-bottom: 35px; }
+  #admin_form .bottom {
+    font-size: 9px;
+    color: #d1d1d1;
+    padding-top: 25px;
+    font-family: arial;
+    font-weight: normal;
+    font-style: italic;
+    margin: 30px 0px;
+    margin-top: 0px;
+    text-align: center;
+    background-image: url('/acidfarm-git/theme/default//img/admin/gradient-bottom.png');
+    background-position: top center;
+    background-repeat: no-repeat; }
+  #admin_form .bottom a {
+    color: #d1d1d1; }
+  #admin_form .subform_div {
+    font-size: 9px;
+    height: 10px;
+    line-height: 10px;
+    color: #d1d1d1;
+    margin-bottom: 5px;
+    margin-top: 0px; }
+  #admin_form .subform_div a {
+    color: #919191; }
+
+.admin_alert_content {
+  font-size: 12px;
+  color: #919191;
+  text-align: center;
+  margin: 5px 0px; }
+
+.adminbtn_connexion {
+  width: 85px;
+  height: 21px;
+  padding: 0px;
+  font-size: 10px;
+  color: #fff;
+  border: 0px solid #fff;
+  cursor: pointer;
+  margin: 10px auto;
+  padding-bottom: 2px;
+  background-color: #96be12;
+  background-image: url('/acidfarm-git/theme/default//img/admin/bouton.png');
+  background-repeat: no-repeat;
+  background-position: top left; }
+  .adminbtn_connexion:hover {
+    background-color: #707072; }
