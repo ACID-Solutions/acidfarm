@@ -1,33 +1,30 @@
 <?php
 
+
+
 $opt = getopt('c::f:t:p:l:');
 if (isset($opt['c']) ) {
 
-	include pathinfo(__FILE__,PATHINFO_DIRNAME ).'/../glue.php';
-	Acid::load(Acid::get('externals:sass:path:lib'));
+	function getThemes() {
 
-	$themes =  (empty($opt['f']) && empty($opt['t']) && empty($opt['p']) && empty($opt['b'])) ?
-						(empty($opt['l']) ? array(Acid::get('theme'),Acid::get('def_theme')) : explode(';' , $opt['p'])) : array();
+		$themes = array();
+		$path = SITE_PATH.Acid::get('keys:theme');
 
-	$recursion = array();
-
-	if ($themes) {
-
-		foreach ($themes as $themekey) {
-			$base_from = Acid::get('keys:theme') . '/' . $themekey . '/css/';
-			$recursion[$themekey] = array(
-				'f'=>($base_from . 'sass/'),
-				't'=>$base_from.Acid::get('sass:path:compiled'),
-				'b'=>$themekey
-			);
-		}
-
-	}else{
-		foreach (array('f','t','p','b') as $var) {
-			if (!empty($opt[$var])) {
-				$recursion[0][$var] = $opt[$var];
+		if (is_dir($path)) {
+			if ($handle = opendir($path)) {
+				while (false !== ($entry = readdir($handle))) {
+					if (!in_array($entry,array('.','..'))) {
+						if (is_dir($path.'/'.$entry)) {
+							$themes[$entry] = $entry;
+						}
+					}
+				}
+				closedir($handle);
 			}
+
 		}
+
+		return $themes;
 	}
 
 	function sass_prepare_files($theme=null) {
@@ -85,6 +82,41 @@ if (isset($opt['c']) ) {
 			file_put_contents($path_to.$fname, $scss->compile(file_get_contents($file)));
 
 			echo '----------------------------------'."\n";
+		}
+	}
+
+	include pathinfo(__FILE__,PATHINFO_DIRNAME ).'/../glue.php';
+	Acid::load(Acid::get('externals:sass:path:lib'));
+
+	$themes =  (empty($opt['f']) && empty($opt['t']) && empty($opt['p']) && empty($opt['b'])) ?
+						(
+							empty($opt['l']) ?
+								getThemes() :
+								(
+									$opt['l']=='usefull' ?
+									array(Acid::get('def_theme')=>Acid::get('def_theme'),Acid::get('theme')=>Acid::get('theme')) :
+									explode(';' , $opt['l'])
+								)
+						) : array();
+
+	$recursion = array();
+
+	if ($themes) {
+
+		foreach ($themes as $themekey) {
+			$base_from = Acid::get('keys:theme') . '/' . $themekey . '/css/';
+			$recursion[$themekey] = array(
+				'f'=>($base_from . 'sass/'),
+				't'=>$base_from.Acid::get('sass:path:compiled'),
+				'b'=>$themekey
+			);
+		}
+
+	}else{
+		foreach (array('f','t','p','b') as $var) {
+			if (!empty($opt[$var])) {
+				$recursion[0][$var] = $opt[$var];
+			}
 		}
 	}
 
