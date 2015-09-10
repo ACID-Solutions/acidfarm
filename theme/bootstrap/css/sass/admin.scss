@@ -134,6 +134,17 @@
   }
 }
 
+.navbar {
+  .navigation_selected{
+    font-weight:bold;
+  }
+}
+
+.generic_nb_elts{
+  > div {
+    margin:8px 0px;
+  }
+}
 
 @media (max-width: 640px) {
 
