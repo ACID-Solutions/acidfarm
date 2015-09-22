@@ -234,7 +234,13 @@ class AdminController{
 			$last_actu = Actu::getLast(1);
 		}
 
-		$content = Acid::tpl('admin/admin-board.tpl',array('registration'=>$registration,'stats'=>$stats,'lastactu'=>$last_actu));
+		$vars = array('registration'=>$registration,'stats'=>$stats,'lastactu'=>$last_actu);
+		$tpl = 'admin/admin-board.tpl';
+		$content = Acid::tpl($tpl,$vars);
+
+		//Calling hook
+		AcidHook::call('adminboard');
+
 
 		Conf::addToContent(Acid::mod('User')->printAdminBody($content,null));
 
@@ -252,21 +258,27 @@ class AdminController{
 
     	if ($check_key = static::checkAccess($route)) {
 
+			$custom_route = false;
+
     		$module = isset(AdminController::$controller[$check_key]['module']) ? AdminController::$controller[$check_key]['module'] : null;
 
     		//hook for case
     		AcidHook::call('admin_controller_route');
 
+			//If no hack by hooks
+			if (empty($custom_route)) {
 
-    		if (is_callable('static::'.$route)) {
-    			$content .= static::$route();
-    		}elseif(isset(AdminController::$functions[$check_key])) {
-    			call_user_func(AdminController::$functions[$check_key]['func'],AdminController::$functions[$check_key]['args']);
-    		}elseif($module) {
-    			$content .= Acid::mod($module)->printAdminInterface();
-    		}else{
-    			$content .= static::board();
-    		}
+				if (is_callable('static::'.$route)) {
+					$content .= static::$route();
+				}elseif(isset(AdminController::$functions[$check_key])) {
+					call_user_func(AdminController::$functions[$check_key]['func'],AdminController::$functions[$check_key]['args']);
+				}elseif($module) {
+					$content .= Acid::mod($module)->printAdminInterface();
+				}else{
+					$content .= static::board();
+				}
+
+			}
 
 
     	}else{
