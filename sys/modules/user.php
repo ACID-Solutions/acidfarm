@@ -82,11 +82,22 @@ class User extends AcidUser {
 							$go_on = false;
 							AcidDialog::add('error',Acid::trad('user_bad_email_exists'));
 						}
+
+						$this->config['acl']['keys']['email'] = User::curLevel();
 					}
 
 					if ($go_on) {
+
+						$this->config['acl']['keys']['id_user'] = User::curUser()->getId();
+
+						foreach ($this->config['identification'] as $identkey) {
+							$this->config['acl']['keys'][$identkey] = User::curLevel();
+							if (!isset($_POST[$identkey])) {
+								$_POST[$identkey] = User::curValue($identkey);
+							}
+						}
+
 						$_POST[User::preKey('do')] = 'update';
-						$this->config['acl']['keys']['email'] = User::curLevel();
 					}
 
 				}
