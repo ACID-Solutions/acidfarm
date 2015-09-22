@@ -1,4 +1,5 @@
-	<table class="admin_tab">
+<div class="table-responsive">
+	<table class="admin_tab table table-hover table-striped">
 	
 		<tr class="head_row">
 			<?php 
@@ -50,6 +51,6 @@
 	
 	
 	</table>
-
+</div>
 				
 				

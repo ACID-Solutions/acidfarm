@@ -19,6 +19,10 @@
 Acid::mod('MyTemplate');
 
 $template = new MyTemplate();
+
+//Hook template start
+AcidHook::call('template-start');
+
 $template->cssPrepare();
 
 //Checking for SEO
@@ -69,9 +73,11 @@ if (Conf::getMetaImage()) {
 	);
 }
 
-
-
 $template->add(Conf::getContent());
+
+//Hook template stop
+AcidHook::call('template-stop');
+
 $template->printPage();
 
 
@@ -93,4 +99,6 @@ if (!empty($start_time)) {
 	Acid::log('TIMER',$db_c.' - '.$db.' - '.$tpl.' - '.$total);
 }
 
+//Hook before Acid Stop
+AcidHook::call('stop');
 include ACID_PATH . 'stop.php';

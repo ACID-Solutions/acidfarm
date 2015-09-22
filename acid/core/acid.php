@@ -258,6 +258,7 @@ class Acid {
 		return $path;
 	}
 
+
 	/**
 	 *  Retourne le chemin vers le fichier theme désigné en entrée.
 	 *  Si le fichier n'existe pas dans le theme courant, on retourne le chemin vers le fichier par défaut.
@@ -267,15 +268,16 @@ class Acid {
 	 * @param boolean $relative si false, chemin complet vers le fichier
 	 * @return string
 	 */
-	public static function themePath($file,$sources=null,$relative=false) {
+	public static function themePath($file,$sources=null,$relative=false,$dir=false) {
 		$path = null;
+
 
 
 		//on teste l'existance des fichiers dans l'ordre défini par $sources
 		$sources = ($sources===null) ? array('current','default','acid') : (is_array($sources) ? $sources : array($sources));
 
 		//on recherche l'existence de cache
-		$cache_key = 'tmp_theme_path:'.md5($file).'-'.md5(implode(',',$sources)).'-'.md5($relative ? 'rel':'abs');
+		$cache_key = 'tmp_theme_path:'.md5(Acid::get('theme')).'-'.md5(Acid::get('def_theme')).'-'.md5($file).'-'.md5(implode(',',$sources)).'-'.md5($relative ? 'rel':'abs');
 		if ($return = Acid::get($cache_key)) {
 			return $return;
 		}
@@ -306,6 +308,15 @@ class Acid {
 
 
 			//on sort de la boucle dès qu'on trouve un chemin existant
+
+			//cas d'un dossier
+			if ($dir) {
+				if (is_dir($path)) {
+					break;
+				}
+			}
+
+			//cas d'un fichier
 			if (is_file($path)) {
 				break;
 			}
@@ -323,10 +334,19 @@ class Acid {
 	 * @param array $sources
 	 * @return Ambigous <string, NULL>
 	 */
-	public static function themeUrl($file,$sources=null) {
-		return self::themePath($file,$sources,true);
+	public static function themeUrl($file,$sources=null,$dir=false) {
+		return self::themePath($file,$sources,true,$dir);
 	}
 
+	/**
+	 * Retourne le chemin  relatif vers le dossier theme désigné en entrée.
+	 * @param string $file
+	 * @param array $sources
+	 * @return Ambigous <string, NULL>
+	 */
+	public static function themeFolder($file,$sources=null) {
+		return self::themePath($file,$sources,true,true);
+	}
 
 	/**
 	 *  Retourne le chemin vers le fichier template désigné en entrée.

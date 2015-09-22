@@ -43,6 +43,10 @@ if (isset($_SERVER['HTTP_USER_AGENT'])) {
 	}
 }
 
+//RESPONSIVE MOBILE
+$this->addInHead('<meta http-equiv="X-UA-Compatible" content="IE=edge">');
+$this->addInHead('<meta name="viewport" content="width=device-width, initial-scale=1">');
+
 //include Acid::outPath('debug.php');
 //$output .= Debug::templateTools();
 

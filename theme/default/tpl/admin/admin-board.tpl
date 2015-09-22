@@ -1,6 +1,6 @@
-<div>
+<div class="table-responsive">
 
-<table style="width:100%; padding:30px; table-layout: fixed;">
+<table class="table" style="width:100%; padding:30px; table-layout: fixed;">
 	<tr>
 		<td colspan="3" style="vertical-align:top;  padding-bottom:25px; height:100px;  border-bottom:1px solid #CCCCCC;" >
 			<p>
@@ -13,7 +13,7 @@
 		<td style="vertical-align:top; padding-top:25px; ">
 
 			<div>
-				<img src="<?php echo Acid::get('url:img'); ?>admin/picto_stats.png"  alt="" title=""  style="width:80px; margin:auto;" />
+				<img src="<?php echo Acid::themeUrl('img/admin/picto_stats.png'); ?>"  alt="" title=""  style="width:80px; margin:auto;" />
 				<h4><?php echo Acid::trad('admin_board_site_title'); ?></h4>
 			</div>
 
@@ -29,7 +29,7 @@
 		<td style="vertical-align:top; padding-top:25px; ">
 
 			<div>
-				<img src="<?php echo Acid::get('url:img'); ?>admin/picto_users.png"  alt="" title=""  style="width:80px; margin:auto;" />
+				<img src="<?php echo Acid::themeUrl('img/admin/picto_users.png'); ?>"  alt="" title=""  style="width:80px; margin:auto;" />
 				<h4><?php echo Acid::trad('admin_board_stats_title'); ?></h4>
 			</div>
 
@@ -46,7 +46,7 @@
 		<?php if (!empty( $v['registration']  )) { ?>
 		<td style="width:25%; vertical-align:top;  padding-top:25px; ">
 			<div>
-				<img src="<?php echo Acid::get('url:img'); ?>admin/picto_registre.png"  alt="" title=""  style="width:80px; margin:auto;"  />
+				<img src="<?php echo Acid::themeUrl('img/admin/picto_registre.png'); ?>"  alt="" title=""  style="width:80px; margin:auto;"  />
 				<h4><?php echo Acid::trad('admin_board_version_title'); ?></h4>
 			</div>
 

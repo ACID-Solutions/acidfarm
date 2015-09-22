@@ -1,0 +1,68 @@
+.to_value_0, .to_value_1 {
+  input[type=submit] {
+    display: block;
+    background-color: transparent;
+    border: 0px solid #FFFFFF;
+    height: 16px;
+    width: 40px;
+    text-ident: -99px;
+    overflow: hidden;
+    color: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
+
+.to_value_0 {
+
+  input[type=submit] {
+    background-image: url('#{$basepath}/img/admin/btn_switch_on.png');
+  }
+}
+
+.to_value_1 {
+
+  input[type=submit] {
+    background-image: url('#{$basepath}/img/admin/btn_switch_off.png');
+  }
+}
+
+.radioswitch {
+  .radio_image {
+    display: block;
+    cursor: pointer;
+    background-color: transparent;
+    border: 0px solid #FFFFFF;
+    height: 16px;
+    width: 40px;
+    text-ident: -99px;
+    overflow: hidden;
+    color: transparent;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  label input[type=radio][value='0'] + .radio_image {
+    background-image: url('#{$basepath}/img/admin/btn_switch_on.png');
+  }
+
+  label input[type=radio][value='1'] + .radio_image {
+    background-image: url('#{$basepath}/img/admin/btn_switch_off.png');
+  }
+
+  label input[type=radio]:checked + .radio_image {
+    display: none;
+  }
+
+  label input[type=radio] {
+    display: none;
+  }
+
+  label .radio_label {
+    display: none;
+  }
+}

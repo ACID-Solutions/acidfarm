@@ -87,6 +87,7 @@ $acidconf['lvl']['seo'] = $acid['lvl']['dev'] ;
 
 $acid['def_theme'] = 'default';
 $acid['theme'] = empty($acid['server_theme']) ?  $acid['def_theme'] : $acid['server_theme'];
+//$acid['theme'] = 'bootstrap';
 
 $acidconf['page']['categories'] = array(0=>'page_standard',1=>'page_special'); //traduit dans /sys/dynamic.php
 
@@ -101,6 +102,13 @@ $acidconf['contact']['shield_key'] = 'form_who_i_am';
 $acidconf['contact']['shield_value'] = 'human';
 
 $acid['sass']['path']['compiled'] = 'compiled/';
+
+
+$acid['sass']['used'] =  !isset($acid['sass']['used']) ?  false : $acid['sass']['used'];
+
+if (!isset($acid['sass']['enable'])) {
+	$acid['sass']['enable'] = $acid['sass']['used'];
+}
 
 //$acid['plupload']['runtimes'] = array('html5','flash');
 

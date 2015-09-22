@@ -41,7 +41,7 @@ $acid['includes']['Route'] 	 	  = 'sys/tools/route.php';
 
 
 // Admin Config
-$acid['includes']['SiteConfig']	  = 'sys/modules/config.php';
+$acid['includes']['SiteConfig']	  = 'sys/modules/site_config.php';
 
 // Conroller Tools
 $acid['includes']['SitemapController'] 	 	  = 'sys/controller/acid/SitemapController.php';

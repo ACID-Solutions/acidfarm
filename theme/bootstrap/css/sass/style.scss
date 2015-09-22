@@ -1,4 +1,6 @@
 @import '/sass/config';
+@import '/sass/bootstrap';
+@import '/sass/bootstrap-mincer';
 
 $header-height:150px;
 
@@ -75,4 +77,63 @@ body {
 
 #contact_form_submit{ 
   margin-top:10px; 
+}
+
+#gallery_wall{
+  margin:auto;
+
+  .wall_elt{
+
+    position:relative;
+    background-color:#FFFFFF;
+
+     a{
+       display:block;
+     }
+
+    .wall_elt_overlay{
+      display:none;
+      position:absolute;
+      top:0px;
+      left:0px;
+      right:0px;
+      bottom:0px;
+      background-color:rgba(#000000,0.8);
+    }
+
+    &:hover .wall_elt_overlay{
+      display:block;
+
+      .wall_elt_overlay_content{
+        display:table;
+        height:100%;
+        width:100%;
+        vertical-align:middle;
+        text-align:center;
+        color:#FFFFFF;
+        font-weight:bold;
+
+        .wall_elt_overlay_body{
+          display:table-cell;
+          height:100%;
+          width:100%;
+          vertical-align:middle;
+          color:#FFFFFF;
+          font-weight:bold;
+        }
+
+      }
+    }
+
+  }
+
+}
+
+.dropdown .dropdown-menu {
+  display: none;
+  margin-top:-8px;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
 }

@@ -31,7 +31,6 @@ class MyTemplate extends AcidTemplate {
 		$this->setDoctype(self::HTML_STD);
 	}
 
-
 	/**
 	 * Retourne le header du template
 	 */

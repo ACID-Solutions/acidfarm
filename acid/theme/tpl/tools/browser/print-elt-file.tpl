@@ -1,4 +1,4 @@
-<div class="fsb_belt_file">
+<div class="fsb_belt_file col-xs-12 col-sm-4 col-md-1">
 	<div class="fsb_belt_img">
 		<a <?php if ($o->getPlugin()=='tinymce') { echo ' onclick="window.open(this.href); return false;" '; }?> href="<?php echo $v['link']; ?>" title="<?php echo $v['attrs']['name']; ?>">
 			<img src="<?php echo $v['img_file']; ?>" alt="<?php echo $v['attrs']['name']; ?>" />

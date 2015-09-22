@@ -91,7 +91,7 @@ class AcidBrowser {
 		$this->acl = ($acl === null) ? Acid::get('browser:acl') : $acl;
 		$this->base_path = ($absolute?'':SITE_PATH) . $path;
 		$this->files_path = $path;
-		$this->img = $img_path===null ? ($acid['url']['img'].'admin/fsb/') : $img_path;
+		$this->img = $img_path===null ? Acid::themeFolder(	'img/admin/fsb/' ) : $img_path;
 		$this->key = $key===null ? 'fsb' : $key;
 		$this->setJS();
 		$this->setPlugin($plugin);

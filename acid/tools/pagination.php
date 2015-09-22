@@ -196,7 +196,7 @@ class AcidPagination
 				}
 				
 				if ($output) {
-					$output =	'<div class="navigation'.(empty($css_class)?'':' '.$css_class).'">' . "\n" . 
+					$output =	'<div class="navbar navbar-default navigation'.(empty($css_class)?'':' '.$css_class).'">' . "\n" .
 								$output . 
 								'</div>' . "\n";
 				}

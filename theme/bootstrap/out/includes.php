@@ -1,11 +1,11 @@
 <?php
-$this->addCSS(Acid::themeUrl('css/bootstrap.min.css'));
-$this->addCSS(Acid::themeUrl('css/bootstrap-theme.min.css'));
-$this->addCSS(Acid::themeUrl('css/style.css'));
 
-//$this->addCSS($this->sassUrl('_bootstrap'));
-//$this->addCSS($this->sassUrl('_bootstrap-mincer'));
-//$this->addCSS($this->sassUrl('style'));
+
+if (Acid::get('sass:used')) {
+    $this->addCSS($this->sassUrl('style'));
+}else{
+    $this->addCSS(Acid::themeUrl('css/style.css'));
+}
 
 
 $this->jQuery();
