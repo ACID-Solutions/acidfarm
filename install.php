@@ -334,6 +334,7 @@ $lprod_quote\$acid['error_report']['prod']	= E_ALL & ~E_STRICT;
 // Sass
 \$acid['sass']['enable'] = true;
 $ldev_quote\$acid['sass']['mode'] = 'dev';
+$lprod_quote\$acid['sass']['mode'] = 'prod';
 
 //Disallow deploy for security patches
 //\$acid['deploy']['allowed'] = true;
