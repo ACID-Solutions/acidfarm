@@ -191,7 +191,7 @@ $acid['log']['colorize']		= array();
 
 
 // Updates and Upgrade
-$acid['upgrade']['types']					= array('update','upgrade');
+$acid['upgrade']['types']					= array('update','upgrade','update_c');
 $acid['upgrade']['path']['update'] 			= SITE_PATH.'sys/update/';
 $acid['upgrade']['path']['upgrade']			= SITE_PATH.'sys/upgrade/';
 $acid['upgrade']['db']['sample_prefix']		= array('acid_','af_');
