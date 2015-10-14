@@ -3,8 +3,10 @@
 
 if (Acid::get('sass:used')) {
     $this->addCSS($this->sassUrl('style'));
+    //$this->addCSS(Acid::sassUrl('dialog.css'));
 }else{
     $this->addCSS(Acid::themeUrl('css/style.css'));
+    //$this->addCSS(Acid::themeUrl('css/dialog.css'));
 }
 
 
