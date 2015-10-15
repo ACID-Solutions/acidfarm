@@ -157,7 +157,6 @@ class Rest {
 						self::requireLogin(Acid::get('rest:realm'),Acid::get('rest:nonce'),$session->id);
 						return false;
 					}
-
 					return AcidSession::getInstance();
 
 				}elseif (Acid::get('rest:public_session:enable')) {
@@ -188,6 +187,9 @@ class Rest {
 		}
 
 		if (AcidSession::instanceExists()) {
+			if (!AcidSession::getInstance()->in_db) {
+				AcidSession::dbAdd();
+			}
 			include(ACID_PATH.'stop.php');
 		}
 		exit();

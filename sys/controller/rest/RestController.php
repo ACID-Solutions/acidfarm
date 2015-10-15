@@ -36,23 +36,28 @@ class RestController{
 			}
 
 		}
+
+		$this->call404();
     }
 
     /**
      * GET
      */
     public function get(){
+
     	$module = AcidRouter::getParam('module');
     	$id = AcidRouter::getParam('id_module');
     	if (Acid::get('includes:'.$module)) {
     		$m = new $module($id);
     		if ($res = $m->restGet()) {
-    			Rest::status200($res);
+				Rest::status200($res);
     		}else{
     			Rest::status204();
     		}
 
     	}
+
+		$this->call404();
     }
 
     /**
@@ -83,4 +88,20 @@ class RestController{
     	Rest::status404();
     }
 
+	/**
+	 * Auth Get
+	 */
+	public function authsalt(){
+		$id = AcidRouter::getParam('id_user');
+		$user = new User($id);
+
+		if ($user->getId()) {
+			Rest::status200(array($id=>$user->get('user_salt')));
+		}else{
+			//fake result
+			Rest::status200(array($id=>User::getRandPasswordSalt()));
+		}
+
+		$this->call404();
+	}
 }

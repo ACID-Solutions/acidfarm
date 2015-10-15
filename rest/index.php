@@ -34,11 +34,20 @@ Acid::set('rest:nonce','beta');
 Acid::set('router:use_lang',false);
 Acid::set('router:folder','rest/');
 
-//$sess = Rest::authentification();
-
-
-
 Acid::set('out','empty');
+
+Acid::set('rest:routes:unlog',array('usersalt'));
+
+//Auth function
+$need_auth = false;
+function RestAuthFunction() {
+    if (!in_array(AcidRouter::getCurrentRouteName(), Acid::get('rest:routes:unlog'))) {
+       $GLOBALS['sess'] = Rest::authentification();
+    }
+}
+
+//AuthGet : Route
+AcidRouter::addGet('usersalt',new AcidRoute('auth/salt/:id_user',array('controller'=>'RestController','action'=>'authsalt','module'=>'rest')));
 
 //Getters
 AcidRouter::addGet('list',new AcidRoute(':module/list',array('controller'=>'RestController','action'=>'getList','module'=>'rest')));
@@ -57,7 +66,13 @@ AcidRouter::addDelete('delete',new AcidRoute(':module',array('controller'=>'Rest
 AcidRouter::addDefaultRoute('404',new AcidRoute('default',array('controller'=>'RestController','action'=>'call404','module'=>'rest')));
 
 //Lancement du Router
-AcidRouter::run();
+if ($need_auth) {
+    //Avec authentification
+    AcidRouter::before('*','RestAuthFunction')->run();
+}else{
+    //Sans authentification
+    AcidRouter::run();
+}
 
 require('../sys/stop.php');
 
