@@ -201,8 +201,10 @@ class MyTemplate extends AcidTemplate {
 	 */
 	public function jQueryLightBox() {
 
-		$this->addJS(Acid::get('url:folder').'js/jquery.lightbox-0.5.min.js');
-		$this->addCss(Acid::themeUrl('css/jquery.lightbox-0.5.css'));
+		//$this->addJS(Acid::get('url:folder').'js/jquery.lightbox-0.5.min.js');
+		//$this->addCss(Acid::themeUrl('css/jquery.lightbox-0.5.css'));
+		$this->addJS(Acid::get('url:folder').'js/mpopup/jquery.magnific-popup.min.js');
+		$this->addCss(Acid::get('url:folder').'js/mpopup/magnific-popup.css');
 
 	}
 

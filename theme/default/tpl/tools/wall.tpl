@@ -39,7 +39,15 @@
 
 <script type="text/javascript">
 
-$('.wall_elt_link').lightBox();
+//$('.wall_elt_link').lightBox();
+
+$('#gallery_wall').magnificPopup({
+	delegate: '.wall_elt_link',
+	type: 'image',
+	gallery: {
+		enabled: true
+	}
+});
 
 </script>
 
