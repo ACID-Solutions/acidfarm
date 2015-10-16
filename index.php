@@ -93,6 +93,9 @@ AcidRouter::addRoute('rss',new AcidRoute('@rss',array('controller'=>'RssControll
 // Route vers la page search
 AcidRouter::addRoute('searchPage', new AcidRoute('@search',array('controller'=>'SearchController'),1));
 
+// Redirections
+//AcidRouter::addRoute('srcRedirect', new AcidRoute('src/:version',array('controller'=>'RedirectController','action'=>'src'),1));
+
 //Par défault : affichage d'une page
 AcidRouter::addRoute('page',new AcidRoute(':page_key',array('controller'=>'PageController'),1));
 

@@ -77,32 +77,26 @@ $acid['lang']['current']      	= $acid['lang']['default'];
 // SITE CONFIGURATION
 //************************************************************************************//
 
+//--permissions
 $acid['permission_active']		=  empty($permission_active) ? false : true;
 
+//--keys
 $acidconf['root_keys'] = array('sitemap.xml','robots.txt','rss');
 $acidconf['site_keys'] = array('news','gallery','search','contact');
 
+//--access
 $acidconf['lvl']['seo'] = $acid['lvl']['dev'] ;
 
-
+//--thème
 $acid['def_theme'] = 'default';
 $acid['theme'] = empty($acid['server_theme']) ?  $acid['def_theme'] : $acid['server_theme'];
 //$acid['theme'] = 'bootstrap';
 
-$acidconf['page']['categories'] = array(0=>'page_standard',1=>'page_special'); //traduit dans /sys/dynamic.php
+//--versioning
+//$acid['versioning']['path'] =  'src/__VERSION__/';
 
-$acidconf['page']['autoident'] = true;
-$acidconf['page']['special'] = array('home');
-
-$acidconf['photo']['limit'] = 12;
-$acidconf['photo_home']['limit'] = null;
-
-$acidconf['contact']['shield'] = true;
-$acidconf['contact']['shield_key'] = 'form_who_i_am';
-$acidconf['contact']['shield_value'] = 'human';
-
+//--sass
 $acid['sass']['path']['compiled'] = 'compiled/';
-
 
 $acid['sass']['used'] =  !isset($acid['sass']['used']) ?  false : $acid['sass']['used'];
 
@@ -110,14 +104,29 @@ if (!isset($acid['sass']['enable'])) {
 	$acid['sass']['enable'] = $acid['sass']['used'];
 }
 
+//--upload
 //$acid['plupload']['runtimes'] = array('html5','flash');
+
+//--pages
+$acidconf['page']['categories'] = array(0=>'page_standard',1=>'page_special'); //traduit dans /sys/dynamic.php
+
+$acidconf['page']['autoident'] = true;
+$acidconf['page']['special'] = array('home');
+
+//--photos
+$acidconf['photo']['limit'] = null;
+$acidconf['photo_home']['limit'] = null;
+
+//--contact
+$acidconf['contact']['shield'] = true;
+$acidconf['contact']['shield_key'] = 'form_who_i_am';
+$acidconf['contact']['shield_value'] = 'human';
 
 // PAGE CONTROLLER
 //************************************************************************************//
 
 //--page reserved by dev
 $acidconf['admin_pages'] = array();
-
 
 //--reserved keys
 $acidconf['keys']['reserved']=$acidconf['site_keys'];

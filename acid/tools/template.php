@@ -149,6 +149,18 @@ class AcidTemplate {
 	public static function versioningUrl($url) {
 		$version = '';
 
+		if (Acid::get('versioning:path')) {
+			if ($version = self::versioningVal()) {
+				if (strpos($url,'http')!==0) {
+					$base_url = AcidFs::removeBasePath($url);
+					$base_url_new = str_replace('__VERSION__', $version, Acid::get('url:folder') . Acid::get('versioning:path'));
+					if (realpath(SITE_PATH.$base_url)) {
+						return $base_url_new . $base_url;
+					}
+				}
+			}
+		}
+
 		if (strpos($url,'?')===false) {
 			if ($version = self::versioningVal()) {
 				$url .='?version='.$version;
