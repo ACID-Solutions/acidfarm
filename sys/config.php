@@ -48,6 +48,15 @@ if (file_exists(SITE_PATH.'sys/maintenance.txt')) {
 // Mods path
 include(SITE_PATH.'sys/includes.php');
 
+// BRANCHING
+//************************************************************************************//
+
+if (file_exists(SITE_PATH.'sys/branch.txt')) {
+	if ($sub_branch = trim(file_get_contents(SITE_PATH.'sys/branch.txt'))) {
+		$acid['db']['prefix'] = $sub_branch.'_'.$acid['db']['prefix'];
+	}
+}
+
 
 // COOKIE
 //************************************************************************************//
