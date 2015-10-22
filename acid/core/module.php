@@ -675,6 +675,21 @@ abstract class AcidModuleCore {
 	}
 
 	/**
+	 * Met à jour la base de données avec les valeurs de l'objet
+	 * Si pas encore présent en base, on ajoute l'élément sinon on le met à jour
+	 * Si $updates est la chaîne de carractères "all", met à jour tous les champs
+	 * Sinon, met à jour uniquement les champs renseignés par le tableau $updates
+	 *
+	 *
+	 * @param { string | array } $updates
+	 *
+	 * @return bool
+	 */
+	public function dbSave($updates='all') {
+		return $this->getId() ? $this->dbUpdate($updates) : $this->dbAdd();
+	}
+
+	/**
 	* Supprime l'enregistrement de l'objet d'identifiant $id de la base de données.
 	*
 	* @param mixed $id
