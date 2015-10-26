@@ -7,8 +7,8 @@
 /sys/server.php
 /sys/stats/
 /sys/update/cur_version.txt
-/sys/update_c/cur_version.txt
-/sys/upgrade/cur_version.txt
+/sys/update/*/cur_version.txt
+
 
 #registration
 /registration/private/maintenance.json

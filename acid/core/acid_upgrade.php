@@ -71,7 +71,7 @@ class AcidUpgrade {
 
 		$this->process_name = 'do_'.$this->type.'_process';
 
-		$this->excluded = array('files'=>Acid::get('upgrade:excluded:files'),'folders'=>Acid::get('upgrade:excluded:folders'));
+		$this->excluded = array('files'=>Acid::get('upgrade:excluded:files'),'folders'=>Acid::get('upgrade:excluded:folders'),'dotfiles'=>Acid::get('upgrade:excluded:dotfiles'));
 		$this->folders = array();
 		$this->files = array('sql'=>array(),'php'=>array(),'sh'=>array());
 	}
@@ -166,10 +166,12 @@ class AcidUpgrade {
 		$h = opendir($this->path);
 		while (($file = readdir($h)) !== false) {
 			if ( ($file != '.') && ($file != '..') && (is_dir($this->path.$file)) ) {
-				if (!in_array($file,$this->excluded['folders'])) {
-					if ($version < $file) {
-						if ( (!$last_version) || ($file <= $last_version) ) {
-							$this->folders[] = $file;
+				if ( !($this->excluded['dotfiles'] && (strpos($file,'.')===0)) ) {
+					if (!in_array($file, $this->excluded['folders'])) {
+						if ($version < $file) {
+							if ((!$last_version) || ($file <= $last_version)) {
+								$this->folders[] = $file;
+							}
 						}
 					}
 				}
@@ -216,7 +218,6 @@ class AcidUpgrade {
 	public function upgrade($version=null) {
 		//on récupère les fichiers à traiter
 		$this->setFolders($version);
-
 		$ext = array('php','sql','sh');
 		$ext_common = array('php','sql');
 		foreach ($this->folders as $folder) {
