@@ -487,7 +487,7 @@ class AcidPaypal {
                 					//Procéssus PDT personnalisé
                 					if ($this->pdt_function !==null) {
                 						$fun = $this->pdt_function;
-                                        $secured_func = $fun($keyarray);
+                                        $secured_func = call_user_func($fun,$keyarray);
                 					
                 						if (!$secured_func) {
                 							$secured_status = false;
