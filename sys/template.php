@@ -72,8 +72,10 @@ class MyTemplate extends AcidTemplate {
 		}else{
 			$banner = '';
 			foreach ($dialog_banner as $key => $bantab) {
-				foreach($bantab as $ban) {
-					$banner .= '<span class="banner_'.$key.'">'. $ban . '</span>' . '<br />' . "\n" ;
+				if($bantab) {
+					foreach ($bantab as $ban) {
+						$banner .= '<span class="banner_' . $key . '">' . $ban . '</span>' . '<br />' . "\n";
+					}
 				}
 			}
 

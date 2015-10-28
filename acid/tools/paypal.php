@@ -425,11 +425,13 @@ class AcidPaypal {
                 	//permet de traiter le retour ipn de paypal
                 	// lire la publication du système PayPal et ajouter 'cmd'
                 	$req = 'cmd=_notify-validate';
-                
-                	foreach($_POST as $key => $value) {
-                		$value = urlencode(stripslashes($value));
-                		$req .= "&amp;amp;amp;amp;amp;$key=$value";
-                	}
+
+                    if ($keyarray) {
+                        foreach ($keyarray as $key => $value) {
+                            $value = urlencode(stripslashes($value));
+                            $req .= "&amp;amp;amp;amp;amp;$key=$value";
+                        }
+                    }
                 
                 	$header = '';
                 	
@@ -485,7 +487,7 @@ class AcidPaypal {
                 					//Procéssus PDT personnalisé
                 					if ($this->pdt_function !==null) {
                 						$fun = $this->pdt_function;
-                						$secured_func = $fun($keyarray);
+                                        $secured_func = $fun($keyarray);
                 					
                 						if (!$secured_func) {
                 							$secured_status = false;

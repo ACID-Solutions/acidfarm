@@ -119,9 +119,11 @@ class Rest {
 		$keys = is_array($keys) ? $keys : array($keys);
 
 		$count = 0;
-		foreach($keys as $key) {
-			if ($user::dbCount(array(array($key,'=',$login)))) {
-				return $key;
+		if($keys) {
+			foreach ($keys as $key) {
+				if ($user::dbCount(array(array($key, '=', $login)))) {
+					return $key;
+				}
 			}
 		}
 

@@ -415,8 +415,10 @@ class Conf {
 			$selected = Conf::get('meta:keywords:'.$cur_lang);
 			$selected_str = implode(',', $selected);
 			$selected = explode(',', $selected_str);
-			foreach($selected as $key => $word){
-				$selected[$key] = trim($word);
+			if($selected) {
+				foreach ($selected as $key => $word) {
+					$selected[$key] = trim($word);
+				}
 			}
 		}
 		else{

@@ -136,9 +136,10 @@ class AcidFacebook {
 	 * @param string $tplPath chemin vers le template
 	 */
 	private function printLike($tplPath) {
-		
-		foreach(AcidFacebook::$_autoconf as $k => $v) {
-			$this->$k = isset($this->$k) ? $this->$k : AcidFacebook::$_autoconf[$k];
+		if (AcidFacebook::$_autoconf) {
+			foreach (AcidFacebook::$_autoconf as $k => $v) {
+				$this->$k = isset($this->$k) ? $this->$k : AcidFacebook::$_autoconf[$k];
+			}
 		}
 		
 		return Acid::tpl($tplPath, array(), $this);

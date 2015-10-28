@@ -136,9 +136,11 @@ class AcidTwitter {
 	 */
 	private function printTweet() {
 		$tplPath = 'tools/twitter.tpl';
-		
-		foreach(AcidTwitter::$_autoconf as $k => $v) {
-			$this->$k = isset($this->$k) ? $this->$k : static::$_autoconf[$k];
+
+		if (AcidTwitter::$_autoconf) {
+			foreach (AcidTwitter::$_autoconf as $k => $v) {
+				$this->$k = isset($this->$k) ? $this->$k : static::$_autoconf[$k];
+			}
 		}
 		
 		return Acid::tpl($tplPath, array(), $this);

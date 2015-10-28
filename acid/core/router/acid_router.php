@@ -412,10 +412,11 @@ class AcidRouter implements Acid_Router_Interface{
      public static function getParam($name){
          $instance = self::getInstance();
          $route = self::getInstance()->_currentRoute;
-         $params = $route->getParams();
-         foreach($params as $key=>$value){
-             if($name===$key){
-                 return $value;
+         if ($params = $route->getParams()) {
+             foreach ($params as $key => $value) {
+                 if ($name === $key) {
+                     return $value;
+                 }
              }
          }
          return false;

@@ -200,17 +200,24 @@ class AcidUrl
     	}
 
     	$gets = array();
-    	foreach ($tab as $key => $val) {
-            $gets[$key] = $key.'='.$val;
+
+        if($tab) {
+            foreach ($tab as $key => $val) {
+                $gets[$key] = $key . '=' . $val;
+            }
         }
 
-        foreach($params as $key => $val) {
-            $gets[$key] = $key.'='.$val;
+        if($params) {
+            foreach ($params as $key => $val) {
+                $gets[$key] = $key . '=' . $val;
+            }
         }
 
-        foreach ($without as $key) {
-            if (isset($gets[$key])) {
-                unset($gets[$key]);
+        if ($without) {
+            foreach ($without as $key) {
+                if (isset($gets[$key])) {
+                    unset($gets[$key]);
+                }
             }
         }
 

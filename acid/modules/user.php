@@ -103,8 +103,10 @@ abstract class AcidUser extends AcidModule {
 		$keys = is_array($keys) ? $keys : array($keys);
 
 		$count = 0;
-		foreach($keys as $key) {
-			$count += $this->dbCount(array(array($key,'=',$login),array($this->tblId(),'not in',$excluded)));
+		if ($keys) {
+			foreach ($keys as $key) {
+				$count += $this->dbCount(array(array($key, '=', $login), array($this->tblId(), 'not in', $excluded)));
+			}
 		}
 
 		return $count;
@@ -866,36 +868,37 @@ abstract class AcidUser extends AcidModule {
 		$identifiants = $comp->getConfig('identification') !== null ? $comp->getConfig('identification') : array('username');
 		$identifiants = !is_array($identifiants) ? array($identifiants) : $identifiants;
 
-		foreach($identifiants as $ident) {
-			if ($comp->dbInitSearch(array($ident=>$login))) {
-				if ($comp->get('active')) {
-					$the_password = $hashed_password ?  $pass : User::getHashedPassword($pass,$comp->get('user_salt'));
-					if ($comp->get('password') == $the_password) {
-						// Vérification de la date de validité du compte (00-00-0000 => illimité)
-						if ( ($comp->get('date_deactivation') == '0000-00-00 00:00:00') || (strtotime($comp->get('date_deactivation')) > time()) ) {
+		if ($identifiants) {
+			foreach ($identifiants as $ident) {
+				if ($comp->dbInitSearch(array($ident => $login))) {
+					if ($comp->get('active')) {
+						$the_password = $hashed_password ? $pass : User::getHashedPassword($pass, $comp->get('user_salt'));
+						if ($comp->get('password') == $the_password) {
+							// Vérification de la date de validité du compte (00-00-0000 => illimité)
+							if (($comp->get('date_deactivation') == '0000-00-00 00:00:00') || (strtotime($comp->get('date_deactivation')) > time())) {
 
-							if ($session_make) {
-								$comp->sessionMake(null,$autolog);
+								if ($session_make) {
+									$comp->sessionMake(null, $autolog);
+								}
+
+								$sess = AcidSession::getInstance();
+								$sess->id_user = $comp->getId();
+
+								return true;
+							} else {
+								Acid::log('user', 'Identification failed for ' . $login . ' (account has expired)');
+
+								if ($print_error) {
+									AcidDialog::add('error', Acid::trad('user_date_expired'));
+								}
+
+								return false;
 							}
-
-							$sess = AcidSession::getInstance();
-							$sess->id_user = $comp->getId();
-
-							return true;
-						} else {
-							Acid::log('user', 'Identification failed for ' . $login . ' (account has expired)');
-
-							if ($print_error) {
-								AcidDialog::add('error',Acid::trad('user_date_expired'));
-							}
-
-							return false;
 						}
 					}
 				}
 			}
 		}
-
 		Acid::log('user', 'Identification failed for ' . $login);
 
 	    if ($print_error) {

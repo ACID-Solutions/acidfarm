@@ -20,21 +20,23 @@ if(Conf::exist('plupload:selectors')) {
 		$selectors = array($selectors);
 	}
 
-	foreach($selectors as $sel) {
-		if(is_array($sel)) {
-			$field = isset($sel[0]) ? $sel[0] : '';
-			$form = isset($sel[1]) ? $sel[1] : 'form';
-			$ext = isset($sel[2]) ? $sel[2] : false;
-			$autosubmit = isset($sel[3]) ? $sel[3] : false;
-		} else {
-			$field = $sel;
-			$form = 'form';
-			$ext = false;
-			$autosubmit = Acid::get('plupload:autosubmit');
+	if($selectors) {
+		foreach ($selectors as $sel) {
+			if (is_array($sel)) {
+				$field = isset($sel[0]) ? $sel[0] : '';
+				$form = isset($sel[1]) ? $sel[1] : 'form';
+				$ext = isset($sel[2]) ? $sel[2] : false;
+				$autosubmit = isset($sel[3]) ? $sel[3] : false;
+			} else {
+				$field = $sel;
+				$form = 'form';
+				$ext = false;
+				$autosubmit = Acid::get('plupload:autosubmit');
+			}
+
+			$pluploads[] = array('field' => $field, 'form' => $form, 'ext' => $ext, 'autosubmit' => $autosubmit);
+
 		}
-
-		$pluploads[] = array('field'=>$field,'form'=>$form, 'ext'=>$ext, 'autosubmit'=>$autosubmit);
-
 	}
 }
 
@@ -42,7 +44,7 @@ if(Conf::exist('plupload:selectors')) {
 * On vérifie l'existence de selector name jQuery (ex : '[name=mon_name]') dans la config.
 * Pour chaque selecteur, on va créer son élément plupload (selector jQuery, selecteur form, ext)
 */
-if(Conf::exist('plupload:names')) {
+if(Conf::get('plupload:names')) {
 	foreach(Conf::get('plupload:names') as $name) {
 		if(is_array($name)) {
 			$field = isset($name[0]) ? $name[0] : '';

@@ -606,8 +606,10 @@ abstract class AcidModuleCore {
 		$sth = AcidDB::prepare($req,array(),true);
 
 		$log = $sth->queryString;
-		foreach($assoc as $k => $v) {
-			$log = str_replace($k, "'$v'", $log);
+		if ($assoc) {
+			foreach ($assoc as $k => $v) {
+				$log = str_replace($k, "'$v'", $log);
+			}
 		}
 
 		// Log contenant les valeurs bindées
@@ -658,8 +660,10 @@ abstract class AcidModuleCore {
 			$sth = AcidDB::prepare($req,array(),true);
 
 			$log = $sth->queryString;
-			foreach($assoc as $k => $v) {
-				$log = str_replace($k, "'$v'", $log);
+			if ($assoc) {
+				foreach ($assoc as $k => $v) {
+					$log = str_replace($k, "'$v'", $log);
+				}
 			}
 
 			// Log contenant les valeurs bindées
@@ -3054,15 +3058,18 @@ abstract class AcidModuleCore {
 		$vars = array();
 		$vars['onglets'] = array();
 
-		foreach($onglets as $url_onglet => $conf_onglet) {
-			$_onglet = new stdClass();
-			$_onglet->url = !is_numeric($url_onglet) ? $url_onglet : $conf_onglet['url'];
-			$_onglet->name = is_array($conf_onglet) ? $conf_onglet['name'] : $conf_onglet;
-			$_onglet->selector = is_array($conf_onglet) ? (isset($conf_onglet['selector']) ? $conf_onglet['selector'] : $_onglet->url): $url_onglet;
-			$_onglet->isSelected = $this->isSelectedOnglet($_onglet->selector);
+		 if ($onglets) {
+			 foreach ($onglets as $url_onglet => $conf_onglet) {
+				 $_onglet = new stdClass();
+				 $_onglet->url = !is_numeric($url_onglet) ? $url_onglet : $conf_onglet['url'];
+				 $_onglet->name = is_array($conf_onglet) ? $conf_onglet['name'] : $conf_onglet;
+				 $_onglet->selector = is_array($conf_onglet) ? (isset($conf_onglet['selector']) ? $conf_onglet['selector'] : $_onglet->url) : $url_onglet;
+				 $_onglet->isSelected = $this->isSelectedOnglet($_onglet->selector);
 
-			$vars['onglets'][] = $_onglet;
-		}
+				 $vars['onglets'][] = $_onglet;
+
+			 }
+		 }
 
 		return Acid::tpl($tpl,$vars,$this);
 	 }
@@ -3475,7 +3482,7 @@ abstract class AcidModuleCore {
 		if ($modules) {
 			$t_champs = array();
 			$t_label = array();
-			foreach ($conf['modules'] as $mod) {
+			foreach ($modules as $mod) {
 				$module = new $mod();
 				foreach($module->getKeys() as $key) {
 					$mod_champs[$module::dbPref($key)] = $module::dbPref($key);
@@ -3483,7 +3490,7 @@ abstract class AcidModuleCore {
 				}
 			}
 
-			if (isset($this->config['admin']['list']['keys'])) {
+			if (!empty($this->config['admin']['list']['keys'])) {
 				foreach ($this->config['admin']['list']['keys'] as $tk => $tkey) {
 					if (strpos($tkey,'.')==false) {
 						$this->config['admin']['list']['keys'][$tk] = self::dbPref($tkey);
@@ -3491,7 +3498,7 @@ abstract class AcidModuleCore {
 				}
 			}
 
-			if (isset($this->config['admin']['list']['keys_excluded'])) {
+			if (!empty($this->config['admin']['list']['keys_excluded'])) {
 				foreach ($this->config['admin']['list']['keys_excluded'] as $tk => $tkey) {
 					if (strpos($tkey,'.')==false) {
 						$this->config['admin']['list']['keys_excluded'][$tk] = self::dbPref($tkey);

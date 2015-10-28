@@ -732,42 +732,43 @@ class AcidForm {
 
 		$output = '';
 		$table = false;
-		foreach($this->_components as $name => $elts) {
-			switch($elts['type']) {
-				case 'field' :
-				case 'free_text' :
+		if ($this->_components) {
+			foreach ($this->_components as $name => $elts) {
+				switch ($elts['type']) {
+					case 'field' :
+					case 'free_text' :
 
-					$b_attr = empty($elts['body_attrs']) ? array() : $elts['body_attrs'];
-					$container = !isset($b_attr['body_container']) ? $bcontainer : $b_attr['body_container'];
-					unset($b_attr['body_container']);
+						$b_attr = empty($elts['body_attrs']) ? array() : $elts['body_attrs'];
+						$container = !isset($b_attr['body_container']) ? $bcontainer : $b_attr['body_container'];
+						unset($b_attr['body_container']);
 
-					$attrs = $b_attr ? self::getParams($b_attr) : '';
+						$attrs = $b_attr ? self::getParams($b_attr) : '';
 
-					$attrs_start = $table ? '' : ($container ? '<'.$container.' '.$attrs.'>' : '');
-					$attrs_stop = $table ? '' : ($container ? '</'.$container.'>' : '');
+						$attrs_start = $table ? '' : ($container ? '<' . $container . ' ' . $attrs . '>' : '');
+						$attrs_stop = $table ? '' : ($container ? '</' . $container . '>' : '');
 
-					$output .= $table ?
-								'			<tr '.$attrs.'>' . "\n" .
-								'				<td class="form_label" >'.$elts['label'].'</td>' . "\n" .
-								'				<td class="form_value" >'.$elts['start'] . $elts['html'] . $elts['stop'].'</td>' . "\n" .
-								'			</tr>' . "\n" .
-								''
-								:'		' . $attrs_start . $elts['label'] . ' ' . $elts['start'] . $elts['html'] . $elts['stop'] . $attrs_stop . "\n";
-				break;
+						$output .= $table ?
+							'			<tr ' . $attrs . '>' . "\n" .
+							'				<td class="form_label" >' . $elts['label'] . '</td>' . "\n" .
+							'				<td class="form_value" >' . $elts['start'] . $elts['html'] . $elts['stop'] . '</td>' . "\n" .
+							'			</tr>' . "\n" .
+							''
+							: '		' . $attrs_start . $elts['label'] . ' ' . $elts['start'] . $elts['html'] . $elts['stop'] . $attrs_stop . "\n";
+						break;
 
-				case 'table_start' :
-					$table = true;
-					$output .=	'		<table'.self::getParams($elts['params']).'>' . "\n";
-				break;
+					case 'table_start' :
+						$table = true;
+						$output .= '		<table' . self::getParams($elts['params']) . '>' . "\n";
+						break;
 
 
-				case 'table_stop' :
-					$table = false;
-					$output .= '		</table>' . "\n";
-				break;
+					case 'table_stop' :
+						$table = false;
+						$output .= '		</table>' . "\n";
+						break;
+				}
 			}
 		}
-
 		$action_attr = (($this->_action==='') && ($this->_html>=5)) ? '' : 'action="'.$this->_action.'"';
 		return 	'<form method="'.$this->_method.'" '.$action_attr.$enctype.self::getParams($this->_form_params).'>' . "\n" .
 				'	<div>' . "\n" .
