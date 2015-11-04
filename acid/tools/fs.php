@@ -187,11 +187,19 @@ class AcidFs
 	 *
 	 * @return bool
 	 */
-	public static function imgResize($src_path,$dst_path,$img_w,$img_h,$src_w=null,$src_h=null,$src_type=null,$src_x=0,$src_y=0){
+	public static function imgResize($src_path,$dst_path,$img_w,$img_h,$src_w=null,$src_h=null,$src_type=null,$src_x=0,$src_y=0,$quality=null){
 		if (file_exists($src_path)) {
 		    if ($src_w === null || $src_h === null || $src_type === null) {
 			    list($src_w,$src_h,$src_type) = getimagesize($src_path);
 		    }
+
+			if (($img_w==$src_w) && ($img_h==$src_h)) {
+				if ((!$src_x) && (!$src_y)) {
+					if ($quality===null) {
+						return copy($src_path,$dst_path);
+					}
+				}
+			}
 
 			$dst_source = ImageCreateTrueColor ($img_w,$img_h);
 			imagealphablending($dst_source,false);
@@ -202,21 +210,22 @@ class AcidFs
 				case 1	:	// Cas du GIF
 							$img_source = ImageCreateFromGif($src_path);
 							ImageCopyResampled($dst_source, $img_source, 0,0,$src_x,$src_y, $img_w, $img_h, $src_w, $src_h);
-							$success = ImageGif($dst_source, $dst_path);
+							$success = ImageGif($dst_source, $dst_path,$quality);
 							imagedestroy($dst_source);
 							break;
 
 				case 2	:	// Cas du JPG
 							$img_source = ImageCreateFromJpeg($src_path);
 							ImageCopyResampled($dst_source, $img_source, 0,0,$src_x,$src_y, $img_w, $img_h, $src_w, $src_h);
-							$success = ImageJpeg($dst_source, $dst_path,100);
+							$quality = $quality===null? 100 : $quality;
+							$success = ImageJpeg($dst_source, $dst_path,$quality);
 							imagedestroy($dst_source);
 							break;
 
 				case 3	:	// Cas du PNG
 							$img_source = ImageCreateFromPng($src_path);
 							ImageCopyResampled($dst_source, $img_source, 0,0,$src_x,$src_y, $img_w, $img_h, $src_w, $src_h);
-							$success = ImagePng($dst_source, $dst_path);
+							$success = ImagePng($dst_source, $dst_path,$quality);
 							imagedestroy($dst_source);
 							break;
 			}
