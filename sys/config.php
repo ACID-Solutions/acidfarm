@@ -129,7 +129,7 @@ $acidconf['photo_home']['limit'] = null;
 //--contact
 $acidconf['contact']['shield'] = true;
 $acidconf['contact']['shield_key'] = 'form_who_i_am';
-$acidconf['contact']['shield_value'] = 'human';
+$acidconf['contact']['shield_val'] = 'human';
 
 // PAGE CONTROLLER
 //************************************************************************************//
