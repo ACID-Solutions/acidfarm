@@ -139,7 +139,13 @@
 <!--
 <?php if (Conf::get('contact:shield')) { ?>
 $().ready( function() {
-	$('#contact_form').append('<input type="hidden" name="<?php echo Conf::get('contact:shield_key'); ?>" value="<?php echo Conf::get('contact:shield_val'); ?>"  />');
+	<?php if (Conf::get('contact:shield_time')) { ?>
+		setTimeout(function() {
+	<?php }  ?>
+			$('#contact_form').append('<input type="hidden" name="<?php echo Conf::get('contact:shield_key'); ?>" value="<?php echo Conf::get('contact:shield_val'); ?>"  />');
+	<?php if (Conf::get('contact:shield_time')) { ?>
+		}, <?php echo Conf::get('contact:shield_time'); ?>  );
+	<?php }  ?>
 });
 <?php }?>
 -->
