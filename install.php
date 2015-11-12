@@ -369,6 +369,7 @@ $htaccessOVH
 
 # URL Rewriting
 RewriteEngine on
+$htaccess_vress
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ {$folder}index.php?acid_nav=$1 [L,QSA]
