@@ -153,11 +153,17 @@ class AcidTemplate {
 			if ($version = self::versioningVal()) {
 				if (strpos($url,'http')!==0) {
 					$base_extension = AcidFs::getExtension($url);
-					$base_url = AcidFs::removeExtension($url);
-					$base_tag = Acid::get('versioning:tag') ? Acid::get('versioning:way') : '-__VERSION__';
-					$base_url_new = $base_url.str_replace('__VERSION__',$version,$base_tag).'.'.$base_extension;
+					$available_ext =  Acid::get('versioning:ext') ? Acid::get('versioning:ext') : array('css','js');
 
-					return $base_url_new;
+					if (in_array($base_extension,$available_ext)) {
+						$base_url = AcidFs::removeExtension($url);
+						$base_tag = Acid::get('versioning:tag') ? Acid::get('versioning:way') : '-__VERSION__';
+						$base_url_new = $base_url.str_replace('__VERSION__',$version,$base_tag).'.'.$base_extension;
+
+						return $base_url_new;
+					}
+
+					return $url;
 				}
 			}
 		}
