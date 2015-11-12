@@ -127,6 +127,8 @@ $action = $_POST;
 $dir_path = __DIR__.'/sys/server.php';
 $htaccess_path = __DIR__.'/.htaccess';
 $htaccess_path_rest = __DIR__.'/rest/.htaccess';
+$htaccess_vress_quote = empty($action['ress_versioning']) ? '#' : '';
+
 $db_path = __DIR__.'/sys/db/init.sql';
 $dbml_path = __DIR__.'/sys/db/multilingual.sql';
 
@@ -240,6 +242,8 @@ if (!file_exists($dir_path)) {
 		$lang_use_nav_0_value =  $lang_use_nav_0 ? 'true' : 'false';
 		$lang_available_value =  "'".implode("','",$lang_available)."'";
 
+		$version_way_quote = empty($action['ress_versioning']) ? '//' : '';
+
 		$config = <<< EOT
 <?php
 // Site info
@@ -330,6 +334,8 @@ $lprod_quote\$acid['error_report']['prod']	= E_ALL & ~E_STRICT;
 //Versioning
 //\$acid['versioning']['file'] = 'sys/versioning.txt';
 //\$acid['versioning']['val'] = ''; //if value, override versionning file
+$version_way_quote\$acid['versioning']['way'] = 'htaccess';
+//\$acid['versioning']['tag'] = '-c__VERSION__';
 
 // Sass
 \$acid['sass']['enable'] = true;
@@ -351,6 +357,9 @@ EOT;
 		'SetEnv PHP_VER 5_TEST' . "\n" .
 		'SetEnv REGISTER_GLOBALS 0' . "\n" .
 		'SetEnv MAGIC_QUOTES 0' : '';
+
+		$htaccess_vress = 	$htaccess_vress_quote.'RewriteRule (.+)-([0-9]+).js$ $1.js [L,QSA]'. "\n" .
+							$htaccess_vress_quote.'RewriteRule (.+)-([0-9]+).css$ $1.css [L,QSA]' . "\n" ;
 
 		$htaccess = <<< HTACC
 # Charset
@@ -532,6 +541,7 @@ HTACC;
 	<div class="block">
 	<h2>Configuration</h2>
 	Server Mode : <select name="devmode"><option value="dev">Dev</option><option value="preprod">Preprod</option><option value="prod"{$prod_selected}>Prod</option></select>
+	Versioning of resources (htaccess) : <input type="checkbox" value="1" name="ress_versioning" checked="checked" />
 	</div>
 	<div class="block">
 	<h2>Housing</h2>
