@@ -429,7 +429,7 @@ HTACC;
 		}
 
 		//ADDING IGNORED FILES
-		$file_to_add = array('/sys/stats/stats.tpl','/sys/stats/contact.tpl','/sys/update/cur_version.txt','/sys/upgrade/cur_version.txt');
+		$file_to_add = array('/sys/stats/stats.tpl','/sys/stats/contact.tpl','/sys/update/cur_version.txt','/sys/update/.system/cur_version.txt','/sys/update/.content/cur_version.txt');
 		foreach ($file_to_add as $fta) {
 			$fa_path = __DIR__.$fta;
 			if (!file_exists($fa_path)) {
