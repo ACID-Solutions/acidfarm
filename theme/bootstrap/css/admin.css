@@ -4987,7 +4987,7 @@ button.close {
 .form_subline_elt {
   float: left;
   padding: 5px 15px;
-  background-image: url('/acidfarm-git/theme/bootstrap//img/admin/mediatheque_separateur_vertical.png');
+  background-image: url('../img/admin/mediatheque_separateur_vertical.png');
   background-repeat: no-repeat;
   background-position: left center;
   min-height: 40px;

@@ -60,7 +60,7 @@ hr {
   padding-bottom: 3px;
   cursor: pointer;
   height: 25px;
-  background-image: url('/acidfarm-git/theme/bootstrap//img/admin/btn_background.png');
+  background-image: url('../img/admin/btn_background.png');
   background-repeat: repeat-x;
   background-position: center left;
   border: 0px solid #000;
@@ -95,9 +95,9 @@ hr {
     #admin_site .to_value_0 input[type=submit]:hover, #admin_site .to_value_1 input[type=submit]:hover {
       background-color: transparent; }
   #admin_site .to_value_0 input[type=submit] {
-    background-image: url('/acidfarm-git/theme/bootstrap//img/admin/btn_switch_on.png'); }
+    background-image: url('../img/admin/btn_switch_on.png'); }
   #admin_site .to_value_1 input[type=submit] {
-    background-image: url('/acidfarm-git/theme/bootstrap//img/admin/btn_switch_off.png'); }
+    background-image: url('../img/admin/btn_switch_off.png'); }
   #admin_site .radioswitch .radio_image {
     display: block;
     cursor: pointer;
@@ -111,9 +111,9 @@ hr {
     background-repeat: no-repeat;
     background-position: center center; }
     #admin_site .radioswitch label input[type=radio][value='0'] + .radio_image {
-      background-image: url('/acidfarm-git/theme/bootstrap//img/admin/btn_switch_on.png'); }
+      background-image: url('../img/admin/btn_switch_on.png'); }
     #admin_site .radioswitch label input[type=radio][value='1'] + .radio_image {
-      background-image: url('/acidfarm-git/theme/bootstrap//img/admin/btn_switch_off.png'); }
+      background-image: url('../img/admin/btn_switch_off.png'); }
     #admin_site .radioswitch label input[type=radio]:checked + .radio_image {
       display: none; }
     #admin_site .radioswitch label input[type=radio] {
@@ -154,7 +154,7 @@ hr {
   #admin_site .form_subline_elt {
     float: left;
     padding: 5px 15px;
-    background-image: url('/acidfarm-git/theme/bootstrap//img/admin/mediatheque_separateur_vertical.png');
+    background-image: url('../img/admin/mediatheque_separateur_vertical.png');
     background-repeat: no-repeat;
     background-position: left center;
     height: 20px;
@@ -170,7 +170,7 @@ hr {
     display: block;
     float: left;
     margin-top: 15px;
-    background-image: url('/acidfarm-git/theme/bootstrap//img/admin/btn_update_background.png');
+    background-image: url('../img/admin/btn_update_background.png');
     background-repeat: repeat-x;
     background-position: center left;
     border: 0px solid #000;
@@ -178,7 +178,7 @@ hr {
     background-color: #919191; }
     #admin_site .submit_bg.update input {
       padding-left: 30px;
-      background-image: url('/acidfarm-git/theme/bootstrap//img/admin/btn_update_background_tick.png');
+      background-image: url('../img/admin/btn_update_background_tick.png');
       background-repeat: no-repeat;
       background-position: 3px center;
       background-color: transparent;
@@ -212,7 +212,7 @@ hr {
   display: block;
   height: 87px;
   color: #fff;
-  background-image: url('/acidfarm-git/theme/bootstrap//img/admin/header_background.png');
+  background-image: url('../img/admin/header_background.png');
   background-color: #919191;
   background-position: center;
   position: absolute;
@@ -233,7 +233,7 @@ hr {
 #header_content {
   background-position: right center;
   background-repeat: no-repeat;
-  background-image: url('/acidfarm-git/theme/bootstrap//img/admin/header_picto.png');
+  background-image: url('../img/admin/header_picto.png');
   margin-right: 35px; }
 
 #footer {
@@ -241,7 +241,7 @@ hr {
   height: 58px;
   margin-top: -58px;
   color: #fff;
-  background-image: url('/acidfarm-git/theme/bootstrap//img/admin/footer_background.png');
+  background-image: url('../img/admin/footer_background.png');
   background-color: #919191;
   background-position: center; }
 
@@ -259,7 +259,7 @@ hr {
   padding-left: 60px;
   background-position: left top;
   background-repeat: no-repeat;
-  background-image: url('/acidfarm-git/theme/bootstrap//img/admin/footer_picto.png');
+  background-image: url('../img/admin/footer_picto.png');
   position: absolute;
   float: left; }
 
@@ -341,7 +341,7 @@ table.stat caption {
 .fsb_belt_dir:hover, .fsb_belt_file:hover {
   background-repeat: repeat-x;
   background-position: bottom center;
-  background-image: url('/acidfarm-git/theme/bootstrap//img/admin/mediatheque_elt_over_background.png'); }
+  background-image: url('../img/admin/mediatheque_elt_over_background.png'); }
 
 .fsb_belt_dir, .fsb_belt_file {
   float: left;
@@ -372,7 +372,7 @@ table.stat caption {
   width: 100%;
   background-repeat: no-repeat;
   background-position: bottom center;
-  background-image: url('/acidfarm-git/theme/bootstrap//img/admin/mediatheque_elt_separateur_horizontal.png'); }
+  background-image: url('../img/admin/mediatheque_elt_separateur_horizontal.png'); }
 
 .fsb_belt_img a {
   display: table-cell;
@@ -442,7 +442,7 @@ table.stat caption {
   .fsb_head .btn_newdir {
     margin-right : 0px; }
   .fsb_head .btn_upload {
-    background-image: url('/acidfarm-git/theme/bootstrap//img/admin/mediatheque_separateur_vertical.png');
+    background-image: url('../img/admin/mediatheque_separateur_vertical.png');
     background-position: left center;
     background-repeat: no-repeat;
     padding-right: 0px;
@@ -463,7 +463,7 @@ table.stat caption {
 
 .generic_elt_admin {
   padding-top: 17px;
-  background-image: url('/acidfarm-git/theme/bootstrap//img/admin/corps_top_shadow.png');
+  background-image: url('../img/admin/corps_top_shadow.png');
   background-repeat: no-repeat;
   background-position: center top; }
   .generic_elt_admin .generic_elts_footer {
@@ -503,7 +503,7 @@ table.stat caption {
   margin-bottom: 0px;
   /*min-height: 400px;*/
   /*padding-top:17px; */
-  background-image: url('/acidfarm-git/theme/bootstrap//img/admin/corps_top_shadow.png');
+  background-image: url('../img/admin/corps_top_shadow.png');
   background-position: top center;
   background-repeat: no-repeat;
   padding-top: 17px; }
@@ -581,7 +581,7 @@ table.stat caption {
 .generic_elts_footer {
   padding-top: 12px;
   min-height: 17px;
-  background-image: url('/acidfarm-git/theme/bootstrap//img/admin/corps_bottom_shadow.png');
+  background-image: url('../img/admin/corps_bottom_shadow.png');
   background-position: top center;
   background-repeat: no-repeat;
   border-top: 1px solid #999;
@@ -612,7 +612,7 @@ table.stat caption {
   font-size: 10pt;
   border: 1px solid #000; }
   #menu #menu_head {
-    background-image: url('/acidfarm-git/theme/bootstrap//img/admin/menu_left_background.png');
+    background-image: url('../img/admin/menu_left_background.png');
     background-color: #919191;
     width: 100%;
     height: 10px; }
@@ -784,7 +784,7 @@ table.stat caption {
   border: 1px solid #ccc;
   color: #808080;
   font-style: italic;
-  background-image: url('/acidfarm-git/theme/bootstrap//img/admin/menu_top_background_unselected.png'); }
+  background-image: url('../img/admin/menu_top_background_unselected.png'); }
   .content_menu ul li.selected a {
     color: #000; }
   .content_menu ul li a {
@@ -829,7 +829,7 @@ table.stat caption {
     line-height: 30px;
     padding-top: 0px;
     margin: 52px 0px;
-    background-image: url('/acidfarm-git/theme/bootstrap//img/admin/gradient-top.png');
+    background-image: url('../img/admin/gradient-top.png');
     background-position: bottom center;
     background-repeat: no-repeat;
     text-align: center;
@@ -844,7 +844,7 @@ table.stat caption {
     margin: 30px 0px;
     margin-top: 0px;
     text-align: center;
-    background-image: url('/acidfarm-git/theme/bootstrap//img/admin/gradient-bottom.png');
+    background-image: url('../img/admin/gradient-bottom.png');
     background-position: top center;
     background-repeat: no-repeat; }
   #admin_form .bottom a {
@@ -876,7 +876,7 @@ table.stat caption {
   margin: 10px auto;
   padding-bottom: 2px;
   background-color: #96be12;
-  background-image: url('/acidfarm-git/theme/bootstrap//img/admin/bouton.png');
+  background-image: url('../img/admin/bouton.png');
   background-repeat: no-repeat;
   background-position: top left; }
   .adminbtn_connexion:hover {
