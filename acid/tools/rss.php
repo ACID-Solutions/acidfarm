@@ -168,6 +168,10 @@ class AcidRss {
 		$img_path = SITE_PATH.AcidFs::removeBasePath($img);
 		$img_url = Acid::get('url:system_lang').AcidFs::removeBasePath($img);
 
+		if (strpos($img_path,'?')!==false) {
+			$img_path = array_shift(explode('?',$img_path));
+		}
+
 		if($img && file_exists($img_path)){
 
 			$size = filesize($img_path);
