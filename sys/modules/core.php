@@ -48,7 +48,7 @@ abstract class AcidModule extends AcidModuleCore {
 		$key = in_array('src',$keys) ? 'src' : in_array('img',$keys) ? 'img' : '';
 
 		if ($key) {
-			return self::genUrlKey('src', $url, $format, $cache_time);
+			return self::genUrlKey($key, $url, $format, $cache_time);
 		}
 	}
 
