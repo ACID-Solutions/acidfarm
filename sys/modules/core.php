@@ -38,6 +38,32 @@ abstract class AcidModule extends AcidModuleCore {
 	}
 
 	/**
+	 * Rerourne l'url de l'image en entrée au format $format
+	 * @param string $url url de l'image source
+	 * @param string $format la format pour l'url retournée
+	 * @param string $cache_time valeur cache
+	 */
+	public static function genUrlSrc($url=null,$format=null,$cache_time=null) {
+		$keys = self::build()->getKeys();
+		$key = in_array('src',$keys) ? 'src' : in_array('img',$keys) ? 'img' : '';
+
+		if ($key) {
+			return self::genUrlKey('src', $url, $format, $cache_time);
+		}
+	}
+
+	/**
+	 * Retourne l'url de l'image associée à l'objet au format saisi en entrée
+	 * @param string $format format pour l'url retournée
+	 */
+	public function urlSrc($format=null) {
+		$key = isset($this->vars['src']) ? 'src' : isset($this->vars['img']) ? 'img' : '';
+		if ($key) {
+			return $this->getUrlKey($key, $format);
+		}
+	}
+
+	/**
 	 * Methode d'affichage des champs multilangues
 	 * @param array $elt
 	 * @param string $key
@@ -60,5 +86,7 @@ abstract class AcidModule extends AcidModuleCore {
 
 		return $val;
 	}
+
+
 
 }
