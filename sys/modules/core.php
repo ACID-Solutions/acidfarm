@@ -45,7 +45,7 @@ abstract class AcidModule extends AcidModuleCore {
 	 */
 	public static function genUrlSrc($url=null,$format=null,$cache_time=null) {
 		$keys = self::build()->getKeys();
-		$key = in_array('src',$keys) ? 'src' : in_array('img',$keys) ? 'img' : '';
+		$key = in_array('src',$keys) ? 'src' : (in_array('img',$keys) ? 'img' : '');
 		if ($key) {
 			return self::genUrlKey($key, $url, $format, $cache_time);
 		}
@@ -56,7 +56,7 @@ abstract class AcidModule extends AcidModuleCore {
 	 * @param string $format format pour l'url retournée
 	 */
 	public function urlSrc($format=null) {
-		$key = isset($this->vars['src']) ? 'src' : isset($this->vars['img']) ? 'img' : '';
+		$key = isset($this->vars['src']) ? 'src' : (isset($this->vars['img']) ? 'img' : '');
 		if ($key) {
 			return $this->getUrlKey($key, $format);
 		}
