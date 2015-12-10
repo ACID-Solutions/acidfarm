@@ -83,10 +83,9 @@ class PageController{
         $page = new Page();
 		$page->init('home');
 
-		$message = $page->trad('content');
-		$vars = array (	'welcome'=>$message	);
+		$vars = array ();
 
-		Conf::addToContent(Acid::tpl('pages/home.tpl',$vars));
+		Conf::addToContent(Acid::tpl('pages/home.tpl',$vars,$page));
     }
 
     /**

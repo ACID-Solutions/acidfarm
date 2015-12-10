@@ -3,5 +3,5 @@
 </div>
 
 <article class="content_body">
-    <?php echo $v['welcome']; ?>
+    <?php echo $o->trad('content'); ?>
 </article>
