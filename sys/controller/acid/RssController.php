@@ -50,32 +50,31 @@ class RSSController {
 
 		$rss_flux = new AcidRss ( Acid::get('site:name'), Acid::get ( 'url:system' ), Acid::get('site:name').' - '.Conf::get('site:accroche')  , Acid::get ( 'url:img_abs' ) . 'site/logo.png' );
 
-		foreach ( $actu_list as $actu ) {
+		if ($actu_list) {
+			foreach ($actu_list as $actu) {
 
-			$title = $actu->trad ( 'title' );
+				$title = $actu->trad('title');
 
-			$url = Acid::get('url:prefix').$actu->url();
+				$url = Acid::get('url:prefix') . $actu->url();
 
-			if ($actu->get ( 'src' )) {
+				if ($actu->get('src')) {
 
-				$img = $actu->urlSrc ( 'large' );
+					$img = $actu->urlSrc('large');
+				} else {
+
+					$img = null;
+				}
+
+				$to_desc = $actu->trad('head') ? $actu->trad('head') : $actu->trad('content');
+
+				$desc = AcidVarString::split($to_desc, 350, '...');
+
+				$rssDate = $actu->get('adate');
+
+				$rss_flux->add($title, $url, $url, $desc, $rssDate, $img);
+
 			}
-
-			else {
-
-				$img = null;
-			}
-
-			$to_desc = $actu->trad ( 'head' ) ? $actu->trad ( 'head' ) : $actu->trad ( 'content' );
-
-			$desc = AcidVarString::split ( $to_desc , 350, '...' );
-
-			$rssDate = $actu->get ( 'adate' );
-
-			$rss_flux->add ( $title, $url, $url, $desc, $rssDate, $img );
-
 		}
-
 		Conf::addToContent ( $rss_flux->printRss () );
 	}
 }
