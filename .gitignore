@@ -29,3 +29,6 @@
 /.htaccess
 /rest/.htaccess
 
+
+#codeception
+/sys/tests/codeception/_output/*
