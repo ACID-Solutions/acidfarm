@@ -15,6 +15,7 @@
 /registration/private/backup/
 
 # acidfarm folders
+/acid/logs/
 /logs/
 /upload/
 /files/
