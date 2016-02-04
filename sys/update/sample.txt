@@ -89,6 +89,7 @@ $campagne->dbAdd();
 //RE-ENCODING
 
 <?php
+
 $req = AcidDB::query('show tables')->fetchAll(PDO::FETCH_ASSOC);
 $tblname = '';
 foreach ($req as $key => $value) {
@@ -96,9 +97,25 @@ foreach ($req as $key => $value) {
 }
 ?>
 
+
 // REMPLACEMENT DE CHAINES
+
 $res ="UPDATE acid_page SET content = REPLACE(content, 'mysearch', 'myreplace') WHERE content LIKE '%mysearch%'";
 AcidDB::exec($req);
+
+
+// CONFIGURATION DU SITE
+
+<?php
+
+$init = array(
+    'contact'=>'Regards Associés',
+    'address'=> '34, rue jean rey',
+    'cp' => '78220',
+    'city' => 'VIROFLAY',
+    'phone' => '06 07 86 88 44'
+);
+SiteConfig::getCurrent()->postUpdate($init);
 
 
 //SRC REPORT
