@@ -12,13 +12,11 @@ $hr = '<hr style=" height:1px;  border:0px solid '.$color.';background-color:'.$
 				<td>
 				<table style="width:100%;">
 					<tr>
-						<td style="width:250px; font-size:30px; color:<?php echo $color; ?>;">
+						<td style="font-size:30px; color:<?php echo $color; ?>;">
 							<a href="<?php echo Acid::get('url:system'); ?>">
 								<?php echo Func::callImg(Acid::get('url:img_abs').'mail/logo.png',Acid::get('site:name'),Acid::get('site:name')); ?>
 							</a>
-						</td>
-						<td style="vertical-align:middle; font-size:30px; padding-top:30px; color:<?php echo $color2; ?>;" >
-							 <?php echo Acid::get('site:name'); ?>
+							<?php /*<div></div><?php echo Acid::get('site:name'); ?></div>*/ ?>
 						</td>
 					</tr>
 				</table>
