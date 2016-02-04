@@ -1,7 +1,8 @@
-# eclipse
+# ide
 /.settings
 /.buildpath
 /.project
+/.idea
 
 # acidfarm
 /sys/server.php
