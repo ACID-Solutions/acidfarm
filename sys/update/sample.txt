@@ -115,7 +115,7 @@ $init = array(
     'city' => 'VIROFLAY',
     'phone' => '06 07 86 88 44'
 );
-SiteConfig::getCurrent()->postUpdate($init);
+SiteConfig::getCurrent()->postRemoteUpdate($init);
 
 
 //SRC REPORT
