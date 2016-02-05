@@ -59,8 +59,6 @@ if ($meta_image) {
 	Conf::set('meta:image:'.Acid::get('lang:default').':default',$meta_image);
 }
 
-Acid::exist
-
 $searched_key = AcidRouter::searchKey($nav[0]);
 Conf::executeMetaDefault($searched_key);
 
