@@ -360,7 +360,7 @@ class User extends AcidUser {
 	 * (non-PHPdoc)
 	 * @see AcidUser::bodyMailStaff()
 	 */
-	public static function bodyMailStaff($tpl,$vars,$object) {
+	public static function bodyMailStaff($tpl,$vars=array(),$object=null) {
 
 		$chang_lang = Conf::get('lang:admin') && (Acid::get('lang:current')!=Conf::get('lang:admin'));
 
