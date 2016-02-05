@@ -132,9 +132,9 @@ class Lang {
 			return $res;
 		}
 
-		if (Conf::exist('keys:'.Acid::get('lang:current').':'.$key)) {
+		if (Conf::exists('keys:'.Acid::get('lang:current').':'.$key)) {
 			return Conf::get('keys:'.Acid::get('lang:current').':'.$key);
-		}elseif (Conf::exist('keys:'.Acid::get('lang:default').':'.$key)) {
+		}elseif (Conf::exists('keys:'.Acid::get('lang:default').':'.$key)) {
 			return Conf::get('keys:'.Acid::get('lang:default').':'.$key);
 		}
 
@@ -151,9 +151,9 @@ class Lang {
 			return $res;
 		}
 
-		if (Conf::exist('name:'.Acid::get('lang:current').':'.$key)) {
+		if (Conf::exists('name:'.Acid::get('lang:current').':'.$key)) {
 			return Conf::get('name:'.Acid::get('lang:current').':'.$key);
-		}elseif (Conf::exist('name:'.Acid::get('lang:default').':'.$key)) {
+		}elseif (Conf::exists('name:'.Acid::get('lang:default').':'.$key)) {
 			return Conf::get('name:'.Acid::get('lang:default').':'.$key);
 		}
 
@@ -168,7 +168,7 @@ class Lang {
 	public static function getRouterKey($key) {
 		$lang = (AcidRouter::getCurrentLang()==='')?Acid::get('lang:default'):AcidRouter::getCurrentLang();
 
-		if (Acid::exist('router:'.$key.':'.$lang.':key','lang')) {
+		if (Acid::exists('router:'.$key.':'.$lang.':key','lang')) {
 			return Acid::get('router:'.$key.':'.$lang.':key','lang');
 		}
 

@@ -208,7 +208,7 @@ if (Acid::get('include:mode')=='full_stack') {
 
 	//Detection de la langue si navigation multilangue
 	if ((Acid::get('lang:use_nav_0')) && ($use_nav_page)) {
-		$root = Conf::exist('root_keys') ? Conf::get('root_keys') : array();
+		$root = Conf::exists('root_keys') ? Conf::get('root_keys') : array();
 		if (!in_array($nav[0],$root)) {
 			$to_use_nav_lang = empty($acid_user_lang) ? ( $nav_lang ? $nav_lang : Acid::get('lang:default') ) : $acid_user_lang;
 			$use_nav_lang = empty($nav[0]) ? $to_use_nav_lang : $nav[0];

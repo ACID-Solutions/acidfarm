@@ -108,7 +108,7 @@ class Page extends AcidModule {
 
 		$ident = $vals[$key];
 		if (!empty($ident)) {
-			$admin_pages = Conf::exist('admin_pages') ? Conf::get('admin_pages') : array();
+			$admin_pages = Conf::exists('admin_pages') ? Conf::get('admin_pages') : array();
 			return in_array($ident,$admin_pages) ? User::curLevel(Acid::get('lvl:dev')) : true;
 		}
 
@@ -239,7 +239,7 @@ class Page extends AcidModule {
 	 */
 	public function postRemove($id=null,$dialog=null) {
 		if (!User::curLevel(Acid::get('lvl:dev'))) {
-			$admin_pages = Conf::exist('admin_pages') ? Conf::get('admin_pages') : array();
+			$admin_pages = Conf::exists('admin_pages') ? Conf::get('admin_pages') : array();
 			$count = self::dbCount(array(array('id_page','=',$id),array('ident','NOT IN',$admin_pages)));
 
 			if (!$count) {
@@ -338,7 +338,7 @@ class Page extends AcidModule {
 		*/
 
 		if (!User::curLevel($GLOBALS['acid']['lvl']['dev'])) {
-			$admin_pages = Conf::exist('admin_pages') ? Conf::get('admin_pages') : array();
+			$admin_pages = Conf::exists('admin_pages') ? Conf::get('admin_pages') : array();
 			$filter = count($admin_pages)? array(array($this->langKey('title',Acid::get('lang:default')),'NOT IN',$admin_pages)) : array();
 		}else{
 			$filter = array();

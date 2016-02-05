@@ -15,7 +15,7 @@
  * @link      http://www.acidfarm.net
  */
 
-$contact_lang  = Acid::exist('lang:contact') ? Acid::get('lang:contact') : Acid::get('lang:default');
+$contact_lang  = Acid::exists('lang:contact') ? Acid::get('lang:contact') : Acid::get('lang:default');
 
 switch ($contact_lang) {
 

@@ -80,8 +80,8 @@ class Acid {
 	 */
 	public static function mod ($mod) {
 
-		if (!Acid::exist('mods:'.$mod)) {
-			if (Acid::exist('includes:'.$mod)) {
+		if (!Acid::exists('mods:'.$mod)) {
+			if (Acid::exists('includes:'.$mod)) {
 				Acid::loadMod(Acid::get('includes:'.$mod),$mod);
 			} else {
 				trigger_error(	'Acid : Could not load ' . $mod . ', '.
@@ -176,7 +176,7 @@ class Acid {
 				$custom = Acid::get('log:custom');
 
 				$color_key = 'log:colorize:'.strtoupper($type);
-				$print_type = Acid::exist($color_key) ? AcidBash::shColorText($type, Acid::get($color_key)) : $type ;
+				$print_type = Acid::exists($color_key) ? AcidBash::shColorText($type, Acid::get($color_key)) : $type ;
 
 				if ( (!is_string($message)) && (!is_numeric($message)) ) {
 					$message = json_encode($message);
@@ -207,7 +207,7 @@ class Acid {
 	 * @return boolean
 	 */
 	public static function tradExists($val) {
-		return Acid::exist('trad:'.$val,'lang');
+		return Acid::exists('trad:'.$val,'lang');
 	}
 
 	/**
@@ -530,7 +530,7 @@ class Acid {
 	 */
 	public static function kill($key,$array=null) {
 		$array = ($array!==null) ? $array : 'acid';
-		if (self::exist($key,$array)) {
+		if (self::exists($key,$array)) {
 			$array_path = self::parseArray($key);
 			$cur_tab = &$GLOBALS[$array];
 			foreach ($array_path as $k) {
@@ -552,10 +552,21 @@ class Acid {
 	 * @param string $array nom de la variable globale qui sera parcourue en tant que tableau
 	 * @return bool
 	 */
-	public static function exist($key,$array=null) {
+	public static function exists($key,$array=null) {
 		$tab = Acid::get($key,$array);
 		return isset($tab);
 	}
+
+	/**
+	 * @deprecated REPLACED BY : Acid::exists
+	 * @param $key
+	 * @param null $array
+	 * @return bool
+	 */
+	public static function exist($key,$array=null) {
+		return self::exists($key,$array);
+	}
+
 
 	/**
 	 *  Test si une variable de configuration est vide
@@ -674,7 +685,7 @@ class Acid {
 	 * @return bool
 	 */
 	public static function sessExist($key) {
-		return self::exist($key,'sess');
+		return self::exists($key,'sess');
 	}
 
 	/**

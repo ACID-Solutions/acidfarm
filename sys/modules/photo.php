@@ -116,7 +116,7 @@ class Photo extends AcidModule {
 	public function postAdd($vals,$dialog=null) {
 		$go_on = true;
 
-		$limit = !Conf::exist('photo:limit') ? null : Conf::get('photo:limit');
+		$limit = !Conf::exists('photo:limit') ? null : Conf::get('photo:limit');
 		if ($limit) {
 			$count = $this->dbCount();
 			$go_on = ($count < $limit);

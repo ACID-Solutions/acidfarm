@@ -327,7 +327,7 @@ abstract class AcidModuleCore {
 	* @return mixed
 	*/
 	public static function modTrad($val) {
-		if (Acid::exist('mod:'.static::TBL_NAME.':'.$val,'lang')) {
+		if (Acid::exists('mod:'.static::TBL_NAME.':'.$val,'lang')) {
 			return Acid::get('mod:'.static::TBL_NAME.':'.$val,'lang');
 		}else{
 			return $val;
@@ -1504,7 +1504,7 @@ abstract class AcidModuleCore {
 	 */
 	public function getCacheTime($force=null) {
 
-		$force = $force !==null ? $force : (Acid::exist('modcache:force_time') ? Acid::get('modcache:force_time') : false);
+		$force = $force !==null ? $force : (Acid::exists('modcache:force_time') ? Acid::get('modcache:force_time') : false);
 		$key = static::cacheTimeKey();
 
 		if (isset($this->vars[$key])) {
@@ -1981,12 +1981,12 @@ abstract class AcidModuleCore {
 
 		if (Acid::get('permission_active')) {
 
-			if (Acid::exist('permission:'.static::TBL_NAME)) {
+			if (Acid::exists('permission:'.static::TBL_NAME)) {
 
 				if ($do) {
-					if (Acid::exist('permission:'.static::TBL_NAME.':'.$do)) {
+					if (Acid::exists('permission:'.static::TBL_NAME.':'.$do)) {
 						if ($type) {
-							if (Acid::exist('permission:'.static::TBL_NAME.':'.$do.':'.$type)) {
+							if (Acid::exists('permission:'.static::TBL_NAME.':'.$do.':'.$type)) {
 								return Acid::get('permission:'.static::TBL_NAME.':'.$do.':'.$type);
 							}
 						}else{
@@ -2049,7 +2049,7 @@ abstract class AcidModuleCore {
 		$types = $type ? array($type) : Acid::get('permission_groups');
 
 
-		$def_do = Acid::exist('permission:'.static::TBL_NAME) ? Acid::get('permission:'.static::TBL_NAME) : array();
+		$def_do = Acid::exists('permission:'.static::TBL_NAME) ? Acid::get('permission:'.static::TBL_NAME) : array();
 		$to_do = $do ? array($do) : array_keys($def_do);
 
 		foreach ($to_do as $d) {
@@ -2381,7 +2381,7 @@ abstract class AcidModuleCore {
 		if ($check_if_empty) {
 			$res = Acid::isEmpty($key,$ident);
 		}else{
-			$res = Acid::exist($key,$ident);
+			$res = Acid::exists($key,$ident);
 		}
 		unset($GLOBALS[$ident]);
 

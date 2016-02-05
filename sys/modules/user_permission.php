@@ -73,7 +73,7 @@ class UserPermission extends AcidModule {
 		if (!Acid::isEmpty('permission_active')) {
 			$res = self::dbList();
 			foreach ($res as $elt) {	
-				if (Acid::exist('includes:'.$elt['module'])) {
+				if (Acid::exists('includes:'.$elt['module'])) {
 					$mod = new $elt['module']();
 					$mod->setPermission($elt['do'],$elt['id'],$elt['type']);
 				}

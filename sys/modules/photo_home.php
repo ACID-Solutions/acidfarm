@@ -146,7 +146,7 @@ class PhotoHome extends AcidModule {
 	public function postAdd($vals,$dialog=null) {
 		$go_on = true;
 
-		$limit = !Conf::exist('photo_home:limit') ? null : Conf::get('photo_home:limit');
+		$limit = !Conf::exists('photo_home:limit') ? null : Conf::get('photo_home:limit');
 
 		if ($limit) {
 			$count = $this->dbCount();

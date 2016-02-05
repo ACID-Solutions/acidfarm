@@ -156,7 +156,7 @@ class MyTemplate extends AcidTemplate {
 	 */
 	public function plupload() {
 
-		if(Conf::exist('plupload:active')) {
+		if(Conf::exists('plupload:active')) {
 			$this->addJS(Acid::get('url:folder').'js/plupload/plupload.js');
 			$this->addJS(Acid::get('url:folder').'js/plupload/plupload.html5.js');
 			$this->addJS(Acid::get('url:folder').'js/plupload/plupload.flash.js');
@@ -166,7 +166,7 @@ class MyTemplate extends AcidTemplate {
 			$this->addJS(Acid::get('url:folder').'js/plupload/jquery.plupload.queue/jquery.plupload.queue.js');
 			$this->addCSS(Acid::get('url:folder').'js/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css');
 
-			$ids = Conf::exist('plupload:ids') ? Conf::get('plupload:ids') : array();
+			$ids = Conf::exists('plupload:ids') ? Conf::get('plupload:ids') : array();
 			$my_js = Acid::tpl('tools/plupload.tpl', array('ids'=>$ids), $this);
 
 			$this->add($my_js . "\n");

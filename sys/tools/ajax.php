@@ -83,7 +83,7 @@ class Ajax {
 	 * @return bool
 	 */
 	public static function getSuccess() {
-		return Acid::exist('ajax:success') ?  Acid::get('ajax:success') : true;
+		return Acid::exists('ajax:success') ?  Acid::get('ajax:success') : true;
 	}
 	
 	/**
@@ -99,7 +99,7 @@ class Ajax {
 	 * @return mixed
 	 */
 	public static function getDatas() {
-		return Acid::exist('ajax:datas') ?  Acid::get('ajax:datas') : array();
+		return Acid::exists('ajax:datas') ?  Acid::get('ajax:datas') : array();
 	}
 	
 	
@@ -117,7 +117,7 @@ class Ajax {
 	 * Retourne le code javascript du contexte AJAX
 	 */
 	public static function getJsAjax() {
-		return Acid::exist('ajax:js') ? Acid::get('ajax:js') : null;
+		return Acid::exists('ajax:js') ? Acid::get('ajax:js') : null;
 	}
 	
 	/**

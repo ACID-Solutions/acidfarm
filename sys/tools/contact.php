@@ -54,7 +54,7 @@ class Contact {
 		if (Conf::get('contact:shield_key')) {
 			$def_excluded[] = Conf::get('contact:shield_key');
 		}
-		return Conf::exist('contact_form:exclude') ? Conf::get('contact_form:exclude') : $def_excluded;
+		return Conf::exists('contact_form:exclude') ? Conf::get('contact_form:exclude') : $def_excluded;
 	}
 
 	/**
@@ -74,7 +74,7 @@ class Contact {
 
 									);
 
-		return Conf::exist('contact_form:optional') ? Conf::get('contact_form:optional'):$def_tab;
+		return Conf::exists('contact_form:optional') ? Conf::get('contact_form:optional'):$def_tab;
 	}
 
 	/**
@@ -92,7 +92,7 @@ class Contact {
                                                                         )
 									);
 
-		return Conf::exist('contact-form:control') ? Conf::get('contact-form:control'):$def_tab;
+		return Conf::exists('contact-form:control') ? Conf::get('contact-form:control'):$def_tab;
 	}
 
 	/**
@@ -215,7 +215,7 @@ class Contact {
 			// CONFIGURE BODY
 				//email configuration
 				$from_name = Acid::trad('contact_post_form_of',array('__SITE__'=>Acid::get('site:name')));
-				$from_email = Conf::exist('contact_form:sender') ? Conf::get('contact_form:sender') : Acid::get('site:email');
+				$from_email = Conf::exists('contact_form:sender') ? Conf::get('contact_form:sender') : Acid::get('site:email');
 				$to_email = $GLOBALS['site_config']->getConf('email');
 				$subject = Acid::trad('contact_post_form_of_subject',array('__SITE__'=>Acid::get('site:name')));
 

@@ -14,7 +14,7 @@ $pluploads = array();
 * On vérifie l'existence de selector simple jQuery (ex : '#mon_id') dans la config.
 * Pour chaque selecteur, on va créer son élément plupload (selector jQuery, selecteur form, ext)
 */
-if(Conf::exist('plupload:selectors')) {
+if(Conf::exists('plupload:selectors')) {
 	$selectors = Conf::get('plupload:selectors');
 	if(!is_array($selectors)) { 
 		$selectors = array($selectors);

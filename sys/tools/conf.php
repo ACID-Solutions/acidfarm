@@ -48,8 +48,17 @@ class Conf {
 	 * @param string $key acheminement vers la variable - exemple : 'macat:mavariable' pour $acidconf['macat']['mavariable']
 	 * @return bool
 	 */
+	public static function exists($key) {
+		return Acid::exists($key,'acidconf');
+	}
+
+	/**
+	 * @deprecated REPLACED BY : Conf::exists
+	 * @param $key
+	 * @return bool
+	 */
 	public static function exist($key) {
-		return Acid::exist($key,'acidconf');
+		return self::exists($key);
 	}
 
 	/**
@@ -89,7 +98,7 @@ class Conf {
 	 * @param string $add_mode si vrai, ajoute $value à la valeur actuelle
 	 */
 	public static function setPageTitle($value,$add_mode=false) {
-		if ($add_mode && Conf::exist('seo:page_title')) {
+		if ($add_mode && Conf::exists('seo:page_title')) {
 			Conf::add('seo:page_title', $value);
 		}else{
 			Conf::set('seo:page_title', $value);
@@ -100,7 +109,7 @@ class Conf {
 	 * Retourne le meta title
 	 */
 	public static function getPageTitle() {
-		return Conf::exist('seo:page_title') ? Conf::get('seo:page_title') : '';
+		return Conf::exists('seo:page_title') ? Conf::get('seo:page_title') : '';
 	}
 
 	/**
@@ -108,7 +117,7 @@ class Conf {
 	 * @param string $key identifiant de page
 	 */
 	public static function defaultPageTitle($key) {
-		if (Conf::exist('meta:title:'.Acid::get('lang:current').':'.$key)) {
+		if (Conf::exists('meta:title:'.Acid::get('lang:current').':'.$key)) {
 			return Conf::get('meta:title:'.Acid::get('lang:current').':'.$key);
 		}
 
@@ -128,7 +137,7 @@ class Conf {
 	 * @return bool
 	 */
 	public static function getPageTitleAlone() {
-		return Conf::exist('seo:page_title_alone') ? Conf::get('seo:page_title_alone') : '';
+		return Conf::exists('seo:page_title_alone') ? Conf::get('seo:page_title_alone') : '';
 	}
 
 
@@ -140,7 +149,7 @@ class Conf {
 	 * @param string $add_mode si vrai, ajoute $value à la valeur actuelle
 	 */
 	public static function setMetaDesc($value,$add_mode=false) {
-		if ($add_mode && Conf::exist('seo:meta_desc')) {
+		if ($add_mode && Conf::exists('seo:meta_desc')) {
 			Conf::add('seo:meta_desc', $value);
 		}else{
 			Conf::set('seo:meta_desc', $value);
@@ -153,7 +162,7 @@ class Conf {
 	 * @param string $add_mode si vrai, ajoute $value à la valeur actuelle
 	 */
 	public static function setMetaDescBase($value,$add_mode=false) {
-		if ($add_mode && Conf::exist('seo:meta_desc_base')) {
+		if ($add_mode && Conf::exists('seo:meta_desc_base')) {
 			Conf::add('seo:meta_desc_base', $value);
 		}else{
 			Conf::set('seo:meta_desc_base', $value);
@@ -166,7 +175,7 @@ class Conf {
 	* @param string $add_mode si vrai, ajoute $value à la valeur actuelle
 	*/
 	public static function setMetaDescStart($value,$add_mode=false) {
-		if ($add_mode && Conf::exist('seo:meta_desc_start')) {
+		if ($add_mode && Conf::exists('seo:meta_desc_start')) {
 			Conf::add('seo:meta_desc_start', $value);
 		}else{
 			Conf::set('seo:meta_desc_start', $value);
@@ -178,7 +187,7 @@ class Conf {
 	 * @return string
 	 */
 	public static function getMetaDesc() {
-		return Conf::exist('seo:meta_desc') ? Conf::get('seo:meta_desc') : '';
+		return Conf::exists('seo:meta_desc') ? Conf::get('seo:meta_desc') : '';
 	}
 
 	/**
@@ -186,7 +195,7 @@ class Conf {
 	 * @return string
 	 */
 	public static function getMetaDescBase() {
-		return Conf::exist('seo:meta_desc_base') ? Conf::get('seo:meta_desc_base') : '';
+		return Conf::exists('seo:meta_desc_base') ? Conf::get('seo:meta_desc_base') : '';
 	}
 
 	/**
@@ -194,7 +203,7 @@ class Conf {
 	 * @return string
 	 */
 	public static function getMetaDescStart() {
-		return Conf::exist('seo:meta_desc_start') ? Conf::get('seo:meta_desc_start') : '';
+		return Conf::exists('seo:meta_desc_start') ? Conf::get('seo:meta_desc_start') : '';
 	}
 
 	/**
@@ -203,7 +212,7 @@ class Conf {
 	 * @return string
 	 */
 	public static function defaultMetaDesc($key) {
-		if (Conf::exist('meta:description:'.Acid::get('lang:current').':'.$key)) {
+		if (Conf::exists('meta:description:'.Acid::get('lang:current').':'.$key)) {
 			return Conf::get('meta:description:'.Acid::get('lang:current').':'.$key);
 		}
 
@@ -227,7 +236,7 @@ class Conf {
 	 * @param string $add_mode si vrai, ajoute $value à la valeur actuelle
 	 */
 	public static function setMetaKeys($value,$add_mode=false) {
-		if (! Conf::exist('seo:meta_keys') ) {
+		if (! Conf::exists('seo:meta_keys') ) {
 			Conf::set('seo:meta_keys', array());
 		}
 
@@ -243,7 +252,7 @@ class Conf {
 	 * @return array
 	 */
 	public static function getMetaKeys() {
-		return Conf::exist('seo:meta_keys') ? Conf::get('seo:meta_keys') : array();
+		return Conf::exists('seo:meta_keys') ? Conf::get('seo:meta_keys') : array();
 	}
 
 
@@ -253,7 +262,7 @@ class Conf {
 	 * @return array
 	 */
 	public static function defaultMetaKeys($key) {
-		if (Conf::exist('meta:keywords:'.Acid::get('lang:current').':'.$key)) {
+		if (Conf::exists('meta:keywords:'.Acid::get('lang:current').':'.$key)) {
 			return Conf::get('meta:keywords:'.Acid::get('lang:current').':'.$key);
 		}
 
@@ -282,7 +291,7 @@ class Conf {
 	 * @param string $add_mode si vrai, ajoute $value à la valeur actuelle
 	 */
 	public static function setMetaImage($value, $add_mode=false) {
-		if ($add_mode && Conf::exist('seo:page_image')) {
+		if ($add_mode && Conf::exists('seo:page_image')) {
 			Conf::add('seo:page_image', $value);
 		}else{
 			Conf::set('seo:page_image', $value);
@@ -295,7 +304,7 @@ class Conf {
 	 * @return mixed
 	 */
 	public static function defaultMetaImage($key) {
-		if (Conf::exist('meta:image:'.Acid::get('lang:current').':'.$key)) {
+		if (Conf::exists('meta:image:'.Acid::get('lang:current').':'.$key)) {
 			return Conf::get('meta:image:'.Acid::get('lang:current').':'.$key);
 		}
 
@@ -342,7 +351,7 @@ class Conf {
 	 * Retourne le meta image
 	 */
 	public static function getMetaImage() {
-		return Conf::exist('seo:page_image') ? Conf::get('seo:page_image') : '';
+		return Conf::exists('seo:page_image') ? Conf::get('seo:page_image') : '';
 	}
 
 	/**

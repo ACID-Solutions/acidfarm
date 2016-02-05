@@ -624,7 +624,7 @@ class AcidRouter implements Acid_Router_Interface{
       */
      public static function getKey($key,$lang=null){
      	$lang = $lang===null ? Acid::get('lang:current') : $lang;
-        if (Acid::exist('router:'.$key.':'.$lang.':key','lang')) {
+        if (Acid::exists('router:'.$key.':'.$lang.':key','lang')) {
             return Acid::get('router:'.$key.':'.$lang.':key','lang');
         }
         return false;
@@ -639,7 +639,7 @@ class AcidRouter implements Acid_Router_Interface{
      public static function getName($key,$lang=null){
      	$lang = $lang===null ? Acid::get('lang:current') : $lang;
 
-        if (Acid::exist('router:'.$key.':'.$lang.':name','lang')) {
+        if (Acid::exists('router:'.$key.':'.$lang.':name','lang')) {
             return Acid::get('router:'.$key.':'.$lang.':name','lang');
         }
         return false;
