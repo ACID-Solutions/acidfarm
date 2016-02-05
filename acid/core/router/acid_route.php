@@ -162,20 +162,24 @@ class AcidRoute{
      * @param unknown_type $partial_on_fail
      * @return boolean
      */
-	public function match($path,$partial_on_fail=null){
+    public function match($path,$partial_on_fail=null){
 
-		if($this->URI==='*'){
-			return true;
-		}
+        if($this->URI==='*'){
+            return true;
+        }
 
-
-		if (($path===false) && ($this->URI!=='')) {
-			return false;
-		}
+        if (($path===false) && ($this->URI!=='')) {
+            return false;
+        }
 
         if($path!==''){
             $path = explode(AcidRouter::URI_DELIMITER, $path);
+        }elseif ( ($this->URI==='') && (!$this->_partitional_URI)){
+            return true;
+        }else{
+            return false;
         }
+
         $this->generatedURI = '';
         $param='';
         $matched = false;
@@ -185,65 +189,67 @@ class AcidRoute{
             return false;
         }
 
-
-		if ($this->method) {
-			if ($http_method=$_SERVER['REQUEST_METHOD']) {
-				if (is_array($this->method)) {
-					if (!in_array($http_method,$this->method)) {
-						return false;
-					}
-				}elseif ($this->method != $http_method){
-					return false;
-				}
-			}
-		}
-
-        foreach ($path as $key => $value) {
-			$value = urldecode($value);
-
-           if(!array_key_exists($key, $this->_partitional_URI)){
-               if(isset($this->partial['start'])){
-                   if(isset($this->partial['stop'])&&$this->partial['stop']===$currentPartial){
-                       break;
-                   }
-                   $this->partialParams[] = $value;
-                   ++$currentPartial;
-                   continue;
-               }
-               $matched = false;
-               return false;
-           }
-           // is a var
-           if($this->_partitional_URI[$key]{0}===':'){
-               $this->params[substr($this->_partitional_URI[$key], 1)] = $value;
-               continue;
-           }
-           // IS A TRANSLATE
-           if($this->_partitional_URI[$key]{0}==='@'){
-               if($this->proceedToTranslate($key,$value)){
-                   continue;
-               }
-               return false;
-               break;
-
-           }
-           if($value===$this->_partitional_URI[$key]){
-               $this->generatedURI.=$value.'|';
-           }else{
-
-           		if ($partial_on_fail) {
-	           		if (!is_array($partial_on_fail)) {
-	           			$partial_on_fail = $path;
-	           		}
-	           		$this->setPartial($partial_on_fail);
-	           	}
-
-               $matched = false;
-               return false;
-           }
+        if ($this->method) {
+            if ($http_method=$_SERVER['REQUEST_METHOD']) {
+                if (is_array($this->method)) {
+                    if (!in_array($http_method,$this->method)) {
+                        return false;
+                    }
+                }elseif ($this->method != $http_method){
+                    return false;
+                }
+            }
         }
 
+        if ($path) {
+            foreach ($path as $key => $value) {
+                $value = urldecode($value);
 
+                if (!array_key_exists($key, $this->_partitional_URI)) {
+                    if (isset($this->partial['start'])) {
+                        if (isset($this->partial['stop']) && $this->partial['stop'] === $currentPartial) {
+                            break;
+                        }
+                        $this->partialParams[] = $value;
+                        ++$currentPartial;
+                        continue;
+                    }
+                    $matched = false;
+                    return false;
+                }
+
+
+
+                // is a var
+                if ($this->_partitional_URI[$key]{0} === ':') {
+                    $this->params[substr($this->_partitional_URI[$key], 1)] = $value;
+                    continue;
+                }
+                // IS A TRANSLATE
+                if ($this->_partitional_URI[$key]{0} === '@') {
+                    if ($this->proceedToTranslate($key, $value)) {
+                        continue;
+                    }
+                    return false;
+                    break;
+
+                }
+                if ($value === $this->_partitional_URI[$key]) {
+                    $this->generatedURI .= $value . '|';
+                } else {
+
+                    if ($partial_on_fail) {
+                        if (!is_array($partial_on_fail)) {
+                            $partial_on_fail = $path;
+                        }
+                        $this->setPartial($partial_on_fail);
+                    }
+
+                    $matched = false;
+                    return false;
+                }
+            }
+        }
 
         return true;
     }

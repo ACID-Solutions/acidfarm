@@ -193,7 +193,7 @@ class AcidRouter implements Acid_Router_Interface{
      public static function route($request){
         try {
 
-        	if($request{0}==="/"){
+        	if(strlen($request) && $request{0}==="/"){
                 $request = substr($request, 1);
             }
 

@@ -155,15 +155,20 @@ class Acid {
 					$uniq_code = $chars{rand(0,15)}.$chars{rand(0,15)}.$chars{rand(0,15)}.$chars{rand(0,15)};
 				}
 
+				static $acid_php_version = null;
+				if ($acid_php_version === null) {
+					$acid_php_version = phpversion();
+				}
+
 				if ($path === null) {
 					switch (Acid::get('log:type')) {
 						case 'daily' :
 							$f_name = Acid::get('log:filename') . '_' . date(Acid::get('log:filename_date')) . '.log';
-						break;
+							break;
 
 						default :
 							$f_name = Acid::get('log:filename') . '.log';
-						break;
+							break;
 					}
 					$path = Acid::get('log:path') . $f_name;
 				}
@@ -176,7 +181,7 @@ class Acid {
 				$custom = Acid::get('log:custom');
 
 				$color_key = 'log:colorize:'.strtoupper($type);
-				$print_type = Acid::exists($color_key) ? AcidBash::shColorText($type, Acid::get($color_key)) : $type ;
+				$print_type = Acid::exist($color_key) ? AcidBash::shColorText($type, Acid::get($color_key)) : $type ;
 
 				if ( (!is_string($message)) && (!is_numeric($message)) ) {
 					$message = json_encode($message);
@@ -185,6 +190,7 @@ class Acid {
 				$line = $uniq_code . ' ' .
 						Acid::get('include:mode') . ' ' .
 						date(Acid::get('log:date_format')) . ' - ' .
+						'PHP~'.$acid_php_version . ' - ' .
 						$print_type. ' - ' .
 						($custom == "" ? "" : ($custom . ' - ')) .
 						basename($file) . ' ' .$line. ' - ' .
