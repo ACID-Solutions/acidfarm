@@ -107,8 +107,6 @@ class Photo extends AcidModule {
 		return parent::printAdminConfigure($do,$conf);
 	}
 
-	/*
-
 	/**
 	 * Override de l'exePost pour le multiAdd
 	 * @return array|bool
@@ -194,7 +192,6 @@ class Photo extends AcidModule {
 
 		return $results;
 	}
-
 
 	/**
 	 * (non-PHPdoc)
