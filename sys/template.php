@@ -170,7 +170,14 @@ class MyTemplate extends AcidTemplate {
 			$my_js = Acid::tpl('tools/plupload.tpl', array('ids'=>$ids), $this);
 
 			$this->add($my_js . "\n");
+
+			if(Conf::exists('plupload:multi')) {
+				$this->add(Acid::tpl('tools/plupload-multi.tpl', array(), $this) . "\n");
+			}
+
 		}
+
+
 
 	}
 

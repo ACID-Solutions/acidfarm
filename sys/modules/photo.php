@@ -107,6 +107,95 @@ class Photo extends AcidModule {
 		return parent::printAdminConfigure($do,$conf);
 	}
 
+	/*
+
+	/**
+	 * Override de l'exePost pour le multiAdd
+	 * @return array|bool
+	 */
+	public function exePost() {
+		if ($this->getPostDo()=='multi') {
+			return $this->postMulti();
+		}else{
+			return parent::exePost();
+		}
+	}
+
+	/**
+	 * Override de l'interface pour le MultiAdd
+	 * @param array $config
+	 * @return string
+	 */
+	public function printAdminInterface($config=array()) {
+
+		$controller = array('list','update','add','print','search');
+		$menu = $this->getStandardOnglets();
+
+		$controller['multi'] = array(array('$','this','printAdminMultipleAddForm'),array());
+		$menu[] =  array('url'=>AcidUrl::build(array($this->preKey('do')=>'multi')),'name'=>Acid::trad('admin_onglet_multi'));
+
+		$config = ($config ? $config : array('onglets'=>$menu,'controller'=>$controller));
+
+		return parent::printAdminInterface($config);
+	}
+
+	/**
+	 * Formulaire d'ajout massif
+	 * @return string
+	 */
+	public function printAdminMultipleAddForm() {
+		$res = AcidDB::query('SELECT MAX(`pos`) as max_pos FROM ' . static::tbl())->fetch(PDO::FETCH_ASSOC);
+		$plus = ($res['max_pos'] + 1);
+		$this->initVars(array('pos' => $plus));
+
+		$this->config['plupload']['multi']['src'] =true;
+
+		return $this->printAdminForm('multi');
+	}
+
+	/**
+	 * Post process de l'ajout massif de photos
+	 * @param null $dialog
+	 * @return array
+	 */
+	public function postMulti($dialog=null) {
+		$dialog = $dialog===null ? $this->getDialogDo('multi') : $dialog;
+		$results = array();
+
+		if ($files = Lib::getInPost('multi_src')) {
+
+			$pos = Lib::getInPost('pos',0);
+			$base_post = $_POST;
+			foreach ($files as $k => $v) {
+				$_POST = $base_post;
+
+				$_POST['tmp_src'] = $v;
+				$_POST['tmp_name_src'] = Lib::getIn($k,Lib::getInPost('multi_name_src',array()));
+
+				$_POST['pos'] = $pos++;
+
+				foreach ($this->langKeyDecline('name') as $kn) {
+					$name = Lib::getIn($kn,$base_post) ? trim(Lib::getIn($kn,$base_post).' '.($k+1)) :AcidFs::removeExtension( $_POST['tmp_name_src']);
+					$_POST[$kn] = $name;
+				}
+
+				if (!$res = $this->postAdd($_POST,false)) {
+					if ($dialog) {
+						AcidDialog::add('error',Acid::trad('photo_error').' (elt:'.$k.').<br />');
+					}
+				}
+
+				$results[] = $res;
+			}
+
+			$_POST['next_page']= AcidUrl::build(array(),array($this->preKey('do')));
+
+		}
+
+		return $results;
+	}
+
+
 	/**
 	 * (non-PHPdoc)
 	 * @param array $vals
@@ -114,6 +203,7 @@ class Photo extends AcidModule {
 	 * @see AcidModuleCore::postAdd()
 	 */
 	public function postAdd($vals,$dialog=null) {
+
 		$go_on = true;
 
 		$limit = !Conf::exists('photo:limit') ? null : Conf::get('photo:limit');
@@ -137,6 +227,7 @@ class Photo extends AcidModule {
 		$res = AcidDB::query('SELECT MAX(`pos`) as max_pos FROM '.$this->tbl())->fetch(PDO::FETCH_ASSOC);
 		$plus = ($res['max_pos']+1);
 		$this->initVars(array('pos'=>$plus,'name'=>'Photo '.$plus));
+
 		return parent::printAdminAddForm();
 	}
 

@@ -227,6 +227,7 @@ $lang['trad']['admin_search_pagination'] = '__INPUT__ Elemente anzeigen';
 $lang['trad']['admin_onglet_list']       = 'Aufzählen';
 $lang['trad']['admin_onglet_add']        = 'Aktuelles Passwort';
 $lang['trad']['admin_onglet_search']     = 'Bestätigung';
+$lang['trad']['admin_onglet_multi']      = 'Mehrere Ergänzungen';
 
 $lang['trad']['admin_action_print']      = 'Anzeigen';
 $lang['trad']['admin_action_add']        = 'Hinzufügen';

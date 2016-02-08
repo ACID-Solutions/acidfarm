@@ -4025,7 +4025,15 @@ abstract class AcidModuleCore {
 								if(in_array($key, array_keys($this->getUploadVars()) )) {
 									$params['class'] = isset($params['class']) ? $params['class'] . ' plupload_for_'.$key : 'plupload_for_'.$key;
 									$as = !isset($this->config['plupload']['autosubmit']) ? Acid::get('plupload:autosubmit') : $this->config['plupload']['autosubmit'];
-									Conf::add('plupload:selectors', array('.plupload_for_'.$key, '.'.$this::TBL_NAME.'.'.$this->preKey($do), $this->vars[$key]->getConfig('ext'), $as));
+									$multi = !empty($this->config['plupload']['multi'][$key]);
+
+									if ($multi) {
+										$stop .= '<div class="plupload_multi_for_'.$key.'"></div>';
+										Conf::add('plupload:multi', array('selector'=>'.'.$this::TBL_NAME.'.'.$this->preKey($do).' .plupload_multi_for_'.$key,'extensions'=>implode(',',$this->vars[$key]->getConfig('ext')), 'hide_submit'=>$as,'key'=>$key));
+									}else{
+										Conf::add('plupload:selectors', array('.plupload_for_'.$key, '.'.$this::TBL_NAME.'.'.$this->preKey($do), $this->vars[$key]->getConfig('ext'), $as));
+									}
+
 								}
 							}
 						}

@@ -73,7 +73,6 @@ if (empty($acid['cookie']['use_server'])) {
 //************************************************************************************//
 
 if (empty($acid['lang']['use_server'])) {
-
 	$def_lang = 'fr'; //fr
 	$acid['lang']['use_nav_0'] 		= false;
 	$acid['lang']['default']        = $def_lang;

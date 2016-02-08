@@ -37,6 +37,7 @@ $lang['trad']['no_result_found'] 	 = 'Aucun résultat trouvé';
 $lang['trad']['no_result_found_for'] = 'Aucun résultat trouvé pour __SEARCH__';
 
 $lang['trad']['photo_above_limit']	 = 'La limite de __NUM__ photos a déjà été atteinte.';
+$lang['trad']['photo_error']          = 'Une erreur s\'est produite !';
 
 $lang['trad']['admin_menu_intranet'] 	= 'Intranet';
 $lang['trad']['admin_menu_my_config'] 	= 'Configuration';

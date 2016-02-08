@@ -227,6 +227,7 @@ $lang['trad']['admin_search_pagination'] = 'Show __INPUT__ elements';
 $lang['trad']['admin_onglet_list']       = 'List';
 $lang['trad']['admin_onglet_add']        = 'Add';
 $lang['trad']['admin_onglet_search']     = 'Search';
+$lang['trad']['admin_onglet_multi']      = 'Multi Add';
 
 $lang['trad']['admin_action_print']      = 'Show';
 $lang['trad']['admin_action_add']        = 'Add';
