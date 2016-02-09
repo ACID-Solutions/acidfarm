@@ -114,6 +114,24 @@ hr{
   color:$fontcolor;  
 }
 
+input, textarea{
+  padding:5px;
+  border:1px solid $gris1;
+  margin-bottom:2px;
+  height:25px;
+
+  @include border-box();
+
+  &[type=radio], &[type=checkbox] {
+    margin-bottom:0px;
+    height:auto;
+  }
+
+  &[type=button], &[type=submit], &[type=image] {
+    cursor:pointer;
+    padding:0px 3px;
+  }
+}
 
 //-----STRUCTURE-----
 

@@ -1,13 +1,17 @@
-<article id="actu" class="block_content">
+<article id="actu" class="block_content" itemscope itemtype="http://schema.org/NewsArticle">
 
     <header>
-        <h1 class="block_content_title"><a href="<?php echo $o->url() ; ?>"><?php echo $o->hscTrad('title');?></a></h1>
+        <h1 class="block_content_title" itemprop="name" >
+            <a href="<?php echo $o->url() ; ?>"  itemprop="url" ><?php echo $o->hscTrad('title');?></a>
+        </h1>
         <div class="block_content_date">Le <?php echo AcidTime::conv($o->get('adate'));?></div>
-        <div class="block_content_head"><?php echo $o->trad('head');?></div>
+        <div itemprop="headline" class="block_content_head"><?php echo $o->trad('head');?></div>
     </header>
 
     <?php if ($o->get('src')) {?>
-    <div class="block_content_img"><?php echo Func::callImg($o->urlSrc('large'),Acid::trad('image'),$o->hscTrad('title'));?></div>
+        <div class="block_content_img">
+                <?php echo Func::callImg($o->urlSrc('large'),Acid::trad('image'),$o->hscTrad('title'));?>
+        </div>
     <?php } ?>
 
     <div class="block_content_text content_body">
@@ -30,5 +34,29 @@
 	    </nav>
     </footer>
 	*/ ?>
+
+    <!-- METAS only-->
+    <meta itemscope itemprop="mainEntityOfPage"  itemType="https://schema.org/WebPage" itemid="<?php echo $o->url();  ?>"/>
+    <meta itemprop="datePublished" content="<?php echo AcidTime::conv($o->get('adate'),'c'); ?>"  />
+    <meta itemprop="dateModified" content="<?php echo AcidTime::conv($o->get('adate'),'c'); ?>" />
+    <meta itemprop="dateCreated" content="<?php echo AcidTime::conv($o->get('adate'),'c'); ?>" />
+    <meta itemprop="author" content="<?php echo Acid::get('site:name'); ?>" />
+    <meta itemprop="description" content="<?php echo AcidVarString::split($o->trad('content'),80);?>" />
+
+    <div itemprop="publisher" itemscope itemtype="https://schema.org/Organization">
+        <div itemprop="logo" itemscope itemtype="https://schema.org/ImageObject">
+            <meta itemprop="url" content="<?php echo Acid::get('url:img_abs');  ?>site/logo.png">
+        </div>
+        <meta itemprop="name" content="<?php echo Acid::get('site:name'); ?>">
+    </div>
+
+    <?php if ($o->get('src')) {?>
+        <div itemprop="image" itemscope itemtype="https://schema.org/ImageObject">
+            <meta itemprop="url" content="<?php echo Acid::get('url:prefix').$o->urlSrc('diapo');  ?>">
+            <meta itemprop="width" content="180">
+            <meta itemprop="height" content="180">
+        </div>
+    <?php } ?>
+    <!-- END METAS only-->
 
 </article>

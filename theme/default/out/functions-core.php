@@ -77,7 +77,10 @@ class FuncCore {
         if (empty($ariane)) {
             $output = Acid::get('site:name');
         } elseif (is_array($ariane)) {
-            $output = '<a href="'.Acid::get('url:system_lang').'">'.Acid::get('site:name').'</a>';
+            $output = '<a href="'.Acid::get('url:system_lang').'" itemscope itemtype="http://schema.org/ListItem" itemprop="itemListElement">'.
+                            '<span itemprop="name">'.Acid::get('site:name').'</span>'.
+                            '<meta content="'.Acid::get('url:system_lang').'" itemprop="url">'.
+                       '</a>';
             $deep = count($ariane);
             $i=1;
             foreach ($ariane as $page=>$url) {
@@ -87,12 +90,22 @@ class FuncCore {
 
                 if ($i != $deep) {
                     if ($_url) {
-                        $output .= ' '.$l.' <a href="'.$_url.'" class="ariane_'.$i.'" >'.htmlspecialchars($_name).'</a>';
+                        $output .=  ' '.$l.'<a href="'.$_url.'" class="ariane_\'.$i.\'" itemscope itemtype="http://schema.org/ListItem" itemprop="itemListElement">'.
+                            '<span itemprop="name">'.htmlspecialchars($_name).'</span>'.
+                            '<meta content="'.$_url.'" itemprop="url">'.
+                            '</a>';
+
                     }else{
-                        $output .= ' '.$l.' '.htmlspecialchars($_name);
+                        $output .=  ' '.$l.' '.
+                            '<span itemscope itemtype="http://schema.org/ListItem" itemprop="itemListElement">'.
+                            '   <span itemprop="name">'.htmlspecialchars($_name).'</span>'.
+                            '</span>';
                     }
                 } else {
-                    $output .= ' '.$l.' ' . htmlspecialchars($_name);
+                    $output .=  ' '.$l.' '.
+                        '<span itemscope itemtype="http://schema.org/ListItem" itemprop="itemListElement">'.
+                        '   <span itemprop="name">'.htmlspecialchars($_name).'</span>'.
+                        '</span>';
                 }
                 $i ++;
             }
@@ -100,7 +113,7 @@ class FuncCore {
 
 
 
-        return	'<div class="ariane">' . "\n" .
+        return	'<div class="ariane" itemscope itemtype="http://schema.org/BreadcrumbList" >' . "\n" .
         $output .
         '</div>' . "\n";
 

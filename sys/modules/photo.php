@@ -108,36 +108,6 @@ class Photo extends AcidModule {
 	}
 
 	/**
-	 * Override de l'exePost pour le multiAdd
-	 * @return array|bool
-	 */
-	public function exePost() {
-		if ($this->getPostDo()=='multi') {
-			return $this->postMulti();
-		}else{
-			return parent::exePost();
-		}
-	}
-
-	/**
-	 * Override de l'interface pour le MultiAdd
-	 * @param array $config
-	 * @return string
-	 */
-	public function printAdminInterface($config=array()) {
-
-		$controller = array('list','update','add','print','search');
-		$menu = $this->getStandardOnglets();
-
-		$controller['multi'] = array(array('$','this','printAdminMultipleAddForm'),array());
-		$menu[] =  array('url'=>AcidUrl::build(array($this->preKey('do')=>'multi')),'name'=>Acid::trad('admin_onglet_multi'));
-
-		$config = ($config ? $config : array('onglets'=>$menu,'controller'=>$controller));
-
-		return parent::printAdminInterface($config);
-	}
-
-	/**
 	 * Formulaire d'ajout massif
 	 * @return string
 	 */
@@ -149,6 +119,41 @@ class Photo extends AcidModule {
 		$this->config['plupload']['multi']['src'] =true;
 
 		return $this->printAdminForm('multi');
+	}
+
+	/**
+	 * Override de l'interface pour le MultiAdd
+	 * @param array $config
+	 * @return string
+	 */
+	public function printAdminInterface($config=array()) {
+
+		$controller = array('list','update','add','print','search');
+
+		$menu = array_merge(
+					$this->getStandardOnglets(array('list','add')),
+					array(array('url'=>AcidUrl::build(array($this->preKey('do')=>'multi')),'name'=>Acid::trad('admin_onglet_multi'))),
+					$this->getStandardOnglets(array('search'))
+		);
+
+		$controller['multi'] = array(array('$','this','printAdminMultipleAddForm'),array());
+
+
+		$config = ($config ? $config : array('onglets'=>$menu,'controller'=>$controller));
+
+		return parent::printAdminInterface($config);
+	}
+
+	/**
+	 * Override de l'exePost pour le multiAdd
+	 * @return array|bool
+	 */
+	public function exePost() {
+		if ($this->getPostDo()=='multi') {
+			return $this->postMulti();
+		}else{
+			return parent::exePost();
+		}
 	}
 
 	/**

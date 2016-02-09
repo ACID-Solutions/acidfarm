@@ -1,39 +1,54 @@
-<div id="contact_content" >
-	<h1><?php echo AcidRouter::getName('contact'); ?></h1>
+<?php
+	$ph = false; 	//Placeholders or Labels
+?>
+
+<section  id="contact_content">
+	<header>
+		<h1 class="block_content_title"><a href="<?php echo Route::buildUrl('contact'); ?>"><?php echo AcidRouter::getName('contact'); ?></a></h1>
+	</header>
+<section >
 	<div id="contact_left" class="col-md-6">
 		<div class="clear"></div>
 
 		<div id="contact_inputs" class="contact_block">
 
 			<h2><?php echo Acid::trad('contact_form_please'); ?></h2>
-			<div class="contact_subtitle" ></div>
 
-			<div class="input_double row">
-				<div class="input_left" >
-					<div class="label"><label for="input_firstname"><?php echo Acid::trad('contact_form_firstname'); ?></label></div>
-					<input id="input_firstname" type="text" name="firstname" value="<?php echo Contact::getSession('firstname'); ?>" />
-				</div>
-				<div class="input_right" >
-					<div class="label"><label for="input_name"><?php echo Acid::trad('contact_form_lastname'); ?></label></div>
-					<input id="input_name"  type="text" name="lastname" value="<?php echo Contact::getSession('lastname'); ?>" />
-				</div>
-				<div class="clear"></div>
+			<div class="input row" >
+				<div class="label"><label for="input_firstname"><?php echo Acid::trad('contact_form_firstname'); ?></label></div>
+				<input	id="input_firstname"
+					    <?php if ($ph) {?>placeholder="<?php echo Acid::trad('contact_form_firstname'); ?>"<?php }  ?>
+			   			type="text" name="firstname" value="<?php echo Contact::getSession('firstname'); ?>" />
+			</div>
+			<div class="input row" >
+				<div class="label"><label for="input_name"><?php echo Acid::trad('contact_form_lastname'); ?></label></div>
+				<input id="input_name"
+					   <?php if ($ph) {?>placeholder="<?php echo Acid::trad('contact_form_lastname'); ?>"<?php }  ?>
+					   type="text" name="lastname" value="<?php echo Contact::getSession('lastname'); ?>" />
 			</div>
 			<div class="input row" >
 				<div class="label"><label for="input_address"><?php echo Acid::trad('contact_form_address'); ?></label></div>
-				<input id="input_address"  type="text" name="address" value="<?php echo Contact::getSession('address'); ?>" />
+				<input id="input_address"
+					   <?php if ($ph) {?>placeholder="<?php echo Acid::trad('contact_form_address'); ?>"<?php }  ?>
+					   type="text" name="address" value="<?php echo Contact::getSession('address'); ?>" />
 			</div>
 			<div class="input row" >
 				<div class="label"><label for="input_tel"><?php echo Acid::trad('contact_form_phone'); ?></label></div>
-				<input id="input_tel"  type="text" name="phone" value="<?php echo Contact::getSession('phone'); ?>" />
+				<input id="input_tel"
+					   <?php if ($ph) {?>placeholder="<?php echo Acid::trad('contact_form_phone'); ?>"<?php }  ?>
+					   type="text" name="phone" value="<?php echo Contact::getSession('phone'); ?>" />
 			</div>
 			<div class="input row" >
 				<div class="label"><label for="input_mail"><?php echo Acid::trad('contact_form_email'); ?></label></div>
-				<input id="input_mail"  type="text" name="email" value="<?php echo Contact::getSession('email'); ?>" />
+				<input id="input_mail"
+					   <?php if ($ph) {?>placeholder="<?php echo Acid::trad('contact_form_email'); ?>"<?php }  ?>
+					   type="text" name="email" value="<?php echo Contact::getSession('email'); ?>" />
 			</div>
 			<div class="input row" >
 				<div class="label"><label for="input_mess"><?php echo Acid::trad('contact_form_message'); ?></label></div>
-				<textarea id="input_mess"  name="message" cols="30" rows="2" ><?php echo Contact::getSession('message'); ?></textarea>
+				<textarea id="input_mess"
+						  <?php if ($ph) {?>placeholder="<?php echo Acid::trad('contact_form_message'); ?>"<?php }  ?>
+						  name="message" cols="30" rows="2" ><?php echo Contact::getSession('message'); ?></textarea>
 			</div>
 
 			<div class="clear"></div>
@@ -63,8 +78,10 @@
 
 
 		<h2 class="contact_title"><?php echo Acid::trad('contact_page_coords'); ?></h2>
-		<div id="contact_coord" class="contact_block">
+		<div id="contact_coord" class="contact_block" itemscope itemtype="http://schema.org/LocalBusiness">
 			<div class="contact_div">
+
+				<meta itemprop="name" content="<?php echo Acid::get('site:name'); ?>">
 
 				<?php /*
 				<div class="info_contact">
@@ -79,9 +96,9 @@
 				<?php } ?>
 
 				<?php if ($g['site_config']->getConf('address') || $g['site_config']->getConf('cp') || $g['site_config']->getConf('city')) {?>
-				<div class="info_contact">
-					<div><span class="strong"><?php echo $g['site_config']->hscConf('address'); ?></span></div>
-					<div><span class="strong"><?php echo $g['site_config']->hscConf('cp'); ?> <?php echo $g['site_config']->hscConf('city'); ?></span></div>
+				<div class="info_contact" itemprop="address" itemscope itemtype="http://schema.org/PostalAddress">
+					<div itemprop="streetAddress"><span class="strong"><?php echo $g['site_config']->hscConf('address'); ?></span></div>
+					<div itemprop="addressLocality"><span class="strong"><?php echo $g['site_config']->hscConf('cp'); ?> <?php echo $g['site_config']->hscConf('city'); ?></span></div>
 				</div>
 				<?php } ?>
 
@@ -89,7 +106,7 @@
 				<div class="info_contact">
 
 					<?php if ($g['site_config']->getConf('phone')) {?>
-					<div>Tél. <span class="strong"><?php echo $g['site_config']->hscConf('phone'); ?></span></div>
+					<div itemprop="telephone">Tél. <span class="strong"><?php echo $g['site_config']->hscConf('phone'); ?></span></div>
 					<?php } ?>
 
 					<?php if ($g['site_config']->getConf('fax')) {?>
@@ -133,10 +150,15 @@
 	<div class="clear"></div>
 </div>
 
-</div>
+</section>
 
 <script type="text/javascript">
 <!--
+
+<?php if ($ph) { ?>
+	$('body:not(.nav-old) #contact_content .label').hide();
+<?php }  ?>
+
 <?php if (Conf::get('contact:shield')) { ?>
 $().ready( function() {
 	<?php if (Conf::get('contact:shield_time')) { ?>

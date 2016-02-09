@@ -73,6 +73,21 @@ hr {
   background-color: #1c1c1c;
   color: #1c1c1c; }
 
+input, textarea {
+  padding: 5px;
+  border: 1px solid #c0c0c0;
+  margin-bottom: 2px;
+  height: 25px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box; }
+  input[type=radio], textarea[type=radio], input[type=checkbox], textarea[type=checkbox] {
+    margin-bottom: 0px;
+    height: auto; }
+  input[type=button], textarea[type=button], input[type=submit], textarea[type=submit], input[type=image], textarea[type=image] {
+    cursor: pointer;
+    padding: 0px 3px; }
+
 #header {
   position: absolute;
   top: 0px;

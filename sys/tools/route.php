@@ -58,7 +58,8 @@ class Route {
 				$mod = new Actu($vals);
 
 				if ($mod->getId()) {
-					return $base . '/' . $mod->getId() . '/' . AcidUrl::normalize($mod->trad('title'));
+					$title = $mod->trad('title') ? $mod->trad('title') : 'read';
+					return $base . '/' . $mod->getId() . '/' . AcidUrl::normalize($title);
 				}else{
 					return $base;
 				}
