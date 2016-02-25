@@ -71,7 +71,7 @@ class ActuController {
                 if ($actu->getId()) {
                     if ($actu->get('active')) {
 
-                        if ($_SERVER['REQUEST_URI'] != $actu->url()) {
+                        if (AcidUrl::requestURI() != $actu->url()) {
                             AcidUrl::redirection301($actu->url());
                         }
 

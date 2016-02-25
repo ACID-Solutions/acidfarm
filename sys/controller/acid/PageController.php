@@ -32,7 +32,7 @@ class PageController{
         if (file_exists(Acid::tplPath($tpl_path))) {
 
 		   Conf::addToContent(Acid::tpl($tpl_path));
-	       Conf::addToAriane( (Conf::getPageTitle() ? Conf::getPageTitle() : $page_key)  ,$_SERVER['REQUEST_URI']);
+	       Conf::addToAriane( (Conf::getPageTitle() ? Conf::getPageTitle() : $page_key), AcidUrl::requestURI());
 
         }else{
 

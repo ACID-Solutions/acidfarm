@@ -237,8 +237,8 @@ class Seo extends AcidModule {
 			$url_match = false;
 			if (!empty($seotab['url'])) {
 
-				if (strpos($_SERVER['REQUEST_URI'],Acid::get('url:folder'))===0) {
-					$checkuri = substr($_SERVER['REQUEST_URI'],strlen(Acid::get('url:folder')));
+				if (strpos(AcidUrl::requestURI(),Acid::get('url:folder'))===0) {
+					$checkuri = substr(AcidUrl::requestURI(),strlen(Acid::get('url:folder')));
 					$seotab['url'] = static::treatUrl($seotab['url']);
 
 					if ($seotab['url']=='*') {

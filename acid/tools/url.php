@@ -227,6 +227,14 @@ class AcidUrl
     }
 
     /**
+     * requestURI without allowed get params
+     * @param string REQUEST_URI
+     */
+    public static function requestURI() {
+        return AcidUrl::build($_GET,Acid::get('url:params:allowed'),$_SERVER['REQUEST_URI']);
+    }
+
+    /**
      * Détecte une URL et la retourne avec la balise <a>
      *
      * @param string $str Chaîne à vérifier.

@@ -80,6 +80,8 @@ $acid['url']['img']             = $acid['url']['folder'] . $acid['keys']['theme'
 $acid['url']['folder_lang'] 	= $acid['url']['folder'];
 $acid['url']['system_lang'] 	= $acid['url']['system'];
 
+$acid['url']['params']['allowed'] = array('gclid','_ga');
+
 //Hook acid
 $acid['hook']['path']          	  = 'hook/';
 
@@ -300,6 +302,7 @@ $acid['timer']['tpl']['opened'] = 0;
 $acid['counter']['tpl'] = 0;
 
 // Plupload
+$acid['plupload']['folder'] = 'plupload/';	// Dossier dans /js/
 $acid['plupload']['chunk_size'] = 2;	// En Mo
 $acid['plupload']['max_size'] = 500;	// En Mo
 $acid['plupload']['session_time'] = 4 * 60 * 60;	// Temps d'execution max de transfert en secondes (4H par défaut)

@@ -147,7 +147,7 @@ if (Acid::get('include:mode')=='full_stack') {
 		$spage = 'index';
 
 		//si ce n'est pas un fichier et qu'on est pas à la racine, on redirige vers l'index.php
-		if (!is_file($file_path) && $_SERVER['REQUEST_URI']!=Acid::get('url:folder')) {
+		if (!is_file($file_path) && AcidUrl::requestURI()!=Acid::get('url:folder')) {
 			if (empty($_GET)) {
 				AcidUrl::redirection301(Acid::get('url:system'));
 			}else{

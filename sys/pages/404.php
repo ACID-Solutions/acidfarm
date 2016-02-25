@@ -17,7 +17,7 @@
 
 
 Conf::setPageTitle(Acid::trad('url_error404'));
-Conf::addToAriane(Acid::trad('404'),$_SERVER['REQUEST_URI']);
+Conf::addToAriane(Acid::trad('404'),AcidUrl::requestURI());
 
 Conf::addToContent(Acid::tpl('pages/url/404.tpl',array('elts'=>SitemapController::webmap())));
 
