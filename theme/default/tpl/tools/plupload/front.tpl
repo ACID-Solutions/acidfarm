@@ -1,0 +1,1 @@
+<?php echo Acid::tpl('tools/plupload/plupload.tpl',$v,$o);  ?>

@@ -350,7 +350,7 @@ class AcidTemplate {
 			}
 		}
 
-		if ($_SERVER['REQUEST_URI'] === Acid::get('url:folder')) {
+		if (AcidUrl::requestURI() === Acid::get('url:folder')) {
 			if (!$doc_std) {
 				$output .= '	<meta name="identifier-url" content="'.Acid::get('url:system').'"/>' . "\n";
 			}

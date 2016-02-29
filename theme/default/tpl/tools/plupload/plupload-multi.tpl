@@ -56,7 +56,8 @@ var MultiPlupload = {
 					dragdrop: true,
 
 
-					flash_swf_url: url_base + 'js/plupload/plupload.flash.swf',
+					flash_swf_url :  url_base + 'js/<?php echo Acid::get('plupload:folder');  ?>Moxie.swf',
+					silverlight_xap_url : url_base + 'js/<?php echo Acid::get('plupload:folder');  ?>Moxie.xap',
 
 					filters: [{title: "Fichier", extensions: config.extensions}],
 

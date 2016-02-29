@@ -93,7 +93,7 @@ class Debug {
 		$selected_b=!$selected_a;
 		
 		$tool =	'<div style="position:absolute; top:10px; left:10px;">'.
-				'<form action="'.$_SERVER['REQUEST_URI'].'" method="post" id="debug_form" ><div>'.
+				'<form action="'.AcidUrl::requestURI().'" method="post" id="debug_form" ><div>'.
 					'<input type="hidden" name="debug_do" value="change_mode"  />'.
 					'<input id="debug_form_mode" type="hidden" name="debug_mode" value="'.($cur_mode? 1:0).'" />'.
 					'<input type="hidden" name="dontreload" value="do_not" />'.

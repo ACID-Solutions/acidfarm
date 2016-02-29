@@ -1491,11 +1491,14 @@ class AcidVarFile extends AcidVarString {
 	 */
 	public function getForm(&$form,$key,$print=true,$params=array(),$start='',$stop='',$body_attrs=array()) {
 		if ($this->getVal()) {
-			$start .= '<a href="'.$this->getUrl().'">'.$this->getFileName().'</a><br />';
-			$stop .= '<br />'.$form->checkbox ($key.'_remove', '1', false).'Supprimer';
+			$start .= '<a href="'.$this->getUrl().'">'.$this->getFileName().'</a>';
+			$stop .= ''.$form->checkbox ($key.'_remove', '1', false,'Supprimer');
 		}
 
-		return $this->getParentForm($form,$key,$print,$params,$start,$stop,$body_attrs);
+		$bstart =  '<div class="src_container">';
+		$bstop = '</div>';
+
+		return $this->getParentForm($form,$key,$print,$params,$start.$bstart,$bstop.$stop,$body_attrs);
 	}
 
 	/**
@@ -1976,10 +1979,13 @@ class AcidVarImage extends AcidVarFile {
 			if (isset($this->config['admin_format']) && isset($this->config['format'][$this->config['admin_format']])) {
 				$start .=	'<a href="'.$this->getUrl().'">'. "\n" .
 					'	<img src="'.$this->getUrl($this->config['admin_format']).'" alt="'.$this->getFileName().'" />'. "\n" .
-					'</a><br />';
-				$stop .= '<br />'.$form->checkbox ($key.'_remove', '1', false).'Supprimer';
+					'</a>';
+				$stop .= ''.$form->checkbox ($key.'_remove', '1', false,'Supprimer');
 
-				return $this->getParentForm($form,$key,$print,$params,$start,$stop,$body_attrs);
+				$bstart =  '<div class="src_container">';
+				$bstop = '</div>';
+
+				return $this->getParentForm($form,$key,$print,$params,$start.$bstart,$bstop.$stop,$body_attrs);
 			}
 
 			return parent::getForm($form,$key,$print,$params,$start,$stop,$body_attrs);

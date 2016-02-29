@@ -113,7 +113,11 @@ if (!isset($acid['sass']['enable'])) {
 }
 
 //--upload
-//$acid['plupload']['runtimes'] = array('html5','flash');
+//if (empty($acid['plupload']['use_server'])) {
+//$acid['plupload']['runtimes'] = array('flash');
+//$acid['plupload']['restriction'] = 'all';
+//$acid['plupload']['fake_latence'] = 0.5;
+//}
 
 //--pages
 $acidconf['page']['categories'] = array(0=>'page_standard',1=>'page_special'); //traduit dans /sys/dynamic.php

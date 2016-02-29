@@ -310,6 +310,7 @@ $acid['plupload']['file_tmp_age'] = 24 * 60 * 60;	// Temps de vie des fichiers t
 $acid['plupload']['show_upload'] = false;	// Affiche le bouton pour upload le fichier
 $acid['plupload']['autosubmit'] = true;	// Soumet (par défaut) le formulaire admin après l'envoie de tous les fichiers
 $acid['plupload']['runtimes'] = array('html5', 'flash');	// Définie les runtimes pour le plugin plupload
+$acid['plupload']['restriction'] = 'logged';	// Définit les restrictions sur l'uplaod (securité)
 
 // Css
 $acid['css']['dynamic']['active'] = false;		//generate css file referring to php file

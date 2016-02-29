@@ -272,6 +272,7 @@ $lang['trad']['admin_list_del_filter'] = 'Löschen Sie den Such-Filter';
 //Tools
 
 //--Plupload
+$lang['trad']['plupload_init']	 = 'Initialisierung...';
 $lang['trad']['plupload_select'] = 'Select file';
 $lang['trad']['plupload_upload'] = 'Upload file';
 $lang['trad']['plupload_cancel_prepare'] = "A file has been prepared, do you want to cancel it ?";

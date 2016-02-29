@@ -157,32 +157,27 @@ class MyTemplate extends AcidTemplate {
 	public function plupload() {
 
 		if(Conf::exists('plupload:active')) {
-			$this->addJS(Acid::get('url:folder').'js/plupload/plupload.js');
-			$this->addJS(Acid::get('url:folder').'js/plupload/plupload.html5.js');
-			$this->addJS(Acid::get('url:folder').'js/plupload/plupload.flash.js');
+			$this->addJS(Acid::get('url:folder').'js/'.Acid::get('plupload:folder').'plupload.full.min.js');
 
-			$this->addJS(Acid::get('url:folder').'js/plupload/i18n/'.Acid::get('lang:current').'.js');
+			$this->addJS(Acid::get('url:folder').'js/'.Acid::get('plupload:folder').'i18n/'.Acid::get('lang:current').'.js');
 
-			$this->addJS(Acid::get('url:folder').'js/plupload/jquery.plupload.queue/jquery.plupload.queue.js');
-			$this->addCSS(Acid::get('url:folder').'js/plupload/jquery.plupload.queue/css/jquery.plupload.queue.css');
+			$this->addJS(Acid::get('url:folder').'js/'.Acid::get('plupload:folder').'jquery.plupload.queue/jquery.plupload.queue.js');
+			$this->addCSS(Acid::get('url:folder').'js/'.Acid::get('plupload:folder').'jquery.plupload.queue/css/jquery.plupload.queue.css');
 
 			$ids = Conf::exists('plupload:ids') ? Conf::get('plupload:ids') : array();
-			$my_js = Acid::tpl('tools/plupload.tpl', array('ids'=>$ids), $this);
+			$my_js = Acid::tpl('tools/plupload/plupload.tpl', array('ids'=>$ids), $this);
 
 			$this->add($my_js . "\n");
 
 			if(Conf::exists('plupload:multi')) {
-				$this->add(Acid::tpl('tools/plupload-multi.tpl', array(), $this) . "\n");
+				$this->add(Acid::tpl('tools/plupload/plupload-multi.tpl', array(), $this) . "\n");
 			}
 
 		}
-
-
-
 	}
 
 	/**
-	 * Active le plugin plupload pour l'upload de fichier
+	 * Active le plugin jquery
 	 */
 	public function jQuery() {
 

@@ -28,8 +28,8 @@ var BrowserPlupload = {
 				unique_names : true,
 				dragdrop: true,
 
-
-				flash_swf_url : url_base + 'js/plupload/plupload.flash.swf',
+				flash_swf_url :  url_base + 'js/<?php echo Acid::get('plupload:folder');  ?>Moxie.swf',
+				silverlight_xap_url : url_base + 'js/<?php echo Acid::get('plupload:folder');  ?>Moxie.xap',
 
 				filters : [  {title : "Fichier", extensions : "<?php echo implode(',', Acid::get('ext:files')); ?>"} ],
 

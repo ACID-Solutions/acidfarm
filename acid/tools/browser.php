@@ -278,7 +278,7 @@ class AcidBrowser {
 					$name = isset($names[$kfile]) ? $names[$kfile] : basename($file);
 					$dest_file = $this->base_path.$dest.$name;
 
-					if (rename($file,$dest_file)) {
+					if (file_exists($file) && rename($file,$dest_file)) {
 						Acid::log('BROWSER','File moved from '.$file.' to '.$dest_file);
 					}else{
 						$success = false;
