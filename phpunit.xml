@@ -17,7 +17,7 @@
   
   <testsuites>
     <testsuite name="Application Test Suite">
-      <directory>./sys/tests</directory>
+      <directory>./sys/tests/phpunit</directory>
     </testsuite>
   </testsuites>
   
