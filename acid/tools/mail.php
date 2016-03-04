@@ -142,9 +142,10 @@ class AcidMail {
 	 * @param bool $is_html True si l'HTML est actif.
 	 * @param array $attached Liste des éléments attachés. ([noms]=>[chemins])
 	 * @param array $functions liste de fonctions à appliquer à l'objet PHPMAILER
+	 * @param string $tpl
 	 * @return boolean
 	 */
-	public static function sendStaff($subject,$body,$is_html=true,$attached=array(),$stream=array(),$functions=array()) {
+	public static function sendStaff($subject,$body,$is_html=true,$attached=array(),$stream=array(),$functions=array(),$tpl=null) {
 
 		$tpl = $tpl===null ? 'mail/staff.tpl' : $tpl;
 
