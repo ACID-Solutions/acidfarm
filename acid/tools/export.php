@@ -71,6 +71,7 @@ class AcidExport {
 
 		//Création d'une sortie php
 		$my_output = 'php://output';
+		$context = null;
 		$handler = @fopen( $my_output, 'w',$context );
 
 		//Requête SQL
@@ -134,7 +135,7 @@ class AcidExport {
 			}
 
 		}else{
-			$subselect = ($select && is_array($select)) ?  $select : ($select ? array() : $this->getKeys());
+			$subselect = ($select && is_array($select)) ?  $select : ($select ? array() : $mod->getKeys());
 
 			$head = array();
 			foreach ($subselect as $key) {
