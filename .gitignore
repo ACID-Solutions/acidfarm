@@ -27,6 +27,7 @@
 /theme/*/css/scss_cache/
 /theme/*/css/sass/_dynamic/*
 *.css.map
+/theme/*/*/combine_cache/*
 
 # acifarm htaccess
 /.htaccess

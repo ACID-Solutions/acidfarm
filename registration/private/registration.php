@@ -67,6 +67,7 @@ if (!file_exists(AcidRegistration::file())) {
 				get : function() {
 					$('#maintenance_info').html('recherche de mise à jour...');
 					$.get('<?php echo $maintenanceinfo; ?>',function(res) {
+
 						if (res.response!=undefined) {
 							if (res.response=='success') {
 								var msg = '';

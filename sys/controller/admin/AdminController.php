@@ -222,12 +222,12 @@ class AdminController{
     	$content ='';
 
 		$registration = '';
-//		$registration_path = SITE_PATH.'registration/private/registration.php';
-//		if (file_exists($registration_path)) {
-//    	ob_start();
-//		include(SITE_PATH.'registration/private/registration.php');
-//		$registration = ob_get_clean();
-//		}
+		$registration_path = SITE_PATH.'registration/private/registration.php';
+		if (file_exists($registration_path)) {
+    	ob_start();
+		include(SITE_PATH.'registration/private/registration.php');
+		$registration = ob_get_clean();
+		}
 
 
 		$expire_date = time() + Acid::get('session:expire') - (60*5);

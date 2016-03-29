@@ -71,7 +71,7 @@ $acid['includes']['AcidZip']   	     = $acid['folder'].'/tools/zip.php';
 $acid['includes']['AcidBash']      	 = $acid['folder'].'/tools/bash.php';
 $acid['includes']['AcidExport']   	 = $acid['folder'].'/tools/export.php';
 $acid['includes']['AcidMediatheque'] = $acid['folder'].'/tools/mediatheque.php';
-
+$acid['includes']['AcidMinifier'] 	= $acid['folder'].'/tools/minifier.php';
 
 /**
  * Autoloader

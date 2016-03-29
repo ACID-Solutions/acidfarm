@@ -2,7 +2,8 @@
 
 class AcidRegistration {
 
-	public static $url = 'http://plateforme.acidfarm.net';
+	public static $url = 'http://platform.acidfarm.net/';
+	public static $api_version = 'v1';
 
 	public static $path = 'registration/';
 	public static $file = 'private/maintenance.json';
@@ -47,16 +48,16 @@ class AcidRegistration {
 	}
 
 	public static function infoUrl() {
-		return static::url().'rest/information/'.static::datas('id_client').'/'.static::datas('public').'/'.static::realversion();
+		return static::url().'rest/'.static::$api_version.'/information/'.static::datas('id_client').'/'.static::datas('public').'/'.static::realversion();
 	}
 
 	public static function dlUrl($version=null) {
 		$version = $version===null ? static::realversion() : $version;
-		return static::url().'rest/download/'.static::datas('id_client').'/'.static::datas('public').'/'.$version;
+		return static::url().'rest/'.static::$api_version.'/download/'.static::datas('id_client').'/'.static::datas('public').'/'.$version;
 	}
 
 	public static function registerUrl() {
-		return static::url().'rest/registration';
+		return static::url().'rest/'.static::$api_version.'/registration';
 	}
 
     public static function postUrl() {

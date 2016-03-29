@@ -48,9 +48,19 @@ class AcidTemplate {
 	protected $head_css     = array();
 
 	/**
+	 * @var array Liens vers fichiers JS Combinés
+	 */
+	protected $head_css_combined     = array();
+
+	/**
 	 * @var array  Liens vers fichiers JavaScript
 	 */
 	protected $head_js      = array();
+
+	/**
+	 * @var array Liens vers fichiers JS Combinés
+	 */
+	protected $head_js_combined     = array();
 
 	/**
 	 * @var array  Liens vers les flux RSS
@@ -242,6 +252,40 @@ class AcidTemplate {
 		return  Acid::get('url:css').Acid::get('sass:path:compiled').$what.'.css';
 	}
 
+
+	public static function canCombine($url)  {
+		return Acid::get('combined:enabled') && ((strpos($url,'http://')===0) || (strpos($url,'https://')===0));
+	}
+
+
+	public function combineJs($url) {
+		if ($this->canCombine($url)) {
+			$this->head_js_combined[] = $url;
+			return true;
+		}
+
+		return  false;
+	}
+
+	public function combineCss($url) {
+		if ($this->canCombine($url)) {
+			$this->head_css_combined[] = $url;
+			return true;
+		}
+
+		return  false;
+	}
+
+	public function combineCssUrl($files=array(),$versioning=true) {
+		$base = '/compiled/combine/';
+		$name = AcidMinifier::fileName($files,'combine','css');
+		if (file_exists(Acid::themePath('css', null, false, true).$base.$name)) {
+			$url =  Acid::themeUrl('css'.$base.$name);
+		}
+		$url = Acid::themeUrl('css').'?type=css&files='.implode(',',$files);
+		return ($versioning ? static::versioningUrl($url) : $url);
+	}
+
 	/**
 	 * Associe une feuille de style au template.
 	 *
@@ -250,7 +294,10 @@ class AcidTemplate {
 	public function addCSS($url,$versioning=true) {
 		if (!in_array($url,$this->head_css)) {
 			$this->head_css[] = $url;
-			$this->head .= '	<link href="'.($versioning ? static::versioningUrl($url) : $url).'" rel="stylesheet" type="text/css"/>' . "\n";
+
+			if (!$this->combineCss($url)) {
+				$this->head .= '	<link href="'.($versioning ? static::versioningUrl($url) : $url).'" rel="stylesheet" type="text/css"/>' . "\n";
+			}
 		}
 	}
 
@@ -273,7 +320,9 @@ class AcidTemplate {
 	public function addJS($url,$versioning=true) {
 		if (!in_array($url,$this->head_js)) {
 			$this->head_js[] = $url;
-			$this->head .= '	<script type="text/javascript" src="'.($versioning ? static::versioningUrl($url) : $url).'"></script>' . "\n";
+			if (!$this->combineJs($url)) {
+				$this->head .= '	<script type="text/javascript" src="' . ($versioning ? static::versioningUrl($url) : $url) . '"></script>' . "\n";
+			}
 		}
 	}
 

@@ -16,10 +16,13 @@
  */
 
 
-// prevent caching (php)
+//Prevent caching (php)
 header('Cache-Control: no-cache');
 header('Pragma: no-cache');
 header('Expires: ' . gmdate(DATE_RFC1123, time()-1));
+
+//Every One can get content
+//header('Access-Control-Allow-Origin: *');
 
 $ajax_lang = isset($_GET['lang']) ? $_GET['lang'] : null;
 $permission_active = false;
