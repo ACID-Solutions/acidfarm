@@ -345,6 +345,15 @@ $version_way_quote\$acid['versioning']['way'] = 'htaccess';
 $ldev_quote\$acid['sass']['mode'] = 'dev';
 $lprod_quote\$acid['sass']['mode'] = 'prod';
 
+// Compiler
+//\$acid['compiler']['enable'] = true;
+//\$acid['compiler']['expiration'] = 60*60*24*15; //15jours
+$ldev_quote\$acid['sass']['mode'] = 'dev';
+//\$acid['compiler']['css']['disable'] = true;
+//\$acid['compiler']['js']['disable'] = true;
+//\$acid['compiler']['css']['compression'] = false;
+//\$acid['compiler']['js']['compression'] = false;
+
 //Disallow deploy for security patches
 //\$acid['deploy']['allowed'] = true;
 

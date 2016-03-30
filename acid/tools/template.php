@@ -252,38 +252,127 @@ class AcidTemplate {
 		return  Acid::get('url:css').Acid::get('sass:path:compiled').$what.'.css';
 	}
 
-
-	public static function canCombine($url)  {
-		return Acid::get('combined:enabled') && ((strpos($url,'http://')===0) || (strpos($url,'https://')===0));
+	/**
+	 * Retourne true si le fichier doit être combiné
+	 * @param $url
+	 * @param string $type
+	 * @return bool
+	 */
+	public static function canCombine($url,$type='css')  {
+		return $url && Acid::get('compiler:enable') && (!Acid::get('compiler:'.$type.':disable')) && ((strpos($url,'http://')!==0) && (strpos($url,'https://')!==0));
 	}
 
-
+	/**
+	 * Empile le fichier js s'il doit être combiné
+	 * @param $url
+	 * @return bool
+	 */
 	public function combineJs($url) {
-		if ($this->canCombine($url)) {
-			$this->head_js_combined[] = $url;
+		if ($this->canCombine($url,'js')) {
+			$this->head_js_combined[] = AcidFs::removeBasePath($url);
 			return true;
 		}
 
 		return  false;
 	}
 
+	/**
+	 * Empile le fichier css s'il doit être combiné
+	 * @param $url
+	 * @return bool
+	 */
 	public function combineCss($url) {
-		if ($this->canCombine($url)) {
-			$this->head_css_combined[] = $url;
+		if ($this->canCombine($url,'css')) {
+			$this->head_css_combined[] = AcidFs::removeBasePath($url);
 			return true;
 		}
-
 		return  false;
 	}
 
-	public function combineCssUrl($files=array(),$versioning=true) {
-		$base = '/compiled/combine/';
-		$name = AcidMinifier::fileName($files,'combine','css');
-		if (file_exists(Acid::themePath('css', null, false, true).$base.$name)) {
-			$url =  Acid::themeUrl('css'.$base.$name);
+	/**
+	 * Génère un fichier de combinaison en fonction des fichiers en entrée et retourne le chemin vers le fichier généré
+	 * @param array $files
+	 * @param string $type
+	 * @return bool|string
+	 */
+	public function generateCombineFile($files=array(),$type='css') {
+
+		if ($files) {
+
+			$filename = Acid::get('compiler:name') ? Acid::get('compiler:name') : 'combine';
+			$dir = Acid::get('compiler:' . $type . ':path') ? Acid::get('compiler:' . $type . ':path') : (Acid::themePath($type, null, false, true) . '/compiled/combine/');
+			$name = AcidMinifier::fileName($files, $filename, $type);
+
+			$dest_path = $dir . $name;
+
+			if (!is_dir($dir)) {
+				mkdir($dir);
+			}
+
+			$this->combineFiles($dest_path, $files, $type);
+
+			return AcidFs::removeBasePath($dest_path);
 		}
-		$url = Acid::themeUrl('css').'?type=css&files='.implode(',',$files);
-		return ($versioning ? static::versioningUrl($url) : $url);
+
+		return false;
+	}
+
+	/**
+	 * Combine les fichiers dans le fichier renseigné en entrée
+	 * @param $dest_file
+	 * @param array $files
+	 * @param string $type
+	 * @return bool
+	 */
+	public function combineFiles($dest_file,$files=array(),$type='css') {
+		$dev_mode = Acid::get('compiler:mode') == 'dev';
+		$compress = Acid::exists('compiler:'.$type.':compression') ? Acid::get('compiler:'.$type.':compression') : true;
+
+		$expire_path = $dest_file . '.expire';
+		$expiration_time = Acid::exists('compiler:expiration') ? Acid::get('compiler:expiration') : 60*60*24;
+
+		$is_expired = true;
+		if (!$dev_mode) {
+			if (file_exists($expire_path)) {
+				$expire = file_get_contents($expire_path);
+				$is_expired = $expire > time();
+			}
+		}
+
+		if ( ($is_expired) || (!file_exists($dest_file)) ) {
+			$content = AcidMinifier::combineFromUrl($files, $type,$compress);
+			file_put_contents($dest_file, $content);
+			file_put_contents($expire_path, (time() + $expiration_time));
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Retourne l'url du fichier de combinaison CSS
+	 * @param bool|true $versioning
+	 * @return bool|string
+	 */
+	public function combineCssUrl($versioning=true) {
+		if ($url = $this->generateCombineFile($this->head_css_combined,'css')) {
+			return ($versioning ? static::versioningUrl($url) : $url);
+		}
+
+		return false;
+	}
+
+	/**
+	 * Retourne l'url du fichier de combinaison JS
+	 * @param bool|true $versioning
+	 * @return bool|string
+	 */
+	public function combineJsUrl($versioning=true) {
+		if ($url = $this->generateCombineFile($this->head_js_combined,'js')) {
+			return ($versioning ? static::versioningUrl($url) : $url);
+		}
+
+		return false;
 	}
 
 	/**
@@ -406,6 +495,14 @@ class AcidTemplate {
 		}
 
 		$output .= "\n";
+
+		if ($combine_js = $this->combineJsUrl()) {
+			$output .= '	<script type="text/javascript" src="' . $combine_js . '"></script>';
+		}
+
+		if ($combine_css = $this->combineCssUrl()) {
+			$output .= '	<link href="'.$combine_css.'" rel="stylesheet" type="text/css"/>' . "\n";
+		}
 
 		/*
 		foreach ($this->head_css as $url) {

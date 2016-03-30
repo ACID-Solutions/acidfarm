@@ -65,13 +65,14 @@ class AcidFs
      * @return string
      */
     public static function removeBasePath($file_name) {
+		$path_pref = substr(SITE_PATH,0,(strlen(Acid::get('url:folder_lang'))*-1));
 
     	if (strpos($file_name,Acid::get('url:system_lang'))===0) {
 			return substr($file_name,strlen(Acid::get('url:system_lang')));
     	}
 
-    	if (strpos($file_name,SITE_PATH.Acid::get('url:folder_lang'))===0) {
-    		return substr($file_name,strlen(SITE_PATH.Acid::get('url:folder_lang')));
+    	if (strpos($file_name,$path_pref.Acid::get('url:folder_lang'))===0) {
+    		return substr($file_name,strlen($path_pref.Acid::get('url:folder_lang')));
     	}
 
     	if (strpos($file_name,Acid::get('url:folder_lang'))===0) {

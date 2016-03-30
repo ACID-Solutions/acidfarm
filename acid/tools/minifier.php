@@ -8,7 +8,7 @@
  * @category  AcidFarm
  * @package   Tool
  * @version   0.1
- * @since     Version 0.5
+ * @since     Version 0.8
  * @copyright 2011 ACID-Solutions SARL
  * @license   http://www.acidfarm.net/license
  * @link      http://www.acidfarm.net
@@ -50,21 +50,7 @@ class AcidMinifier {
                 '#(?<=[\{;])(border|outline):none(?=[;\}\!])#',
                 // Remove empty selector(s)
                 '#(\/\*(?>.*?\*\/))|(^|[\{\}])(?:[^\s\{\}]+)\{\}#s'
-            ),
-            array(
-                '$1',
-                '$1$2$3$4$5$6$7',
-                '$1',
-                ':0',
-                '$1:0 0',
-                '.$1',
-                '$1$3',
-                '$1$2$4$5',
-                '$1$2$3',
-                '$1:0',
-                '$1$2'
-            ),
-            $input);
+            ),array('$1','$1$2$3$4$5$6$7','$1',':0','$1:0 0','.$1','$1$3','$1$2$4$5','$1$2$3','$1:0','$1$2'),$input);
     }
 
     /**
@@ -73,28 +59,8 @@ class AcidMinifier {
      * @return mixed
      */
     public static function js($input) {
-        if(trim($input) === "") return $input;
-        return preg_replace(
-            array(
-                // Remove comment(s)
-                '#\s*("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\')\s*|\s*\/\*(?!\!|@cc_on)(?>[\s\S]*?\*\/)\s*|\s*(?<![\:\=])\/\/.*(?=[\n\r]|$)|^\s*|\s*$#',
-                // Remove white-space(s) outside the string and regex
-                '#("(?:[^"\\\]++|\\\.)*+"|\'(?:[^\'\\\\]++|\\\.)*+\'|\/\*(?>.*?\*\/)|\/(?!\/)[^\n\r]*?\/(?=[\s.,;]|[gimuy]|$))|\s*([!%&*\(\)\-=+\[\]\{\}|;:,.<>?\/])\s*#s',
-                // Remove the last semicolon
-                '#;+\}#',
-                // Minify object attribute(s) except JSON attribute(s). From `{'foo':'bar'}` to `{foo:'bar'}`
-                '#([\{,])([\'])(\d+|[a-z_][a-z0-9_]*)\2(?=\:)#i',
-                // From `foo['bar']` to `foo.bar`
-                '#([a-z0-9_\)\]])\[([\'"])([a-z_][a-z0-9_]*)\2\]#i'
-            ),
-            array(
-                '$1',
-                '$1$2',
-                '}',
-                '$1$3',
-                '$1.$3'
-            ),
-            $input);
+        /*TODO*/
+        return $input;
     }
 
     /**
@@ -125,62 +91,40 @@ class AcidMinifier {
      * @param $files
      * @param string $type
      */
-    public static function combineFromUrl($files, $type='css',$base_url=null,$compress=true) {
+    public static function combineFromUrl($files, $type='css',$compress=true,$base_url=null,$base_path=null) {
         $base_url = $base_url===null? Acid::get('url:system') : $base_url;
+        $base_path = $base_path===null? SITE_PATH : $base_url;
 
         $contents = '';
         if ($files && is_array($files)) {
             foreach ($files as $file) {
-                $url = ((strpos($file,'http:')===0) || (strpos($file,'https:')===0)) ? $file : $base_url.$file;
-                $curlSession = curl_init();
-                curl_setopt($curlSession, CURLOPT_URL, $base_url.$file);
-                curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
-                $contents .=  curl_exec($curlSession). "\n";
-                curl_close($curlSession);
+                $url = $base_url.$file;
+                $fpath = $base_path.$file;
+                $sub_content = '';
+
+                if (file_exists($fpath)) {
+                    $sub_content = @file_get_contents($fpath);
+                }else{
+                    $curlSession = curl_init();
+                    curl_setopt($curlSession, CURLOPT_URL, $url);
+                    curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
+                    $sub_content = @curl_exec($curlSession);
+                    curl_close($curlSession);
+                }
+
+                if ($sub_content)  {
+                    if ($compress) {
+                        $sub_content = static::compress($sub_content,$type);
+                    }
+                    if ($type=='css') {
+                        $refpath = (Acid::get('url:folder').AcidFs::removeBasePath(dirname($fpath)));
+                        $sub_content = preg_replace('/url\(\s*[\'"]?\/?(.+?)[\'"]?\s*\)/i', 'url('.$refpath.'/$1)', $sub_content);
+                    }
+                    $contents .=  "/* ".$url." */"."\n" .$sub_content. "\n" ;
+                }
             }
         }
 
-        if ($compress) {
-            return static::compress($contents);
-        }
-
         return $contents;
-    }
-
-    public static function saveEncoding($content,$destpath) {
-        // Determine supported compression method
-        $gzip = strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip');
-        $deflate = strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'deflate');
-
-        if ($gzip) {
-            $content = gzencode($content, 9, FORCE_GZIP);
-            $suffix = '.gzip';
-        }elseif ($deflate) {
-            $content = gzencode($content, 9, FORCE_DEFLATE);
-            $suffix = '.deflate';
-        }
-
-        file_put_contents($destpath,$content);
-    }
-
-    public static function parseEncoding($file) {
-
-        $encoding = AcidFS::getExtension($file);
-        if (in_array($encoding, array('gzip','deflate'))) {
-            $type = AcidFS::getExtension(substr($file,0,(strlen('.'.$encoding)*-1)));
-            static::loadEncoding($type,$encoding,file_get_contents($file));
-        }
-
-        return false;
-    }
-
-    public static function loadEncoding($type='css',$encoding='gzip',$content='') {
-        header ("Content-Type: text/" . $type);
-        header ("Content-Encoding: " . $encoding);
-        if ($content) {
-            header ('Content-Length: ' . strlen($content));
-        }
-        echo $content;
-        exit();
     }
 }
