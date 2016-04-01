@@ -311,7 +311,7 @@ class AcidTemplate {
 
 			$this->combineFiles($dest_path, $files, $type);
 
-			return AcidFs::removeBasePath($dest_path);
+			return Acid::get('url:folder').AcidFs::removeBasePath($dest_path);
 		}
 
 		return false;
@@ -325,6 +325,9 @@ class AcidTemplate {
 	 * @return bool
 	 */
 	public function combineFiles($dest_file,$files=array(),$type='css') {
+
+		Acid::log('COMBINE',$_SERVER['REQUEST_URI'].' generating combined file '. $dest_file . ' with '.implode(',',$files));
+
 		$dev_mode = Acid::get('compiler:mode') == 'dev';
 		$compress = Acid::exists('compiler:'.$type.':compression') ? Acid::get('compiler:'.$type.':compression') : true;
 

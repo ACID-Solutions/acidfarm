@@ -103,8 +103,10 @@ class AcidMinifier {
                 $sub_content = '';
 
                 if (file_exists($fpath)) {
+                    Acid::log('COMBINE','from path '. $fpath);
                     $sub_content = @file_get_contents($fpath);
                 }else{
+                    Acid::log('COMBINE','from url '. $url);
                     $curlSession = curl_init();
                     curl_setopt($curlSession, CURLOPT_URL, $url);
                     curl_setopt($curlSession, CURLOPT_RETURNTRANSFER, true);
