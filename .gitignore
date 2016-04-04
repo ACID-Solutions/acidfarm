@@ -11,7 +11,6 @@
 /sys/update/cur_version.txt
 /sys/update/*/cur_version.txt
 
-
 #registration
 /registration/private/maintenance.json
 /registration/private/backup/
@@ -22,16 +21,28 @@
 /upload/
 /files/
 
-#sass
+# acifarm htaccess
+/.htaccess
+/rest/.htaccess
+
+#sass / compiler
 /theme/*/*/compiled/*
 /theme/*/css/scss_cache/
 /theme/*/css/sass/_dynamic/*
 *.css.map
 
-# acifarm htaccess
-/.htaccess
-/rest/.htaccess
+# composer
+vendor/
+composer.lock
 
+#bower
+bower_components
+.bower-cache
+.bower-registry
+.bower-tmp
+
+#npm
+node_modules/
 
 #codeception
 /sys/tests/codeception/_output/*

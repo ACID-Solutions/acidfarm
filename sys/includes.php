@@ -48,3 +48,8 @@ $acid['includes']['SitemapController'] 	 	  = 'sys/controller/acid/SitemapContro
 
 // Print
 $acid['includes']['MyTemplate']   = 'sys/template.php';
+
+//Composer autoload
+if (file_exists(SITE_PATH.'vendor/autoload.php')) {
+    require_once SITE_PATH.'vendor/autoload.php';
+}
