@@ -5095,6 +5095,10 @@ button.close {
   display: table;
   margin: auto; }
 
+.fsb_print .fsb_belt_file_action_eng {
+  background: rgba(0, 0, 0, 0.8) none repeat scroll 0 0;
+  text-align: center;}
+
 .fsb_belt_dir .fsb_belt_file_action a, .fsb_belt_file .fsb_belt_file_action a, .fsb_belt_dir .fsb_belt_file_action a:link, .fsb_belt_file .fsb_belt_file_action a:link, .fsb_belt_dir .fsb_belt_file_action a:visited, .fsb_belt_file .fsb_belt_file_action a:visited, .fsb_belt_dir .fsb_belt_file_action a:active, .fsb_belt_file .fsb_belt_file_action a:active {
   color: #fff;
   white-space: nowrap; }
