@@ -9,7 +9,7 @@
  * @category  AcidFarm
  * @package   Controller
  * @version   0.1
- * @since     Version 0.1
+ * @since     Version 0.6
  * @copyright 2011 ACID-Solutions SARL
  * @license   http://www.acidfarm.net/license
  * @link      http://www.acidfarm.net
@@ -43,6 +43,10 @@ Acid::set('rest:routes:unlog',array('usersalt'));
 
 //Auth function
 $need_auth = false;
+
+/**
+ * Fonction d'authentification REST
+ */
 function RestAuthFunction() {
     if (!in_array(AcidRouter::getCurrentRouteName(), Acid::get('rest:routes:unlog'))) {
        $GLOBALS['sess'] = Rest::authentification();

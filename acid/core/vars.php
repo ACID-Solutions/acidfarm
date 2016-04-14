@@ -881,10 +881,8 @@ class AcidVarLongText extends AcidVarTextarea {
 class AcidVarInfo extends AcidVar {
 
 	/**
-	 * Constructeur AcidVarText
+	 * Constructeur AcidVarInfo
 	 * @param string $label
-	 * @param int $cols
-	 * @param int $rows
 	 * @param string $def
 	 */
 	public function __construct ($label='AcidVarInfo',$def='') {
@@ -1051,6 +1049,11 @@ class AcidVarPassword extends AcidVarString {
 		$this->setForm('password',array('size'=>$this->form['size'],'maxlength'=>$this->form['maxlength']));
 	}
 
+	/**
+	 * Generate random password
+	 * @param int $size
+	 * @return string
+	 */
 	public static function random($size=8) {
 		$numbers = '0123456789';
 		$chars = 'aeiouy';

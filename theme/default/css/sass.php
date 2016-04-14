@@ -6,6 +6,10 @@ $directory = "stylesheets";
 require '../../../sys/glue.php';
 
 
+/**
+ * Generation des fichiers dynamics SAS
+ * @param null $theme
+ */
 function sass_prepare_files($theme=null) {
 
 	$theme = $theme===null ? Acid::get('theme') : $theme;

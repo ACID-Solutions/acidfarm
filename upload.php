@@ -37,6 +37,10 @@ if (!User::curLevel()) {
 
 Acid::log('UPLOAD','User instance for uploading file is '.User::curUser()->getId());
 
+/**
+ * Log et affiche un message bloquant
+ * @param $msg le message
+ */
 function logAndDie($msg) {
 	Acid::log('PLUPLOAD',$msg);
 	die($msg);

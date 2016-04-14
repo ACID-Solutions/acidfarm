@@ -1,20 +1,71 @@
 <?php
+/**
+ * AcidFarm - Yet Another Framework
+ *
+ * Requires PHP version 5.3
+ *
+ * @author    ACID-Solutions <contact@acid-solutions.fr>
+ * @category  AcidFarm
+ * @package   Registration
+ * @version   0.1
+ * @since     Version 0.8
+ * @copyright 2011 ACID-Solutions SARL
+ * @license   http://www.acidfarm.net/license
+ * @link      http://www.acidfarm.net
+ */
 
+/**
+ * Class AcidRegistration
+ */
 class AcidRegistration {
 
+	/**
+	 * @var string url vers la plateforme d'enregistrement
+	 */
 	public static $url = 'http://platform.acidfarm.net/';
+
+	/**
+	 * @var string dossier de version de l'api
+	 */
 	public static $api_version = 'v1';
 
+	/**
+	 * @var string chemin vers le dossier d'enregistrement
+	 */
 	public static $path = 'registration/';
+
+	/**
+	 * @var string chemin vers le fichier d'enregistrement
+	 */
 	public static $file = 'private/maintenance.json';
-    public static $backup = 'private/backup/';
 
-	public static $upgrade_path = 'upgrade';
+	/**
+	 * @var string chemin vers le dossier d'auto-backup
+	 */
+	public static $backup = 'private/backup/';
 
+
+	/**
+	 * @var string chemin vers le dossier d'upgrade depuis le dossier sys/
+	 */
+	public static $upgrade_path = 'update/.system';
+
+	/**
+	 * @var string chemin vers le fichier de version principale
+	 */
 	public static $base_version_file = 'version.txt';
 
+	/**
+	 * @var null propriétés
+	 */
 	public static $_datas = null;
 
+	/**
+	 * Retourne une propriété ou toutes les propriétés de l'objet
+	 * @param null $key
+	 * @param null $def
+	 * @return null
+	 */
 	public static function datas($key=null,$def=null) {
 		if (static::$_datas===null) {
 
@@ -39,6 +90,10 @@ class AcidRegistration {
 		return static::$_datas;
 	}
 
+	/**
+	 * Retourne l'url de la plateforme d'enregistrement
+	 * @return mixed|string
+	 */
 	public static function url() {
         if (Acid::get('url:registration')) {
             return Acid::get('url:registration');
@@ -47,42 +102,78 @@ class AcidRegistration {
 		return static::$url;
 	}
 
+	/**
+	 * Retourne l'url api d'information spécifique au site
+	 * @return string
+	 */
 	public static function infoUrl() {
 		return static::url().'rest/'.static::$api_version.'/information/'.static::datas('id_client').'/'.static::datas('public').'/'.static::realversion();
 	}
 
+	/**
+	 * Retourne l'url api de téléchargement spécifique au site
+	 * @param null $version
+	 * @return string
+	 */
 	public static function dlUrl($version=null) {
 		$version = $version===null ? static::realversion() : $version;
 		return static::url().'rest/'.static::$api_version.'/download/'.static::datas('id_client').'/'.static::datas('public').'/'.$version;
 	}
 
+	/**
+	 * Retourne l'url api d'enregistrement
+	 * @return string
+	 */
 	public static function registerUrl() {
 		return static::url().'rest/'.static::$api_version.'/registration';
 	}
 
+	/**
+	 * Retourne l'url de post traitement du site
+	 * @return string
+	 */
     public static function postUrl() {
         return Acid::get('url:system').self::$path.'post.php';
     }
 
+	/**
+	 * Retourne l'url de retour à fournir à la plateforme d'enregistrement
+	 * @return string
+	 */
     public static function backUrl() {
         $url_base = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : Conf::get('url:admin');
         return Acid::get('url:system').AcidFs::removeBasePath($url_base);
     }
 
+	/**
+	 * Retourne le chemin complet vers le dossier de backup
+	 * @return string
+	 */
     public static function backupPath() {
         return SITE_PATH.static::$path.self::$backup;
     }
 
 
-
+	/**
+	 * Retourne le chemin complet vers le fichier d'enregistrement
+	 * @return string
+	 */
 	public static function file() {
 		return SITE_PATH.static::$path.static::$file;
 	}
 
+	/**
+	 * Retourne le chemin complet vers le fichier de sousversioning
+	 * @return string
+	 */
 	public static function subversionfile() {
 		return SITE_PATH.'sys/'.static::$upgrade_path.'/cur_version.txt';
 	}
 
+	/**
+	 * Retourne la valeur de sousversioning
+	 * @return string
+	 */
 	public static function subversion() {
 		if (file_exists(static::subversionfile())) {
 			return file_get_contents(static::subversionfile());
@@ -91,17 +182,28 @@ class AcidRegistration {
 		return '';
 	}
 
+	/**
+	 * Retourne la version majeur du site
+	 * @return null
+	 */
 	public static function version() {
 		return static::datas('version');
 	}
 
+	/**
+	 * Retourne la version complète du site
+	 * @return string
+	 */
 	public static function realversion() {
 		$sb = static::subversion();
 		$next = $sb ? '.'.$sb : '.000';
 		return static::version().$next;
 	}
 
-
+	/**
+	 * Effectue l'enregistrement
+	 * @param null $vals
+	 */
 	public static function executeRegistration($vals=null) {
 		$vals = $vals===null ? $_POST : $vals;
 
@@ -112,6 +214,10 @@ class AcidRegistration {
 		}
 	}
 
+	/**
+	 * Confirme l'enregistrement
+	 * @param null $vals
+	 */
     public static function executeConfirmation($vals=null) {
         Acid::log('REGISTRATION','Confirmation asked...');
         if (AcidRegistration::datas('need_confirmation')) {
@@ -124,6 +230,10 @@ class AcidRegistration {
         }
     }
 
+	/**
+	 * Formulaire d'enregistrement manuel
+	 * @param null $fields
+	 */
     public static function manual($fields=null) {
 
         Acid::log('REGISTRATION','Manual mode...');
@@ -148,11 +258,18 @@ class AcidRegistration {
     }
 
 
+	/**
+	 * Désactive l'enregistrement
+	 */
 	public static function disable() {
         Acid::log('REGISTRATION','Running disable...');
 		static::setJson(array('allowed'=>false));
 	}
 
+	/**
+	 * Processus d'enregistrement
+	 * @param $vals
+	 */
 	public static function install($vals) {
 
         Acid::log('REGISTRATION','Running install...');
@@ -208,11 +325,20 @@ class AcidRegistration {
 		curl_close($ch);
 	}
 
+	/**
+	 * Altère le fichier d'enregistrement
+	 * @param $vals
+	 */
 	public static function setJson($vals) {
         Acid::log('REGISTRATION','Setting values...');
 		file_put_contents(static::file(),json_encode($vals));
 	}
 
+	/**
+	 * Checksum d'un dossier
+	 * @param $dir
+	 * @return string
+	 */
 	public static function md5Dir($dir) {
 		if (is_dir($dir)) {
 			$sum = '';

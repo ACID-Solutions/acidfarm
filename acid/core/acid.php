@@ -564,6 +564,8 @@ class Acid {
 	}
 
 	/**
+	 * DEPRECATED
+	 *
 	 * @deprecated REPLACED BY : Acid::exists
 	 * @param $key
 	 * @param null $array

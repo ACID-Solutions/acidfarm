@@ -44,8 +44,8 @@ class Rest {
 
 	/**
 	 * Parsing du digest
-	 * @param unknown $headerValue
-	 * @return Ambigous <boolean, multitype:unknown >
+	 * @param $headerValue
+	 * @return array|bool
 	 */
 	public static function parseHttpDigest( $headerValue ) {
 		$needed_parts = array('nonce' => 1, 'nc' => 1, 'cnonce' => 1, 'qop' => 1, 'username' => 1, 'uri' => 1, 'response' => 1, 'opaque' => 1, 'realm'=>1);
@@ -61,8 +61,8 @@ class Rest {
 
 	/**
 	 * Login command
-	 * @param unknown $realm
-	 * @param unknown $nonce
+	 * @param $realm
+	 * @param $nonce
 	 */
 	public static function headerAuth($realm,$nonce,$session_id) {
 		header('WWW-Authenticate: Digest realm="' . $realm . '",qop="auth",nonce="' . $nonce . '",opaque="' . $session_id . '"');
@@ -70,8 +70,8 @@ class Rest {
 
 	/**
 	 * Demande d'authentification digest
-	 * @param unknown $realm
-	 * @param unknown $nonce
+	 * @param $realm
+	 * @param $nonce
 	 */
 	public static function requireLogin($realm,$nonce,$session_id,$datas=null) {
 		self::headerAuth($realm,$nonce,$session_id);
@@ -80,8 +80,8 @@ class Rest {
 
 	/**
 	 * Porcedure de log digest
-	 * @param unknown $realm
-	 * @param unknown $nonce
+	 * @param $realm
+	 * @param $nonce
 	 */
 	public static function digestLogin($datas=array()) {
 
@@ -110,7 +110,7 @@ class Rest {
 
 	/**
 	 * Recherche la credential d'authentification
-	 * @param unknown $login
+	 * @param  $login
 	 * @return number
 	 */
 	public static function searchLoginType($login) {
@@ -271,8 +271,6 @@ class Rest {
 	public static function status500($datas=null) {
 		self::response($datas,500);
 	}
-
-
 
 
 }

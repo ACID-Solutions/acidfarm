@@ -16,8 +16,15 @@
 
 require Acid::outPath('functions-core.php');
 
+/**
+ * Class Func
+ */
 class Func extends FuncCore {
 
+    /**
+     * Génère le menu
+     * @return string
+     */
     public static function getMenu() {
         if (Acid::get('out')=='siteadmin') {
             $config = Acid::get('admin:menu_config');

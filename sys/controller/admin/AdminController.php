@@ -51,8 +51,8 @@ class AdminController{
 
 	/**
 	 * Contrôle des accès utilisateur
-	 * @param string $routename
- 	 * @return number|boolean|sring nom de la route si accessible, false si non permis, 0 si inexistant
+	 * @param $page
+	 * @return bool|int|string nom de la route si accessible, false si non permis, 0 si inexistant
 	 */
 	public static function checkAccess($page){
 
@@ -80,11 +80,12 @@ class AdminController{
 		return $check_key;
 	}
 
-
 	/**
-	 *
-	 * @param unknown $routename
-	 * @return number|boolean|unknown
+	 * Définit les accès à la page désignée part $key
+	 * @param $key
+	 * @param $level
+	 * @param null $module
+	 * @param array $config
 	 */
 	public static function addAccess($key,$level,$module=null,$config=array()){
 
@@ -96,9 +97,12 @@ class AdminController{
 	}
 
 	/**
-	 *
-	 * @param unknown $routename
-	 * @return number|boolean|unknown
+	 * Ajout la page designée par $key au menu
+	 * @param $key
+	 * @param $parent
+	 * @param $label
+	 * @param int $level
+	 * @param array $config
 	 */
 	public static function addMenu($key,$parent, $label,$level=0,$config=array()){
 
@@ -116,9 +120,10 @@ class AdminController{
 	}
 
 	/**
-	 *
-	 * @param unknown $routename
-	 * @return number|boolean|unknown
+	 * Ajoute une "méthode controller" à la volée pour la page désignée par $key
+	 * @param $key
+	 * @param $function
+	 * @param array $args
 	 */
 	public static function addMethod($key,$function,$args=array()){
 		AdminController::$functions[$key]['func'] = $function;
@@ -126,16 +131,17 @@ class AdminController{
 	}
 
 	/**
-	 *
-	 * @param unknown $routename
-	 * @return number|boolean|unknown
+	 * Ajoute une catégorie au menu
+	 * @param $key
+	 * @param $label
+	 * @param array $config
+	 * @param int $level
 	 */
 	public static function addMenuCat($key,$label,$config=array(),$level=0){
 
 		static::addMenu($key,null,$label,$level,$config);
 
 	}
-
 
 	/**
 	 * Affichage d'authentification
@@ -249,7 +255,6 @@ class AdminController{
 		Conf::addToContent(Acid::mod('User')->printAdminBody($content,null));
 
     }
-
 
     /**
      * Affichage des modules

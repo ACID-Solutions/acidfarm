@@ -64,6 +64,7 @@ class AcidMinifier {
     }
 
     /**
+     * Génère le nom de fichier compilé
      * @param $minify
      * @param string $type
      */

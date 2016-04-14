@@ -21,6 +21,10 @@
  */
 class RobotsController{
 
+	/**
+	 * Retourne la liste des dossiers de thème
+	 * @return array
+	 */
 	public static function getThemes() {
 
 		$themes = array();
