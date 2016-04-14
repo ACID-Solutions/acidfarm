@@ -22,7 +22,7 @@
  * Exemple d'appel : AcidRouter::addRoute('debugroute', new AcidRoute('@debug',array('module'=>'debug','controller'=>'DebugController','action'=>'maFctAction')));
  * @package   Controller
  */
-class DebugController extends AcidModule {
+class DebugController {
 	
 	/**
 	 * Fonction de debug
