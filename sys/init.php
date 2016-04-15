@@ -63,6 +63,9 @@ else {
 include (SITE_PATH . 'sys/config.php');
 include (ACID_PATH . 'start.php');
 
+//Supervision (Sentry if enabled)
+require  (SITE_PATH . 'sys/supervisor.php');
+
 //Hook for includes
 AcidHook::call('includes');
 

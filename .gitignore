@@ -34,6 +34,7 @@
 # composer
 vendor/
 composer.lock
+composer.json
 
 #bower
 bower_components

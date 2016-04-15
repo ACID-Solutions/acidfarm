@@ -357,6 +357,9 @@ $ldev_quote\$acid['sass']['mode'] = 'dev';
 //Disallow deploy for security patches
 //\$acid['deploy']['allowed'] = true;
 
+//Sentry url for supervision, need Raven (ex : composer require raven/raven)
+//\$acid['sentry']['url'] = '';
+
 EOT;
 
 
