@@ -316,6 +316,7 @@ class User extends AcidUser {
 	}
 
 	/**
+	 * Override bodyMail pour gérer la langue
 	 * @see AcidUser::bodyMail()
 	 * @param string $tpl
 	 * @param array $vars
@@ -338,6 +339,7 @@ class User extends AcidUser {
 	}
 
 	/**
+	 * Override subjectMail pour gérer la langue
 	 * @see AcidUser::subjectMail()
 	 * @param string $subject
 	 * @param array $replace
@@ -363,6 +365,7 @@ class User extends AcidUser {
 	}
 
 	/**
+	 * Override bodyMailStaff pour gérer la langue
 	 * @see AcidUser::bodyMailStaff()
 	 * @param string $tpl
 	 * @param array $vars

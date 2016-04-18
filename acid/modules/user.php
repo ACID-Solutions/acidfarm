@@ -1092,6 +1092,7 @@ abstract class AcidUser extends AcidModule {
 	}
 
 	/**
+	 * Override de la liste des clés obligatoires pour les postProcess
 	 * @see AcidModuleCore::getControlledKeys()
 	 * @param string $do
 	 * @return array
@@ -1108,6 +1109,7 @@ abstract class AcidUser extends AcidModule {
 	}
 
 	/**
+	 * Override de la méthode de vaidation pour les postProcess
 	 * @see AcidModuleCore::checkVals()
 	 * @param string $tab
 	 * @param string $do

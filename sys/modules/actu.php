@@ -166,6 +166,7 @@ class Actu extends AcidModule {
 	}
 
 	/**
+	 * Override de la configuration de l'interface d'admin
 	 * @see AcidModuleCore::printAdminConfigure()
 	 * @param string $do
 	 * @param array $conf

@@ -85,6 +85,8 @@ class AcidSitemap {
 
 
 	/**
+	 * Génère le sitemap en xml et défini la sortie du template comme "xml"
+	 *
 	 * @param $content contenu du sitemap
 	 * @param bool|true $display_source si true, alors ajoute automatiquement l'index du site
 	 * @param bool|null $multilingual si true active le mode multilangue

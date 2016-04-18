@@ -98,10 +98,11 @@ class Seo extends AcidModule {
 		return $this->genUrlImg($this->get('seo_img'),$format);
 	}
 
-
 	/**
-	 * (non-PHPdoc)
+	 * Override du formaulaire d'administration
 	 * @see AcidModuleCore::printAdminForm()
+	 * @param string $do
+	 * @return string
 	 */
 	public function printAdminForm($do) {
 

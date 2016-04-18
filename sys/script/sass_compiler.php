@@ -1,10 +1,27 @@
 <?php
-
-
+/**
+ * AcidFarm - Yet Another Framework
+ *
+ * Requires PHP version 5.3
+ *
+ * @author    ACID-Solutions <contact@acid-solutions.fr>
+ * @category  AcidFarm
+ * @package   Acidfarm\Script
+ * @version   0.1
+ * @since     Version 0.5
+ * @copyright 2011 ACID-Solutions SARL
+ * @license   http://www.acidfarm.net/license
+ * @link      http://www.acidfarm.net
+ */
 
 $opt = getopt('c::f:t:p:l:');
 if (isset($opt['c']) ) {
 
+	/**
+	 * Retourne la liste des dossiers thèmes
+	 *
+	 * @return array
+	 */
 	function getThemes() {
 
 		$themes = array();
@@ -27,6 +44,11 @@ if (isset($opt['c']) ) {
 		return $themes;
 	}
 
+	/**
+	 * Préparation des fichiers dynamiques pour traitement SASS
+	 *
+	 * @param null $theme
+	 */
 	function sass_prepare_files($theme=null) {
 
 		$theme = $theme===null ? Acid::get('theme') : $theme;
@@ -43,8 +65,6 @@ if (isset($opt['c']) ) {
 		if (!file_exists($dyn_path)) {
 			mkdir($dyn_path);
 		}
-
-
 
 		if (is_dir($tpl_path)) {
 			if ($dh = opendir($tpl_path)) {
@@ -64,6 +84,12 @@ if (isset($opt['c']) ) {
 
 	}
 
+	/**
+	 * Compilation d'un fichier
+	 * @param $file
+	 * @param $path_to
+	 * @param null $theme
+	 */
 	function sass_compilation_from_file($file,$path_to,$theme=null) {
 		if (AcidFs::getExtension($file)=='scss') {
 			$theme = $theme===null ? Acid::get('theme') : $theme;
@@ -160,10 +186,6 @@ if (isset($opt['c']) ) {
 		}
 
 	}
-
-
-
-
 
 }else{
 	echo "Pour effectuer l'opération, merci d'ajouter l'argument -c  à la commande actuelle." . "\n" .

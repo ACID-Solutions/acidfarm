@@ -53,6 +53,7 @@ class Conf {
 	}
 
 	/**
+	 * (non-PHPdoc)
 	 * @see Conf::exists
 	 * @deprecated REPLACED BY : Conf::exists
 	 * @param $key
