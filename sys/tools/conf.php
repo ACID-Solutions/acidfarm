@@ -53,6 +53,7 @@ class Conf {
 	}
 
 	/**
+	 * @see Conf::exists
 	 * @deprecated REPLACED BY : Conf::exists
 	 * @param $key
 	 * @return bool

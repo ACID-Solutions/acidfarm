@@ -1,5 +1,4 @@
 <?php
-
 /**
  * AcidFarm - Yet Another Framework
  *
@@ -7,15 +6,18 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Acidfarm\Model
+ * @package   Acidfarm\Traduction
  * @version   0.1
- * @since     Version 0.1
+ * @since     Version 0.8
  * @copyright 2011 ACID-Solutions SARL
  * @license   http://www.acidfarm.net/license
  * @link      http://www.acidfarm.net
  */
 
-
+/**
+ * Class Lang
+ * @package   Acidfarm\Traduction
+ */
 class Lang {
 
 	/**
@@ -178,7 +180,9 @@ class Lang {
 
 	/**
 	 * Change de langue en intégrant un rollback
-	 * @param string $lang identifiant de langue
+	 *
+	 * @param $lang
+	 * @param bool|true $change_current si true, altère la valeur Acid::get('lang;current')
 	 */
 	public static function switchTo($lang,$change_current=true) {
 		Acid::save(null,'lang');
@@ -193,11 +197,12 @@ class Lang {
 
 		$GLOBALS['lang'] = array();
 		Lang::loadLang($lang);
-
 	}
 
 	/**
 	 * Remonte dans l'historique de langue
+	 *
+	 * @param bool|true $change_current si true, altère la valeur Acid::get('lang;current')
 	 */
 	public static function rollback($change_current=true) {
 		Acid::rollback(null,'lang');

@@ -316,8 +316,11 @@ class User extends AcidUser {
 	}
 
 	/**
-	 * (non-PHPdoc)
 	 * @see AcidUser::bodyMail()
+	 * @param string $tpl
+	 * @param array $vars
+	 * @param null $object
+	 * @return string
 	 */
 	public function bodyMail($tpl,$vars=array(),$object=null) {
 
@@ -335,8 +338,11 @@ class User extends AcidUser {
 	}
 
 	/**
-	 * (non-PHPdoc)
 	 * @see AcidUser::subjectMail()
+	 * @param string $subject
+	 * @param array $replace
+	 * @param bool|false $staff
+	 * @return Ambigous
 	 */
 	public function subjectMail($subject,$replace=array(),$staff=false) {
 
@@ -357,8 +363,11 @@ class User extends AcidUser {
 	}
 
 	/**
-	 * (non-PHPdoc)
 	 * @see AcidUser::bodyMailStaff()
+	 * @param string $tpl
+	 * @param array $vars
+	 * @param null $object
+	 * @return string
 	 */
 	public static function bodyMailStaff($tpl,$vars=array(),$object=null) {
 

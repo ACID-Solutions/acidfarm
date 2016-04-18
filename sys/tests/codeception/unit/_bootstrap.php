@@ -14,4 +14,6 @@
  * @link      http://www.acidfarm.net
  */
 
-// Here you can initialize variables that will be available to your tests
+/**
+ *  Here you can initialize variables that will be available to your tests
+ */

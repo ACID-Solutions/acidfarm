@@ -2138,6 +2138,10 @@ class AcidVarList extends AcidVar {
 	 * @var booelan true si la valeur associée est une chaine
 	 */
 	protected	$use_index	= null;
+
+	/**
+	 * @var bool|null|true true si l'index est un entier
+	 */
 	protected	$int_index	= null;
 
 	/**
@@ -2146,9 +2150,10 @@ class AcidVarList extends AcidVar {
 	 * @param string $label Etiquette de la variable.
 	 * @param array $elts Liste des éléments.
 	 * @param string $def Valeur par défaut.
-	 * @param bool $multiple True si on autorise plusieurs valeurs sélectionnées en formulaire.
-	 * @param bool $use_index
+	 * @param bool|false $multiple True si on autorise plusieurs valeurs sélectionnées en formulaire.
+	 * @param bool|true $use_index On utilise l'asso
 	 * @param int $size Taille du select dans le formulaire.
+	 * @param bool|true $int_index
 	 */
 	public function __construct($label='AcidVarList',$elts=array(),$def='',$multiple=false,$use_index=true,$size=1,$int_index=true) {
 

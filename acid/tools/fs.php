@@ -185,7 +185,7 @@ class AcidFs
 	 * @param int $src_type
 	 * @param int $src_x
 	 * @param int $src_y
-	 *
+	 * @param null $quality
 	 * @return bool
 	 */
 	public static function imgResize($src_path,$dst_path,$img_w,$img_h,$src_w=null,$src_h=null,$src_type=null,$src_x=0,$src_y=0,$quality=null){

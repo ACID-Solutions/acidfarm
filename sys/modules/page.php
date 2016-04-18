@@ -121,7 +121,8 @@ class Page extends AcidModule {
 	/**
 	 * Retourne true si la création d'une page d'identifiant désigné par $vals['ident'] est possible
 	 *
-	 * @param array $vals informations sur la page à créer
+	 * @param $vals informations sur la page à créer
+	 * @param string|null $key
 	 * @return bool
 	 */
 	public function goodIdent($vals,$key=null) {

@@ -85,9 +85,9 @@ class AcidSitemap {
 
 
 	/**
-	 * Génère un sitemap
-	 * @param string $content contenu du sitemap
-	 * @param boleean $display_source si true, alors ajoute automatiquement l'index du site
+	 * @param $content contenu du sitemap
+	 * @param bool|true $display_source si true, alors ajoute automatiquement l'index du site
+	 * @param bool|null $multilingual si true active le mode multilangue
 	 * @return string
 	 */
 	public static function printSitemap($content,$display_source=true,$multilingual=null) {

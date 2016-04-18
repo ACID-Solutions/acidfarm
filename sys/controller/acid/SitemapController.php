@@ -32,6 +32,7 @@ class SitemapController{
      * @param array $tab liste des pages
      * @param string $url_base url en prefixe
      * @param float $priority seuil de priorité
+	 * @param string $changefreq fréquence de modification
      * @return string
      */
 	public function decline_sitemap ($tab, $url_base, $priority=0.9, $changefreq='monthly') {

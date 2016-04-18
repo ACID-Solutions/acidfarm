@@ -1530,11 +1530,13 @@ abstract class AcidModuleCore {
 	}
 
 	/**
-	* Formate l'url en fonction de l'AcidVar de la clé saisi en entrée
-	* @param string $key nom du paramètre
-	* @param string $url pour forcer l'url
-	* @param string $format format à appliquer à l'url
-	*/
+	 * Formate l'url en fonction de l'AcidVar de la clé saisi en entrée
+	 * @param string $key nom du paramètre
+	 * @param string $url pour forcer l'url
+	 * @param string $format format à appliquer à l'url
+	 * @param null $cache_time cachetime à ajouter en paramètre
+	 * @return string
+	 */
 	public static function genUrlKey($key,$url=null,$format=null,$cache_time=null) {
 
 		$class = get_called_class();
@@ -4207,10 +4209,11 @@ abstract class AcidModuleCore {
 
 	/**
 	 * Affiche un formulaire de "quick change"
-	 * @param string $key Nom du paramètre
-	 * @param object $obj L'objet
-	 * @param boolean $ajax Le formulaire sera traité en ajax
 	 *
+	 * @param $key
+	 * @param null $obj
+	 * @param bool|false $ajax Le formulaire sera traité en ajax
+	 * @param array $params
 	 * @return string
 	 */
 	public function printFormQuickChange($key,$obj=null,$ajax=false,$params=array()) {

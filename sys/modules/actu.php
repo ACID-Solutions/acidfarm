@@ -166,9 +166,9 @@ class Actu extends AcidModule {
 	}
 
 	/**
-	 * (non-PHPdoc)
+	 * @see AcidModuleCore::printAdminConfigure()
+	 * @param string $do
 	 * @param array $conf
-	 * @see AcidModuleCore::printAdminList()
 	 */
 	public function printAdminConfigure($do='default',$conf=array()) {
 

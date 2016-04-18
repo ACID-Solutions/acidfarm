@@ -240,7 +240,10 @@ class AcidTemplate {
 	}
 
 	/**
-	 *	Retourne le lien sass ou non en fonction du context
+	 * Retourne le lien sass ou non en fonction du context
+	 *
+	 * @param $what
+	 * @return string
 	 */
 	public static function sassUrl($what) {
 		if (Acid::get('sass:enable')) {
@@ -381,7 +384,8 @@ class AcidTemplate {
 	/**
 	 * Associe une feuille de style au template.
 	 *
-	 * @param string $url
+	 * @param $url
+	 * @param bool|true $versioning
 	 */
 	public function addCSS($url,$versioning=true) {
 		if (!in_array($url,$this->head_css)) {
@@ -408,6 +412,7 @@ class AcidTemplate {
 	 * Associe un document javascript au template.
 	 *
 	 * @param string $url
+	 * @param bool|true $versioning
 	 */
 	public function addJS($url,$versioning=true) {
 		if (!in_array($url,$this->head_js)) {

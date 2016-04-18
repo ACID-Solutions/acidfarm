@@ -24,7 +24,14 @@ class Seo extends AcidModule {
 	const TBL_NAME = 'seo';
 	const TBL_PRIMARY = 'id_seo';
 
+	/**
+	 * @var object|null l'instance du module
+	 */
 	public static $_instance = null;
+
+	/**
+	 * @var array|null cache
+	 */
 	public $seos = null;
 
 

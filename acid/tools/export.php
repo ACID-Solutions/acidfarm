@@ -19,16 +19,19 @@
  */
 class AcidExport {
 
+
 	/**
 	 * Effectue un export CSV d'un module
-	 * @param string $module Nom du module
-	 * @param mixed $select Selection SQL
-	 * @param mixed $filter Filtre SQL
-	 * @param mixed $order Ordre SQL
-	 * @param mixed $limit Limite SQL
-	 * @param mixed $mods Liste des modules joints
-	 * @param string $delimiter
-	 * @param string $enclosure
+	 *
+	 * @param $module Nom du module
+	 * @param string $select Selection SQL
+	 * @param string $filter Filtre SQL
+	 * @param string $order Ordre SQL
+	 * @param string $limit Limite SQL
+	 * @param array $mods Liste des modules joints
+	 * @param array $assoc tableau de remplacement de valeurs
+	 * @param string $delimiter Délimiter CSV
+	 * @param string $enclosure Enclosure CSV
 	 */
 	public static function sqlModule2CSV($module,$select='',$filter='',$order='',$limit='',$mods=array(),$assoc=array(),$delimiter=';',$enclosure='"') {
 

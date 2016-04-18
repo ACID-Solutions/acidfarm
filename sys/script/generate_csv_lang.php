@@ -44,6 +44,12 @@ if (isset($opt['c'])) {
 	$lang_tab = array();
 	$lang_csv = array();
 
+	/**
+	 * Génère un tableau de traduction
+	 * @param $stab
+	 * @param $dtab
+	 * @param string $curkey
+	 */
 	function composeTab($stab,&$dtab,$curkey='') {
 
 		if (is_array($stab)) {

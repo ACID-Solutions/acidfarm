@@ -241,6 +241,9 @@ abstract class AcidUser extends AcidModule {
 
 	/**
 	 * Retourne le nom complet de l'utilisateur
+	 *
+	 * @param bool|true $hsc
+	 * @return mixed|string
 	 */
 	public function fullName($hsc=true) {
 		$name = trim(Acid::trad($this->get('firstname').' '.$this->get('lastname')));
@@ -250,6 +253,9 @@ abstract class AcidUser extends AcidModule {
 
 	/**
 	 * Retourne l'adresse complete de l'utilisateur
+	 *
+	 * @param bool|true $hsc
+	 * @return string
 	 */
 	public function address($hsc=true) {
 		$address = trim(Acid::trad($this->get('address').' '.$this->get('cp').' '.$this->get('city').' '.$this->get('country')));
@@ -1086,8 +1092,9 @@ abstract class AcidUser extends AcidModule {
 	}
 
 	/**
-	 * (non-PHPdoc)
 	 * @see AcidModuleCore::getControlledKeys()
+	 * @param string $do
+	 * @return array
 	 */
 	protected function getControlledKeys($do) {
 		$keys = $this->getConfig('identification');
@@ -1101,8 +1108,10 @@ abstract class AcidUser extends AcidModule {
 	}
 
 	/**
-	 * (non-PHPdoc)
 	 * @see AcidModuleCore::checkVals()
+	 * @param string $tab
+	 * @param string $do
+	 * @return bool|string
 	 */
 	protected function checkVals($tab,$do) {
 
@@ -1526,12 +1535,12 @@ abstract class AcidUser extends AcidModule {
 		}
 	}
 
-
 	/**
 	 * Créer une session utilisateur.
 	 *
-	 * @param int $id Identifiant. Par défaut : NULL
-	 * @param bool $connexion_auto
+	 * @param null $id Identifiant. Par défaut : NULL
+	 * @param bool|false $connexion_auto
+	 * @param bool|true $cookie
 	 */
 	public function sessionMake($id=null,$connexion_auto=false,$cookie=true) {
 		parent::sessionMake($id);
