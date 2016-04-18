@@ -16,6 +16,9 @@
 
 require Acid::outPath('functions-core.php');
 
+/**
+ * Class Func
+ */
 class Func extends FuncCore {
 
 }

@@ -54,7 +54,8 @@ class AcidHook {
 	private $increments = array();
 
 	/**
-	 * Constructeur
+	 * Constructeur AcidHook
+	 * @param null $hook_path chemin vers le dossier de reception des hooks
 	 */
 	private function __construct($hook_path=null) {
 		$this->path = $hook_path===null ? SITE_PATH.Acid::get('hook:path') : $hook_path;
@@ -121,7 +122,9 @@ class AcidHook {
 
 	/**
 	 * Execute un hook
+	 *
 	 * @param string $hook
+	 * @param array $params
 	 */
 	public function hook($hook,$params=array()) {
 		if ($this->parser===null) {
@@ -141,7 +144,9 @@ class AcidHook {
 
 	/**
 	 * Alias statique de Hook::getInstance()->hook($hook);
+	 *
 	 * @param string $hook Nom du point d'ancrage
+	 * @param array $paramss
 	 */
 	public static function call($hook,$params=array()) {
 		return self::getInstance()->hook($hook,$params);

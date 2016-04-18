@@ -63,7 +63,8 @@ class AcidUrl
     /**
      * Procède à l'appel d'une redirection 301 vers $url
      *
-     * @param string $url
+     * @param $url
+     * @param int $max_age
      */
     public static function redirection301($url,$max_age=86400) {
         header($_SERVER['SERVER_PROTOCOL'].' 301 Moved Permanently');
@@ -79,7 +80,7 @@ class AcidUrl
     /**
      * Effectue une redirection vers $url.
      *
-     * @param string $url
+     * @param $url
      */
     public static function redirection($url) {
 		header('Location: '.$url);

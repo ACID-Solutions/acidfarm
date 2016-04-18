@@ -68,12 +68,13 @@ class Page extends AcidModule {
 		return parent::__construct($init_id);
 	}
 
-
 	/**
 	 * Initialise une page selon l'identifiant $ident
 	 * Retourne l'id de la page en cas de réussite, false sinon.
 	 *
-	 * @param unknown_type $ident
+	 * @param $ident identifiant de la page
+	 * @param string|null $lang langue utilisée pour l'identifiant (par défaut la langue courante)
+	 * @return array|bool
 	 */
 	public function init($ident,$lang=null) {
 		if ($ident !== null) {
@@ -99,7 +100,9 @@ class Page extends AcidModule {
 
 	/**
 	 * Retourne true si la page peut être créés
-	 * @param array $vals informations sur la page à créer
+	 *
+	 * @param $vals informations sur la page à créer
+	 * @param null $key
 	 * @return bool
 	 */
 	public function checkAuth($vals,$key=null) {
@@ -117,6 +120,7 @@ class Page extends AcidModule {
 
 	/**
 	 * Retourne true si la création d'une page d'identifiant désigné par $vals['ident'] est possible
+	 *
 	 * @param array $vals informations sur la page à créer
 	 * @return bool
 	 */

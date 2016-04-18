@@ -80,7 +80,7 @@ class AcidRss {
 	 * @param string $alink
 	 * @param string $description
 	 * @param string $img
-	 *
+	 * @param string|null $media_mode
 	 */
 	public function __construct($title, $alink, $description, $img = null, $media_mode = null) {
 		$this->title = $title;
@@ -123,10 +123,9 @@ class AcidRss {
 	/**
 	 * Retourne une version formatée de la date en entrée.
 	 *
-	 * @param string $date_to_convert
-	 *
+	 * @param $date_to_convert
+	 * @param string|null $gmt
 	 * @return string
-	 *
 	 */
 	public function getValidDate($date_to_convert, $gmt=null) {
 		$gmt = $gmt !== null ? $gmt : date('O');
@@ -161,7 +160,9 @@ class AcidRss {
 	 * @param string $guid
 	 * @param string $description
 	 * @param string $pubDate
-	 *
+	 * @param string|null $img
+	 * @param string|null $media_mode
+	 * @param string|null $gmt
 	 */
 	public function add($title, $link, $guid, $description, $pubDate, $img=null, $media_mode=null, $gmt=null) {
 

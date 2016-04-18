@@ -93,9 +93,8 @@ class PhotoHome extends AcidModule {
 	}
 
 	/**
-	 * (non-PHPdoc)
-	 * @param array $conf
-	 * @see AcidModuleCore::printAdminList()
+	 * Override de la configuration de l'admnistration du module
+	 * @see AcidModuleCore::printAdminConfigure()
 	 */
 	public function printAdminConfigure($do='default',$conf=array()) {
 

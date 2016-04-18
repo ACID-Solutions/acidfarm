@@ -65,8 +65,11 @@ class AcidMinifier {
 
     /**
      * Génère le nom de fichier compilé
-     * @param $minify
+     *
+     * @param $files
+     * @param $name
      * @param string $type
+     * @return string
      */
     public static function fileName( $files, $name, $type='css') {
         return $name . '-' . md5(implode(',', $files)) . '.' . $type;
@@ -87,10 +90,16 @@ class AcidMinifier {
         return $minify;
     }
 
+
     /**
-     * Combine resources from curl requests
+     * Combine les ressources via des requêtes curl
+     *
      * @param $files
      * @param string $type
+     * @param bool|true $compress
+     * @param null $base_url
+     * @param null $base_path
+     * @return string
      */
     public static function combineFromUrl($files, $type='css',$compress=true,$base_url=null,$base_path=null) {
         $base_url = $base_url===null? Acid::get('url:system') : $base_url;

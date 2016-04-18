@@ -222,6 +222,8 @@ class AcidSession {
 
 	/**
 	 * Met à jour la session en base de données.
+	 *
+	 * @param bool|null $savecookie si true, met à jour le cookie de session
 	 */
 	public static function dbUpdate($cookie=null) {
 		$s = self::getInstance($cookie);

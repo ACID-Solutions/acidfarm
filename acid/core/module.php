@@ -3814,16 +3814,15 @@ abstract class AcidModuleCore {
 
 	}
 
-
 	/**
 	 * Préparation du module pour les différents affichage/formulaires
-	 * @param string $do Vue en cours
-	 * @param array $conf Configuration
+	 *
+	 * @param string $do  Vue en cours
+	 * @param array $conf  Configuration
 	 */
 	public function printAdminConfigure($do='default',$conf=array()) {
 
 	}
-
 
 	/**
 	 * Préparation du module pour le retour CSV
@@ -3948,7 +3947,6 @@ abstract class AcidModuleCore {
 	* Retourne le formulaire d'administration du module pour la vue demandée
 	*
 	* @param string $do la vue demandée
-	*
 	* @return string
 	*/
 	public function printAdminForm($do) {

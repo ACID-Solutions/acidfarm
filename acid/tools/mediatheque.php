@@ -1,4 +1,18 @@
 <?php
+/**
+ * AcidFarm - Yet Another Framework
+ *
+ * Requires PHP version 5.3
+ *
+ * @author    ACID-Solutions <contact@acid-solutions.fr>
+ * @category  AcidFarm
+ * @package   Acidfarm\Tool
+ * @version   0.1
+ * @since     Version 0.6
+ * @copyright 2011 ACID-Solutions SARL
+ * @license   http://www.acidfarm.net/license
+ * @link      http://www.acidfarm.net
+ */
 
 /**
  * Outil de Mediatheque publique
@@ -66,19 +80,29 @@ class AcidMediatheque {
 	 */
 	protected $js = "";
 
+	/**
+	 * @var int largeur des miniatures en pixels
+	 */
 	public $thumbs_width = 100;
+
+	/**
+	 * @var int hauteur des miniatures en pixels
+	 */
 	public $thumbs_height = 60;
 
 	const UNAUTHORIZED_PATH = '`(^\.\./)|(^\.\.$)|(/\.\./)|(\.\.$)`';
 	const UNAUTHORIZED_NAME = '`[\\\\/:*?"<>|]`';
 
 	/**
-	 * Constructeur AcidBrowser
+	 * Constructeur AcidMediatheque
 	 *
-	 * @param string $path Chemin associé au navigateur.
-	 * @param bool $absolute True si le chemin est absolu. - Défaut : false
-	 * @param string $acl acl personnalisé
-	 * @param string $plugin
+	 * @param $path Chemin associé au navigateur.
+	 * @param bool|false $absolute True si le chemin est absolu. - Défaut : false
+	 * @param null $acl acl personnalisé
+	 * @param null $plugin plugin associé
+	 * @param string $router_key clé de la route
+	 * @param string $tpl_path chemin vers le dossier tpl
+	 * @param bool|true $use_router si true, utilise les routeurs
 	 */
 	public function __construct($path,$absolute=false,$acl=null,$plugin=null,$router_key='medias',$tpl_path='tools/medias/',$use_router=true) {
 		global $acid,$css_theme;
@@ -102,7 +126,8 @@ class AcidMediatheque {
 
 	/**
 	 * Retourne l'url de la mediatheque publique
-	 * @param string $path
+	 *
+	 * @param string|null $path
 	 * @return string
 	 */
 	public function buildUrl($path=null) {

@@ -83,12 +83,13 @@ class AcidRoute{
     public $unique_match    	= true;
 
     /**
-     * Constructeur
-     * @param string $URI alias de la route
-     * @param string $controller
-     * @param int $partial_start
-     * @param int $partial_stop
-     * @param array $params
+     * Constructeur AcidRoute
+     * @param $URI alias de la route
+     * @param array $controller configuration du controller
+     * @param null $partial_start si défini, index de la premère clé des paramètres partiels
+     * @param null $partial_stop si défini, index de la dernière clé des paramètres partiels
+     * @param null $params les paramètres
+     * @param null $method la méthode associée
      */
     public function __construct($URI,$controller=array(),$partial_start=null,$partial_stop=null,$params=null,$method=null){
         $this->params = $params;

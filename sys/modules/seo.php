@@ -91,6 +91,7 @@ class Seo extends AcidModule {
 		return $this->genUrlImg($this->get('seo_img'),$format);
 	}
 
+
 	/**
 	 * (non-PHPdoc)
 	 * @see AcidModuleCore::printAdminForm()

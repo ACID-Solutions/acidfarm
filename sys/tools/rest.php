@@ -24,6 +24,7 @@ class Rest {
 
 	/**
 	 * Retourne la valeur du digest
+	 *
 	 * @return Ambigous <boolean, unknown, string>
 	 */
 	public static function getDigest() {
@@ -44,6 +45,7 @@ class Rest {
 
 	/**
 	 * Parsing du digest
+	 *
 	 * @param $headerValue
 	 * @return array|bool
 	 */
@@ -61,8 +63,10 @@ class Rest {
 
 	/**
 	 * Login command
+	 *
 	 * @param $realm
 	 * @param $nonce
+	 * @param $session_id
 	 */
 	public static function headerAuth($realm,$nonce,$session_id) {
 		header('WWW-Authenticate: Digest realm="' . $realm . '",qop="auth",nonce="' . $nonce . '",opaque="' . $session_id . '"');
@@ -70,8 +74,11 @@ class Rest {
 
 	/**
 	 * Demande d'authentification digest
+	 *
 	 * @param $realm
 	 * @param $nonce
+	 * @param $session_id
+	 * @param array|string|null $datas
 	 */
 	public static function requireLogin($realm,$nonce,$session_id,$datas=null) {
 		self::headerAuth($realm,$nonce,$session_id);
@@ -80,6 +87,7 @@ class Rest {
 
 	/**
 	 * Porcedure de log digest
+	 *
 	 * @param $realm
 	 * @param $nonce
 	 */
@@ -110,6 +118,7 @@ class Rest {
 
 	/**
 	 * Recherche la credential d'authentification
+	 *
 	 * @param  $login
 	 * @return number
 	 */
@@ -132,6 +141,7 @@ class Rest {
 	/**
 	 * Procédure d'Authentification
 	 * Initialise / Gère les sessions
+	 *
 	 * @return boolean|object
 	 */
 	public static function authentification() {
@@ -176,7 +186,8 @@ class Rest {
 
 	/**
 	 * Reponse HTTP
-	 * @param string $datas
+	 *
+	 * @param array|string $datas
 	 * @param number $status
 	 */
 	public static function response($datas=null,$status=200) {
@@ -201,6 +212,7 @@ class Rest {
 
 	/**
 	 * Reponse 400 Bad Request
+	 *
 	 * @param string $datas
 	 */
 	public static function status400($datas=null) {
@@ -209,6 +221,7 @@ class Rest {
 
 	/**
 	 * Reponse 401 Unauthorized
+	 *
 	 * @param string $datas
 	 */
 	public static function status401($datas=null) {
@@ -217,6 +230,7 @@ class Rest {
 
 	/**
 	 * Reponse 403 - Forbidden
+	 *
 	 * @param string $datas
 	 */
 	public static function status403($datas=null) {
@@ -226,6 +240,7 @@ class Rest {
 
 	/**
 	 * Reponse 404 Not Found
+	 *
 	 * @param string $datas
 	 */
 	public static function status404($datas=null) {
@@ -234,6 +249,7 @@ class Rest {
 
 	/**
 	 * Reponse 200 OK
+	 *
 	 * @param string $datas
 	 */
 	public static function status200($datas=null) {
@@ -242,6 +258,7 @@ class Rest {
 
 	/**
 	 * Reponse 201 Created
+	 *
 	 * @param string $datas
 	 */
 	public static function status201($datas=null) {
@@ -250,6 +267,7 @@ class Rest {
 
 	/**
 	 * Reponse 202
+	 *
 	 * @param string $datas
 	 */
 	public static function status202($datas=null) {
@@ -258,6 +276,7 @@ class Rest {
 
 	/**
 	 * Reponse 204 No Content
+	 *
 	 * @param string $datas
 	 */
 	public static function status204($datas=null) {
@@ -266,6 +285,7 @@ class Rest {
 
 	/**
 	 * Reponse 500 Internal Error
+	 *
 	 * @param string $datas
 	 */
 	public static function status500($datas=null) {
