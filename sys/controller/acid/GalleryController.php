@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  Acidfarm
- * @package   Controller
+ * @package   Acidfarm\Controller
  * @version   0.1
  * @since     Version 0.4
  * @copyright 2011 ACID-Solutions SARL
@@ -18,7 +18,7 @@
 
 /**
  * Contrôleur de Galerie
- * @package   Controller
+ * @package   Acidfarm\Controller
  */
 class GalleryController {
 	

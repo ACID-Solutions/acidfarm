@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Traduction
+ * @package   Acidfarm\Traduction
  * @version   0.1
  * @since     Version 0.4
  * @copyright 2011 ACID-Solutions SARL

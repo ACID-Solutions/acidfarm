@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Core
+ * @package   Acidfarm\Core
  * @version   0.4
  * @since     Version 0.4
  * @copyright 2012 ACID-Solutions SARL
@@ -17,7 +17,7 @@
 
 /**
  * Interface de Routage
- * @package   Core
+ * @package   Acidfarm\Core
  */
  interface Acid_Router_Interface{
      

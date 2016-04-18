@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Model
+ * @package   Acidfarm\Model
  * @version   0.1
  * @since     Version 0.1
  * @copyright 2011 ACID-Solutions SARL
@@ -20,7 +20,7 @@ Acid::load('tools/mail.php');
 /**
  *
  * Outil Mailer, Override du Gestionnaire Mail
- * @package   Tool
+ * @package   Acidfarm\Tool
  *
  */
 class Mailer extends AcidMail {

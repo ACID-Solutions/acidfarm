@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   User Module
+ * @package   Acidfarm\User Module
  * @version   0.1
  * @since     Version 0.1
  * @copyright 2011 ACID-Solutions SARL
@@ -18,7 +18,7 @@
 
 /**
  * Gestion des actualités du site
- * @package   User Module
+ * @package   Acidfarm\User Module
  */
 class Actu extends AcidModule {
 	const TBL_NAME = 'actu';

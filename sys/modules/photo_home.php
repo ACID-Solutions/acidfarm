@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   User Module
+ * @package   Acidfarm\User Module
  * @version   0.1
  * @since     Version 0.1
  * @copyright 2011 ACID-Solutions SARL
@@ -18,7 +18,7 @@
 
 /**
  * Gestion de la galerie photo de la homepage
- * @package   User Module
+ * @package   Acidfarm\User Module
  */
 class PhotoHome extends AcidModule {
 	const TBL_NAME = 'photo_home';

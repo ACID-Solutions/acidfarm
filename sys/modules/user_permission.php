@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   User Module
+ * @package   Acidfarm\User Module
  * @version   0.1
  * @since     Version 0.4
  * @copyright 2011 ACID-Solutions SARL
@@ -20,7 +20,7 @@
  * Gestion des permissions utilisateurs
  * Les permissions permettre à un utilisateur, groupe ou niveau d'utilisateur d'outrepasser ses droits sur les ACL d'un module
  * Pour connaitre les droits d'un utilisateur sur un module, il faut prendre en compte ce que les ACL de ce module lui permettent, puis y rajouter ses permissions 
- * @package   User Module
+ * @package   Acidfarm\User Module
  */
 class UserPermission extends AcidModule {
 	const TBL_NAME = 'user_permission';

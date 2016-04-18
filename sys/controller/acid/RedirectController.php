@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  Acidfarm
- * @package   Controller
+ * @package   Acidfarm\Controller
  * @version   0.1
  * @since     Version 0.7
  * @copyright 2011 ACID-Solutions SARL
@@ -17,7 +17,7 @@
 
 /**
  * Contrôleur de Redirections
- * @package   Controller
+ * @package   Acidfarm\Controller
  */
 class RedirectController{
 

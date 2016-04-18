@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Model
+ * @package   Acidfarm\Model
  * @version   0.1
  * @since     Version 0.5
  * @copyright 2011 ACID-Solutions SARL
@@ -17,7 +17,7 @@
 
 /**
  * Géneration des URL du site
- * @package   Model
+ * @package   Acidfarm\Model
  */
 class Route {
 

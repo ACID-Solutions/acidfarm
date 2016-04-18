@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Core
+ * @package   Acidfarm\Core
  * @version   0.1
  * @since     Version 0.1
  * @copyright 2011 ACID-Solutions SARL
@@ -26,7 +26,7 @@
 
 /**
  * Utilitaire de  base de données
- * @package   Core
+ * @package   Acidfarm\Core
  *
  */
 class AcidDB {

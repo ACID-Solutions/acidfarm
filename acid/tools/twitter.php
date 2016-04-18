@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Tool
+ * @package   Acidfarm\Tool
  * @version   0.5
  * @since     Version 0.5
  * @copyright 2012 ACID-Solutions SARL
@@ -19,7 +19,7 @@
 
 /**
  * Classe de partage sur le réseau social Twitter.com
- * @package   Tool
+ * @package   Acidfarm\Tool
  */
 class AcidTwitter {
 	

@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Config
+ * @package   Acidfarm\Config
  * @version   0.1
  * @since     Version 0.1
  * @copyright 2011 ACID-Solutions SARL

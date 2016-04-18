@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Tool
+ * @package   Acidfarm\Tool
  * @version   0.1
  * @since     Version 0.1
  * @copyright 2011 ACID-Solutions SARL
@@ -19,7 +19,7 @@
 
 /**
  * Outil AcidBrowser, Gestionnaire de navigateur multimedia
- * @package   Tool
+ * @package   Acidfarm\Tool
  */
 class AcidBrowser {
 

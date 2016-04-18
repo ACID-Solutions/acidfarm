@@ -6,7 +6,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   User Module
+ * @package   Acidfarm\User Module
  * @version   0.1
  * @since     Version 0.5
  * @copyright 2011 ACID-Solutions SARL
@@ -16,7 +16,7 @@
 
 /**
  * Permet à l'utilisateur d'altérer tous les AcidModule
- * @package   User Module
+ * @package   Acidfarm\User Module
  */
 abstract class AcidModule extends AcidModuleCore {
 

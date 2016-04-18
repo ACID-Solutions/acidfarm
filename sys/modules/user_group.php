@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   User Module
+ * @package   Acidfarm\User Module
  * @version   0.1
  * @since     Version 0.4
  * @copyright 2011 ACID-Solutions SARL
@@ -17,7 +17,7 @@
 
 /**
  * Gestion des groupes utilisateurs
- * @package   User Module
+ * @package   Acidfarm\User Module
  */
 class UserGroup extends AcidModule {
 	

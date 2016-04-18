@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   User Module
+ * @package   Acidfarm\User Module
  * @version   0.2
  * @since     Version 0.1
  * @copyright 2011 ACID-Solutions SARL
@@ -17,7 +17,7 @@
 
 /**
  * Module Page de l'utilisateur
- * @package   User Module
+ * @package   Acidfarm\User Module
  */
 class Page extends AcidModule {
 	const TBL_NAME = 'page';

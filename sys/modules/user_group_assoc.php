@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   User Module
+ * @package   Acidfarm\User Module
  * @version   0.1
  * @since     Version 0.4
  * @copyright 2011 ACID-Solutions SARL
@@ -17,7 +17,7 @@
 
 /**
  * Gère l'association Utilisateur/Groupe d'utilisateur
- * @package   User Module
+ * @package   Acidfarm\User Module
  */
 class UserGroupAssoc extends AcidModule {
 	const TBL_NAME = 'user_group_assoc';

@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Module
+ * @package   Acidfarm\Module
  * @version   0.1
  * @since     Version 0.1
  * @copyright 2011 ACID-Solutions SARL
@@ -19,7 +19,7 @@
 
 /**
  * Module AcidUser, Gestionnaire d'utilisateurs
- * @package   Module
+ * @package   Acidfarm\Module
  */
 abstract class AcidUser extends AcidModule {
 

@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Tool
+ * @package   Acidfarm\Tool
  * @version   0.1
  * @since     Version 0.1
  * @copyright 2011 ACID-Solutions SARL
@@ -18,7 +18,7 @@
 
 /**
  * Outil AcidTimer, Gestionnaire de chronomètres.
- * @package   Tool
+ * @package   Acidfarm\Tool
  */
 class AcidTimer {
 	

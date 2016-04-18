@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Core
+ * @package   Acidfarm\Core
  * @version   0.4
  * @since     Version 0.4
  * @copyright 2012 ACID-Solutions SARL
@@ -19,7 +19,7 @@ require_once 'interface/acid_router_interface.php';
 
 /**
  * Classe de Routage : contrôleur de route
- * @package   Core
+ * @package   Acidfarm\Core
  */
 class AcidRouter implements Acid_Router_Interface{
 

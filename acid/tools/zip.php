@@ -6,7 +6,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Tool
+ * @package   Acidfarm\Tool
  * @version   0.1
  * @since     Version 0.3
  * @copyright 2011 ACID-Solutions SARL
@@ -16,7 +16,7 @@
 
 /**
  * GENERATEUR ZIP PHPMYADMIN
- * @package   Tool
+ * @package   Acidfarm\Tool
  */
 class zipfile
 { 
@@ -151,7 +151,7 @@ class zipfile
 
 /**
  * ACIDZIP
- * @package   Tool
+ * @package   Acidfarm\Tool
  */
 class AcidZip {
 

@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Model
+ * @package   Acidfarm\Model
  * @version   0.1
  * @since     Version 0.4
  * @copyright 2011 ACID-Solutions SARL
@@ -18,7 +18,7 @@
 
 /**
  * Outils d'assistance dans le contexte AJAX
- * @package   Model
+ * @package   Acidfarm\Model
  */
 class Ajax {
 	

@@ -6,7 +6,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Model / View
+ * @package   Acidfarm\ModelView
  * @version   0.1
  * @since     Version 0.3
  * @copyright 2011 ACID-Solutions SARL
@@ -16,7 +16,7 @@
 
 /**
  * Librairies de fonctions liées au thème du site
- * @package   Model / View
+ * @package   Acidfarm\ModelView
  */
 class FuncCore {
 

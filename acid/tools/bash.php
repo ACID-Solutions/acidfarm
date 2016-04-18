@@ -6,7 +6,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Tool
+ * @package   Acidfarm\Tool
  * @version   0.1
  * @since     Version 0.5
  * @copyright 2011 ACID-Solutions SARL
@@ -16,7 +16,7 @@
 
 /**
  * Outils Bash en PHP
- * @package   Tool
+ * @package   Acidfarm\Tool
  */
 class AcidBash {
 

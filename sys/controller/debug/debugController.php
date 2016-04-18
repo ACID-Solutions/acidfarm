@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Controller
+ * @package   Acidfarm\Controller
  * @version   0.1
  * @since     Version 0.1
  * @copyright 2011 ACID-Solutions SARL
@@ -20,7 +20,7 @@
  * Controller de debug 
  * Egalement utilisé comme exemple d'utilisation d'un controller dans une autre arborescence 
  * Exemple d'appel : AcidRouter::addRoute('debugroute', new AcidRoute('@debug',array('module'=>'debug','controller'=>'DebugController','action'=>'maFctAction')));
- * @package   Controller
+ * @package   Acidfarm\Controller
  */
 class DebugController {
 	

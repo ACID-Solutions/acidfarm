@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Core
+ * @package   Acidfarm\Core
  * @version   0.1
  * @since     Version 0.6
  * @copyright 2011 ACID-Solutions SARL
@@ -25,7 +25,7 @@
 
 /**
  * Utilitaire de Hook
- * @package   Core
+ * @package   Acidfarm\Core
  */
 class AcidHook {
 

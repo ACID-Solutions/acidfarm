@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Core
+ * @package   Acidfarm\Core
  * @version   0.1
  * @since     Version 0.5
  * @copyright 2011 ACID-Solutions SARL
@@ -20,7 +20,7 @@ if (file_exists($acid['core']['module']['path'])) {
 }else{
 	/**
 	 * Permet la modification utilisateur de l'ensemble des AcidModule
-	 * @package   User Module
+	 * @package   Acidfarm\User Module
 	 */
 	abstract class AcidModule extends AcidModuleCore {}
 }
@@ -30,7 +30,7 @@ if (file_exists($acid['core']['mail']['path'])) {
 }else{
 	/**
 	 * Permet l'envoi d'emails
-	 * @package   Tools
+	 * @package   Acidfarm\Tools
 	 */
 	abstract class Mailer extends AcidMail {}
 }

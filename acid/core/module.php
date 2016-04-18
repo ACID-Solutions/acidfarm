@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Core
+ * @package   Acidfarm\Core
  * @version   0.2
  * @since     Version 0.1
  * @copyright 2011 ACID-Solutions SARL
@@ -18,7 +18,7 @@
 
 /**
  * Module Acidfarm
- * @package   Core
+ * @package   Acidfarm\Core
  *
  */
 abstract class AcidModuleCore {

@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Core
+ * @package   Acidfarm\Core
  * @version   0.4
  * @since     Version 0.4
  * @copyright 2012 ACID-Solutions SARL
@@ -17,7 +17,7 @@
 
 /**
  * Classe de Routage : configuration de route
- * @package   Core
+ * @package   Acidfarm\Core
  */
 class AcidRoute{
 

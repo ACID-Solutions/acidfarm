@@ -6,7 +6,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Tests
+ * @package   Acidfarm\Tests
  * @version   0.1
  * @since     Version 0.8
  * @copyright 2011 ACID-Solutions SARL

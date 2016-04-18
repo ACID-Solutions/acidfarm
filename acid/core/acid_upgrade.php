@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Core
+ * @package   Acidfarm\Core
  * @version   0.1
  * @since     Version 0.1
  * @copyright 2011 ACID-Solutions SARL
@@ -36,7 +36,7 @@
  * 	$my_upgrade = new new AcidUpgrade('upgrade');
  *	$my_upgrade->launchUpgrade();
  *
- * @package   Core
+ * @package   Acidfarm\Core
  */
 class AcidUpgrade {
 

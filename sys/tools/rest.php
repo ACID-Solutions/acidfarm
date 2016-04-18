@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package   Model
+ * @package   Acidfarm\Model
  * @version   0.1
  * @since     Version 0.7
  * @copyright 2011 ACID-Solutions SARL
@@ -18,7 +18,7 @@
 
 /**
  * Librairie de fonctions REST
- * @package   Model
+ * @package   Acidfarm\Model
  */
 class Rest {
 
