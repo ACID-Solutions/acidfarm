@@ -21,9 +21,24 @@
  */
 class AdminController{
 
+	/**
+	 * @var array Liste des élements du menu
+	 */
 	public static $menu = array();
+
+	/**
+	 * @var array Liste des catégories du menu
+	 */
 	public static $menucat = array();
+
+	/**
+	 * @var array Liste des controllers incluant leurs droits d'accès
+	 */
 	public static $controller = array();
+
+	/**
+	 * @var array Liste des méthodes personnalisées
+	 */
 	public static $functions = array();
 
 

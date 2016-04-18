@@ -74,13 +74,15 @@ class AcidBrowser {
 	const UNAUTHORIZED_PATH = '`(^\.\./)|(^\.\.$)|(/\.\./)|(\.\.$)`';
 	const UNAUTHORIZED_NAME = '`[\\\\/:*?"<>|]`';
 
+
 	/**
 	 * Constructeur AcidBrowser
-	 *
-	 * @param string $path Chemin associé au navigateur.
-	 * @param bool $absolute True si le chemin est absolu. - Défaut : false
-	 * @param string $acl acl personnalisé
-	 * @param string $plugin
+	 * @param string $path chemin associé au navigateur.
+	 * @param bool|false $absolute si true, le chemin est absolu. - Défaut : false
+	 * @param null $acl acl personnalisé
+	 * @param null string $plugin plugin associé
+	 * @param null $key clé dom
+	 * @param null $img_path chemin vers le dossier d'images
 	 */
 	public function __construct($path,$absolute=false,$acl=null,$plugin=null,$key=null,$img_path=null) {
 		global $acid,$css_theme;

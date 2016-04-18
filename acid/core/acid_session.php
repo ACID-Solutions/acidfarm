@@ -99,7 +99,9 @@ class AcidSession {
 	/**
 	 * Créer ou récupére la session en cours.
 	 *
-	 * @return object
+	 * @param array|null $cookie pour simuler les données de $_COOKIE
+	 * @param bool|true $savecookie si true, met à jour le cookie de session
+	 * @return AcidSession|object
 	 */
 	public static function getInstance($cookie=null,$savecookie=true) {
 

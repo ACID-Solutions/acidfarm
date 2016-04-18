@@ -7,7 +7,7 @@
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
  * @category  AcidFarm
- * @package Vars
+ * @package   Acidfarm/Vars
  * @version   0.1
  * @since     Version 0.1
  * @copyright 2011 ACID-Solutions SARL
@@ -17,7 +17,7 @@
 
 /**
  * Classe modèle AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVar {
 
@@ -499,7 +499,7 @@ class AcidVar {
 
 /**
  * Variante "Chaîne de caractères" d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarString extends AcidVar {
 
@@ -673,7 +673,7 @@ class AcidVarString extends AcidVar {
 
 /**
  * Variante paramètre invisible d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarHidden extends AcidVar {
 
@@ -713,7 +713,7 @@ class AcidVarHidden extends AcidVar {
 
 /**
  * Variante Décimale d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarFloat extends AcidVar {
 
@@ -752,7 +752,7 @@ class AcidVarFloat extends AcidVar {
 
 /**
  * Variante Nombre Entier d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarInteger extends AcidVar {
 
@@ -789,7 +789,7 @@ class AcidVarInteger extends AcidVar {
 
 /**
  * Variante TextArea d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarTextarea extends AcidVar {
 
@@ -825,7 +825,7 @@ class AcidVarTextarea extends AcidVar {
 
 /**
  * Variante Texte d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarText extends AcidVarTextarea {
 	/**
@@ -842,7 +842,7 @@ class AcidVarText extends AcidVarTextarea {
 
 /**
  * Variante Medium Texte d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarMediumText extends AcidVarTextarea {
 	/**
@@ -859,7 +859,7 @@ class AcidVarMediumText extends AcidVarTextarea {
 
 /**
  * Variante Long Texte d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarLongText extends AcidVarTextarea {
 	/**
@@ -876,7 +876,7 @@ class AcidVarLongText extends AcidVarTextarea {
 
 /**
  * Variante "Chaîne de caractères" d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarInfo extends AcidVar {
 
@@ -893,7 +893,7 @@ class AcidVarInfo extends AcidVar {
 
 /**
  * Variante Heure d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarTime extends AcidVarString {
 
@@ -925,7 +925,7 @@ class AcidVarTime extends AcidVarString {
 
 /**
  * Variante Date d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarDate extends AcidVarString {
 
@@ -957,7 +957,7 @@ class AcidVarDate extends AcidVarString {
 
 /**
  * Variante Date Time d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarDateTime extends AcidVarString {
 
@@ -989,7 +989,7 @@ class AcidVarDateTime extends AcidVarString {
 
 /**
  * Variante Email d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarEmail extends AcidVarString {
 	/**
@@ -1004,7 +1004,7 @@ class AcidVarEmail extends AcidVarString {
 
 /**
  * Variante Url d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarUrl extends AcidVarString {
 	/**
@@ -1021,7 +1021,7 @@ class AcidVarUrl extends AcidVarString {
 
 /**
  * Variante RVB d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarRVB extends AcidVarString {
 	/**
@@ -1036,7 +1036,7 @@ class AcidVarRVB extends AcidVarString {
 
 /**
  * Variante Mot de Passe d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarPassword extends AcidVarString {
 
@@ -1082,7 +1082,7 @@ class AcidVarPassword extends AcidVarString {
 
 /**
  * Variante Fichier d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarFile extends AcidVarString {
 
@@ -1560,7 +1560,7 @@ class AcidVarFile extends AcidVarString {
 
 /**
  * Variante Image d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarImage extends AcidVarFile {
 
@@ -2003,7 +2003,7 @@ class AcidVarImage extends AcidVarFile {
 
 /**
  * Autre Variante Int d'AcidVar ( Clonée Base de Données )
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarInt extends AcidVarInteger {
 
@@ -2021,7 +2021,7 @@ class AcidVarInt extends AcidVarInteger {
 
 /**
  * Autre Variante TinyInt d'AcidVar ( Clonée Base de Données )
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarTinyInt extends AcidVarInteger {
 	/**
@@ -2038,7 +2038,7 @@ class AcidVarTinyInt extends AcidVarInteger {
 
 /**
  * Autre Variante SmallInt d'AcidVar ( Clonée Base de Données )
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarSmallInt extends AcidVarInteger {
 
@@ -2056,7 +2056,7 @@ class AcidVarSmallInt extends AcidVarInteger {
 
 /**
  * Autre Variante MediumInt d'AcidVar ( Clonée Base de Données )
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarMediumInt extends AcidVarInteger {
 
@@ -2074,7 +2074,7 @@ class AcidVarMediumInt extends AcidVarInteger {
 
 /**
  * Autre Variante BigInt d'AcidVar ( Clonée Base de Données )
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarBigInt extends AcidVarInteger {
 
@@ -2092,7 +2092,7 @@ class AcidVarBigInt extends AcidVarInteger {
 
 /**
  * Autre Variante Booléenne d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarBool extends AcidVarInteger {
 
@@ -2120,7 +2120,7 @@ class AcidVarBool extends AcidVarInteger {
 
 /**
  * Variante Liste d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarList extends AcidVar {
 
@@ -2212,7 +2212,7 @@ class AcidVarList extends AcidVar {
 
 /**
  * Variante Radio d'AcidVar
- * @package Vars
+ * @package   Acidfarm/Vars
  */
 class AcidVarRadio extends AcidVar {
 

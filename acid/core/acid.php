@@ -270,9 +270,10 @@ class Acid {
 	 *  Si le fichier n'existe pas dans le theme courant, on retourne le chemin vers le fichier par défaut.
 	 *
 	 * @param string $file
-	 * @param array $sources
-	 * @param boolean $relative si false, chemin complet vers le fichier
-	 * @return string
+	 * @param array | null $sources liste des sources à verifier (par défaut : array('current','default','acid'))
+	 * @param bool|false $relative si false, chemin complet vers le fichier
+	 * @param bool|false $dir si true, on recherche un dossier au lieu d'un fichier
+	 * @return mixed|null|string
 	 */
 	public static function themePath($file,$sources=null,$relative=false,$dir=false) {
 		$path = null;
@@ -336,9 +337,10 @@ class Acid {
 
 	/**
 	 * Retourne le chemin  relatif vers le fichier theme désigné en entrée.
-	  * @param string $file
+	 * @param string $file
 	 * @param array $sources
-	 * @return Ambigous <string, NULL>
+	 * @param bool|false $dir si true, on recherche un dossier au lieu d'un fichier
+	 * @return mixed|null|string
 	 */
 	public static function themeUrl($file,$sources=null,$dir=false) {
 		return self::themePath($file,$sources,true,$dir);
