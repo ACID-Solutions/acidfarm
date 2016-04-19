@@ -359,6 +359,7 @@ $ldev_quote\$acid['sass']['mode'] = 'dev';
 
 //Sentry url for supervision, need Raven (ex : composer require raven/raven)
 //\$acid['sentry']['url'] = '';
+//\$acid['sentry']['report_level'] = E_ALL;
 
 EOT;
 

@@ -19,9 +19,11 @@ if (Acid::get('sentry:url')) {
     try {
             $client = new Raven_Client(Acid::get('sentry:url'));
 
+            $sentry_report_level = ( (Acid::exists('sentry:url') ? Acid::get('sentry:url') : -1 ) );
+
             $error_handler = new Raven_ErrorHandler($client);
             $error_handler->registerExceptionHandler();
-            $error_handler->registerErrorHandler();
+            $error_handler->registerErrorHandler(true, $sentry_report_level);
             $error_handler->registerShutdownFunction();
 
             $client->user_context(User::curUser()->getVals());
