@@ -377,6 +377,15 @@ EOT;
 		$htaccess_vress = 	$htaccess_vress_quote.'RewriteRule (.+)-([0-9]+).js$ $1.js [L,QSA]'. "\n" .
 							$htaccess_vress_quote.'RewriteRule (.+)-([0-9]+).css$ $1.css [L,QSA]' . "\n" ;
 
+		$htaccessMaintenance = <<< HTACC
+#RewriteCond %{REMOTE_ADDR} !^123\.456\.789\.000
+RewriteCond %{DOCUMENT_ROOT}{$folder}maintenance.html -f
+RewriteCond %{DOCUMENT_ROOT}{$folder}maintenance.enable -f
+RewriteCond %{SCRIPT_FILENAME} !{$folder}maintenance.html
+RewriteRule ^.*$ {$folder}maintenance.html [R=503,L]
+ErrorDocument 503 {$folder}maintenance.html
+HTACC;
+
 		$htaccess = <<< HTACC
 # Charset
 AddDefaultCharset UTF-8
@@ -385,6 +394,9 @@ $htaccessOVH
 
 # URL Rewriting
 RewriteEngine on
+
+
+
 $htaccess_vress
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
@@ -399,6 +411,7 @@ $htaccessOVH
 
 # URL Rewriting
 RewriteEngine on
+$htaccessMaintenance
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ {$folder}rest/index.php?acid_nav=$1 [L,QSA]

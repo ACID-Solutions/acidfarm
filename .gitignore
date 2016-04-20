@@ -45,5 +45,9 @@ bower_components
 #npm
 node_modules/
 
+#maintenance
+/maintenance.html
+/maintenance.enable
+
 #codeception
 /sys/tests/codeception/_output/*
