@@ -22,20 +22,51 @@ tinyMCE.init({
 			fontsize_formats: "8px 11px 12px 13px 14px 16px 18px 22px 24px 26px 32px 48px",
 		    toolbar: "insertfile undo redo | styleselect fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
 			body_class : "content_body",
-			content_css : "<?php echo Acid::get('sass:used') ? AcidTemplate::sassUrl('tiny-mce') : Acid::themeUrl('css/tiny-mce.css'); ?>",
+			content_css : "<?php echo Acid::get('sass:used') ? AcidTemplate::sassUrl('tiny-mce') : Acid::themeUrl('css/tiny-mce.css'); ?>"
 			/*
-			,style_formats: [
-				{title: 'Titre 1', block: 'h2', styles: {color: '#FF8A00', fontSize: '25px', fontWeight :'normal', margin:'0px', marginnBottom:'15px'}},
-				{title: 'Titre 2', block: 'h3', styles: {color: '#2B3144', fontSize: '17px', fontWeight :'normal', margin:'0px', marginnBottom:'10px'}},
-				{title: 'Titre 3', block: 'h4', styles: {color: '#000000', fontSize: '13px', fontWeight :'bold', fontStyle :'normal', margin:'0px', marginnBottom:'10px'}},
-				{title: 'Sous Titre 1', block: 'h4', styles: {color: '#747474', fontSize: '14px', fontStyle :'italic', fontWeight :'normal', margin:'0px', marginBottom:'15px'}},
-				{title: 'Sous Titre 2', block: 'h5', styles: {color: '#C2C2C2', fontSize: '13px', fontStyle :'italic', fontWeight :'normal', margin:'0px', marginBottom:'10px'}},
-				{title: 'Information', block: 'p', styles: {color: '#747474', fontSize: '12px', fontStyle :'italic', fontWeight :'normal', margin:'0px', marginBottom:'10px'}},
-				{title: 'Block', block: 'div', styles: {border: '1px solid #354052', padding:'10px', margin:'10px 0px', color:'#000000', fontSize:'12px;'}},
-				{title: 'Noir', inline: 'span', styles: {color: '#000000'}},
-				{title: 'Gris', inline: 'span', styles: {color: '#C2C2C2'}},
-
+			 , style_formats: [
+			 {title: 'Headers', items: [
+			 {title: 'Header 1', format: 'h1'},
+			 {title: 'Header 2', format: 'h2'},
+			 {title: 'Header 3', format: 'h3'},
+			 {title: 'Header 4', format: 'h4'},
+			 {title: 'Header 5', format: 'h5'},
+			 {title: 'Header 6', format: 'h6'}
+			 ]},
+			 {title: 'Inline', items: [
+			 {title: 'Bold', icon: 'bold', format: 'bold'},
+			 {title: 'Italic', icon: 'italic', format: 'italic'},
+			 {title: 'Underline', icon: 'underline', format: 'underline'},
+			 {title: 'Strikethrough', icon: 'strikethrough', format: 'strikethrough'},
+			 {title: 'Superscript', icon: 'superscript', format: 'superscript'},
+			 {title: 'Subscript', icon: 'subscript', format: 'subscript'},
+			 {title: 'Code', icon: 'code', format: 'code'}
+			 ]},
+			 {title: 'Blocks', items: [
+			 {title: 'Paragraph', format: 'p'},
+			 {title: 'Blockquote', format: 'blockquote'},
+			 {title: 'Div', format: 'div'},
+			 {title: 'Pre', format: 'pre'}
+			 ]},
+			 {title: 'Alignment', items: [
+			 {title: 'Left', icon: 'alignleft', format: 'alignleft'},
+			 {title: 'Center', icon: 'aligncenter', format: 'aligncenter'},
+			 {title: 'Right', icon: 'alignright', format: 'alignright'},
+			 {title: 'Justify', icon: 'alignjustify', format: 'alignjustify'}
+			 ]},
+			 {title: 'Inline Styles', items: [
+			 {title: 'Titre 1', block: 'h2', styles: {color: '#FF8A00', fontSize: '25px', fontWeight :'normal', margin:'0px', marginnBottom:'15px'}},
+			 {title: 'Titre 2', block: 'h3', styles: {color: '#2B3144', fontSize: '17px', fontWeight :'normal', margin:'0px', marginnBottom:'10px'}},
+			 {title: 'Titre 3', block: 'h4', styles: {color: '#000000', fontSize: '13px', fontWeight :'bold', fontStyle :'normal', margin:'0px', marginnBottom:'10px'}},
+			 {title: 'Sous Titre 1', block: 'h4', styles: {color: '#747474', fontSize: '14px', fontStyle :'italic', fontWeight :'normal', margin:'0px', marginBottom:'15px'}},
+			 {title: 'Sous Titre 2', block: 'h5', styles: {color: '#C2C2C2', fontSize: '13px', fontStyle :'italic', fontWeight :'normal', margin:'0px', marginBottom:'10px'}},
+			 {title: 'Information', selector: 'div, p, span', styles: {color: '#747474', fontSize: '12px', fontStyle :'italic', fontWeight :'normal', margin:'0px', marginBottom:'10px'}},
+			 {title: 'Block', selector: 'div, p, span', styles: {border: '1px solid #354052', padding:'10px', margin:'10px 0px', color:'#000000', fontSize:'12px;'}},
+			 {title: 'Noir', inline: 'span', styles: {color: '#000000'}},
+			 {title: 'Gris', inline: 'span', styles: {color: '#C2C2C2'}},
+			 ]}
 			],
+
 			template_replace_values: {
 				main_color : "#1C1C1C",
 		        url_system : "<?php echo Acid::get('url:system'); ?>", //use {$url_system}

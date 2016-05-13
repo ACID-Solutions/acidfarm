@@ -16,7 +16,7 @@
  */
 
 $acid['server_theme'] = basename(realpath(__DIR__.'/..'));
-
+$acid['session']['enable'] = false;
 $directory = "stylesheets";
 require '../../../sys/glue.php';
 

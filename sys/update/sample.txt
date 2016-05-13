@@ -109,11 +109,11 @@ AcidDB::exec($req);
 <?php
 
 $init = array(
-    'contact'=>'Regards Associés',
-    'address'=> '34, rue jean rey',
-    'cp' => '78220',
-    'city' => 'VIROFLAY',
-    'phone' => '06 07 86 88 44'
+    'contact'=>'My contact',
+    'address'=> 'my adresse',
+    'cp' => '000000',
+    'city' => 'CITYNAME',
+    'phone' => '00 00 00 00 00'
 );
 SiteConfig::getCurrent()->postRemoteUpdate($init);
 

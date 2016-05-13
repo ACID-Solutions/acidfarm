@@ -76,7 +76,7 @@ CREATE TABLE IF NOT EXISTS `acid_page` (
 
 INSERT INTO `acid_page` (`id_page`, `id_page_category`, `title`, `ident`, `adate`, `content`, `seo_title`, `seo_desc`, `seo_keys`, `active`,`src`,`cache_time`) VALUES
 (1, 1, 'Home Page', 'home', '2011-12-08 12:55:33', '<p style="text-align: left;"><span id="result_box" lang="en"><strong><span class="hps">Welcome to</span> <span class="hps">the home page</span> <span class="hps">AcidFarm</span> !</strong><br /> <span class="hps">Thank you for choosing</span> <span class="hps">our solution.</span></span></p>','','','', 0, '', ''),
-(2, 0, 'AcidFarm', 'acidfarm', '2011-03-01 11:50:09', '<p>AcidFarm is a open source framework developped by Acid-Solutions SARL.</p>\r\n<p>Primarily developed for web developers who want to build a PHP Website more easily, Acidfarm was made in jully 2010.</p>\r\n<p>AcidFarm in few words :</p>\r\n<ul>\r\n<li>A Securized FrameWork</li>\r\n<li>A Lightweight FrameWork</li>\r\n<li>A Flexible Framework</li>\r\n</ul>', '','','', 1, '', '');
+(2, 0, 'AcidFarm', 'acidfarm', '2011-03-01 11:50:09', '<p>AcidFarm is an open source framework developped by Acid-Solutions SARL.</p>\r\n<p>Primarily developed for web developers who want to build a PHP Website more easily, Acidfarm was made in july 2010.</p>\r\n<p>AcidFarm in few words :</p>\r\n<ul>\r\n<li>A Securized FrameWork</li>\r\n<li>A Lightweight FrameWork</li>\r\n<li>A Flexible Framework</li>\r\n</ul>', '','','', 1, '', '');
 
 
 -- --------------------------------------------------------
