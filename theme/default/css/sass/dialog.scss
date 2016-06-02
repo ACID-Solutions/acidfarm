@@ -171,7 +171,7 @@ $couleur2:#AAAAAA;
   
   .dialog_classic {
     padding: 4px;
-    background-image: url('../img/picto_classic.png');
+    background-image: url('#{$basepath}img/picto_classic.png');
     background-repeat: no-repeat;
     background-position: right bottom;
     min-height: 22px;
@@ -179,7 +179,7 @@ $couleur2:#AAAAAA;
   
   .dialog_valid {
     padding: 4px;
-    background-image: url('../img/picto_valid.png');
+    background-image: url('#{$basepath}img/picto_valid.png');
     background-repeat: no-repeat;
     background-position: right bottom;
     min-height: 22px;
@@ -187,7 +187,7 @@ $couleur2:#AAAAAA;
   
   .dialog_error {
     padding: 2px;
-    background-image: url('../img/picto_error.png');
+    background-image: url('#{$basepath}img/picto_error.png');
     background-repeat: no-repeat;
     background-position: right bottom;
     /*min-height: 22px;*/

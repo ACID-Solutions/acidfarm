@@ -47,11 +47,11 @@
   }
 
   label input[type=radio][value='0'] + .radio_image {
-    background-image: url('#{$basepath}/img/admin/btn_switch_on.png');
+    background-image: url('#{$basepath}img/admin/btn_switch_on.png');
   }
 
   label input[type=radio][value='1'] + .radio_image {
-    background-image: url('#{$basepath}/img/admin/btn_switch_off.png');
+    background-image: url('#{$basepath}img/admin/btn_switch_off.png');
   }
 
   label input[type=radio]:checked + .radio_image {

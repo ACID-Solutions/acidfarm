@@ -130,7 +130,8 @@ class AcidMinifier {
                     }
                     if ($type=='css') {
                         $refpath = (Acid::get('url:folder').AcidFs::removeBasePath(dirname($fpath)));
-                        $sub_content = preg_replace('/url\(\s*[\'"]?\/?(.+?)[\'"]?\s*\)/i', 'url('.$refpath.'/$1)', $sub_content);
+                        //$sub_content = preg_replace('/url\(\s*[\'"]?\/?(.+?)[\'"]?\s*\)/i', 'url('.$refpath.'/$1)', $sub_content);
+                        $sub_content = preg_replace('/url\(\s*[\'"]?\.(.+?)[\'"]?\s*\)/i', 'url('.$refpath.'/.$1)', $sub_content);
                     }
                     $contents .=  "/* ".$url." */"."\n" .$sub_content. "\n" ;
                 }

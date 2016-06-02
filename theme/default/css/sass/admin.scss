@@ -84,7 +84,7 @@ hr{
     padding-bottom: 3px;
     cursor: pointer;
     height: 25px;
-    background-image: url('#{$basepath}/img/admin/btn_background.png');
+    background-image: url('#{$basepath}img/admin/btn_background.png');
     background-repeat: repeat-x;
     background-position: center left;
     border: 0px solid #000000;
@@ -189,7 +189,7 @@ hr{
   .form_subline_elt {
     float: left;
     padding: 5px 15px;
-    background-image: url('#{$basepath}/img/admin/mediatheque_separateur_vertical.png');
+    background-image: url('#{$basepath}img/admin/mediatheque_separateur_vertical.png');
     background-repeat: no-repeat;
     background-position: left center;
     height: 20px;
@@ -211,7 +211,7 @@ hr{
     display: block;
     float: left;
     margin-top: 15px;
-    background-image: url('#{$basepath}/img/admin/btn_update_background.png');
+    background-image: url('#{$basepath}img/admin/btn_update_background.png');
     background-repeat: repeat-x;
     background-position: center left;
     border: 0px solid #000000;
@@ -220,7 +220,7 @@ hr{
 
     input {
       padding-left: 30px;
-      background-image: url('#{$basepath}/img/admin/btn_update_background_tick.png');
+      background-image: url('#{$basepath}img/admin/btn_update_background_tick.png');
       background-repeat: no-repeat;
       background-position: 3px center;
       background-color: transparent;
@@ -272,7 +272,7 @@ hr{
   display:block;
   height:87px;
   color:#FFFFFF;
-  background-image:url('#{$basepath}/img/admin/header_background.png');
+  background-image:url('#{$basepath}img/admin/header_background.png');
   background-color:#919191;
   background-position:center;
   position:absolute;
@@ -296,7 +296,7 @@ hr{
 #header_content{
   background-position:right center;
   background-repeat:no-repeat;
-  background-image:url('#{$basepath}/img/admin/header_picto.png');
+  background-image:url('#{$basepath}img/admin/header_picto.png');
   margin-right:35px;
 }
 
@@ -305,7 +305,7 @@ hr{
   height:58px;
   margin-top:-58px;
   color:#FFFFFF;
-  background-image:url('#{$basepath}/img/admin/footer_background.png');
+  background-image:url('#{$basepath}img/admin/footer_background.png');
   background-color:#919191;
   background-position:center;
 }
@@ -328,7 +328,7 @@ hr{
   padding-left:60px;
   background-position:left top;
   background-repeat:no-repeat;
-  background-image:url('#{$basepath}/img/admin/footer_picto.png');
+  background-image:url('#{$basepath}img/admin/footer_picto.png');
   position:absolute;
 
   float:left;
