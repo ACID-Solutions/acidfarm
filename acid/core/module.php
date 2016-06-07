@@ -1772,7 +1772,7 @@ abstract class AcidModuleCore {
 		$obj = new $class($vals[static::tblId()]);
 		$obj->postConfigure($vals,'update',$this->getConfig());
 
-		$old = $obj;
+		$old = $class::build($obj->getVals());
 
 		if ($obj->getId()) {
 
