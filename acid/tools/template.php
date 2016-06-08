@@ -504,12 +504,12 @@ class AcidTemplate {
 
 		$output .= "\n";
 
-		if ($combine_js = $this->combineJsUrl()) {
-			$output .= '	<script type="text/javascript" src="' . $combine_js . '"></script>';
-		}
-
 		if ($combine_css = $this->combineCssUrl()) {
 			$output .= '	<link href="'.$combine_css.'" rel="stylesheet" type="text/css"/>' . "\n";
+		}
+
+		if ($combine_js = $this->combineJsUrl()) {
+			$output .= '	<script type="text/javascript" src="' . $combine_js . '"></script>';
 		}
 
 		/*
