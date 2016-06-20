@@ -212,6 +212,15 @@ class MyTemplate extends AcidTemplate {
 
 	}
 
+	/**
+	 * Active le plugin plupload pour l'upload de fichier
+	 */
+	public function jQueryImgAreaSelect() {
+		$this->addJS(Acid::get('url:folder').'js/imgareaselect/scripts/jquery.imgareaselect.min.js');
+		$this->addCss(Acid::get('url:folder').'js/imgareaselect/css/imgareaselect-default.css');
+	}
+
+
 
 	/**
 	 * Définit les variables d'environnement Acid en javascript

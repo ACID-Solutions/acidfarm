@@ -1,3 +1,4 @@
-<div class="fsb_plupload" style="position:relative;">
 
-</div>
+<?php echo Acid::tpl('tools/browser/plupload-browser-form.tpl',$v,$o); ?>
+
+<?php echo Acid::tpl('tools/browser/img-modeler-form.tpl',$v,$o); ?>

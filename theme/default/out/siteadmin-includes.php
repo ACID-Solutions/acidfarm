@@ -24,7 +24,8 @@ if (Acid::get('sass:used')) {
 
 
 $this->jQuery();
-$this->jqueryUI();
+$this->jQueryUI();
+$this->jQueryImgAreaSelect();
 $this->tinyMCE();
 $this->plupload();
 
