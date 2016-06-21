@@ -1,51 +1,79 @@
-<form id="fsb_img_modeler" method="POST" style="padding:50px; position:relative; display:none;">
-    <div style="position:absolute; top:10px; right:10px;" onclick="BrowserModeler.close();" class="fsb_img_modeler_close" >fermer</div>
+<form id="fsb_img_modeler" class="fsb_img_modeler_form" method="POST" style="display:none;">
+    <div onclick="BrowserModeler.close();" class="fsb_img_modeler_close" ><?php echo Acid::trad('browser_editor_close');  ?></div>
     <div>
         <input type="hidden"  name="fsb_do" value="modeler" />
         <input type="hidden" name="path" value="<?php  echo addslashes($v['cur_path']); ?>" />
         <div class="fsb_img_modeler" ></div>
         <div class="fsb_img_panel" style="padding:20px 0px;" >
-            <div style="padding:10px 0px;" >
+            <div>
                 <div>
-                    Image : <input type="text"  name="src" value="" style="width:50%;" />
+                    <input type="hidden"  name="src" value="" />
                 </div>
             </div>
-            <div style="padding:10px 0px;" >
+            <div>
                 <div>
-                    Prev. width : <input type="text"  name="prev_width" value="0" >
-                    Prev. height : <input type="text"  name="prev_height" value="0"  />
+                   <input type="hidden"  name="prev_width" value="0" >
+                   <input type="hidden"  name="prev_height" value="0"  />
                 </div>
                 <div>
-                    Orig. width : <input type="text"  name="real_width" value="0" />
-                    Orig. height : <input type="text"  name="real_height" value="0" />
+                   <input type="hidden"  name="real_width" value="0" />
+                   <input type="hidden"  name="real_height" value="0" />
                 </div>
                 <div>
-                    Dest. width : <input type="text"  name="dest_width" value="0"  />
-                    Dest. height : <input type="text"  name="dest_height" value="0" />
+                   <input type="hidden"  name="dest_width" value="0"  />
+                   <input type="hidden"  name="dest_height" value="0" />
                 </div>
                 <div>
-                    Out. width : <input type="text"  name="output_width" value="0"  />
-                    Out. height : <input type="text"  name="output_height" value="0" />
+
                 </div>
             </div>
-            <div style="padding:10px 0px;" >
-                Prev. x1 <input type="text"  name="prev_x_a" value="0" />
-                Prev. y1 <input type="text"  name="prev_y_a" value="0" />
-                Prev. x2 <input type="text"  name="prev_x_b" value="0" />
-                Prev. y2 <input type="text"  name="prev_y_b" value="0" />
+            <div>
+                <input type="hidden"  name="prev_x_a" value="0" />
+                <input type="hidden"  name="prev_y_a" value="0" />
+                <input type="hidden"  name="prev_x_b" value="0" />
+                <input type="hidden"  name="prev_y_b" value="0" />
             </div>
-            <div style="padding:10px 0px;" >
-                Orig. x1 <input type="text"  name="x_a" value="0" />
-                Orig. y1 <input type="text"  name="y_a" value="0" />
-                Orig. x2 <input type="text"  name="x_b" value="0" />
-                Orig. y2 <input type="text"  name="y_b" value="0" />
+            <div>
+               <input type="hidden"  name="x_a" value="0" />
+               <input type="hidden"  name="y_a" value="0" />
+               <input type="hidden"  name="x_b" value="0" />
+               <input type="hidden"  name="y_b" value="0" />
             </div>
-            <div style="padding:10px 0px;">
-                <label>Nom : <input type="text" value=""  name="dest_name" style="width:30%;"  /></label>
-                <label>Compression : <input type="text" value="0"  name="dest_comp" /></label>
-                <label>Rotation : <input type="text" value="0"  name="rotate" /></label>
+            <div class="fsb_img_modeler_panel">
+
+                <div class="fsb_img_modeler_panel_group">
+                    <label><?php echo Acid::trad('browser_editor_output_name');  ?> <input type="text" value=""  name="dest_name"  /></label>
+                </div>
+                <div class="fsb_img_modeler_panel_group">
+                    <label><?php echo Acid::trad('browser_editor_rotate');  ?> <input size="3" type="text" value="0"  name="rotate" /></label>
+                </div>
+                <div class="fsb_img_modeler_panel_group">
+                    <label><?php echo Acid::trad('browser_editor_compress');  ?> <input  size="3"  type="text" value="0"  name="dest_comp" /></label>
+                </div>
+                <div class="fsb_img_modeler_panel_group">
+                    <label>
+                        <?php echo Acid::trad('browser_editor_original_format');  ?>
+                        <span class="fsb_img_modeler_original_format" ></span>
+                    </label>
+                </div>
+                <div class="fsb_img_modeler_panel_group">
+                    <label>
+                        <?php echo Acid::trad('browser_editor_selection_format');  ?>
+                        <span class="fsb_img_modeler_selection_format" ></span>
+                    </label>
+                </div>
+                <div class="fsb_img_modeler_panel_group">
+                    <label>
+                        <?php echo Acid::trad('browser_editor_output_format');  ?>
+                        <input size="4"  type="text"  name="output_width" value="0"  />
+                        <span> x </span>
+                        <input size="4" type="text"  name="output_height" value="0" />
+                    </label>
+                </div>
+
             </div>
-            <input type="submit" value="Modeler" />
+
+            <input type="submit" value="<?php echo Acid::trad('browser_editor_edit');  ?>" />
         </div>
 
 

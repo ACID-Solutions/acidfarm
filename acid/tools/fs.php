@@ -211,7 +211,7 @@ class AcidFs
 				case 1	:	// Cas du GIF
 							$img_source = ImageCreateFromGif($src_path);
 							ImageCopyResampled($dst_source, $img_source, 0,0,$src_x,$src_y, $img_w, $img_h, $src_w, $src_h);
-							$success = ImageGif($dst_source, $dst_path,$quality);
+							$success = ImageGif($dst_source, $dst_path);
 							imagedestroy($dst_source);
 							break;
 
@@ -229,6 +229,50 @@ class AcidFs
 							$success = ImagePng($dst_source, $dst_path,$quality);
 							imagedestroy($dst_source);
 							break;
+			}
+			return $success;
+		}
+	}
+
+	/**
+	 *  Créer une replique avec rotation de l'image désignée par $src_path et la stocke en $dst_path.
+	 *
+	 * @param string $src_path
+	 * @param string $dst_path
+	 * @param float $degrees
+	 * @param int $bgd_color
+	 * @param int $ignore_transparent
+	 * @param null $quality
+	 * @return bool
+	 */
+	public static function imgRotate($src_path,$dst_path,$degrees,$bgd_color=0,$ignore_transparent = 0,$quality=null){
+		if (file_exists($src_path)) {
+			list($src_w,$src_h,$src_type) = getimagesize($src_path);
+
+
+
+			$success = true;
+			switch($src_type) {
+				case 1	:	// Cas du GIF
+					$img_source = ImageCreateFromGif($src_path);
+					$rotate = imagerotate($img_source, $degrees, $bgd_color);
+					$success = ImageGif($rotate, $dst_path);
+
+				break;
+
+				case 2	:	// Cas du JPG
+					$img_source = ImageCreateFromJpeg($src_path);
+					$rotate = imagerotate($img_source, $degrees, $bgd_color);
+					$quality = $quality===null? 100 : $quality;
+					$success = ImageJpeg($rotate, $dst_path,$quality);
+
+				break;
+
+				case 3	:	// Cas du PNG
+					$img_source = ImageCreateFromPng($src_path);
+					$rotate = imagerotate($img_source, $degrees, $bgd_color);
+					$success = ImagePng($rotate, $dst_path,$quality);
+				break;
 			}
 			return $success;
 		}

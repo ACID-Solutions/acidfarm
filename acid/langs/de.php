@@ -297,9 +297,20 @@ $lang['trad']['browser_ask_del_folder'] = 'Diesen Ordner UND SEINEN GANZEN INHAL
 $lang['trad']['browser_choose_btn']     = 'Choose';
 $lang['trad']['browser_change_btn']     = 'Den';
 $lang['trad']['browser_change_name']    = 'Den Namen verändern';
+$lang['trad']['browser_editor_btn']     		= 'Herausgeber';
+$lang['trad']['browser_editor_edit']   			= 'Bearbeiten';
+$lang['trad']['browser_editor_close']     		= 'Schließen';
+$lang['trad']['browser_editor_output_name']    	= 'Ausgabe Name';
+$lang['trad']['browser_editor_output_format']   = 'Bildgröße';
+$lang['trad']['browser_editor_original_format']   = 'Image size';
+$lang['trad']['browser_editor_selection_format']   = 'Auswahl Größe';
+$lang['trad']['browser_editor_rotate']    		= 'Drehung';
+$lang['trad']['browser_editor_compress']    	= 'Kompression';
 $lang['trad']['browser_cancel']         = 'Cancel';
 $lang['trad']['browser_delete']         = 'Löschen';
 $lang['trad']['browser_upload_file']    = 'Uploader Datei';
+$lang['trad']['browser_editor_ask_output_name']    		= 'Bitte geben Sie einen Ausgabenamen .';
+$lang['trad']['browser_editor_ask_output_override']    	= '__NAME__ Bereits vorhanden ist, wollen Sie sie überschreiben ?';
 
 //--Url
 $lang['trad']['url_access_denied']   = 'Zugang nicht erlaubt';

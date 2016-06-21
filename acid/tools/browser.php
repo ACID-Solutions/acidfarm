@@ -263,79 +263,108 @@ class AcidBrowser {
 
 		if (isset($attrs['path']) && isset($attrs['src']) && !empty($attrs['dest_name'])) {
 
-				$src_path = SITE_PATH. AcidFs::removeBasePath(urldecode($attrs['src']));
-				$dst_path = dirname($src_path) . '/'. $attrs['dest_name'];
+			$src_path = SITE_PATH. AcidFs::removeBasePath(urldecode($attrs['src']));
+			$dst_path = dirname($src_path) . '/'. $attrs['dest_name'];
 
 
-				$file_ok = false;
+			$file_ok = false;
 
-			echo realpath(dirname($dst_path)) . ' v '. realpath($this->base_path . $this->cur_path . $attrs['path']);
-				if (strpos(realpath($src_path), realpath($this->base_path . $this->cur_path . $attrs['path']))===0) {
-					if (strpos(realpath(dirname($dst_path)), realpath($this->base_path . $this->cur_path . $attrs['path']))===0) {
-						if (is_file($src_path) && AcidFs::getExtension($src_path) == AcidFs::getExtension($dst_path)) {
-							list($src_w,$src_h,$src_type) = getimagesize($src_path);
-							$file_ok = true;
-						}
+
+			if (strpos(realpath($src_path), realpath($this->base_path . $this->cur_path . $attrs['path']))===0) {
+				if (strpos(realpath(dirname($dst_path)), realpath($this->base_path . $this->cur_path . $attrs['path']))===0) {
+					if (is_file($src_path) && AcidFs::getExtension($src_path) == AcidFs::getExtension($dst_path)) {
+						list($src_w,$src_h,$src_type) = getimagesize($src_path);
+						$file_ok = true;
 					}
 				}
+			}
 
 
-				if ($file_ok) {
+			if ($file_ok) {
 
-						if (!empty($attrs['dest_width']) && !empty($attrs['dest_height'])) {
-							if (!empty($src_w) && !empty($src_h)  && !empty($src_type)) {
+				if (!empty($attrs['dest_width']) && !empty($attrs['dest_height'])) {
 
-								$quality = null;
-								$dst_width = $attrs['dest_width'];
-								$dst_height = $attrs['dest_height'];
-								$output_width = $dst_width;
-								$output_height = $dst_height;
-								$start_x = 0;
-								$start_y = 0;
+					if (!empty($src_w) && !empty($src_h)  && !empty($src_type)) {
 
-								if (!empty($attrs['output_width'])) {
-									$output_width = $attrs['output_width'];
-								}
+						$quality = null;
+						$dst_width = $attrs['dest_width'];
+						$dst_height = $attrs['dest_height'];
+						$output_width = $dst_width;
+						$output_height = $dst_height;
+						$start_x = 0;
+						$start_y = 0;
 
-								if (!empty($attrs['output_height'])) {
-									$output_height = $attrs['output_height'];
-								}
-
-
-								if (isset($attrs['x_a']) && isset($attrs['y_a'])) {
-									$start_x = $attrs['x_a'];
-									$start_y = $attrs['y_a'];
-								}
-
-								//gestion du taux de compression
-								if (!empty($attrs['dest_comp'])) {
-									$quality = 100 - $attrs['dest_comp'];
-									$quality = $quality < 0 ? 0 : $quality;
-								}
-
-
-
-								//modelage de la nouvelle image
-								AcidFS::imgResize(
-									$src_path,
-									$dst_path,
-									$output_width,
-									$output_height,
-									$dst_width,
-									$dst_height,
-									$src_type,
-									$start_x,
-									$start_y,
-									$quality
-								);
-
-							}
-
+						if (!empty($attrs['output_width'])) {
+							$output_width = $attrs['output_width'];
 						}
+
+						if (!empty($attrs['output_height'])) {
+							$output_height = $attrs['output_height'];
+						}
+
+
+						if (isset($attrs['x_a']) && isset($attrs['y_a'])) {
+							$start_x = $attrs['x_a'];
+							$start_y = $attrs['y_a'];
+						}
+
+						//gestion du taux de compression
+						if (!empty($attrs['dest_comp'])) {
+							$quality = 100 - $attrs['dest_comp'];
+							$quality = $quality < 0 ? 0 : $quality;
+						}
+
+
+
+						//modelage de la nouvelle image
+						AcidFS::imgResize(
+							$src_path,
+							$dst_path,
+							$output_width,
+							$output_height,
+							$dst_width,
+							$dst_height,
+							$src_type,
+							$start_x,
+							$start_y,
+							$quality
+						);
+
+						//la compression a déjà été traitée
+						$quality = null;
+
+						//la cible est la désormais la nouvelle image
+						$src_path = $dst_path;
+
+					}
 
 				}
 
+				//si rotation
+				if (!empty($attrs['rotate'])) {
+
+					//gestion du taux de compression
+					if (!empty($attrs['dest_comp'])) {
+						$quality = 100 - $attrs['dest_comp'];
+						$quality = $quality < 0 ? 0 : $quality;
+					}
+
+					//rotation de la nouvelle image
+					AcidFS::imgRotate(
+						$src_path,
+						$dst_path,
+						(float)$attrs['rotate'],
+						0,
+						0,
+						$quality
+					);
+
+				}
+
+			}
+
 		}
+
 	}
 
 	/**

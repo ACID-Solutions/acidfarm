@@ -293,9 +293,21 @@ $lang['trad']['browser_ask_new_name']   = 'Nouveau nom';
 $lang['trad']['browser_ask_del_file']   = 'Supprimer ce fichier ?';
 $lang['trad']['browser_ask_del_folder'] = 'Supprimer ce dossier ET TOUT SON CONTENU ?';
 
-$lang['trad']['browser_choose_btn']     = 'Choisir';
-$lang['trad']['browser_change_btn']     = 'Modifier';
-$lang['trad']['browser_change_name']    = 'Modifier le nom';
+$lang['trad']['browser_choose_btn']     		= 'Choisir';
+$lang['trad']['browser_change_btn']     		= 'Modifier';
+$lang['trad']['browser_change_name']    		= 'Modifier le nom';
+$lang['trad']['browser_editor_btn']     		= 'Editeur';
+$lang['trad']['browser_editor_edit']   			= 'Editer';
+$lang['trad']['browser_editor_close']     		= 'Fermer';
+$lang['trad']['browser_editor_output_name']    	= 'Nom de sortie';
+$lang['trad']['browser_editor_output_format']   = 'Dimensions de sortie';
+$lang['trad']['browser_editor_original_format']   = 'Dimensions de l\'image';
+$lang['trad']['browser_editor_selection_format']   = 'Dimensions de la sélection';
+$lang['trad']['browser_editor_rotate']    		= 'Rotation';
+$lang['trad']['browser_editor_compress']    	= 'Compression';
+$lang['trad']['browser_editor_ask_output_name']    		= 'Veuillez saisir un nom de sortie.';
+$lang['trad']['browser_editor_ask_output_override']    	= '__NAME__ existe déjà, voulez-vous l\'écraser ?';
+
 $lang['trad']['browser_cancel']         = 'Annuler';
 $lang['trad']['browser_delete']         = 'Supprimer';
 $lang['trad']['browser_upload_file']    = 'Uploader Fichier';

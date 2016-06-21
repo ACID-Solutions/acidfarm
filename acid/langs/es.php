@@ -296,9 +296,20 @@ $lang['trad']['browser_ask_del_folder'] = '¿ Suprimir este dossier Y TODO EL CO
 $lang['trad']['browser_choose_btn']     = 'Choose';
 $lang['trad']['browser_change_btn']     = 'Modificar';
 $lang['trad']['browser_change_name']    = 'Modificar el nombre';
+$lang['trad']['browser_editor_btn']     		= 'Editor';
+$lang['trad']['browser_editor_edit']   			= 'Editar';
+$lang['trad']['browser_editor_close']     		= 'Cerca';
+$lang['trad']['browser_editor_output_name']    	= 'Nombre de salida';
+$lang['trad']['browser_editor_output_format']   = 'Dimensiones de salida';
+$lang['trad']['browser_editor_original_format']   = 'Tamaño de la imagen';
+$lang['trad']['browser_editor_selection_format']   = 'Tamaño de la selección';
+$lang['trad']['browser_editor_rotate']    		= 'Rotación';
+$lang['trad']['browser_editor_compress']    	= 'Compresión';
 $lang['trad']['browser_cancel']         = 'Cancel';
 $lang['trad']['browser_delete']         = 'Surpimir';
 $lang['trad']['browser_upload_file']    = 'Uploader Fichero';
+$lang['trad']['browser_editor_ask_output_name']    		= 'Por favor, introduzca un nombre de salida.';
+$lang['trad']['browser_editor_ask_output_override']    	= '__NAME__ Ya existe, ¿desea sobrescribirlo?';
 
 //--Url
 $lang['trad']['url_access_denied']   = 'Acceso no autorizado';

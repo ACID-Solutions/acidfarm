@@ -11,11 +11,18 @@
                 var img = $(this).find('.fsb_belt_img img');
                 if (img.length) {
 
-                    $(this).find('.fsb_belt_file_action').append('<a onclick="BrowserModeler.call(\'' + img.attr('src') + '\', \'' + img.attr('alt') + '\');" >Editeur</a>');
+                    var btn = '' +
+                    '<a href="#" title="<?php echo Acid::trad('browser_editor_btn'); ?>" '+
+                    'onclick="BrowserModeler.call(\'' + img.attr('src') + '\', \'' + img.attr('alt') + '\'); return false;">'+
+                       '<img src="<?php echo Acid::themeUrl('img/admin/fsb/modify_m.png'); ?>" alt="" />' +
+                       ' <?php echo Acid::trad('browser_editor_btn'); ?>'+
+                    '</a>';
+                    $(this).find('.fsb_belt_file_action').append(btn);
                 }
             });
 
             $(BrowserModeler.target).find('[name=output_width], [name=output_height]').on('change', BrowserModeler.outputChange);
+            $(BrowserModeler.target).on('submit', BrowserModeler.submit);
         },
 
         call: function (img, name) {
@@ -25,7 +32,7 @@
             loader = new Image();
             loader.src = img;
             loader.onload = function () {
-                $(BrowserModeler.target).find('.fsb_img_modeler').html('<img src="' + loader.src + '" alt="modeler image" style="max-width:100%" />');
+                $(BrowserModeler.target).find('.fsb_img_modeler').html('<img class="fsb_img_modeler_image_peview" src="' + loader.src + '" alt="modeler image" style="max-width:100%" />');
 
                 if (BrowserModeler.instance !== null) {
                     BrowserModeler.instance.cancelSelection();
@@ -48,6 +55,10 @@
                 $(BrowserModeler.target).find('[name=dest_height]').val(loader.height);
                 $(BrowserModeler.target).find('[name=output_width]').val(loader.width);
                 $(BrowserModeler.target).find('[name=output_height]').val(loader.height);
+
+                $(BrowserModeler.target).find('.fsb_img_modeler_original_format').html(loader.width+' x '+loader.height);
+                $(BrowserModeler.target).find('.fsb_img_modeler_selection_format').html(loader.width+' x '+loader.height);
+
             };
 
 
@@ -76,6 +87,14 @@
             $(BrowserModeler.target).find('[name=dest_height]').val(Math.round((selection.y2 - selection.y1) / ratio));
             $(BrowserModeler.target).find('[name=output_width]').val(Math.round((selection.x2 - selection.x1) / ratio));
             $(BrowserModeler.target).find('[name=output_height]').val(Math.round((selection.y2 - selection.y1) / ratio));
+
+            $(BrowserModeler.target).find('.fsb_img_modeler_original_format').html(
+                $(BrowserModeler.target).find('[name=real_width]').val()+' x '+$(BrowserModeler.target).find('[name=real_height]').val()
+            );
+
+            $(BrowserModeler.target).find('.fsb_img_modeler_selection_format').html(
+                $(BrowserModeler.target).find('[name=dest_width]').val()+' x '+$(BrowserModeler.target).find('[name=dest_height]').val()
+            );
         },
 
         outputChange: function () {
@@ -87,6 +106,24 @@
                 }else{
                     $(BrowserModeler.target).find('[name=output_width]').val( Math.round($(this).val()*ratio));
                 }
+            }
+        },
+
+        submit: function () {
+
+            var outputname = $(BrowserModeler.target).find('[name=dest_name]').val();
+            if (outputname) {
+
+                if ($('[data-fsb-name="'+outputname.replace('.','\\.')+'"]').length) {
+                    var txt = '<?php echo addslashes(Acid::trad('browser_editor_ask_output_override'));  ?>';
+                    return confirm(txt.replace('__NAME__',outputname));
+                }
+
+                return true;
+
+            }else{
+                alert('<?php echo addslashes(Acid::trad('browser_editor_ask_output_name'));  ?>');
+                return false;
             }
         },
 

@@ -4,7 +4,7 @@ $name = AcidVarString::split(basename($v['attrs']['name'],$ext),30,'~');
 $is_img = isset($v['attrs']['ext']) && ($v['attrs']['ext']=== 0);
 ?>
 
-<div class="fsb_belt_file <?php echo $is_img ? 'fsb_belt_file_image' : '';  ?> col-xs-12 col-sm-4 col-md-1">
+<div data-fsb-name="<?php echo $v['attrs']['name']; ?>" class="fsb_belt_file <?php echo $is_img ? 'fsb_belt_file_image' : '';  ?> col-xs-12 col-sm-4 col-md-1">
 	<div class="fsb_belt_img">
 		<a <?php if ($o->getPlugin()=='tinymce') { echo ' onclick="window.open(this.href); return false;" '; }?> href="<?php echo $v['link']; ?>" title="<?php echo $v['attrs']['name']; ?>">
 			<img src="<?php echo $v['img_file']; ?>" alt="<?php echo $v['attrs']['name']; ?>" />

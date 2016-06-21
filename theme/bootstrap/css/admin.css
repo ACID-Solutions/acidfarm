@@ -4987,7 +4987,7 @@ button.close {
 .form_subline_elt {
   float: left;
   padding: 5px 15px;
-  background-image: url('../img/admin/mediatheque_separateur_vertical.png');
+  background-image: url('/acidfarm-git/theme/default//img/admin/mediatheque_separateur_vertical.png');
   background-repeat: no-repeat;
   background-position: left center;
   min-height: 40px;
@@ -5007,6 +5007,12 @@ button.close {
   margin-bottom: 16px; }
   .panel-body .content_title .h2 {
     margin-top: 0px; }
+
+.navbar .navigation_selected {
+  font-weight: bold; }
+
+.generic_nb_elts > div {
+  margin: 8px 0px; }
 
 @media (max-width: 640px) {
   .dropdown, .menu.navbar-brand, .dropdown li, .menu.navbar-brand li, .dropdown a, .menu.navbar-brand a, .dropdown span, .menu.navbar-brand span {
@@ -5095,10 +5101,6 @@ button.close {
   display: table;
   margin: auto; }
 
-.fsb_print .fsb_belt_file_action_eng {
-  background: rgba(0, 0, 0, 0.8) none repeat scroll 0 0;
-  text-align: center;}
-
 .fsb_belt_dir .fsb_belt_file_action a, .fsb_belt_file .fsb_belt_file_action a, .fsb_belt_dir .fsb_belt_file_action a:link, .fsb_belt_file .fsb_belt_file_action a:link, .fsb_belt_dir .fsb_belt_file_action a:visited, .fsb_belt_file .fsb_belt_file_action a:visited, .fsb_belt_dir .fsb_belt_file_action a:active, .fsb_belt_file .fsb_belt_file_action a:active {
   color: #fff;
   white-space: nowrap; }
@@ -5151,6 +5153,23 @@ button.close {
   padding: 5px;
   min-height: 300px; }
 
+.fsb_img_modeler_form {
+  padding: 50px;
+  position: relative; }
+
+.fsb_img_modeler_close {
+  position: absolute;
+  top: 10px;
+  right: 10px; }
+
+.fsb_img_modeler_panel {
+  padding: 20px 0px;
+  position: relative; }
+
+.fsb_img_modeler_panel_group {
+  padding: 5px 0px;
+  position: relative; }
+
 .plupload .plupload_filelist_footer {
   min-height: 22px;
   height: auto; }
@@ -5177,9 +5196,36 @@ button.close {
     display: inline-block;
     margin: auto; }
 
+.fsb_print .fsb_belt_file_action_eng {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.8); }
+
 .fsb_belt_file_name {
   min-height: 45px;
   heigth: auto; }
+
+.admin_preview {
+  width: 700px;
+  border: solid 1px #e0e0e0;
+  padding: 5px;
+  min-height: 300px; }
+
+.fsb_img_modeler_form {
+  padding: 50px;
+  position: relative; }
+
+.fsb_img_modeler_close {
+  position: absolute;
+  top: 10px;
+  right: 10px; }
+
+.fsb_img_modeler_panel {
+  padding: 20px 0px;
+  position: relative; }
+
+.fsb_img_modeler_panel_group {
+  padding: 5px 0px;
+  position: relative; }
 
 @media (max-width: 720px) {
   .fsb_belt_file_action_eng, .fsb_belt_file_action {
@@ -5254,9 +5300,9 @@ button.close {
   background-repeat: no-repeat;
   background-position: center center; }
   .radioswitch label input[type=radio][value='0'] + .radio_image {
-    background-image: url('/acidfarm-git/theme/default//img/admin/btn_switch_on.png'); }
+    background-image: url('/acidfarm-git/theme/default/img/admin/btn_switch_on.png'); }
   .radioswitch label input[type=radio][value='1'] + .radio_image {
-    background-image: url('/acidfarm-git/theme/default//img/admin/btn_switch_off.png'); }
+    background-image: url('/acidfarm-git/theme/default/img/admin/btn_switch_off.png'); }
   .radioswitch label input[type=radio]:checked + .radio_image {
     display: none; }
   .radioswitch label input[type=radio] {
@@ -5299,7 +5345,7 @@ button.close {
     line-height: 30px;
     padding-top: 0px;
     margin: 52px 0px;
-    background-image: url('/acidfarm-git/theme/default//img/admin/gradient-top.png');
+    background-image: url('/acidfarm-git/theme/default/img/admin/gradient-top.png');
     background-position: bottom center;
     background-repeat: no-repeat;
     text-align: center;
@@ -5314,7 +5360,7 @@ button.close {
     margin: 30px 0px;
     margin-top: 0px;
     text-align: center;
-    background-image: url('/acidfarm-git/theme/default//img/admin/gradient-bottom.png');
+    background-image: url('/acidfarm-git/theme/default/img/admin/gradient-bottom.png');
     background-position: top center;
     background-repeat: no-repeat; }
   #admin_form .bottom a {
@@ -5346,7 +5392,7 @@ button.close {
   margin: 10px auto;
   padding-bottom: 2px;
   background-color: #96be12;
-  background-image: url('/acidfarm-git/theme/default//img/admin/bouton.png');
+  background-image: url('/acidfarm-git/theme/default/img/admin/bouton.png');
   background-repeat: no-repeat;
   background-position: top left; }
   .adminbtn_connexion:hover {
