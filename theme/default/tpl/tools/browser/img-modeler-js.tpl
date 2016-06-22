@@ -59,6 +59,11 @@
                 $(BrowserModeler.target).find('.fsb_img_modeler_original_format').html(loader.width+' x '+loader.height);
                 $(BrowserModeler.target).find('.fsb_img_modeler_selection_format').html(loader.width+' x '+loader.height);
 
+                $(BrowserModeler.target).find('.fsb_img_modeler_original_size').html(loader.size);
+
+                $.each(loader.properties, function (k,v) {
+                   alert(k+' => '+v);
+                });
             };
 
 
@@ -92,14 +97,29 @@
                 $(BrowserModeler.target).find('[name=real_width]').val()+' x '+$(BrowserModeler.target).find('[name=real_height]').val()
             );
 
-            $(BrowserModeler.target).find('.fsb_img_modeler_selection_format').html(
-                $(BrowserModeler.target).find('[name=dest_width]').val()+' x '+$(BrowserModeler.target).find('[name=dest_height]').val()
-            );
+            if ( parseInt($(BrowserModeler.target).find('[name=dest_width]').val()) ||  parseInt($(BrowserModeler.target).find('[name=dest_height]').val()) ) {
+                $(BrowserModeler.target).find('.fsb_img_modeler_selection_format').html(
+                    $(BrowserModeler.target).find('[name=dest_width]').val() + ' x ' + $(BrowserModeler.target).find('[name=dest_height]').val()
+                );
+            }else{
+                $(BrowserModeler.target).find('.fsb_img_modeler_selection_format').html(
+                    $(BrowserModeler.target).find('[name=real_width]').val() + ' x ' + $(BrowserModeler.target).find('[name=real_height]').val()
+                );
+
+                $(BrowserModeler.target).find('[name=output_width]').val($(BrowserModeler.target).find('[name=real_width]').val());
+                $(BrowserModeler.target).find('[name=output_height]').val($(BrowserModeler.target).find('[name=real_height]').val());
+            }
         },
 
         outputChange: function () {
             if ($(BrowserModeler.target).find('[name=dest_height]').val() && $(BrowserModeler.target).find('[name=dest_width]').val() ) {
-                var ratio = $(BrowserModeler.target).find('[name=dest_width]').val() / $(BrowserModeler.target).find('[name=dest_height]').val();
+
+
+                if ( parseInt($(BrowserModeler.target).find('[name=dest_width]').val()) ||  parseInt($(BrowserModeler.target).find('[name=dest_height]').val()) ) {
+                    var ratio = $(BrowserModeler.target).find('[name=dest_width]').val() / $(BrowserModeler.target).find('[name=dest_height]').val();
+                }else{
+                    var ratio = $(BrowserModeler.target).find('[name=real_width]').val() / $(BrowserModeler.target).find('[name=real_height]').val();
+                }
 
                 if ($(this).attr('name')=='output_width') {
                     $(BrowserModeler.target).find('[name=output_height]').val( Math.round($(this).val()/ratio));

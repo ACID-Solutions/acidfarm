@@ -158,6 +158,10 @@ if ($extension = AcidFs::getExtension($fileName)) {
 		if (!$chunks || $chunk == $chunks - 1) {
 			// Strip the temp .part suffix off
 			rename("{$filePath}.part", $filePath);
+
+			if (Acid::get('plupload:callback')) {
+				call_user_func_array(Acid::get('plupload:callback'),array($filePath));
+			}
 		}
 
 		// Return Success JSON-RPC response

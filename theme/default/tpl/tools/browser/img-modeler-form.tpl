@@ -54,6 +54,7 @@
                     <label>
                         <?php echo Acid::trad('browser_editor_original_format');  ?>
                         <span class="fsb_img_modeler_original_format" ></span>
+                        <span class="fsb_img_modeler_original_size" ></span>
                     </label>
                 </div>
                 <div class="fsb_img_modeler_panel_group">

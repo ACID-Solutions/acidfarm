@@ -42,7 +42,7 @@
 					<div class="label"><label for="input_mail"><?php echo Acid::trad('contact_form_email'); ?></label></div>
 					<input id="input_mail"
 						   <?php if ($ph) {?>placeholder="<?php echo Acid::trad('contact_form_email'); ?>"<?php }  ?>
-						   type="text" name="email" value="<?php echo Contact::getSession('email'); ?>" />
+						   type="email" name="email" value="<?php echo Contact::getSession('email'); ?>" />
 				</div>
 				<div class="input row" >
 					<div class="label"><label for="input_mess"><?php echo Acid::trad('contact_form_message'); ?></label></div>
