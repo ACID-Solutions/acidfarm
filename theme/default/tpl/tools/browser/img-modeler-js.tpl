@@ -12,12 +12,12 @@
                 if (img.length) {
 
                     var btn = '' +
-                    '<a href="#" title="<?php echo Acid::trad('browser_editor_btn'); ?>" '+
+                    ' - <a href="#" title="<?php echo Acid::trad('browser_editor_btn'); ?>" '+
                     'onclick="BrowserModeler.call(\'' + img.attr('src') + '\', \'' + img.attr('alt') + '\'); return false;">'+
                        '<img src="<?php echo Acid::themeUrl('img/admin/fsb/modify_m.png'); ?>" alt="" />' +
                        ' <?php echo Acid::trad('browser_editor_btn'); ?>'+
                     '</a>';
-                    $(this).find('.fsb_belt_file_action').append(btn);
+                    $(this).find('.fsb_belt_file_action_eng').append(btn);
                 }
             });
 
