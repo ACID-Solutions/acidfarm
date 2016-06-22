@@ -82,6 +82,23 @@ $acid['includes']['AcidMinifier'] 	= $acid['folder'].'/tools/minifier.php';
 function AcidAutoLoader($class_name) {
 	$path = null;
 
+
+	if (strpos($class_name,'AcidVar')===0) {
+
+		$acid_path = ACID_PATH.'core/vars/'.$class_name.'.php';
+		$site_path = SITE_PATH.'sys/vars/'.$class_name.'.php';
+
+		if (file_exists($site_path)) {
+			require_once $site_path;
+			return true;
+		}
+
+		if (file_exists($acid_path)) {
+			require_once $acid_path;
+			return true;
+		}
+	}
+
 	if (isset($GLOBALS['acid']['includes'][$class_name])) {
 		$file_path  = $GLOBALS['acid']['includes'][$class_name];
 
@@ -179,7 +196,7 @@ require ACID_PATH . 'core/acid_dialog.php';
 require ACID_PATH . 'core/acid_upgrade.php';
 require ACID_PATH . 'core/acid_hook.php';
 
-require ACID_PATH . 'core/vars.php';
+//require ACID_PATH . 'core/vars.php';
 require ACID_PATH . 'core/module.php';
 
 require_once ACID_PATH . 'extend.php';

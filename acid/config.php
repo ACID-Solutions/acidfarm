@@ -211,6 +211,11 @@ $acid['phplog']['type']		    = 'single'; // single / daily
 $acid['error_report']['debug']	= E_ALL & ~E_STRICT;
 $acid['error_report']['prod']	= 0;
 
+// Vars
+$acid['vars']['file']                  = array('AcidVarFile');
+$acid['vars']['image']                  = array('AcidVarImage', 'AcidVarWatermark');
+$acid['vars']['upload']                  =  array_merge($acid['vars']['file'], $acid['vars']['image']);
+
 // Files
 
 // --mode

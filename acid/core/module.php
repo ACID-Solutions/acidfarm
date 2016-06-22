@@ -1665,7 +1665,7 @@ abstract class AcidModuleCore {
 	* @return Ambigous <multitype:unknown, multitype:unknown >
 	*/
 	public function getVarsFiles() {
-		return $this->getVarsByType(array('AcidVarFile'));
+		return $this->getVarsByType(Acid::get('vars:file'));
 	}
 
 	/**
@@ -1673,7 +1673,7 @@ abstract class AcidModuleCore {
 	* @return Ambigous <multitype:unknown, multitype:unknown >
 	*/
 	public function getVarsImages() {
-		return $this->getVarsByType(array('AcidVarImage'));
+		return $this->getVarsByType(Acid::get('vars:image'));
 	}
 
 	/**
@@ -1681,7 +1681,7 @@ abstract class AcidModuleCore {
 	* @return Ambigous <multitype:unknown, multitype:unknown >
 	*/
 	public function getUploadVars() {
-		return $this->getVarsByType(array('AcidVarFile','AcidVarImage'));
+		return $this->getVarsByType(Acid::get('vars:upload'));
 	}
 
 	/**
