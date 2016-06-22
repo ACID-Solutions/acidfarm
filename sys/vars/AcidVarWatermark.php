@@ -40,6 +40,11 @@ class AcidVarWatermark extends AcidVarImage
 
     }
 
+    /**
+     * Appliquer l'effet de watermark sur une image
+     *
+     * @param $format format à traiter en fonction de $this->config['watermark'][$format]
+     */
     public function applyMark($format) {
         Acid::log('IMAGE WM','WaterMark, format '.$format.' using '.$this->config['watermark'][$format]['url']);
 
