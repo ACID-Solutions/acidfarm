@@ -27,6 +27,7 @@ class AcidVarWatermark extends AcidVarImage
      * @param string $label étiquette
      * @param string $folder chemin vers le repertoire de stockage du fichier
      * @param array $config configuration
+     * @param array $watermark configuration du watermark : array( format => array( 'url' => path, 'opacity' => int ))
      * @param string $name nom du fichier (variables magiques : __NAME__, __ID__ )
      */
     public function __construct($label = 'AcidVarWatermark', $folder = null, $config = array(), $watermark=array(), $name = '')
