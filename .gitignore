@@ -4,6 +4,7 @@
 /.project
 /.idea
 
+
 # acidfarm
 /sys/server.php
 /sys/stats/
@@ -29,6 +30,8 @@
 /theme/*/*/compiled/*
 /theme/*/css/scss_cache/
 /theme/*/css/sass/_dynamic/*
+!/theme/*/css/sass/_dynamic/.gitkeep
+
 *.css.map
 
 # composer
