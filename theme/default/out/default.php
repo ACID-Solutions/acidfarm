@@ -28,8 +28,6 @@ if ($page_class||$nav_class||$site_class) {
 	$body_class .= trim($body_class.' '.$page_class.' '.$nav_class.' '.$site_class);
 }
 
-$bhead='header';
-$bfoot = 'footer';
 
 if (isset($_SERVER['HTTP_USER_AGENT'])) {
 	$nav_old = false;
@@ -37,8 +35,6 @@ if (isset($_SERVER['HTTP_USER_AGENT'])) {
 		$nav_old = $nav_old || (stripos($_SERVER['HTTP_USER_AGENT'],$search) !== false);
 	}
 	if ($nav_old) {
-		$bhead='div';
-		$bfoot = 'div';
 		$body_class .= ' nav-old';
 	}
 }
@@ -63,19 +59,8 @@ $output .=  <<<OUTPUT
 {$this->getCookieWarning()}
 
 
-<$bhead id="header" >
-    {$this->getHeader()}
-</$bhead>
-<div id="wrapper">
-	<div id="container">
-		<div id="content">
-		    {$this->output}
-		</div>
-	</div>
-</div>
-<$bfoot id="footer">
-    {$this->getFooter()}
-</$bfoot>
+{$this->getBody(array('nav_old'=>$nav_old))}
+
 
 OUTPUT;
 

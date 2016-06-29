@@ -57,20 +57,9 @@ $output .=  <<<OUTPUT
 {$this->getBwin()}
 {$this->getCookieWarning()}
 
-{$this->getHeader()}
+{$this->getBody(array('nav_old'=>$nav_old))}
 
-<div  id="content"  class="container">
-	<div class="row">
-        <div class="col-md-12">
-		    {$this->output}
-		</div>
-	</div>
 
-	<hr />
-	<footer id="footer">
-    	{$this->getFooter()}
-	</footer>
-</div>
 OUTPUT;
 
 
