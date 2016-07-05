@@ -395,7 +395,7 @@ $htaccessOVH
 # URL Rewriting
 RewriteEngine on
 
-
+$htaccessMaintenance
 
 $htaccess_vress
 RewriteCond %{REQUEST_FILENAME} !-f
