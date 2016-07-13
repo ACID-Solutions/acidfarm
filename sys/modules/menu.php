@@ -97,14 +97,14 @@ class Menu extends AcidModule {
 
         if (static::$_assoc===null) {
             $assoc = Page::getAssoc(Page::build()->langKey('title'), null, true, array('title' => 'ASC'), array(array('ident', '!=', 'home')));
-            $other_assoc = array();
-            if ($keys = Acid::get('seo:keys')) {
+            $other_assoc = array('index'=>AcidRouter::getName('index'));
+            if ($keys = Conf::get('site_keys')) {
                 foreach ($keys as $key) {
                     $other_assoc[$key] = AcidRouter::getName($key);
                 }
             }
 
-            static::$_assoc = array('index' => 'Home', 'news' => 'Actualités', 'contact' => 'Contact') + $assoc;
+            static::$_assoc = $other_assoc + $assoc;
         }
         $this->vars['ident']->setElts(static::$_assoc);
         $this->vars['ident']->setForm('select');
