@@ -17,6 +17,14 @@
 
 //Modules
 
+//--menu
+$lang['mod']['menu']['__NAME__'] = 'Menu';
+$lang['mod']['menu']['id_menu'] = 'Id';
+$lang['mod']['menu']['ident'] 	= 'Pagine';
+$lang['mod']['menu']['name'] = 'Titolo';
+$lang['mod']['menu']['pos'] = 'Posizione';
+$lang['mod']['menu']['active'] = 'Attivo';
+
 //--seo
 $lang['mod']['seo']['__NAME__'] = 'SEO';
 $lang['mod']['seo']['id_seo'] = 'Id';
@@ -31,7 +39,7 @@ $lang['mod']['seo']['strict_mode']  = 'Strict Mode?';
 $lang['mod']['actu']['__NAME__'] = 'Attualità';
 $lang['mod']['actu']['id_page'] = 'Id';
 $lang['mod']['actu']['content'] = 'Contenuto';
-$lang['mod']['actu']['title'] 	= 'Title';
+$lang['mod']['actu']['title'] 	= 'Titolo';
 $lang['mod']['actu']['head']	= 'Head';
 $lang['mod']['actu']['seo_title'] = 'SEO Titolo';
 $lang['mod']['actu']['seo_desc'] = 'SEO Contenuto';

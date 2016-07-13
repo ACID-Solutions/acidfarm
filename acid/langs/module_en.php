@@ -17,6 +17,14 @@
 
 //Modules
 
+//--menu
+$lang['mod']['menu']['__NAME__'] = 'Menus';
+$lang['mod']['menu']['id_menu'] = 'Id';
+$lang['mod']['menu']['ident'] 	= 'Target';
+$lang['mod']['menu']['name'] = 'Title';
+$lang['mod']['menu']['pos'] = 'Position';
+$lang['mod']['menu']['active'] = 'Active';
+
 //--seo
 $lang['mod']['seo']['__NAME__'] = 'SEO';
 $lang['mod']['seo']['id_seo'] = 'Id';
@@ -38,7 +46,7 @@ $lang['mod']['actu']['seo_desc'] = 'SEO Description';
 $lang['mod']['actu']['seo_keys'] = 'SEO Keywords';
 $lang['mod']['actu']['adate']   = 'Date/Time';
 $lang['mod']['actu']['src']    = 'Picture';
-$lang['mod']['actu']['active']  = 'Activ';
+$lang['mod']['actu']['active']  = 'Active';
 $lang['mod']['actu']['cache_time']  = 'Cache time';
 
 //--page
@@ -53,7 +61,7 @@ $lang['mod']['page']['seo_desc'] = 'SEO Description';
 $lang['mod']['page']['seo_keys'] = 'SEO Keywords';
 $lang['mod']['page']['adate']   = 'Date';
 $lang['mod']['page']['src']    = 'Picture';
-$lang['mod']['page']['active']   = 'Activ';
+$lang['mod']['page']['active']   = 'Active';
 $lang['mod']['actu']['cache_time']  = 'Cache time';
 
 //--photo
@@ -62,7 +70,7 @@ $lang['mod']['photo']['id_photo'] = 'Id';
 $lang['mod']['photo']['name']	  = 'Name';
 $lang['mod']['photo']['position'] = 'Position';
 $lang['mod']['photo']['src']    = 'Picture';
-$lang['mod']['photo']['active']  = 'Activ';
+$lang['mod']['photo']['active']  = 'Active';
 $lang['mod']['actu']['cache_time']  = 'Cache time';
 
 //--photo home

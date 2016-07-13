@@ -251,4 +251,28 @@ ALTER TABLE `acid_seo`
   DROP `seo_desc`,
   DROP `seo_keys`;
 
-COMMIT; 
+COMMIT;
+
+#MENU
+ALTER TABLE `acid_menu`
+ADD `name_fr` VARCHAR( 100 ) NOT NULL AFTER `id_acid_menu` ,
+ADD `name_en` VARCHAR( 100 ) NOT NULL AFTER `name_fr` ,
+ADD `name_es` VARCHAR( 100 ) NOT NULL AFTER `name_en` ,
+ADD `name_de` VARCHAR( 100 ) NOT NULL AFTER `name_es` ,
+ADD `name_it` VARCHAR( 100 ) NOT NULL AFTER `name_de` ;
+
+COMMIT;
+
+UPDATE `acid_menu`  SET
+`name_fr`=`name`,
+`name_en`=`name`,
+`name_es`=`name`,
+`name_de`=`name`,
+`name_it`=`name`;
+
+COMMIT;
+
+ALTER TABLE `acid_menu`
+  DROP `name`;
+
+COMMIT;

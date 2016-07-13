@@ -29,10 +29,10 @@ class FuncCore {
     }
 
     /**
-     * Retourne le menu du site en HTML
+     * Retourne le menu du site en HTML en mode figé
      * @return string
      */
-    public static function getMenu() {
+    public static function getMenuSample() {
         $elts = array();
 
         //Start
@@ -62,6 +62,29 @@ class FuncCore {
 
         $vars = array('elts' => $elts);
         return Acid::tpl('menu.tpl',$vars);
+    }
+
+    /**
+     * Retourne le menu du site en HTML
+     * @return string
+     */
+    public static function getMenu() {
+
+        return static::getMenuSample();
+
+       /*
+        $elts = array();
+
+        if ($menus = Menu::dbList(array(array('active','=',1)),array('pos'=>'ASC'))) {
+            foreach ($menus as $key =>$elt) {
+                $m = new menu($elt);
+                $elts[$m->getId()] = array('url'=>$m->link(),'name'=>$m->name());
+            }
+        }
+
+        $vars = array('elts' => $elts);
+        return Acid::tpl('menu.tpl',$vars);
+       */
     }
 
     /**
