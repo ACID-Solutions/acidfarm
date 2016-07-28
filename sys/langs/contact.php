@@ -25,13 +25,15 @@ switch ($contact_lang) {
 		$GLOBALS['lang']['trad']['contact_post_address']    = 'Adresse';
 
 		$GLOBALS['lang']['trad']['contact_post_cp']     	 = 'Code Postal';
-		$GLOBALS['lang']['trad']['contact_post_city']  	 = 'Ville';
-		$GLOBALS['lang']['trad']['contact_post_phone'] 	 = 'Téléphone';
-		$GLOBALS['lang']['trad']['contact_post_fax']        = 'Fax';
-		$GLOBALS['lang']['trad']['contact_post_website']    = 'Site Web';
+		$GLOBALS['lang']['trad']['contact_post_city']  	 	 = 'Ville';
+		$GLOBALS['lang']['trad']['contact_post_phone'] 	     = 'Téléphone';
+		$GLOBALS['lang']['trad']['contact_post_fax']         = 'Fax';
+		$GLOBALS['lang']['trad']['contact_post_website']     = 'Site Web';
 
 		$GLOBALS['lang']['trad']['contact_post_firstname']  = 'Prénom';
 		$GLOBALS['lang']['trad']['contact_post_lastname']   = 'Nom';
+		$GLOBALS['lang']['trad']['contact_post_identity']   = 'Identité';
+		$GLOBALS['lang']['trad']['contact_post_company']   	= 'Société';
 		$GLOBALS['lang']['trad']['contact_post_message']    = 'Message';
 
 		$GLOBALS['lang']['trad']['contact_post_cause_1']    = 'Avoir des informations';
@@ -55,14 +57,16 @@ switch ($contact_lang) {
 		$GLOBALS['lang']['trad']['contact_post_contact']    = 'Contact';
 		$GLOBALS['lang']['trad']['contact_post_address']    = 'Address';
 
-		$GLOBALS['lang']['trad']['contact_post_cp']     	 = 'Zip code';
-		$GLOBALS['lang']['trad']['contact_post_city']  	 = 'City';
-		$GLOBALS['lang']['trad']['contact_post_phone'] 	 = 'Phone';
+		$GLOBALS['lang']['trad']['contact_post_cp']     	= 'Zip code';
+		$GLOBALS['lang']['trad']['contact_post_city']  		= 'City';
+		$GLOBALS['lang']['trad']['contact_post_phone'] 	 	= 'Phone';
 		$GLOBALS['lang']['trad']['contact_post_fax']        = 'Fax';
 		$GLOBALS['lang']['trad']['contact_post_website']    = 'Website';
 
 		$GLOBALS['lang']['trad']['contact_post_firstname']  = 'Firstname';
 		$GLOBALS['lang']['trad']['contact_post_lastname']   = 'Lastname';
+		$GLOBALS['lang']['trad']['contact_post_identity']   = 'Identity';
+		$GLOBALS['lang']['trad']['contact_post_company']   	= 'Company';
 		$GLOBALS['lang']['trad']['contact_post_message']    = 'Message';
 
 		$GLOBALS['lang']['trad']['contact_post_cause_1']    = 'Have information';
