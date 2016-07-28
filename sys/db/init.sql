@@ -258,3 +258,21 @@ CREATE TABLE IF NOT EXISTS `acid_photo` (
   `cache_time` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id_photo`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+
+
+-- --------------------------------------------------------
+
+
+--
+-- Structure de la table `acid_menu`
+--
+
+CREATE TABLE IF NOT EXISTS `acid_menu` (
+`id_menu` int(10) unsigned NOT NULL,
+  `ident` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
+  `pos` int(11) NOT NULL,
+  `active` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
+   PRIMARY KEY (`id_menu`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;

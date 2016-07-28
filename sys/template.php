@@ -34,8 +34,7 @@ class MyTemplate extends AcidTemplate {
 	/**
 	 * Retourne le header du template
 	 */
-	public function getHeader() {
-		$v = array();
+	public function getHeader($v=array()) {
 		return Acid::tpl('header.tpl',$v,$this);
 	}
 
@@ -43,12 +42,20 @@ class MyTemplate extends AcidTemplate {
 	/**
 	 * Retourne le footer du template
 	 */
-	public function getFooter() {
-		$v =	array();
+	public function getFooter($v=array()) {
 		$stats =  '<div id="stats_content">'. Acid::executeTpl(SITE_PATH . 'sys/stats/stats.tpl') . '</div>';
 		return Acid::tpl('footer.tpl',$v,$this).$stats;
 	}
 
+	/**
+	 * Retourne le footer du template
+	 */
+	public function getBody($v=array()) {
+		$v['content']=$this->output;
+		$v['header']=$this->getHeader($v);
+		$v['footer']=$this->getFooter($v);
+		return Acid::tpl('body.tpl',$v,$this);
+	}
 
 	/**
 	 * Retourne le corps  de la pop-in de dialogue du template

@@ -40,30 +40,63 @@ $lang['trad']['photo_above_limit']	 = 'The limit of __NUM__ photos has already b
 $lang['trad']['photo_error']          = '¡ Se produció un error !';
 
 $lang['trad']['admin_menu_intranet'] 	= 'Intranet';
-$lang['trad']['admin_menu_my_config'] 	= 'Configuration';
-$lang['trad']['admin_menu_user_config'] = 'Users';
+$lang['trad']['admin_menu_my_config'] 	= 'Configuración';
+$lang['trad']['admin_menu_user_config'] = 'Usuarios';
 $lang['trad']['admin_menu_web'] 		= 'Web Site';
-$lang['trad']['admin_menu_tools'] 		= 'Tools';
+$lang['trad']['admin_menu_tools'] 		= 'Herramientas';
+
+$lang['trad']['admin_board_welcome'] 		= 'Bienvenido <b>__NAME__</b>,<br/>Aquí usted está en su oficina.';
+
+$lang['trad']['admin_board_site_title'] 		= 'Website';
+$lang['trad']['admin_board_site_name'] 				= 'Nombre del Sitio Web :';
+$lang['trad']['admin_board_site_email'] 			= 'Mail por Internet:';
+$lang['trad']['admin_board_form_email'] 			= 'Contactos de correo electrónico formulario:';
+$lang['trad']['admin_board_site_url'] 				= 'URL del sitio web :';
+
+$lang['trad']['admin_board_stats_title'] 		= 'Estadísticas';
+$lang['trad']['admin_board_stats_sessions'] 		= '<b>__NB__</b> sesiones activas';
+$lang['trad']['admin_board_stats_lastnews'] 		= 'Su última noticia tiene fecha de <b>__DATE__</b>';
+
+$lang['trad']['admin_board_version_title'] 		= 'Framework versión';
+$lang['trad']['admin_board_version_v'] 						= 'Versión :';
+$lang['trad']['admin_board_version_vc'] 					= 'Versión completa :';
+$lang['trad']['admin_board_version_number'] 				= 'Número de registro :';
+$lang['trad']['admin_board_version_url'] 					= 'Registration url :';
+$lang['trad']['admin_board_version_maj_available'] 			= 'Update available, ';
+$lang['trad']['admin_board_version_maj_available_here'] 	= 'aquí';
+$lang['trad']['admin_board_version_maj_unavailable'] 		= 'Update unavailable.';
+
+$lang['trad']['admin_registration_title'] 		= 'Registration';
+$lang['trad']['admin_registration_check'] 		= 'Subscribe to Acidfarm\'s recording service';
+$lang['trad']['admin_registration_domain'] 		= 'Dominio registrado:';
+$lang['trad']['admin_registration_contact'] 	= 'registration contact :';
+$lang['trad']['admin_registration_email'] 		= 'registration email :';
+$lang['trad']['admin_registration_phone'] 		= 'teléfono de registro:';
+$lang['trad']['admin_registration_sample'] 		= 'sample:';
+
+$lang['trad']['admin_registration_submit'] 		= 'Submit';
 
 $lang['trad']['contact_form_please']	= 'Please enter:';
 $lang['trad']['contact_form_firstname']	= 'Firstname:';
 $lang['trad']['contact_form_lastname'] 	= 'Lastname:';
+$lang['trad']['contact_form_identity'] 	= 'Identidad:';
+$lang['trad']['contact_form_company'] 	= 'Compañía:';
 $lang['trad']['contact_form_address']   = 'Address:';
-$lang['trad']['contact_form_phone'] 	= 'Phone:';
+$lang['trad']['contact_form_phone'] 	= 'Teléfono:';
 $lang['trad']['contact_form_email'] 	= 'Email:';
-$lang['trad']['contact_form_message'] 	= 'Message:';
+$lang['trad']['contact_form_message'] 	= 'Mensaje:';
 $lang['trad']['contact_form_nl'] 		= 'Recibe boletín?';
 
-$lang['trad']['contact_page_map'] 		= 'Map';
+$lang['trad']['contact_page_map'] 		= 'Mapa';
 $lang['trad']['contact_page_coords'] 	= 'Coords';
 
-$lang['trad']['read_more']				= 'Read more';
+$lang['trad']['read_more']				= 'Lee mas';
 
-$lang['trad']['contact_post_msg_sent']		 	= 'Your message has been sent.';
-$lang['trad']['contact_post_field_missing'] 	= 'The following field is missing :';
-$lang['trad']['contact_post_fields_missing'] 	= 'Those following fields are missing :';
-$lang['trad']['contact_post_field_mistakes']	= 'There is mistakes with the following fields :';
-$lang['trad']['contact_post_bad_request']		= 'This form isn\'t filled correctly.';
+$lang['trad']['contact_post_msg_sent']		 	= 'Tu mensaje ha sido enviado.';
+$lang['trad']['contact_post_field_missing'] 	= 'El siguiente campo no se encuentra:';
+$lang['trad']['contact_post_fields_missing'] 	= 'Esos siguientes campos faltan:';
+$lang['trad']['contact_post_field_mistakes']	= 'Hay errores con los siguientes campos:';
+$lang['trad']['contact_post_bad_request']		= 'Este formulario no se llena correctamente.';
 $lang['trad']['contact_please_enable_javascript'] = 'Por favor, active Javascript para utilizar este formulario.';
 
 $lang['trad']['conception']			= 'concepción';
@@ -74,7 +107,7 @@ $lang['trad']['next']			= 'Anterior';
 $lang['trad']['previous']		= 'Siguiente';
 $lang['trad']['all_news']		= 'Todas las noticias';
 
-$lang['trad']['alt_image'] = 'Image';
+$lang['trad']['alt_image'] = 'Imagen';
 
-$lang['trad']['page_standard'] = 'Standard';
-$lang['trad']['page_special'] = 'Special';
+$lang['trad']['page_standard'] = 'Estándar';
+$lang['trad']['page_special'] = 'Especial';

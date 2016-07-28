@@ -205,8 +205,8 @@ td, th {
 
 @font-face {
   font-family: 'Glyphicons Halflings';
-  src: url('../fonts/bootstrap/glyphicons-halflings-regular.eot');
-  src: url('../fonts/bootstrap/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/bootstrap/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/bootstrap/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/bootstrap/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg'); }
+  src: url('../fonts/glyphicons-halflings-regular.eot');
+  src: url('../fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'), url('../fonts/glyphicons-halflings-regular.woff2') format('woff2'), url('../fonts/bootstrap/glyphicons-halflings-regular.woff') format('woff'), url('../fonts/bootstrap/glyphicons-halflings-regular.ttf') format('truetype'), url('../fonts/bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg'); }
 
 .glyphicon {
   position: relative;
@@ -4987,7 +4987,7 @@ button.close {
 .form_subline_elt {
   float: left;
   padding: 5px 15px;
-  background-image: url('/acidfarm-git/theme/default//img/admin/mediatheque_separateur_vertical.png');
+  background-image: url('../../default/img/admin/mediatheque_separateur_vertical.png');
   background-repeat: no-repeat;
   background-position: left center;
   min-height: 40px;
@@ -5036,7 +5036,7 @@ button.close {
 .fsb_belt_dir:hover, .fsb_belt_file:hover {
   background-repeat: repeat-x;
   background-position: bottom center;
-  background-image: url('/acidfarm-git/theme/default//img/admin/mediatheque_elt_over_background.png'); }
+  background-image: url('../../default/img/admin/mediatheque_elt_over_background.png'); }
 
 .fsb_belt_dir, .fsb_belt_file {
   float: left;
@@ -5067,7 +5067,7 @@ button.close {
   width: 100%;
   background-repeat: no-repeat;
   background-position: bottom center;
-  background-image: url('/acidfarm-git/theme/default//img/admin/mediatheque_elt_separateur_horizontal.png'); }
+  background-image: url('../../default/img/admin/mediatheque_elt_separateur_horizontal.png'); }
 
 .fsb_belt_img a {
   display: table-cell;
@@ -5137,7 +5137,7 @@ button.close {
   .fsb_head .btn_newdir {
     margin-right : 0px; }
   .fsb_head .btn_upload {
-    background-image: url('/acidfarm-git/theme/default//img/admin/mediatheque_separateur_vertical.png');
+    background-image: url('../../default/img/admin/mediatheque_separateur_vertical.png');
     background-position: left center;
     background-repeat: no-repeat;
     padding-right: 0px;
@@ -5282,10 +5282,10 @@ button.close {
     background-color: transparent; }
 
 .to_value_0 input[type=submit] {
-  background-image: url('/acidfarm-git/theme/default//img/admin/btn_switch_on.png'); }
+  background-image: url('../../default/img/admin/btn_switch_on.png'); }
 
 .to_value_1 input[type=submit] {
-  background-image: url('/acidfarm-git/theme/default//img/admin/btn_switch_off.png'); }
+  background-image: url('../../default/img/admin/btn_switch_off.png'); }
 
 .radioswitch .radio_image {
   display: block;
@@ -5300,9 +5300,9 @@ button.close {
   background-repeat: no-repeat;
   background-position: center center; }
   .radioswitch label input[type=radio][value='0'] + .radio_image {
-    background-image: url('/acidfarm-git/theme/default/img/admin/btn_switch_on.png'); }
+    background-image: url('../../default/img/admin/btn_switch_on.png'); }
   .radioswitch label input[type=radio][value='1'] + .radio_image {
-    background-image: url('/acidfarm-git/theme/default/img/admin/btn_switch_off.png'); }
+    background-image: url('../../default/img/admin/btn_switch_off.png'); }
   .radioswitch label input[type=radio]:checked + .radio_image {
     display: none; }
   .radioswitch label input[type=radio] {
@@ -5345,7 +5345,7 @@ button.close {
     line-height: 30px;
     padding-top: 0px;
     margin: 52px 0px;
-    background-image: url('/acidfarm-git/theme/default/img/admin/gradient-top.png');
+    background-image: url('../../default/img/admin/gradient-top.png');
     background-position: bottom center;
     background-repeat: no-repeat;
     text-align: center;
@@ -5360,7 +5360,7 @@ button.close {
     margin: 30px 0px;
     margin-top: 0px;
     text-align: center;
-    background-image: url('/acidfarm-git/theme/default/img/admin/gradient-bottom.png');
+    background-image: url('../../default/img/admin/gradient-bottom.png');
     background-position: top center;
     background-repeat: no-repeat; }
   #admin_form .bottom a {
@@ -5392,7 +5392,7 @@ button.close {
   margin: 10px auto;
   padding-bottom: 2px;
   background-color: #96be12;
-  background-image: url('/acidfarm-git/theme/default/img/admin/bouton.png');
+  background-image: url('../../default/img/admin/bouton.png');
   background-repeat: no-repeat;
   background-position: top left; }
   .adminbtn_connexion:hover {

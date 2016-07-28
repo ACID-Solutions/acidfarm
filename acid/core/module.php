@@ -2747,16 +2747,17 @@ abstract class AcidModuleCore {
 	*/
 	public function getStandardActionDelete($elt) {
 		$ident = isset($elt[static::tblId()]) ? $elt[static::tblId()] : $elt[self::dbPref(static::tblId())];
-
-		$del_form = Acid::tpl('admin/admin-form-delete.tpl',array('id'=>$ident,'next'=>AcidUrl::build($this->getAdminCurNav())),$this);
+		$next = isset($this->config['admin']['remove']['next_page']) ? $this->config['admin']['remove']['next_page'] : AcidUrl::build($this->getAdminCurNav());
+		$next = $next ? $next : '';
+		$del_form = Acid::tpl('admin/admin-form-delete.tpl',array('id'=>$ident,'next'=>$next),$this);
 
 		return array(
-				'link'=>'#',
-				'image'=>Acid::themeUrl('img/admin/btn_supprimer.png'),
-				'title'=>Acid::trad('admin_action_remove'),
-				'click'=>'if (confirm(\'Supprimer ?\')){window.document.getElementById(\''.static::preKey($ident).'_delform\').submit()};return false;',
-				'script'=>$del_form
-				);
+			'link'=>'#',
+			'image'=>Acid::themeUrl('img/admin/btn_supprimer.png'),
+			'title'=>Acid::trad('admin_action_remove'),
+			'click'=>'if (confirm(\'Supprimer ?\')){window.document.getElementById(\''.static::preKey($ident).'_delform\').submit()};return false;',
+			'script'=>$del_form
+		);
 	}
 
 	/**

@@ -25,22 +25,20 @@ if ($page_class&&$nav_class) {
 	$body = $this->getBodyAttrs();
 	$body_class = isset($body['class']) ? $body['class'] : '';
 	$body_class = trim($body_class.' '.$page_class.' '.$nav_class.' '.$site_class);
-	if ($body_class) {
-		$this->setBodyAttrs(array('class'=>$body_class));
-	}
 }
 
-$bhead='header';
-$bfoot = 'footer';
 if (isset($_SERVER['HTTP_USER_AGENT'])) {
 	$nav_old = false;
 	foreach (array('MSIE 8','MSIE 7','MSIE 6') as $search) {
 		$nav_old = $nav_old || (stripos($_SERVER['HTTP_USER_AGENT'],$search) !== false);
 	}
 	if ($nav_old) {
-		$bhead='div';
-		$bfoot = 'div';
+		$body_class .= ' nav-old';
 	}
+}
+
+if ($body_class) {
+	$this->setBodyAttrs(array('class'=>$body_class));
 }
 
 //RESPONSIVE MOBILE
@@ -57,20 +55,9 @@ $output .=  <<<OUTPUT
 {$this->getBwin()}
 {$this->getCookieWarning()}
 
-{$this->getHeader()}
+{$this->getBody(array('nav_old'=>$nav_old))}
 
-<div  id="content"  class="container">
-	<div class="row">
-        <div class="col-md-12">
-		    {$this->output}
-		</div>
-	</div>
 
-	<hr />
-	<footer id="footer">
-    	{$this->getFooter()}
-	</footer>
-</div>
 OUTPUT;
 
 

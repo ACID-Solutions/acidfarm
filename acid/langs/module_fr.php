@@ -17,6 +17,14 @@
 
 //Modules
 
+//--menu
+$lang['mod']['menu']['__NAME__'] = 'Menus';
+$lang['mod']['menu']['id_menu'] = 'Id';
+$lang['mod']['menu']['ident'] 	= 'Cible';
+$lang['mod']['menu']['name'] = 'Nom';
+$lang['mod']['menu']['pos'] = 'Position';
+$lang['mod']['menu']['active'] = 'Actif';
+
 //--seo
 $lang['mod']['seo']['__NAME__'] = 'SEO';
 $lang['mod']['seo']['id_seo'] = 'Id';
