@@ -78,7 +78,7 @@ $lang['trad']['contact_mail_bad_request']  = 'Das Formular wurde unsachgemäß a
 
 //CheckVals
 $lang['trad']['checkvals_error_plur']  	   = 'Folgende Felder wurden nicht ausgefüllt';
-
+$lang['trad']['checkvals_or']  	  		   = ' oder ';
 
 //Popup
 $lang['trad']['popup_title_error']   = 'Fehler';

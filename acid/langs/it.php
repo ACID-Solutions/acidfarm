@@ -78,7 +78,7 @@ $lang['trad']['contact_mail_bad_request']  = 'Il formulario non è stato compila
 
 //CheckVals
 $lang['trad']['checkvals_error_plur']  	   = 'I campi successive non sono stati compilati';
-
+$lang['trad']['checkvals_or']  	  		   = ' o ';
 
 //Popup
 $lang['trad']['popup_title_error']   = 'Errore';

@@ -9,6 +9,7 @@
 /sys/server.php
 /sys/stats/
 /sys/stats.tpl
+/sys/branch.txt
 /sys/update/cur_version.txt
 /sys/update/*/cur_version.txt
 

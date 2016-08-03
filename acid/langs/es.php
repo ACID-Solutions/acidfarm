@@ -78,7 +78,7 @@ $lang['trad']['contact_mail_bad_request']  = 'El formulario no està rellenado c
 
 //CheckVals
 $lang['trad']['checkvals_error_plur']  	   = 'Los campos siguientes no tienen información';
-
+$lang['trad']['checkvals_or']  	  		   = ' o ';
 
 //Popup
 $lang['trad']['popup_title_error']   = 'Error';
