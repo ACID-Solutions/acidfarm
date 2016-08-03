@@ -2102,7 +2102,7 @@ abstract class AcidModuleCore {
 
 	/**
 	* Retourne un tableau contenant les clés à contrôler
-	*
+	* Si on a array( k1, array(k2, k3) ), k1 doit être défini ainsi que k2 ou k3.
 	* @param string $do
 	*
 	* @return array()
@@ -2133,19 +2133,81 @@ abstract class AcidModuleCore {
 		$session_time[$do]  = 100;
 		AcidSession::tmpSet(static::preKey($do),$tab,$session_time[$do]);
 
+		//récupération des clés d'upload
+		$upload_keys = array_keys($this->getUploadVars());
+
 		//initialisation
 		$missing = array();
 
 		$missing_error = '';
 		$text_error = '';
 		foreach ($controlled_keys[$do] as $key) {
-			switch ($key) {
-				default :
-					if (empty($tab[$key])) {
-						$missing[] = $key;
-						$missing_error .= $this->checkLabel($key) . '<br />';
+
+			//on ajoute les clés d'upload temporaire en option si nécéssaire
+			if (in_array($key,$upload_keys)) {
+				$key = array($key,'tmp_'.$key);
+			}
+
+			//une liste de clés
+			if (is_array($key)) {
+
+				//initialisation
+				$cond_missing_keys = array();
+				$cond_missing_error = array();
+				$cond_match = null;
+				$sub_text_error = '';
+
+				//pour chaque clé conditionnelle
+				foreach ($key as $skey) {
+
+					$cond_missing_keys[] = $skey;
+
+					//on affiche le nom de la clé que si elle n'est pas une clé temporaire (upload)
+					if (strpos($skey,'tmp_') !== 0) {
+						$cond_missing_error[] = $this->checkLabel($skey);
 					}
-				break;
+
+					//si une valeur est correcte,
+					if ($cond_match = $this->checkKey($skey,$tab,$do,$sub_text_error)) {
+						break;
+					}else{
+
+						//si c'est une erreur bloquante
+						if ($cond_match===false) {
+							if ($sub_text_error) {
+								$missing[] = $skey;
+								$text_error .= $sub_text_error . '<br />';
+							}
+							break;
+						}
+					}
+				}
+
+				//si aucun champs n'a été renseigné
+				if ($cond_match===null) {
+					$missing[] = $cond_missing_keys[0];
+					$missing_error .= implode(Acid::trad('checkvals_or'),$cond_missing_error) . '<br />';
+				}
+			}
+
+			//un clé classique
+			else{
+
+				$sub_text_error = '';
+
+				switch ($key) {
+					default :
+						if (!$this->checkKey($key,$tab,$do,$sub_text_error)) {
+							$missing[] = $key;
+							$missing_error .= $this->checkLabel($key) . '<br />';
+						}
+					break;
+				}
+
+				if ($sub_text_error) {
+					$text_error .= $sub_text_error . '<br />';
+				}
+
 			}
 		}
 
@@ -2161,6 +2223,27 @@ abstract class AcidModuleCore {
 			AcidDialog::add('banner',$error);
 			return false;
 		}
+	}
+
+
+	/**
+	 * Validation de champs
+	 * @param $key
+	 * @param $tab
+	 * @param string $do
+	 * @param null $error_msg alimente $error_msg avec un message d'erreur personnalisé si besoin
+	 * @return bool|null retourne null si la clé est manquante, false si c'est une mauvaise valeur, true si ok
+	 */
+	protected function checkKey($key,$tab,$do='',&$error_msg=null) {
+
+		switch ($key) {
+			default :
+				return empty($tab[$key]) ? null : true;
+			break;
+		}
+
+		//Erreur de validation : false
+		return false;
 	}
 
 	/**

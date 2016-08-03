@@ -78,7 +78,7 @@ $lang['trad']['contact_mail_bad_request']  = 'Le formulaire n\'est pas rempli co
 
 //CheckVals
 $lang['trad']['checkvals_error_plur']  	   = 'Les champs suivants ne sont pas renseignés';
-
+$lang['trad']['checkvals_or']  	  		   = ' ou ';
 
 //Popup
 $lang['trad']['popup_title_error']   = 'Erreur';

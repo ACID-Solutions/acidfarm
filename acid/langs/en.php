@@ -78,7 +78,7 @@ $lang['trad']['contact_mail_bad_request']  = 'The form has been filled in incorr
 
 //CheckVals
 $lang['trad']['checkvals_error_plur']  	   = 'The following fields have not been filled in';
-
+$lang['trad']['checkvals_or']  	  		   = ' or ';
 
 //Popup
 $lang['trad']['popup_title_error']   = 'Error';
