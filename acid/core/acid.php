@@ -461,13 +461,12 @@ class Acid {
 	 *
 	 * @return mixed
 	 */
-	public static function get($key,$array=null) {
-		$array = ($array!==null) ? $array : 'acid';
-        $array = !is_array($array) ? $GLOBALS[$array] : $array;
+    public static function get($key,$array=null) {
+        $array = ($array!==null) ? $array : 'acid';
 
-		$array_path = self::parseArray($key);
-		return self::parse($array_path,$array);
-	}
+        $array_path = self::parseArray($key);
+        return self::parse($array_path,$GLOBALS[$array]);
+    }
 
 	/**
 	 *  Définit une variable de configuration
