@@ -22,7 +22,9 @@ tinyMCE.init({
 			fontsize_formats: "8px 11px 12px 13px 14px 16px 18px 22px 24px 26px 32px 48px",
 		    toolbar: "insertfile undo redo | styleselect fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
 			body_class : "content_body",
-			content_css : "<?php echo Acid::get('sass:used') ? AcidTemplate::sassUrl('tiny-mce') : Acid::themeUrl('css/tiny-mce.css'); ?>"
+			content_css : "<?php echo Acid::get('sass:used') ? AcidTemplate::sassUrl('tiny-mce') : Acid::themeUrl('css/tiny-mce.css'); ?>",
+			content_style : "<?php echo Acid::get('tinymce:style'); ?>"
+
 			/*
 			 , style_formats: [
 			 {title: 'Headers', items: [

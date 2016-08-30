@@ -463,9 +463,10 @@ class Acid {
 	 */
 	public static function get($key,$array=null) {
 		$array = ($array!==null) ? $array : 'acid';
+        $array = !is_array($array) ? $GLOBALS[$array] : $array;
 
 		$array_path = self::parseArray($key);
-		return self::parse($array_path,$GLOBALS[$array]);
+		return self::parse($array_path,$array);
 	}
 
 	/**
