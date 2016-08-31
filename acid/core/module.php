@@ -109,7 +109,12 @@ abstract class AcidModuleCore {
      * @return string
      */
     public static function tblMods($module) {
-        return Acid::mod($module)->tblJoin();
+
+        if ($module::tbl()!=$module::tblJoin()) {
+            return array($module::tbl(),$module::tblJoin());
+        }
+
+        return $module::tbl();
     }
 
 	/**
@@ -1177,7 +1182,7 @@ abstract class AcidModuleCore {
 
 			foreach ($mods_tab as $module => $keys) {
 				foreach (Acid::mod($module)->getKeys() as $key) {
-					$select[] = array($key,false,Acid::mod($module)->tbl(),Acid::mod($module)->dbPref($key));
+					$select[] = array($key,false,Acid::mod($module)->tblJoin(),Acid::mod($module)->dbPref($key));
 				}
 
 				if ($keys) {
