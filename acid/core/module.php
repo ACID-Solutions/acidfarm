@@ -92,6 +92,26 @@ abstract class AcidModuleCore {
 		}
 	}
 
+    /**
+     * Retourne le nom de la table SQL associé au module pour les jointures.
+     * Méthode prévue pour override
+     *
+     * @return string
+     */
+    public static function tblJoin() {
+        return static::tbl();
+    }
+
+    /**
+     * Retourne le nom de la table SQL associé au module pour le dbListMods.
+     * Méthode prévue pour override
+     *
+     * @return string
+     */
+    public static function tblMods($module) {
+        return Acid::mod($module)->tblJoin();
+    }
+
 	/**
 	* Contrôle puis retourne le nom de la table SQL associé au module sans préfixe.
 	*
@@ -1162,7 +1182,7 @@ abstract class AcidModuleCore {
 
 				if ($keys) {
 					$my_from = array();
-					$my_from[] = Acid::mod($module)->tbl();
+					$my_from[] = static::tblMods($module);
 					$my_from[] = $keys;
 					$from[] = $my_from;
 				}
