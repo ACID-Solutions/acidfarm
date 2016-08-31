@@ -305,7 +305,7 @@ abstract class AcidModuleCore {
 			if ($allow_tbl_pref) {
 				foreach ($this->getKeys(true) as $pkey) {
 					if (isset($tab[$pkey])) {
-						$key = substr($pkey,strlen($this->tbl().'.'));
+						$key = $this->dbPrefRemove($pkey);
 						if ($tab[$pkey] != $this->vars[$key]->getVal()) {
 							$this->vars[$key]->setVal($tab[$pkey]);
 							$changes[] = $key;
@@ -440,7 +440,7 @@ abstract class AcidModuleCore {
 	public function getKeys($add_tbl=false) {
 		$keys = array();
 		foreach ($this->vars as $key => $var) {
-			$keys[] = $add_tbl ? $this->tbl().'.'.$key : $key;
+			$keys[] = $add_tbl ? $this->dbPref($key) : $key;
 		}
 		return $keys;
 	}
@@ -743,7 +743,7 @@ abstract class AcidModuleCore {
 	* @return string|unknown
 	*/
 	public static function dbPref($value,$prefix=null) {
-		$prefix = $prefix===null ? static::tbl() : $prefix;
+		$prefix = $prefix===null ? static::tblJoin() : $prefix;
 
 		if ($prefix!='') {
 			return $prefix.'.'.$value;
