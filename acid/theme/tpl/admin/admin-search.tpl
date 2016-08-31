@@ -11,7 +11,7 @@ $form = $o->initForm($o->preKey('fv_'),false);
 $tab = new AcidTable();
 $line = 1;
 foreach ($v['keys'] as $key) {
-	$class = get_class($v['vars'][$key]);
+	$class = isset($v['vars'][$key]) ? get_class($v['vars'][$key]) : 'AcidVarText';
 	if ($class !== 'AcidVarFile') {
 
 		$mo = in_array($class,array('AcidVarBool','AcidVarList','AcidVarRadio')) ?
@@ -19,7 +19,7 @@ foreach ($v['keys'] as $key) {
 
 		$method =	'<select name="'.$o->preKey('fm_'.$key).'">' . $mo . '</select>';
 
-		$field_form = get_class($v['vars'][$key]) != 'AcidVarText' ?
+		$field_form = $class != 'AcidVarText' ?
 		$form->getComponent($o->preKey('fv_'.$key)) :
 		AcidForm::text($o->preKey('fv_'.$key),'',50);
 
