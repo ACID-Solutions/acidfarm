@@ -33,6 +33,11 @@ abstract class AcidModuleCore {
 	*/
 	protected $config = array();
 
+    /**
+     * @var array liste des clés considérées comme privées
+     */
+    protected $private_keys = array();
+
 	const TBL_NAME = null;
 	const TBL_PRIMARY = null;
 
@@ -323,17 +328,38 @@ abstract class AcidModuleCore {
 
 	/**
 	* Retourne un tableau accueillant les paramètres de l'objet associés à leurs valeurs.
-	*
+	* @param array $filter liste des clés autorisées à la sortie
 	*
 	* @return array ([paramètre] => [valeurs])
 	*/
-	public function getVals () {
+	public function getVals ($filter=null) {
 		$tab = array();
 		foreach ($this->vars as $key => $var) {
-			$tab[$key] = $var->getVal();
+		    if ( ($filter===null) || (in_array($key, $filter)) ) {
+                $tab[$key] = $var->getVal();
+            }
 		}
 		return $tab;
 	}
+
+    /**
+     * Retourne un tableau accueillant les paramètres considérés publiques de l'objet associés à leurs valeurs.
+     *
+     * @return array
+     */
+    public function getPublicVals () {
+       $keys = empty($this->private_keys) ? null : array_diff($this->getKeys(), $this->private_keys);
+       return $this->getVals($keys);
+    }
+
+    /**
+     * Retourne un tableau accueillant les paramètres considérés privés de l'objet associés à leurs valeurs.
+     *
+     * @return array
+     */
+    public function getPrivateVals () {
+        return $this->getVals($this->private_keys);
+    }
 
 	/**
 	* Liste les paramètres de l'objet ainsi que leurs valeurs sous forme d'une chaîne de caractères mise en forme.
@@ -2224,7 +2250,9 @@ abstract class AcidModuleCore {
 					default :
 						if (!$this->checkKey($key,$tab,$do,$sub_text_error)) {
 							$missing[] = $key;
-							$missing_error .= $this->checkLabel($key) . '<br />';
+                            if (!$sub_text_error) {
+                                $missing_error .= $this->checkLabel($key) . '<br />';
+                            }
 						}
 					break;
 				}
@@ -2357,7 +2385,7 @@ abstract class AcidModuleCore {
 
 			//config
 			$config['dialog'] = $dialog;
-			$config['obj'] = $res ? $res->getVals() : array();
+			$config['obj'] = $res ? $res->getPublicVals() : array();
 			$config['datas'] = isset($vals['datas']) ? $vals['datas'] : array();
 			$config['success'] = !empty($res);
 			$config['content'] = isset($config['content']) ? $config['content'] : '';
