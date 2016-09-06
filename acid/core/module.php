@@ -931,7 +931,7 @@ abstract class AcidModuleCore {
 
 					$way = isset($val[1]) ? $val[1] : 0;
 
-					if (is_bool($val)) {
+					if (is_bool($way)) {
 						$way = $way ? 'DESC':'ASC';
 					}
 
@@ -3416,59 +3416,99 @@ abstract class AcidModuleCore {
 	*
 	* @return array
 	*/
-	public function getAdminListOptions($mods=false) {
+    public function getAdminListOptions($mods=false) {
 
-		$filter = $order = array();
+        $filter = $order = array();
+        $mods_extend =  array();
+
+        $gets = $this->admin_nav;
+
+        $gkeys = array_keys($this->vars);
+        if ($extend = $this->getConfig('admin:curnav:extended_keys')) {
+            $gkeys = array_merge($gkeys,$extend);
+        }
+
+        // cas de jointure pour les filtres
+        if ($mods) {
+
+            foreach ($mods as $module) {
+
+                $mod = $module::build();
+                foreach ($mod->getKeys() as $k) {
+
+                    $mk = $mod->dbPref($k);
+                    $mods_extend[] = $mk;
+
+                    $sub_key = str_replace('.','_',$this->preKey('fv_' . $mk));
+                    if (isset($_GET[$sub_key])) {
+                        $gets['fv_' . $mk] = $_GET[$sub_key];
+                    }
+                    unset($_GET[$sub_key]);
+
+                    $sub_key =  str_replace('.','_',$this->preKey('fm_' . $mk));
+                    if (isset($_GET[$sub_key])) {
+                        $gets['fm_' . $mk] = $_GET[$sub_key];
+                    }
+                    unset($_GET[$sub_key]);
+
+                }
+            }
+
+            $gkeys = array_merge($gkeys,$mods_extend);
+        }
+
+        // chaîne WHERE
+        foreach ($gkeys as $key) {
+            if (isset($gets['fm_'.$key]) && isset($gets['fv_'.$key]) && strlen($gets['fv_'.$key])) {
+
+                $search_val = html_entity_decode($gets['fv_'.$key]);
+                $key_filter = !$mods ? $key : $this->dbPref($key);
+                $key_filter = ($mods_extend && (in_array($key,$mods_extend))) ? $key : $key_filter;
+                $key_filter = ($extend && (in_array($key,$extend))) ? $key : $key_filter;
 
 
-		$gets = $this->admin_nav;
+                switch($gets['fm_'.$key]) {
+                    case 'contain' :	$filter[] = array($key_filter,'LIKE',$search_val,'%','%');	break;
+                    case 'start' :		$filter[] = array($key_filter,'LIKE',$search_val,'','%');	break;
+                    case 'stop' :		$filter[] = array($key_filter,'LIKE',$search_val,'%','');	break;
+                    case 'is' :			$filter[] = array($key_filter,'=',$search_val);		break;
+                }
+            }
+        }
 
-		$gkeys = array_keys($this->vars);
-		if ($extend = $this->getConfig('admin:curnav:extended_keys')) {
-			$gkeys = array_merge($gkeys,$extend);
-		}
+        //cas de jointure pour l'ordre
+        if (isset($gets['lo'])) {
+            $valid_key = isset($this->vars[$gets['lo']]);
+            if (($mods) && (!$valid_key)) {
+                foreach ($mods as $module) {
+                    if (!$valid_key) {
+                        $m = new $module();
 
-		// chaîne WHERE
-		foreach ($gkeys as $key) {
-			if (isset($gets['fm_'.$key]) && isset($gets['fv_'.$key]) && strlen($gets['fv_'.$key])) {
-				$search_val = html_entity_decode($gets['fv_'.$key]);
-				$key_filter = !$mods ? $key : $this->dbPref($key);
-				$key_filter = ($extend && (in_array($key,$extend))) ? $key : $key_filter;
+                        if (strpos($gets['lo'],$m->dbPref(''))!==false) {
+                            $check = substr($gets['lo'],strlen($m->dbPref('')));
+                            $valid_key = in_array($check,$m->getKeys());
+                        }
+                    }
+                }
+            }
+        }
 
-				switch($gets['fm_'.$key]) {
-					case 'contain' :	$filter[] = array($key_filter,'LIKE',$search_val,'%','%');	break;
-					case 'start' :		$filter[] = array($key_filter,'LIKE',$search_val,'','%');	break;
-					case 'stop' :		$filter[] = array($key_filter,'LIKE',$search_val,'%','');	break;
-					case 'is' :			$filter[] = array($key_filter,'=',$search_val);		break;
-				}
-			}
-		}
+        // chaîne ORDER
+        if (isset($gets['lo']) && isset($gets['ld']) && $valid_key) {
 
-		//cas de jointure
-		if (isset($gets['lo'])) {
-			$valid_key = isset($this->vars[$gets['lo']]);
-			if (($mods) && (!$valid_key)) {
-				foreach ($mods as $module) {
-					if (!$valid_key) {
-						$m = new $module();
-						if (strpos($gets['lo'],$m->dbPref(''))!==false) {
-							$check = substr($gets['lo'],strlen($m->dbPref('')));
-							$valid_key = in_array($check,$m->getKeys());
-						}
-					}
-				}
-			}
-		}
+            if (isset($this->config['admin']['list']['orderval'][$gets['lo']])) {
+                $order = array('()'=>$this->config['admin']['list']['orderval'][$gets['lo']].' '.($gets['ld']?'DESC':'ASC'));
+            }else{
+                $order = array($gets['lo']=>($gets['ld']?true:false));
+            }
 
-		// chaîne ORDER
-		if (isset($gets['lo']) && isset($gets['ld']) && $valid_key) {
-			$order = array($gets['lo']=>($gets['ld']?true:false));
-		}elseif (isset($this->config['admin']['list']['order'])) {
-			$order = $this->config['admin']['list']['order'];
-		}
+        }elseif (isset($this->config['admin']['list']['order'])) {
+            $order = $this->config['admin']['list']['order'];
+        }
 
-		return array($filter,$order);
-	}
+
+        return array($filter,$order);
+    }
 
 	/**
 	* Retourne le listing d'administration du module sous forme d'une chaîne de caractères mise en forme.

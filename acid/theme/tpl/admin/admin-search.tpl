@@ -10,9 +10,12 @@ $method_list_strict =	'	<option value="unused">'.Acid::trad('admin_search_list_i
 $form = $o->initForm($o->preKey('fv_'),false);
 $tab = new AcidTable();
 $line = 1;
+
+$upload_keys = array_keys($o->getUploadVars());
+
 foreach ($v['keys'] as $key) {
 	$class = isset($v['vars'][$key]) ? get_class($v['vars'][$key]) : 'AcidVarText';
-	if ($class !== 'AcidVarFile') {
+	if (!in_array($key,$upload_keys)) {
 
 		$mo = in_array($class,array('AcidVarBool','AcidVarList','AcidVarRadio')) ?
 		$method_list_strict : $method_filter;
