@@ -30,10 +30,11 @@ class AcidExport {
 	 * @param string $limit Limite SQL
 	 * @param array $mods Liste des modules joints
 	 * @param array $assoc tableau de remplacement de valeurs
+	 * @param array $func tableau de fonctions pour remplacement de valeurs
 	 * @param string $delimiter Délimiter CSV
 	 * @param string $enclosure Enclosure CSV
 	 */
-	public static function sqlModule2CSV($module,$select='',$filter='',$order='',$limit='',$mods=array(),$assoc=array(),$delimiter=';',$enclosure='"') {
+	public static function sqlModule2CSV($module,$select='',$filter='',$order='',$limit='',$mods=array(),$assoc=array(),$func=array(),$delimiter=';',$enclosure='"') {
 
 		//On peut appeler un objet en paramètres
 		$mod = is_string($module) ? $module::build() : $module;
@@ -49,18 +50,18 @@ class AcidExport {
 			}
 
 			//On prépare le from et le potentiel select (si non défini)
-			foreach ($mods_tab as $submod => $keys) {
-				foreach (Acid::mod($submod)->getKeys() as $key) {
-						$new_select[] = array($key,false,Acid::mod($submod)->tbl(),Acid::mod($submod)->dbPref($key));
-				}
+            foreach ($mods_tab as $submod => $keys) {
+                foreach (Acid::mod($submod)->getKeys() as $key) {
+                    $new_select[] = array($key,false,Acid::mod($submod)->tblJoin(),Acid::mod($submod)->dbPref($key));
+                }
 
-				if ($keys) {
-					$my_from = array();
-					$my_from[] = Acid::mod($submod)->tbl();
-					$my_from[] = $keys;
-					$from[] = $my_from;
-				}
-			}
+                if ($keys) {
+                    $my_from = array();
+                    $my_from[] = $mod::tblMods($submod);
+                    $my_from[] = $keys;
+                    $from[] = $my_from;
+                }
+            }
 
 			//Si pas de select prédéfini, on le format pour les jointures
 			$select = $select ? $select : $new_select;
@@ -147,6 +148,28 @@ class AcidExport {
 						}
 					}
 				}
+
+                //Si des valeurs doivent être générées par une function
+                if ($func) {
+                    foreach ($func as $key => $subfunc) {
+                        if (isset($data[$key])) {
+                            $name = isset($subfunc[0]) ? $subfunc[0] : '';
+                            $args = isset($subfunc[1]) ? $subfunc[1] : array();
+                            if ($name) {
+                                if ($args) {
+                                    foreach ($args as $k=>$a) {
+                                        if ($a == '__VAL__') {
+                                            $args[$k] = $data[$key];
+                                        }elseif ($a == '__ELT__') {
+                                            $args[$k] = $data;
+                                        }
+                                    }
+                                }
+                                $data[$key] = call_user_func_array($name, $args);
+                            }
+                        }
+                    }
+                }
 
 
 				fputcsv($handler, $data, $delimiter, $enclosure);
