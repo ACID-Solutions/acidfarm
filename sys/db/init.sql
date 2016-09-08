@@ -269,7 +269,7 @@ CREATE TABLE IF NOT EXISTS `acid_photo` (
 --
 
 CREATE TABLE IF NOT EXISTS `acid_menu` (
-`id_menu` int(10) unsigned NOT NULL,
+  `id_menu` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `ident` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `name` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `pos` int(11) NOT NULL,
