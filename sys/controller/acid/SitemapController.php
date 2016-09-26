@@ -62,7 +62,8 @@ class SitemapController{
 			$langs = array(Acid::get('lang:current'));
 		}
 
-		$res = Acid::mod('Page')->dblist(array(array('active','=',1)));
+		$respage = Acid::mod('Page')->dbList(array(array('active','=',1)));
+		$resactu = Acid::mod('Actu')->dbList(array(array('active','=',1)),array('adate'=>'DESC'));
 
 		foreach ($langs as $lang) {
 
@@ -81,13 +82,23 @@ class SitemapController{
 
 			//Pages
 			$map = array();
-			foreach ($res as $elt) {
+			foreach ($respage as $elt) {
 				$mod = new Page($elt);
 
 				$map[] =  array('url'=>AcidUrl::absolute($mod->url()));
 			}
 
 			$this->decline_sitemap($map,'',0.8);
+
+            //Actus
+            $map = array();
+            foreach ($resactu as $elt) {
+                $mod = new Actu($elt);
+
+                $map[] =  array('url'=>AcidUrl::absolute($mod->url()));
+            }
+
+            $this->decline_sitemap($map,'',0.7);
 
 
 			Lang::rollback();
@@ -102,20 +113,47 @@ class SitemapController{
 	 */
 	public static function webmap(){
 
-		$res = Page::dblist(array(array('active','=',1)));
+
 
 		$map = array();
-		$map[] = array('url'=>Acid::get('url:folder_lang'),'title'=>AcidRouter::getName('index'), 'class'=>"smmain");
-		$map[] = array('url'=>Actu::buildUrl(),'title'=>AcidRouter::getName('news'), 'class'=>"smmain");
-		$map[] = array('url'=>Photo::buildUrl(),'title'=>AcidRouter::getName('gallery'), 'class'=>"smmain");
 
-		foreach ($res as $elt) {
+        //home page
+		$map[] = array('url'=>Acid::get('url:folder_lang'),'title'=>AcidRouter::getName('index'), 'class'=>"smmain");
+
+        //site keys
+        //$map[] = array('url'=>Actu::buildUrl(),'title'=>AcidRouter::getName('news'), 'class'=>"smmain");
+		//$map[] = array('url'=>Photo::buildUrl(),'title'=>AcidRouter::getName('gallery'), 'class'=>"smmain");
+
+        //site keys exclusion
+        $delayed = array(
+            'contact'=>false,
+            'search'=>false
+        );
+
+        //site keys treatment
+        foreach (Conf::get('site_keys') as $key) {
+            if (!isset($delayed[$key])) {
+                $map[] = array('url' => Route::buildUrl($key), 'title' => AcidRouter::getName($key), 'class' => "smmain");
+            }else{
+                $delayed[$key] = array('url' => Route::buildUrl($key), 'title' => AcidRouter::getName($key), 'class' => "smmain");
+            }
+        }
+
+        //dynamic pages
+        $res = Page::dbList(array(array('active','=',1)));
+        foreach ($res as $elt) {
 			$p = new Page($elt);
 			$map[] = array('url'=>$p->url(),'title'=>$p->hscTrad('title'), 'class'=>"smpage");
 		}
 
-		$map[] = array('url'=>Route::buildUrl('contact'),'title'=>AcidRouter::getName('contact'), 'class'=>"smmain");
-		$map[] = array('url'=>Route::buildUrl('search'),'title'=>AcidRouter::getName('search'), 'class'=>"smmain");
+        //delayed keys
+        //$map[] = array('url'=>Route::buildUrl('contact'),'title'=>AcidRouter::getName('contact'), 'class'=>"smmain");
+        //$map[] = array('url'=>Route::buildUrl('search'),'title'=>AcidRouter::getName('search'), 'class'=>"smmain");
+        foreach ($delayed as $key =>$elt) {
+            $map[] = $elt;
+        }
+
+
 
 
 		return $map;

@@ -138,6 +138,10 @@ else {
 	//-site web
 	AdminController::addMenuCat('web',Acid::trad('admin_menu_web'),array('unclickable'=>true,'color'=>$color[3]),$def_level);
 
+	//--accueil
+	AdminController::addMenu('home','web',Acid::trad('admin_menu_home'),$def_level);
+	AdminController::addAccess('home',$def_level);
+
 	//--actualites
 	AdminController::addMenu('actu','web',Acid::trad('admin_menu_news'),$def_level);
 	AdminController::addAccess('actu',$def_level,'Actu');

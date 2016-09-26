@@ -80,8 +80,11 @@ class PageController{
             AcidUrl::redirection301(Route::buildUrl('search').'/'.$_GET['search']);
         }
 
+        //$page = new Page();
+		//$page->init('home');
+
         $page = new Page();
-		$page->init('home');
+        $page->initVars(array($page->langKey('content')=>SiteConfig::getCurrent()->getConf('home_'.$page->langKey('content'))));
 
 		$vars = array ();
 

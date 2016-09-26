@@ -107,6 +107,8 @@ $lang['mod']['config']['phone'] 	 = 'Phone';
 $lang['mod']['config']['fax']        = 'Fax';
 $lang['mod']['config']['website']    = 'Website';
 
+$lang['mod']['config']['home_content']    = 'Contenido';
+
 //--user
 $lang['mod']['user']['__NAME__'] 		  = 'Usuarios';
 $lang['mod']['user']['id_user']           = 'Id';

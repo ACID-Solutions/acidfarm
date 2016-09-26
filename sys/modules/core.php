@@ -58,7 +58,9 @@ abstract class AcidModule extends AcidModuleCore {
 	public function urlSrc($format=null) {
 		$key = isset($this->vars['src']) ? 'src' : (isset($this->vars['img']) ? 'img' : '');
 		if ($key) {
-			return $this->getUrlKey($key, $format);
+		    if ($this->get($key)) {
+                return $this->getUrlKey($key, $format);
+            }
 		}
 	}
 

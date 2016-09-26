@@ -108,6 +108,8 @@ $lang['mod']['config']['phone'] 	 = 'Téléphone';
 $lang['mod']['config']['fax']        = 'Fax';
 $lang['mod']['config']['website']    = 'Site Web';
 
+$lang['mod']['config']['home_content']    = 'Contenu accueil';
+
 //--user
 $lang['mod']['user']['__NAME__'] 		  = 'Utilisateurs';
 $lang['mod']['user']['id_user']           = 'Id';

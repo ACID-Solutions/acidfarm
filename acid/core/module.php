@@ -929,7 +929,7 @@ abstract class AcidModuleCore {
 				//tri selon un ordre défini par un tableau de valeurs
 				elseif ($val && is_array($val) && is_array($val[0]) && $val[0]) {
 
-					$way = isset($val[1]) ? $val[1] : 0;
+					$way = isset($val[1]) ? $val[1] : false;
 
 					if (is_bool($way)) {
 						$way = $way ? 'DESC':'ASC';
@@ -3524,6 +3524,7 @@ abstract class AcidModuleCore {
 		//Gestion des filtres additionnels
 		$add_filter = isset($conf['filter']) ? $conf['filter'] : array();
 		$add_order = isset($conf['order']) ? $conf['order'] : array();
+        $sub_order = isset($conf['sub_order']) ? $conf['sub_order'] : array();
 		$mods = isset($conf['mods']) ? $conf['mods'] : $this->getAdminListMods();
 
 		$modules = array();
@@ -3558,9 +3559,13 @@ abstract class AcidModuleCore {
 				$filter = array_merge($add_filter,$filter);
 			}
 
-			if (!empty($add_order)) {
-				$order = array_merge($add_order,$order);
-			}
+            if (!empty($add_order)) {
+                $order = $add_order + $order;
+            }
+
+            if (!empty($sub_order)) {
+                $order = $order + $sub_order;
+            }
 
 			//Récupération des paramètres
 
@@ -4319,7 +4324,7 @@ abstract class AcidModuleCore {
 								'stop'=>Acid::trad('admin_search_list_stop')
 		);
 
-		$ll = isset($this->config['admin']['list']['limit']) ? $this->config['admin']['list']['limit'] : 10;
+		$ll = isset($this->config['admin']['list']['limit']) ? $this->config['admin']['list']['limit'] : 25;
 
 		$tpl = $this->getAdminTpl('search');
 		$tpl = $tpl ? $tpl : 'admin/admin-search.tpl';

@@ -63,11 +63,15 @@ class SiteConfig extends AcidModule {
 
 		$success = parent::__construct($init_id);
 
+        $home_content = array();
+        foreach (Page::build()->langKeyDecline('content') as $k) {
+            $home_content[] = 'home_'.$k;
+        }
 
 		$this->free_mode = $free_mode;
 
 		$this->addControl(array('email','contact','address','cp','city','coords','zoom','phone','fax','website'));
-		//$this->addRemoteControl(array('key1','key2'));
+		$this->addRemoteControl($home_content);
 
 		$this->addExcluded(array(self::preKey('do'),'submit','next_page'));
 
@@ -394,6 +398,40 @@ class SiteConfig extends AcidModule {
 		}
 
 	}
+
+    /**
+     * Formulaire d'administration du contenu de la home page
+     * @return string
+     */
+    public static function printRemoteHomeForm() {
+        $form = new AcidForm('post','');
+        $form->tableStart();
+        $form->addHidden('',Acid::mod('SiteConfig')->preKey('do'),'remote_update');
+        $form->addHidden('','module_do',Acid::mod('SiteConfig')->getClass());
+
+        $lang_keys= Page::build()->langKeyDecline('content');
+        if ($langs = Acid::get('lang:available')) {
+            $have_lang_keys = (count($langs) > 1) || Acid::get('lang:use_nav_0');
+            foreach ($lang_keys as $k) {
+
+                $class = '';
+                if ($have_lang_keys) {
+                    $l = explode('_', $k);
+                    $l = $l[(count($l) - 1)];
+                    $class = 'lang ' . $l;
+                }
+
+                $form->addTextarea(Page::build()->getLabel($k), self::getCurrent()->modTrad('home_' . $k), self::getCurrent()->getConf('home_' . $k), 120, 20,array('class'=>$class),'','',array('class'=>$class));
+            }
+        }
+
+        $form->addSubmit('',Acid::trad('config_btn_validate'));
+        $form->tableStop();
+
+
+        $flags = $have_lang_keys ? Page::build()->printAdminFlags('remote_update',$lang_keys) : '';
+        return $flags.$form->html();
+    }
 
 	/**
 	 * Exemple de formulaire de mise à jour de variables libres

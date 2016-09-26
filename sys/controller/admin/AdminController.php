@@ -272,6 +272,17 @@ class AdminController{
     }
 
     /**
+     * Affichage de la configuration utilisateur
+     */
+    public static function home(){
+
+        $content = Acid::mod('User')->printAdminBody(SiteConfig::printRemoteHomeForm(),array(AcidUrl::build(array('page'=>'home'))=>Acid::trad('admin_menu_home')));
+
+
+        Conf::addToContent($content);
+    }
+
+    /**
      * Affichage des modules
      */
     public static function index(){
