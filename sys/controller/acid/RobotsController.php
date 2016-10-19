@@ -54,13 +54,20 @@ class RobotsController{
       	Acid::set('out','text');
 
       	$disallow = '';
-      	$themes = self::getThemes();
-      	foreach ($themes as $theme) {
-      		$disallow .= 'Disallow: '.Acid::get('url:folder') . Acid::get('keys:theme') . '/'.$theme.'/css/'  . "\n" ;
-			$disallow .= 'Disallow: '.Acid::get('url:folder') . Acid::get('keys:theme') . '/'.$theme.'/out/'  . "\n" ;
-			$disallow .= 'Disallow: '.Acid::get('url:folder') . Acid::get('keys:theme') . '/'.$theme.'/tpl/'  . "\n" ;
-			$disallow .= 'Disallow: '.Acid::get('url:folder') . Acid::get('keys:theme') . '/'.$theme.'/js/'  . "\n" ;
-      	}
+
+        if (Acid::get('donotindex')) {
+            $disallow .= 'Disallow: '.Acid::get('url:folder')   . "\n" ;
+        }else {
+
+            $themes = self::getThemes();
+            foreach ($themes as $theme) {
+                $disallow .= 'Disallow: ' . Acid::get('url:folder') . Acid::get('keys:theme') . '/' . $theme . '/css/' . "\n";
+                $disallow .= 'Disallow: ' . Acid::get('url:folder') . Acid::get('keys:theme') . '/' . $theme . '/out/' . "\n";
+                $disallow .= 'Disallow: ' . Acid::get('url:folder') . Acid::get('keys:theme') . '/' . $theme . '/tpl/' . "\n";
+                $disallow .= 'Disallow: ' . Acid::get('url:folder') . Acid::get('keys:theme') . '/' . $theme . '/js/' . "\n";
+            }
+        }
+
 
 		$robot = 	'User-agent: *' . "\n" .
 					$disallow .

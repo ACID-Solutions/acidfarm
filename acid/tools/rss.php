@@ -169,9 +169,10 @@ class AcidRss {
 		$img_path = SITE_PATH.AcidFs::removeBasePath($img);
 		$img_url = Acid::get('url:system_lang').AcidFs::removeBasePath($img);
 
-		if (strpos($img_path,'?')!==false) {
-			$img_path = array_shift(explode('?',$img_path));
-		}
+        if (strpos($img_path,'?')!==false) {
+            $p=explode('?',$img_path);
+            $img_path = array_shift($p);
+        }
 
 		if($img && file_exists($img_path)){
 

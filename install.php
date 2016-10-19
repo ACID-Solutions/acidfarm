@@ -354,6 +354,9 @@ $ldev_quote\$acid['compiler']['mode'] = 'dev';
 //\$acid['compiler']['css']['compression'] = false;
 //\$acid['compiler']['js']['compression'] = false;
 
+//Disallow indexation
+$lpp_quote\$acid['donotindex'] = true;
+
 //Disallow deploy for security patches
 //\$acid['deploy']['allowed'] = true;
 
@@ -423,9 +426,11 @@ HTACC;
 		$eh = fwrite($h, $htaccess);
 		fclose($h);
 
-		$h = fopen($htaccess_path_rest,'w');
-		$eh = fwrite($h, $htaccessrest);
-		fclose($h);
+        if (file_exists(__DIR__.'/rest')) {
+            $h = fopen($htaccess_path_rest, 'w');
+            $eh = fwrite($h, $htaccessrest);
+            fclose($h);
+        }
 
 		if ($db_init) {
 

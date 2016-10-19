@@ -19,7 +19,7 @@ if (Acid::get('sentry:url')) {
     try {
             $client = new Raven_Client(Acid::get('sentry:url'));
 
-            $sentry_report_level = ( (Acid::exists('sentry:url') ? Acid::get('sentry:url') : -1 ) );
+            $sentry_report_level = ( (Acid::exists('sentry:report_level') ? Acid::get('sentry:report_level') : -1 ) );
 
             $error_handler = new Raven_ErrorHandler($client);
             $error_handler->registerExceptionHandler();
