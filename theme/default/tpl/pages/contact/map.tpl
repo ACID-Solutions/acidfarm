@@ -6,7 +6,7 @@
     </div>
 </div>
 
-<?php echo AcidGMap::apiCall(); ?>
+<?php echo AcidGMap::apiCall($g['site_config']->getConf('gmapapikey')); ?>
 
 <?php
 

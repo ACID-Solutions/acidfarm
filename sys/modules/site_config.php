@@ -70,7 +70,7 @@ class SiteConfig extends AcidModule {
 
 		$this->free_mode = $free_mode;
 
-		$this->addControl(array('email','contact','address','cp','city','coords','zoom','phone','fax','website'));
+		$this->addControl(array('email','contact','address','cp','city','coords','zoom','gmapapikey','phone','fax','website'));
 		$this->addRemoteControl($home_content);
 
 		$this->addExcluded(array(self::preKey('do'),'submit','next_page'));

@@ -24,8 +24,9 @@ class AcidGMap {
 	 * Retourne une portion de code html appelant l'api GoogleMap
 	 * @return string
 	 */
-	public static function apiCall() {
-		return '<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false"></script>'. "\n" ;
+	public static function apiCall($key=null) {
+	    $keyquery= $key ? ('&key='.$key) : '';
+		return '<script type="text/javascript" src="https://maps.google.com/maps/api/js?sensor=false'.$keyquery.'"></script>'. "\n" ;
 	}
 
 	/**
