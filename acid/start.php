@@ -200,6 +200,7 @@ require ACID_PATH . 'core/acid_hook.php';
 require ACID_PATH . 'core/module.php';
 
 require_once ACID_PATH . 'extend.php';
+require_once ACID_PATH . 'retro.php';
 
 require_once ACID_PATH . 'core/router/acid_router.php';
 require_once ACID_PATH . 'core/router/acid_route.php';
