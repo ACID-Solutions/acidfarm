@@ -62,9 +62,13 @@ class RobotsController{
             $themes = self::getThemes();
             foreach ($themes as $theme) {
                 $disallow .= 'Disallow: ' . Acid::get('url:folder') . Acid::get('keys:theme') . '/' . $theme . '/css/' . "\n";
+                $disallow .= 'Allow: ' . Acid::get('url:folder') . Acid::get('keys:theme') . '/' . $theme . '/css/*.css' . "\n";
+                $disallow .= 'Allow: ' . Acid::get('url:folder') . Acid::get('keys:theme') . '/' . $theme . '/css/compiled/*.css' . "\n";
                 $disallow .= 'Disallow: ' . Acid::get('url:folder') . Acid::get('keys:theme') . '/' . $theme . '/out/' . "\n";
                 $disallow .= 'Disallow: ' . Acid::get('url:folder') . Acid::get('keys:theme') . '/' . $theme . '/tpl/' . "\n";
                 $disallow .= 'Disallow: ' . Acid::get('url:folder') . Acid::get('keys:theme') . '/' . $theme . '/js/' . "\n";
+                $disallow .= 'Allow: ' . Acid::get('url:folder') . Acid::get('keys:theme') . '/' . $theme . '/js/*.js' . "\n";
+                $disallow .= 'Allow: ' . Acid::get('url:folder') . Acid::get('keys:theme') . '/' . $theme . '/js/compiled/*.js' . "\n";
             }
         }
 
