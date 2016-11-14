@@ -144,7 +144,10 @@ $acidconf['admin_pages'] = array();
 //--reserved keys
 $acidconf['keys']['reserved']=$acidconf['site_keys'];
 
-
+//--admin preview
+$acidconf['admin_preview']['varname'] = 'admin_preview';
+$acidconf['admin_preview']['mods'] = array('Actu','Page');
+$acid['url']['params']['allowed'][] = $acidconf['admin_preview']['varname'];
 
 // SEO
 //************************************************************************************//

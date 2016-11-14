@@ -26,7 +26,7 @@ abstract class AcidModule extends AcidModuleCore {
 	 * @return string
 	 */
 	public static function buildUrl($vals=array()) {
-		return Route::buildUrl(static::checkTbl(),$vals);
+        return Route::buildUrl(static::checkTbl(),$vals);
 	}
 
 	/**
@@ -36,6 +36,22 @@ abstract class AcidModule extends AcidModuleCore {
 	public function url() {
 		return $this->buildUrl($this->getVals());
 	}
+
+    /***
+     * Retourne si le module est actif (ou en mode aperçu admin)
+     * return boolean
+     */
+	public function active() {
+	    if (Conf::get('admin_preview') && in_array($this->getClass(),Conf::get('admin_preview:mods'))) {
+            if (isset($this->vars['active'])) {
+                return
+                    //l'élement est actif
+                    $this->get('active')
+                    //OU on est admin (ou plus) et le paramêtre GET est défini à une valeur non nulle
+                    || ((!empty($_GET[Conf::get('admin_preview:varname')])) && User::curLevel(Acid::get('lvl:admin')));
+            }
+        }
+    }
 
 	/**
 	 * Rerourne l'url de l'image en entrée au format $format

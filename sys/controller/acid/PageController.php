@@ -41,7 +41,7 @@ class PageController{
 
 	        Acid::set('tmp_current_object',$my_page);
 
-	        if (count(AcidRouter::getParams()) == 1 && $my_page->get('active')) {
+	        if ( (count(AcidRouter::getParams()) == 1) && $my_page->getId() && $my_page->active()) {
 
 	        	//add to ariane
 	        	Conf::addToAriane($my_page->trad('title'),$my_page->url());

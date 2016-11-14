@@ -68,8 +68,7 @@ class ActuController {
                 $actu = new Actu($page);
                 Acid::set('tmp_current_object',$actu);
 
-                if ($actu->getId()) {
-                    if ($actu->get('active')) {
+                if ($actu->getId() && $actu->active()) {
 
                         if (AcidUrl::requestURI() != $actu->url()) {
                             AcidUrl::redirection301($actu->url());
@@ -88,7 +87,9 @@ class ActuController {
 
                         //add to HTML
                         Conf::addToContent($actu->printActu());
-                    }
+
+                }else{
+                    AcidUrl::error404();
                 }
             }else{
                 AcidUrl::error404();
