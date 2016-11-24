@@ -55,6 +55,13 @@
     font-weight:bold;
   }
 
+  a{
+    padding:2px;
+    margin-right:5px;
+    margin-bottom:5px;
+    border:1px solid #CCCCCC;
+  }
+
   .admin_list_head_filter_title + a:before{
     content:"";
     padding:0px 5px;

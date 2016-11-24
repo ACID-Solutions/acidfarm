@@ -255,7 +255,7 @@ COMMIT;
 
 #MENU
 ALTER TABLE `acid_menu`
-ADD `name_fr` VARCHAR( 100 ) NOT NULL AFTER `id_acid_menu` ,
+ADD `name_fr` VARCHAR( 100 ) NOT NULL AFTER `id_menu` ,
 ADD `name_en` VARCHAR( 100 ) NOT NULL AFTER `name_fr` ,
 ADD `name_es` VARCHAR( 100 ) NOT NULL AFTER `name_en` ,
 ADD `name_de` VARCHAR( 100 ) NOT NULL AFTER `name_es` ,
@@ -274,5 +274,17 @@ COMMIT;
 
 ALTER TABLE `acid_menu`
   DROP `name`;
+
+COMMIT;
+
+ALTER TABLE `acid_menu`
+ADD `url_fr` VARCHAR( 100 ) NOT NULL AFTER `id_menu` ,
+ADD `url_en` VARCHAR( 100 ) NOT NULL AFTER `url_fr` ,
+ADD `url_es` VARCHAR( 100 ) NOT NULL AFTER `url_en` ,
+ADD `url_de` VARCHAR( 100 ) NOT NULL AFTER `url_es` ,
+ADD `url_it` VARCHAR( 100 ) NOT NULL AFTER `url_de` ;
+
+ALTER TABLE `acid_menu`
+  DROP `url`;
 
 COMMIT;

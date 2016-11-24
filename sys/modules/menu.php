@@ -54,6 +54,7 @@ class Menu extends AcidModule {
                 //AUTODETECT
                 $ks = !empty($have_lang_keys) ? ('_'.$l) : '';
                 $ds = !empty($have_lang_keys) ? (' '.$l) : '';
+                $this->vars['url'.$ks] =  new AcidVarString($this->modTrad('url').$ds,50);
                 $this->vars['name'.$ks] =  new AcidVarString($this->modTrad('name').$ds,50);
             }
             //CONFIGURATION DU MULTILINGUE DANS LES FORMULAIRES ADMIN
@@ -96,7 +97,7 @@ class Menu extends AcidModule {
         $this->config['print']['active']= array('type'=>'toggle','ajax'=>true);
 
         if (static::$_assoc===null) {
-            $assoc = Page::getAssoc(Page::build()->langKey('title'), null, true, array('title' => 'ASC'), array(array('ident', '!=', 'home')));
+            $assoc = Page::getAssoc(Page::build()->langKey('title'), null, true, array(Page::build()->langKey('title') => 'ASC'), array(array(Page::build()->langKey('ident','default'), '!=', 'home')));
             $other_assoc = array('index'=>AcidRouter::getName('index'));
             if ($keys = Conf::get('site_keys')) {
                 foreach ($keys as $key) {
@@ -110,6 +111,9 @@ class Menu extends AcidModule {
         $this->vars['ident']->setForm('select');
         $this->config['print']['ident']= array('type'=>'quickchange','ajax'=>false);
 
+        foreach (array_merge($this->langKeyDecline('name'), $this->langKeyDecline('url')) as $lkey) {
+            $this->config['print'][$lkey]= array('type'=>'quickchange','ajax'=>false);
+        }
 
         return parent::printAdminConfigure($do,$conf);
     }
@@ -144,6 +148,11 @@ class Menu extends AcidModule {
      * @return string
      */
     public function link() {
+
+        if ($this->trad('url')) {
+            return $this->trad('url');
+        }
+
         if ($this->get('ident')) {
             if ($p = $this->page()) {
                 return $p->url();

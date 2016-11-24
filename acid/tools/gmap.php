@@ -195,7 +195,12 @@ class AcidGMap {
 
     		'.$default_marker.'
 
-
+            var center = block_gmap_map.getCenter();
+            google.maps.event.addDomListener(window, \'resize\', function() {
+                document.getElementById('.$content_div.'_div_id).style=\'\';
+                block_gmap_map.setCenter(center);
+            });
+            
 		'.
 		($function ? '}' : '' ).
 		'

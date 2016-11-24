@@ -21,6 +21,7 @@
 $lang['mod']['menu']['__NAME__'] = 'Menu';
 $lang['mod']['menu']['id_menu'] = 'Id';
 $lang['mod']['menu']['ident'] 	= 'Pagine';
+$lang['mod']['menu']['url'] 	= 'URL personalizzato';
 $lang['mod']['menu']['name'] = 'Titolo';
 $lang['mod']['menu']['pos'] = 'Posizione';
 $lang['mod']['menu']['active'] = 'Attivo';

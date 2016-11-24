@@ -21,6 +21,7 @@
 $lang['mod']['menu']['__NAME__'] = 'Menüs';
 $lang['mod']['menu']['id_menu'] = 'Id';
 $lang['mod']['menu']['ident'] 	= 'Seite';
+$lang['mod']['menu']['url'] 	= 'Benutzerdefinierte URL';
 $lang['mod']['menu']['name'] = 'Anrede';
 $lang['mod']['menu']['pos'] = 'Position';
 $lang['mod']['menu']['active'] = 'Aktiv';

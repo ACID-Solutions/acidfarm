@@ -17,16 +17,23 @@ tinyMCE.init({
 		    plugins: [
 		        "advlist autolink lists link image charmap print preview anchor template",
 		        "searchreplace visualblocks code fullscreen",
-		        "insertdatetime media table contextmenu paste"
+		        "insertdatetime media table contextmenu paste textcolor colorpicker"
 		    ],
 			fontsize_formats: "8px 11px 12px 13px 14px 16px 18px 22px 24px 26px 32px 48px",
-		    toolbar: "insertfile undo redo | styleselect fontsizeselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+		    toolbar: "insertfile undo redo | styleselect fontsizeselect forecolor backcolor | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
 			body_class : "content_body",
 			content_css : "<?php echo Acid::get('sass:used') ? AcidTemplate::sassUrl('tiny-mce') : Acid::themeUrl('css/tiny-mce.css'); ?>",
 			content_style : "<?php echo Acid::get('tinymce:style'); ?>"
 
-			/*
-			 , style_formats: [
+			 /*
+			 , textcolor_map: [
+			 "FFFFFF", "Blanc",
+			 "333333", "Noir",
+			 "4D4D4D", "Gris1",
+			 "F2F2F2", "Gris 2"
+			 ]
+
+			 ,style_formats: [
 			 {title: 'Headers', items: [
 			 {title: 'Header 1', format: 'h1'},
 			 {title: 'Header 2', format: 'h2'},
