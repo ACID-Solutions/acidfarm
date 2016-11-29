@@ -911,7 +911,7 @@ abstract class AcidModuleCore {
 	* @param mixed $order [SQL CODE | array('field1'=>'ASC|DESC','field2'=>'ASC|DESC')]
 	* @return string
 	*/
-	public static function dbGenerateOrder($order) {
+	public static function dbGenerateOrder($order,$add_aquote=true) {
 		$order_string = '';
 
 		//requête en chaine de caractères
@@ -935,13 +935,16 @@ abstract class AcidModuleCore {
 						$way = $way ? 'DESC':'ASC';
 					}
 
-					$order_string .= " FIELD(" . addslashes($key) . ",".addslashes(implode(',',$val[0])). ") ". $way . ", ";
+                    $akey = $add_aquote ? "`".$key."`" : $key;
+					$order_string .= " FIELD(" . addslashes($akey) . ",".addslashes(implode(',',$val[0])). ") ". $way . ", ";
 
 				} else {
 					if (is_bool($val)) {
 						$val = $val ? 'DESC':'ASC';
 					}
-					$order_string .= "`".addslashes($key)."` " . $val . ", ";
+
+                    $akey = $add_aquote ? "`".$key."`" : $key;
+					$order_string .= $akey . " " . $val . ", ";
 				}
 
 			}
@@ -1231,7 +1234,7 @@ abstract class AcidModuleCore {
 		} else {
 
 			// Building ORDER BY query
-			$order_string = static::dbGenerateOrder($order);
+			$order_string = static::dbGenerateOrder($order,false);
 			$order_string = $order_string ? ' '.$order_string : $order_string;
 
 
