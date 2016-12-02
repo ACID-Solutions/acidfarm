@@ -1,8 +1,8 @@
 <div class="table-responsive">
 
-<table class="table" style="width:100%; padding:30px; table-layout: fixed;">
+<table class="table table-board" style="width:100%; padding:30px; table-layout: fixed;">
 	<tr>
-		<td colspan="3" style="vertical-align:top;  padding-bottom:25px; height:100px;  border-bottom:1px solid #CCCCCC;" >
+		<td  class="board_home" colspan="3" >
 			<p>
 				<?php echo Acid::trad('admin_board_welcome',array('__NAME__'=>User::curUser()->fullName())); ?>
     		</p>
@@ -10,7 +10,7 @@
 	</tr>
 
 	<tr>
-		<td style="vertical-align:top; padding-top:25px; ">
+		<td  class="board_coords">
 
 			<div>
 				<img src="<?php echo Acid::themeUrl('img/admin/picto_stats.png'); ?>"  alt="" title=""  style="width:80px; margin:auto;" />
@@ -18,15 +18,15 @@
 			</div>
 
 			<table>
-				<tr><td style="vertical-align:top; white-space:nowrap; padding-right:15px;" ><?php echo Acid::trad('admin_board_site_name'); ?> </td><td><b><?php echo Acid::get('site:name');?></b></td></tr>
-				<tr><td style="vertical-align:top; white-space:nowrap; padding-right:15px;"><?php echo Acid::trad('admin_board_site_email'); ?> </td><td><b><?php echo Acid::get('site:email');?></b></td></tr>
-				<tr><td style="vertical-align:top; white-space:nowrap; padding-right:15px;"><?php echo Acid::trad('admin_board_form_email'); ?> </td><td><b><?php echo SiteConfig::getCurrent()->hscConf('email');?></b></td></tr>
-				<tr><td style="vertical-align:top; white-space:nowrap; padding-right:15px;"><?php echo Acid::trad('admin_board_site_url'); ?> </td><td><a href="<?php echo Acid::get('url:system_lang');?>"><b><?php echo Acid::get('url:system_lang');?></b></a></td></tr>
+				<tr><td><?php echo Acid::trad('admin_board_site_name'); ?> </td><td><b><?php echo Acid::get('site:name');?></b></td></tr>
+				<tr><td><?php echo Acid::trad('admin_board_site_email'); ?> </td><td><b><?php echo Acid::get('site:email');?></b></td></tr>
+				<tr><td><?php echo Acid::trad('admin_board_form_email'); ?> </td><td><b><?php echo SiteConfig::getCurrent()->hscConf('email');?></b></td></tr>
+				<tr><td><?php echo Acid::trad('admin_board_site_url'); ?> </td><td><a href="<?php echo Acid::get('url:system_lang');?>"><b><?php echo Acid::get('url:system_lang');?></b></a></td></tr>
 			</table>
 
 		</td>
 
-		<td style="vertical-align:top; padding-top:25px; ">
+		<td  class="board_stats">
 
 			<div>
 				<img src="<?php echo Acid::themeUrl('img/admin/picto_users.png'); ?>"  alt="" title=""  style="width:80px; margin:auto;" />
@@ -44,7 +44,7 @@
 		</td>
 
 		<?php if (!empty( $v['registration']  )) { ?>
-		<td style="width:25%; vertical-align:top;  padding-top:25px; ">
+		<td class="board_registration">
 			<div>
 				<img src="<?php echo Acid::themeUrl('img/admin/picto_registre.png'); ?>"  alt="" title=""  style="width:80px; margin:auto;"  />
 				<h4><?php echo Acid::trad('admin_board_version_title'); ?></h4>

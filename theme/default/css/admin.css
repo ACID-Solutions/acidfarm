@@ -811,6 +811,35 @@ table.stat caption {
 .content_display {
   border: 1px solid #ccc; }
 
+.table-board .board_home {
+  min-height: 100px;
+  border-bottom: 1px solid #ccc; }
+.table-board .board_coords table td {
+  vertical-align: top;
+  padding-right: 15px;
+  white-space: nowrap; }
+.table-board .board_registration {
+  width: 25%; }
+.table-board > table td {
+  vertical-align: top;
+  padding-top: 25px; }
+
+@media screen and (max-width: 960px) {
+  .table-board tr, .table-board tr td {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    display: block;
+    width: 100%; }
+  .table-board tr .board_registration, .table-board tr td .board_registration {
+    width: 100%; }
+  .table-board tr table tr, .table-board tr td table tr {
+    display: table-row;
+    width: auto; }
+  .table-board tr table td, .table-board tr td table td {
+    display: table-cell;
+    width: auto; } }
+
 #admin_form {
   width: 600px;
   margin: 100px auto;
