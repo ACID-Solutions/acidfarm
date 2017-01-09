@@ -798,15 +798,15 @@ class AcidMediatheque {
 		list($dirs,$files,$links) = self::getDirElements();
 
 		if ($dirs && is_array($dirs)){
-			sort($dirs);
+            natcasesort($dirs);
 		}
 
 		if ($links && is_array($links)){
-			sort($links);
+            natcasesort($links);
 		}
 
 		if ($files && is_array($files)){
-			sort($files);
+            natcasesort($files);
 		}
 
 		$params = array(

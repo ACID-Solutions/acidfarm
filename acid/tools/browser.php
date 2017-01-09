@@ -746,6 +746,18 @@ class AcidBrowser {
 
 		list($dirs,$files,$links) = self::getDirElements();
 
+        if ($dirs && is_array($dirs)){
+            natcasesort($dirs);
+        }
+
+        if ($links && is_array($links)){
+            natcasesort($links);
+        }
+
+        if ($files && is_array($files)){
+            natcasesort($files);
+        }
+
 		$params = array(
 						'print_path'=>$this->printPath(), 'new_dir_form'=>$this->printNewDirHiddenForm(),
 						'upload_form' => $this->printUploadForm($this->cur_path), 'remove_form' => $this->printRemoveForm(),
