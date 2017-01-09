@@ -466,8 +466,9 @@ class AcidBrowser {
 	 */
 	protected function getContent($path) {
 		$files_list = array();
-		if ($handle = opendir($path)) {
-			while ($file = readdir($handle)){
+        if ($resultpath = scandir($path)) {
+            natcasesort($resultpath) ;
+            foreach ($resultpath as $file){
 				if ($file != "." && $file != "..") {
 					$file_to_list = array();
 					if (is_dir($path.$file)) {
@@ -481,7 +482,6 @@ class AcidBrowser {
 					$files_list[] = $file_to_list;
 				}
 			}
-			closedir($handle);
 		}
 
 		return $files_list;
@@ -745,18 +745,6 @@ class AcidBrowser {
 		$this->setCurPath($path);
 
 		list($dirs,$files,$links) = self::getDirElements();
-
-        if ($dirs && is_array($dirs)){
-            natcasesort($dirs);
-        }
-
-        if ($links && is_array($links)){
-            natcasesort($links);
-        }
-
-        if ($files && is_array($files)){
-            natcasesort($files);
-        }
 
 		$params = array(
 						'print_path'=>$this->printPath(), 'new_dir_form'=>$this->printNewDirHiddenForm(),
