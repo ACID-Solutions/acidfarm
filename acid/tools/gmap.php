@@ -354,7 +354,7 @@ class AcidGMap {
 
 		}
 
-		$url = 'http://maps.googleapis.com/maps/api/staticmap?center='.$center.'&amp;zoom='.$zoom.$size.'&amp;maptype=roadmap&amp;sensor=false';
+		$url = 'https://maps.googleapis.com/maps/api/staticmap?center='.$center.'&amp;zoom='.$zoom.$size.'&amp;maptype=roadmap&amp;sensor=false';
 
 		$link_start = $link_stop = '';
 		if (!empty($onclick)) {
