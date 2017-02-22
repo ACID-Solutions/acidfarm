@@ -66,6 +66,7 @@ $acid['includes']['AcidCSV']         = $acid['folder'].'tools/csv.php';
 $acid['includes']['AcidGMap']        = $acid['folder'].'tools/gmap.php';
 $acid['includes']['AcidPaypal']      = $acid['folder'].'tools/paypal.php';
 $acid['includes']['AcidFacebook']    = $acid['folder'].'/tools/facebook.php';
+$acid['includes']['AcidLinkedIn']    = $acid['folder'].'/tools/linkedin.php';
 $acid['includes']['AcidTwitter']     = $acid['folder'].'/tools/twitter.php';
 $acid['includes']['AcidZip']   	     = $acid['folder'].'/tools/zip.php';
 $acid['includes']['AcidBash']      	 = $acid['folder'].'/tools/bash.php';
