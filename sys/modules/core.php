@@ -51,6 +51,8 @@ abstract class AcidModule extends AcidModuleCore {
                     || ((!empty($_GET[Conf::get('admin_preview:varname')])) && User::curLevel(Acid::get('lvl:admin')));
             }
         }
+
+        return !isset($this->vars['active']) ? true : $this->get('active');
     }
 
 	/**
