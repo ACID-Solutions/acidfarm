@@ -356,6 +356,21 @@ class Conf {
 		return Conf::exists('seo:page_image') ? Conf::get('seo:page_image') : '';
 	}
 
+    /**
+     * Définit l'url canonique de la page
+     * @param string $value valeur
+     */
+    public static function setCanonicalUrl($value) {
+        Conf::set('canonical:url', $value);
+    }
+
+    /**
+     * Retourne l'url canonique de la page
+     */
+    public static function getCanonicalUrl() {
+        return Conf::exists('canonical:url') ? Conf::get('canonical:url') : '';
+    }
+
 	/**
 	 * Génère l'ensemble des éléments SEO de la page
 	 * @param array $title : tableau contenant les titres de la page dans les langues disponibles sous forme 'fr' => 'titre'

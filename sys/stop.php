@@ -73,6 +73,12 @@ if (Conf::getMetaImage()) {
 	);
 }
 
+
+if (Conf::getCanonicalUrl()) {
+    Acid::set('canonical:url',Conf::getCanonicalUrl());
+}
+
+
 $template->add(Conf::getContent());
 
 //Hook template stop

@@ -502,6 +502,10 @@ class AcidTemplate {
 			}
 		}
 
+        if (Acid::get('canonical:url')) {
+            $output .= '    <link rel="canonical" href="'.htmlspecialchars(Acid::get('canonical:url')).'" />' . "\n";
+        }
+
 		$output .= "\n";
 
 		if ($combine_css = $this->combineCssUrl()) {
