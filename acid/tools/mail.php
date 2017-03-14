@@ -61,6 +61,14 @@ class AcidMail {
 			    	$mail->Username = Acid::get('email:smtp:user');
 			    	$mail->Password = Acid::get('email:smtp:pass');
 			    }
+
+                if (Acid::get('email:smtp:secure')) {
+                    $mail->SMTPSecure = Acid::get('email:smtp:secure');
+                }
+
+                if (Acid::get('email:smtp:debug')) {
+                    $mail->SMTPDebug = 1;
+                }
 			}
 
 			$mail->From = $from_email;

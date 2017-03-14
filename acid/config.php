@@ -158,6 +158,8 @@ $acid['email']['method']        = 'mail';         // Could be "smtp" or "mail" (
 $acid['email']['smtp']['host']  = 'localhost';    // If smtp
 $acid['email']['smtp']['user']  = '';             // If smtp
 $acid['email']['smtp']['pass']  = '';             // If smtp
+$acid['email']['smtp']['debug']  = false;         // If smtp
+$acid['email']['smtp']['secure']  = '';           // If smtp, could be "tls" or "ssl"
 
 
 // File system

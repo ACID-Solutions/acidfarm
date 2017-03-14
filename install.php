@@ -272,6 +272,8 @@ $lpp_plus_quote\$acid['email']['smtp']['host']		= 'localhost'; // If smtp'
 //\$acid['email']['smtp']['user']					= ''; // If smtp
 //\$acid['email']['smtp']['pass']					= ''; // If smtp
 //\$acid['email']['smtp']['port']					= ''; // If smtp
+//\$acid['email']['smtp']['secure']					= ''; // If smtp, could be "tls" or "ssl"
+//\$acid['email']['smtp']['debug']					= true; // If smtp
 
 // Lang
 $lang_quote\$acid['lang']['use_server'] 	= true;
