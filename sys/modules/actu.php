@@ -21,8 +21,21 @@
  * @package   Acidfarm\User Module
  */
 class Actu extends AcidModule {
-	const TBL_NAME = 'actu';
+
+    const TBL_NAME = 'actu';
 	const TBL_PRIMARY = 'id_actu';
+
+    /*
+     * Cache du nombre d'actualités
+     */
+    public static $_nb_elts = null;
+
+    /**
+     * Nombre d'éléments par page dans la liste des actualités
+     * @var int
+     */
+    public static $_pagination = 5;
+
 
 	/**
 	 * Constructeur
@@ -106,6 +119,60 @@ class Actu extends AcidModule {
 		return Route::buildUrl(static::checkTbl().'_list',array('page'=>$page));
 	}
 
+    /**
+     * Retourne l'url de la liste des actualités suivantes(gère la pagination)
+     * @param int $page page à afficher
+     * @return string
+     */
+    public static function buildUrlListNext($page=1,$nb_elts_per_page=null) {
+        $page_next = $page +1;
+        if (AcidPagination::getPage($page_next,static::getCount(),static::$_pagination) == $page_next) {
+            return static::buildUrlList($page_next);
+        }
+    }
+
+    /**
+     * Retourne l'url de la liste des actualités précédentes (gère la pagination)
+     * @param int $page page à afficher
+     * @return string
+     */
+    public static function buildUrlListPrev($page=1,$nb_elts_per_page=null) {
+        if ($page>1) {
+            return static::buildUrlList($page-1);
+        }
+    }
+
+    /**
+     * Retourne le nombre d'actualités au total
+     * @return string
+     */
+    public static function getCount() {
+        if (static::$_nb_elts===null) {
+            $filter = array(array('active', '=', 1));
+            static::$_nb_elts = self::dbCount($filter);
+        }
+
+        return static::$_nb_elts;
+    }
+
+    /**
+     * Retourne les actualités
+     * @param null $filter override du filtre
+     * @param null $order override de l'ordre
+     * @param null $limit override de la limitation
+     */
+    public static function getElts($filter=null,$order=null,$limit='') {
+
+        if ($filter===null) {
+            $filter = array(array('active', '=', 1));
+        }
+
+        if ($order===null) {
+            $order = array('adate'=>'DESC');
+        }
+
+        return static::dbList($filter,array('adate'=>'DESC'),$limit);
+    }
 
 	/**
 	 * Retourne la dernière actualité sous forme d'objet
@@ -253,26 +320,21 @@ class Actu extends AcidModule {
 	 * @return string
 	 */
 	public static function printList($page=1) {
-		$nb_elts_per_page = 5;
-
-		$filter = array(array('active','=',1));
-		$count = self::dbCount($filter);
+		$nb_elts_per_page = static::$_pagination;
+		$count = static::getCount();
 
 		$page = AcidPagination::getPage($page,$count,$nb_elts_per_page);
 		$limit = ($nb_elts_per_page*($page-1)).','.$nb_elts_per_page;
-		$elts = self::dbList($filter,array('adate'=>'DESC'),$limit);
+		$elts = static::getElts(null,null,$limit);
 
 		$link_function = array('func'=>'Actu::buildUrlList','args'=>array('__PAGE__'));
 		$pagination = AcidPagination::getNav($page,$count,$nb_elts_per_page,'tools/pagination.tpl',array('link_func'=>$link_function));
-
 
 		$v = array(
 				'url'=>self::buildUrl(),
 				'elts' => $elts,
 				'pagination' => $pagination
 		);
-
-
 
 		return Acid::tpl('pages/actu-list.tpl',$v,Acid::mod('Actu'));
 

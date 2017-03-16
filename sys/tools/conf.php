@@ -371,6 +371,36 @@ class Conf {
         return Conf::exists('canonical:url') ? Conf::get('canonical:url') : '';
     }
 
+    /**
+     * Définit l'url de la page suivante
+     * @param string $value valeur
+     */
+    public static function setNextUrl($value) {
+        Conf::set('seo:next_url', $value);
+    }
+
+    /**
+     * Retourne l'url de la page suivante
+     */
+    public static function getNextUrl() {
+        return Conf::exists('seo:next_url') ? Conf::get('seo:next_url') : '';
+    }
+
+    /**
+     * Définit l'url de la page précédente
+     * @param string $value valeur
+     */
+    public static function setPrevUrl($value) {
+        Conf::set('seo:prev_url', $value);
+    }
+
+    /**
+     * Retourne l'url de la page précédente
+     */
+    public static function getPrevUrl() {
+        return Conf::exists('seo:prev_url') ? Conf::get('seo:prev_url') : '';
+    }
+
 	/**
 	 * Génère l'ensemble des éléments SEO de la page
 	 * @param array $title : tableau contenant les titres de la page dans les langues disponibles sous forme 'fr' => 'titre'

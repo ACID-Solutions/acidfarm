@@ -55,7 +55,16 @@ class ActuController {
 //              $generate_keywords_from_text = 'ceci est une chaine de caractère test que l\'on ajoute manuellement pour faire le test et voir ce qui est retenu. Ici, on peut voir qu\'un mot présent deux fois est retenu. Tout mot indésirable est à ajouter dans le fichier "kw_excluded.txt"';
 //              Conf::SEOGen($title, $desc, $meta_img_url, $use_default_kewords, $added_keywords, $generate_keywords_from_text);
 
-             Conf::setCanonicalUrl(AcidUrl::absolute(Actu::buildUrl()));
+             //Conf::setCanonicalUrl(AcidUrl::absolute(Actu::buildUrlList()));
+
+             if ($prev_url = Actu::buildUrlListPrev($page)) {
+                 Conf::setPrevUrl(AcidUrl::absolute($prev_url));
+             }
+
+             if ($next_url = Actu::buildUrlListNext($page)) {
+                 Conf::setNextUrl(AcidUrl::absolute($next_url));
+             }
+
 
              //add to HTML
              Conf::addToContent(Actu::printList($page));

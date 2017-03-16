@@ -99,7 +99,7 @@ AcidRouter::addRoute('searchPage', new AcidRoute('@search',array('controller'=>'
 AcidRouter::addRoute('page',new AcidRoute(':page_key',array('controller'=>'PageController'),1));
 
 //Si pas de page définie, affichage de la home
-AcidRouter::addDefaultRoute('index',new AcidRoute('default',array('controller'=>'PageController','action'=>'home')));
+AcidRouter::addDefaultRoute('index',new AcidRoute('default',array('controller'=>'IndexController','action'=>'index')));
 
 //Lancement du Router
 AcidRouter::after('*',function() { Seo::prepare(); })->run();

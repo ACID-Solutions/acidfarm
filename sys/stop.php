@@ -73,9 +73,16 @@ if (Conf::getMetaImage()) {
 	);
 }
 
-
 if (Conf::getCanonicalUrl()) {
     Acid::set('canonical:url',Conf::getCanonicalUrl());
+}
+
+if (Conf::getNextUrl()) {
+    Acid::set('seo:next_url',Conf::getNextUrl());
+}
+
+if (Conf::getPrevUrl()) {
+    Acid::set('seo:prev_url',Conf::getPrevUrl());
 }
 
 

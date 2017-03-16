@@ -506,6 +506,16 @@ class AcidTemplate {
             $output .= '    <link rel="canonical" href="'.htmlspecialchars(Acid::get('canonical:url')).'" />' . "\n";
         }
 
+        if (Acid::get('seo:prev_url')) {
+            $output .= '    <link rel="prev" href="'.htmlspecialchars(Acid::get('seo:prev_url')).'" />' . "\n";
+        }
+
+        if (Acid::get('seo:next_url')) {
+            $output .= '    <link rel="next" href="'.htmlspecialchars(Acid::get('seo:next_url')).'" />' . "\n";
+        }
+
+
+
 		$output .= "\n";
 
 		if ($combine_css = $this->combineCssUrl()) {

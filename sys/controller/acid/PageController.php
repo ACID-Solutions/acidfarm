@@ -67,31 +67,6 @@ class PageController{
     }
 
     /**
-     * Affiche la home page
-     */
-    public function home(){
-        Conf::setPageTitleAlone(true);
-        if (!Conf::getPageTitle()) {
-        	Conf::setPageTitle(Acid::get('site:name'));
-        }
-  		Conf::setAriane(array());
-
-        if (isset($_GET['search'])) {
-            AcidUrl::redirection301(Route::buildUrl('search').'/'.$_GET['search']);
-        }
-
-        //$page = new Page();
-		//$page->init('home');
-
-        $page = new Page();
-        $page->initVars(array($page->langKey('content')=>SiteConfig::getCurrent()->getConf('home_'.$page->langKey('content'))));
-
-		$vars = array ();
-
-		Conf::addToContent(Acid::tpl('pages/home.tpl',$vars,$page));
-    }
-
-    /**
      * Affiche la liste des pages activées
      */
     public function listAction(){
