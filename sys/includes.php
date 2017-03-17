@@ -22,7 +22,7 @@ $acid['includes']['UserPermission']    	 = 'sys/modules/user_permission.php';
 
 //Site
 $acid['includes']['Page']         		 = 'sys/modules/page.php';
-$acid['includes']['Actu']        		 = 'sys/modules/actu.php';
+$acid['includes']['News']        		 = 'sys/modules/news.php';
 $acid['includes']['PhotoHome']	  		 = 'sys/modules/photo_home.php';
 $acid['includes']['Photo']	  	  		 = 'sys/modules/photo.php';
 $acid['includes']['Seo']	  	  		 = 'sys/modules/seo.php';

@@ -34,8 +34,8 @@ $lang['trad']['config_btn_validate'] = 'Validate';
 
 
 //Actualités
-$lang['trad']['actu_home_unavailable'] = 'Keine Aktualität vorhanden.';
-$lang['trad']['actu_h1'] = 'Verlauf der Aktualitäten';
+$lang['trad']['news_home_unavailable'] = 'Keine Aktualität vorhanden.';
+$lang['trad']['news_h1'] = 'Verlauf der Aktualitäten';
 
 
 //Pagination

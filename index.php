@@ -67,8 +67,8 @@ Conf::executeMetaDefault($searched_key);
 //Hooks
 AcidHook::call('routes');
 
-// Page Actu avec X Params Facultatif
-AcidRouter::addRoute('news', new AcidRoute('@news',array('controller'=>'ActuController'),1));
+// Page d'actualités avec X Params Facultatif
+AcidRouter::addRoute('news', new AcidRoute('@news',array('controller'=>'NewsController'),1));
 
 //AcidRouter::addRoute('page',new AcidRoute('page/:page_key',array('controller'=>'PageController'),1));
 //AcidRouter::addRoute('allpage',new AcidRoute('@page',array('controller'=>'PageController','action'=>'listAction')));

@@ -15,15 +15,15 @@
  */
 
 /**
- * Régénère les fichiers liés au module Actualités
+ * Régénère les fichiers liés au module Page
  */
 
 $opt = getopt('c::');
 if (isset($opt['c'])) {
 
 	$acid_custom_log = '[SCRIPT]';
-	include pathinfo(__FILE__,PATHINFO_DIRNAME ).'/../glue.php';
-	Actu::regenAll();
+    include_once pathinfo(__FILE__,PATHINFO_DIRNAME ).'/../../glue.php';
+	Page::regenAll();
 
 }else{
 	echo "Pour effectuer l'opération, merci d'ajouter l'argument -c  à la commande actuelle." . "\n"  ;

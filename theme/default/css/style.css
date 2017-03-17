@@ -206,10 +206,10 @@ header {
   text-align: left;
   color: #1c1c1c; }
 
-.block_actu_list .actu_list_image {
+.block_news_list .news_list_image {
   float: left;
   padding-right: 5px; }
-  .block_actu_list .actu_list_content {
+  .block_news_list .news_list_content {
     float: left; }
   #nav ul {
     list-style: none;

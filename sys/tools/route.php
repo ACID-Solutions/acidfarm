@@ -52,10 +52,10 @@ class Route {
 			break;
 
 			//News
-			case Actu::checkTbl() :
+			case News::checkTbl() :
 
 				$base .= AcidRouter::getKey('news',$rl);
-				$mod = new Actu($vals);
+				$mod = new News($vals);
 
 				if ($mod->getId()) {
 					$title = $mod->trad('title') ? $mod->trad('title') : 'read';
@@ -73,7 +73,7 @@ class Route {
 			break;
 
 			//News List
-			case Actu::checkTbl().'_list' :
+			case News::checkTbl().'_list' :
 
 				$base .= AcidRouter::getKey('news',$rl);
 				$page = isset($vals['page']) ? $vals['page'] : 1;

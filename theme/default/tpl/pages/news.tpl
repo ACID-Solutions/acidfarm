@@ -1,4 +1,4 @@
-<article id="actu" class="block_content" itemscope itemtype="http://schema.org/NewsArticle">
+<article id="news" class="block_content" itemscope itemtype="http://schema.org/NewsArticle">
 
     <header>
         <h1 class="block_content_title" itemprop="name" >
@@ -26,7 +26,7 @@
 	    		<?php if (($prev = Lib::getIn('prev',$v)) && ($prev->getId())) { ?>
 	    		<li class="nav_prev" ><a href="<?php echo $prev->url(); ?>"><?php echo Acid::trad('previous'); ?> </a></li>
 	    		<?php } ?>
-	    		<li><a href="<?php echo Actu::buildUrl(); ?>"><?php echo Acid::trad('all_news'); ?></a></li>
+	    		<li><a href="<?php echo News::buildUrlList(); ?>"><?php echo Acid::trad('all_news'); ?></a></li>
 	    		<?php if (($next = Lib::getIn('next',$v)) && ($next->getId())) { ?>
 	    		<li class="nav_next" ><a href="<?php echo $next->url(); ?>"><?php echo Acid::trad('next'); ?> </a></li>
 	    		<?php } ?>

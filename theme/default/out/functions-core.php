@@ -37,7 +37,7 @@ class FuncCore {
 
         //Start
         $elts['index'] = array('url'=>Route::buildUrl(),'name'=>AcidRouter::getName('index'));
-        $elts['news'] = array('url'=>Actu::buildUrl(),'name'=>AcidRouter::getName('news'));
+        $elts['news'] = array('url'=>News::buildUrl(),'name'=>AcidRouter::getName('news'));
         $elts['gallery'] = array('url'=>Photo::buildUrl(),'name'=>AcidRouter::getName('gallery'));
 
         //Middle

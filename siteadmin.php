@@ -143,8 +143,8 @@ else {
 	AdminController::addAccess('home',$def_level);
 
 	//--actualites
-	AdminController::addMenu('actu','web',Acid::trad('admin_menu_news'),$def_level);
-	AdminController::addAccess('actu',$def_level,'Actu');
+	AdminController::addMenu('news','web',Acid::trad('admin_menu_news'),$def_level);
+	AdminController::addAccess('news',$def_level,'News');
 
 	//--photos accueil
 	AdminController::addMenu('photo_home','web',Acid::trad('admin_menu_photo_home'),$def_level);

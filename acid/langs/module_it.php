@@ -36,19 +36,19 @@ $lang['mod']['seo']['seo_desc'] = 'SEO Desc';
 $lang['mod']['seo']['seo_keys'] = 'SEO Keywords';
 $lang['mod']['seo']['strict_mode']  = 'Strict Mode?';
 
-//--actu
-$lang['mod']['actu']['__NAME__'] = 'Attualità';
-$lang['mod']['actu']['id_page'] = 'Id';
-$lang['mod']['actu']['content'] = 'Contenuto';
-$lang['mod']['actu']['title'] 	= 'Titolo';
-$lang['mod']['actu']['head']	= 'Head';
-$lang['mod']['actu']['seo_title'] = 'SEO Titolo';
-$lang['mod']['actu']['seo_desc'] = 'SEO Contenuto';
-$lang['mod']['actu']['seo_keys'] = 'SEO Keywords';
-$lang['mod']['actu']['adate']   = 'Data e ora';
-$lang['mod']['actu']['src']    = 'Imagen';
-$lang['mod']['actu']['active']  = 'Attivo';
-$lang['mod']['actu']['cache_time']  = 'Indicatore di cache';
+//--news
+$lang['mod']['news']['__NAME__'] = 'Attualità';
+$lang['mod']['news']['id_news'] = 'Id';
+$lang['mod']['news']['content'] = 'Contenuto';
+$lang['mod']['news']['title'] 	= 'Titolo';
+$lang['mod']['news']['head']	= 'Head';
+$lang['mod']['news']['seo_title'] = 'SEO Titolo';
+$lang['mod']['news']['seo_desc'] = 'SEO Contenuto';
+$lang['mod']['news']['seo_keys'] = 'SEO Keywords';
+$lang['mod']['news']['adate']   = 'Data e ora';
+$lang['mod']['news']['src']    = 'Imagen';
+$lang['mod']['news']['active']  = 'Attivo';
+$lang['mod']['news']['cache_time']  = 'Indicatore di cache';
 
 //--page
 $lang['mod']['page']['__NAME__'] = 'Pagine';

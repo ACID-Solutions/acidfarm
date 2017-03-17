@@ -146,7 +146,7 @@ function recurse_copy($src,$dst) {
 	}
 }
 
-$path_to_cp = array('files/home','files/actu');
+$path_to_cp = array('files/home','files/news');
 $path_init = __DIR__.'/src/';
 foreach ($path_to_cp as $my_path) {
 	if (file_exists($path_init.$my_path)) {

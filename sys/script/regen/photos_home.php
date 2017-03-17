@@ -22,8 +22,7 @@ $opt = getopt('c::');
 if (isset($opt['c'])) {
 
 	$acid_custom_log = '[SCRIPT]';
-	include pathinfo(__FILE__,PATHINFO_DIRNAME ).'/../glue.php';
-	
+    include_once pathinfo(__FILE__,PATHINFO_DIRNAME ).'/../../glue.php';
 	PhotoHome::regenAll();
 	
 }else{

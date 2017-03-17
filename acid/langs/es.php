@@ -34,8 +34,8 @@ $lang['trad']['config_btn_validate'] = 'Validate';
 
 
 //Actualités
-$lang['trad']['actu_home_unavailable'] = 'Ninguna actualidad disponible';
-$lang['trad']['actu_h1'] = 'Historial de las actualidades';
+$lang['trad']['news_home_unavailable'] = 'Ninguna actualidad disponible';
+$lang['trad']['news_h1'] = 'Historial de las actualidades';
 
 
 //Pagination

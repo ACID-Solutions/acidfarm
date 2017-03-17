@@ -37,8 +37,8 @@
 				<?php if (isset( $v['stats']['users']['count']  )) { ?>
 				<li><?php echo Acid::trad('admin_board_stats_sessions',array('__NB__'=>$v['stats']['users']['count'])); ?></li>
 				<?php } ?>
-				<?php if ($actu = Lib::getIn('lastactu',$v)) { ?>
-				<li><?php echo Acid::trad('admin_board_stats_lastnews',array('__DATE__'=>AcidTime::conv($actu->get('adate')))); ?></li>
+				<?php if ($news = Lib::getIn('lastnews',$v)) { ?>
+				<li><?php echo Acid::trad('admin_board_stats_lastnews',array('__DATE__'=>AcidTime::conv($news->get('adate')))); ?></li>
 				<?php } ?>
 			</ul>
 		</td>

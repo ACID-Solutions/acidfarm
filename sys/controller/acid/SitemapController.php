@@ -63,7 +63,7 @@ class SitemapController{
 		}
 
 		$respage = Acid::mod('Page')->dbList(array(array('active','=',1)));
-		$resactu = Acid::mod('Actu')->dbList(array(array('active','=',1)),array('adate'=>'DESC'));
+		$resnews = Acid::mod('News')->dbList(array(array('active','=',1)),array('adate'=>'DESC'));
 
 		foreach ($langs as $lang) {
 
@@ -92,8 +92,8 @@ class SitemapController{
 
             //Actus
             $map = array();
-            foreach ($resactu as $elt) {
-                $mod = new Actu($elt);
+            foreach ($resnews as $elt) {
+                $mod = new News($elt);
 
                 $map[] =  array('url'=>AcidUrl::absolute($mod->url()));
             }
@@ -121,7 +121,7 @@ class SitemapController{
 		$map[] = array('url'=>Acid::get('url:folder_lang'),'title'=>AcidRouter::getName('index'), 'class'=>"smmain");
 
         //site keys
-        //$map[] = array('url'=>Actu::buildUrl(),'title'=>AcidRouter::getName('news'), 'class'=>"smmain");
+        //$map[] = array('url'=>News::buildUrl(),'title'=>AcidRouter::getName('news'), 'class'=>"smmain");
 		//$map[] = array('url'=>Photo::buildUrl(),'title'=>AcidRouter::getName('gallery'), 'class'=>"smmain");
 
         //site keys exclusion

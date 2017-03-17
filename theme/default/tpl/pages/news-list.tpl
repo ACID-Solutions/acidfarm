@@ -6,28 +6,28 @@
     $i = 0;
     //BOUCLE :: POUR CHAQUE ELEMENT
     foreach ($v['elts'] as $elt) {
-        $mod = new Actu($elt);
+        $mod = new News($elt);
 
-        $url_actu = $mod->url();
+        $url_news = $mod->url();
 
-        echo $i ?  '<hr class="large actu_hr" />' : '';
+        echo $i ?  '<hr class="large news_hr" />' : '';
     ?>
-        <article class="block_actu_list block_content" id="actu_<?php echo $elt['id_actu']; ?>" itemscope itemtype="http://schema.org/Periodical">
-            <header><h2 class="actu_list_title" itemprop="name"><a href="<?php echo $url_actu ; ?>"  ><?php echo $mod->hscTrad('title'); ?></a></h2></header>
+        <article class="block_news_list block_content" id="news_<?php echo $elt['id_news']; ?>" itemscope itemtype="http://schema.org/Periodical">
+            <header><h2 class="news_list_title" itemprop="name"><a href="<?php echo $url_news ; ?>"  ><?php echo $mod->hscTrad('title'); ?></a></h2></header>
           	<div class="clear"></div>
-            <div class="actu_list_image">
+            <div class="news_list_image">
             	<?php if ($mod->get('src')) {?>
 			    <div itemprop="image"  class="block_content_img"><?php echo Func::callImg($mod->urlSrc('mini'),Acid::trad('image'),$mod->hscTrad('title'));?></div>
 			    <?php } ?>
             </div>
-            <div class="actu_list_content">
-	            <div class="actu_list_date">Le <?php echo AcidTime::conv($elt['adate']); ?></div>
-	            <div itemprop="headline" class="actu_list_head">
+            <div class="news_list_content">
+	            <div class="news_list_date">Le <?php echo AcidTime::conv($elt['adate']); ?></div>
+	            <div itemprop="headline" class="news_list_head">
 	                <?php echo $mod->hscTrad('head'); ?>
 	            </div>
-	            <nav class="actu_list_next">
+	            <nav class="news_list_next">
 	                <ul>
-	                    <li><a itemprop="url" href="<?php echo $url_actu ; ?>"><?php echo Acid::trad('read_more'); ?></a></li>
+	                    <li><a itemprop="url" href="<?php echo $url_news ; ?>"><?php echo Acid::trad('read_more'); ?></a></li>
 	                </ul>
 	            </nav>
             </div>

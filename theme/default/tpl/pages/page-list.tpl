@@ -13,7 +13,7 @@
 
             $url_page = $mod->url();
 
-            echo $i ?  '<hr class="large actu_hr" />' : '';
+            echo $i ?  '<hr class="large page_hr" />' : '';
         ?>
 
             <article class="block_page_list block_content" id="page_<?php echo $elt['id_page']; ?>">

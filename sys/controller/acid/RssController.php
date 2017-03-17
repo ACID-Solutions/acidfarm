@@ -33,30 +33,30 @@ class RSSController {
 
 		$rss_list = array ();
 
-		$actu_list = Actu::getLast ( 15 );
+		$news_list = News::getLast ( 15 );
 
 		$rss_flux = new AcidRss ( Acid::get('site:name'), Acid::get ( 'url:system' ), Acid::get('site:name').' - '.Conf::get('site:accroche')  , Acid::get ( 'url:img_abs' ) . 'site/logo.png' );
 
-		if ($actu_list) {
-			foreach ($actu_list as $actu) {
+		if ($news_list) {
+			foreach ($news_list as $news) {
 
-				$title = $actu->trad('title');
+				$title = $news->trad('title');
 
-				$url = Acid::get('url:prefix') . $actu->url();
+				$url = Acid::get('url:prefix') . $news->url();
 
-				if ($actu->get('src')) {
+				if ($news->get('src')) {
 
-					$img = $actu->urlSrc('large');
+					$img = $news->urlSrc('large');
 				} else {
 
 					$img = null;
 				}
 
-				$to_desc = $actu->trad('head') ? $actu->trad('head') : $actu->trad('content');
+				$to_desc = $news->trad('head') ? $news->trad('head') : $news->trad('content');
 
 				$desc = AcidVarString::split($to_desc, 350, '...');
 
-				$rssDate = $actu->get('adate');
+				$rssDate = $news->get('adate');
 
 				$rss_flux->add($title, $url, $url, $desc, $rssDate, $img);
 

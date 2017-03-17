@@ -36,19 +36,19 @@ $lang['mod']['seo']['seo_desc'] = 'SEO Desc';
 $lang['mod']['seo']['seo_keys'] = 'SEO Keywords';
 $lang['mod']['seo']['strict_mode']  = 'Strict Mode?';
 
-//--actu
-$lang['mod']['actu']['__NAME__'] = 'News';
-$lang['mod']['actu']['id_actu'] = 'Id';
-$lang['mod']['actu']['content'] = 'Content';
-$lang['mod']['actu']['title'] 	= 'Title';
-$lang['mod']['actu']['head']	= 'Head';
-$lang['mod']['actu']['seo_title'] = 'SEO Title';
-$lang['mod']['actu']['seo_desc'] = 'SEO Description';
-$lang['mod']['actu']['seo_keys'] = 'SEO Keywords';
-$lang['mod']['actu']['adate']   = 'Date/Time';
-$lang['mod']['actu']['src']    = 'Picture';
-$lang['mod']['actu']['active']  = 'Active';
-$lang['mod']['actu']['cache_time']  = 'Cache time';
+//--news
+$lang['mod']['news']['__NAME__'] = 'News';
+$lang['mod']['news']['id_news'] = 'Id';
+$lang['mod']['news']['content'] = 'Content';
+$lang['mod']['news']['title'] 	= 'Title';
+$lang['mod']['news']['head']	= 'Head';
+$lang['mod']['news']['seo_title'] = 'SEO Title';
+$lang['mod']['news']['seo_desc'] = 'SEO Description';
+$lang['mod']['news']['seo_keys'] = 'SEO Keywords';
+$lang['mod']['news']['adate']   = 'Date/Time';
+$lang['mod']['news']['src']    = 'Picture';
+$lang['mod']['news']['active']  = 'Active';
+$lang['mod']['news']['cache_time']  = 'Cache time';
 
 //--page
 $lang['mod']['page']['__NAME__'] = 'Pages';
@@ -63,7 +63,7 @@ $lang['mod']['page']['seo_keys'] = 'SEO Keywords';
 $lang['mod']['page']['adate']   = 'Date';
 $lang['mod']['page']['src']    = 'Picture';
 $lang['mod']['page']['active']   = 'Active';
-$lang['mod']['actu']['cache_time']  = 'Cache time';
+$lang['mod']['page']['cache_time']  = 'Cache time';
 
 //--photo
 $lang['mod']['photo']['__NAME__'] = 'Photos';
@@ -72,7 +72,7 @@ $lang['mod']['photo']['name']	  = 'Name';
 $lang['mod']['photo']['position'] = 'Position';
 $lang['mod']['photo']['src']    = 'Picture';
 $lang['mod']['photo']['active']  = 'Active';
-$lang['mod']['actu']['cache_time']  = 'Cache time';
+$lang['mod']['photo']['cache_time']  = 'Cache time';
 
 //--photo home
 $lang['mod']['photo_home']['__NAME__'] = 'Photos home';

@@ -192,10 +192,10 @@ hr {
       background-color: #fff; }
     #admin_site .submit_bg.update:hover input {
       color: #e6e6e6; }
-  #admin_site .actu_do .submit_bg.update, #admin_site .page_do .submit_bg.update {
+  #admin_site .news_do .submit_bg.update, #admin_site .page_do .submit_bg.update {
     float: right;
     margin-top: 0px; }
-    #admin_site .actu_do .submit_bg.update input, #admin_site .page_do .submit_bg.update input {
+    #admin_site .news_do .submit_bg.update input, #admin_site .page_do .submit_bg.update input {
       min-width: 200px; }
 
 #site.admin {

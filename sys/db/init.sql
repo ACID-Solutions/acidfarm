@@ -22,11 +22,11 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 -- --------------------------------------------------------
 
 --
--- Structure de la table `acid_actu`
+-- Structure de la table `acid_news`
 --
 
-CREATE TABLE IF NOT EXISTS `acid_actu` (
-  `id_actu` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS `acid_news` (
+  `id_news` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `head` text COLLATE utf8_unicode_ci NOT NULL,
   `content` longtext COLLATE utf8_unicode_ci NOT NULL,
@@ -37,15 +37,15 @@ CREATE TABLE IF NOT EXISTS `acid_actu` (
   `active` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
   `src` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `cache_time` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id_actu`)
+  PRIMARY KEY (`id_news`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 
 --
--- Contenu de la table `af_actu`
+-- Contenu de la table `af_news`
 --
 
-INSERT INTO `acid_actu` (`id_actu`, `title`, `head`, `content`, `seo_title`, `seo_desc`, `seo_keys`, `adate`, `active`,`src`,`cache_time`) VALUES
+INSERT INTO `acid_news` (`id_news`, `title`, `head`, `content`, `seo_title`, `seo_desc`, `seo_keys`, `adate`, `active`,`src`,`cache_time`) VALUES
 (1, 'AcidFarm is working', 'Here my news head.', '<p>Here my news content.</p>', '','','', NOW(), '1','','');
 
 -- --------------------------------------------------------

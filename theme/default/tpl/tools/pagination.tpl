@@ -1,7 +1,6 @@
 <div class="clear"></div>
-<hr />
 
-<nav id="pagination">
+<nav class="pagination">
     <ul>
         <?php   if ($v['page'] > 1) {
                     $url = AcidPagination::genUrl(($v['page']-1),$v['link_func']);

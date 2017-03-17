@@ -20,10 +20,10 @@
  * Gestion des actualités du site
  * @package   Acidfarm\User Module
  */
-class Actu extends AcidModule {
+class News extends AcidModule {
 
-    const TBL_NAME = 'actu';
-	const TBL_PRIMARY = 'id_actu';
+    const TBL_NAME = 'news';
+	const TBL_PRIMARY = 'id_news';
 
     /*
      * Cache du nombre d'actualités
@@ -52,7 +52,7 @@ class Actu extends AcidModule {
 
 		$config = array('format'=>$photo_format,'admin_format'=>'mini');
 
-		$this->vars['id_actu'] = new AcidVarInt($this->modTrad('id_actu'),true);
+		$this->vars['id_news'] = new AcidVarInt($this->modTrad('id_news'),true);
 
 		if ($langs = Acid::get('lang:available')) {
 			/*AUTODETECTION DU MULTILINGUE*/
@@ -76,7 +76,7 @@ class Actu extends AcidModule {
 			$this->config['multilingual']['flags']['default']  = !empty($have_lang_keys);
 		}
 
-		$this->vars['src'] 	= 	new AcidVarImage( self::modTrad('src'), Acid::get('path:files').'actu/', $config);
+		$this->vars['src'] 	= 	new AcidVarImage( self::modTrad('src'), Acid::get('path:files').'news/', $config);
 		$this->vars['adate'] = new AcidVarDateTime($this->modTrad('adate'));
 		$this->vars['active'] = new AcidVarBool($this->modTrad('active'));
 		$this->vars['cache_time'] = new AcidVarInfo(self::modTrad('cache_time'));
@@ -126,7 +126,7 @@ class Actu extends AcidModule {
      */
     public static function buildUrlListNext($page=1,$nb_elts_per_page=null) {
         $page_next = $page +1;
-        if (AcidPagination::getPage($page_next,static::getCount(),static::$_pagination) == $page_next) {
+        if (static::validatePageList($page_next,$nb_elts_per_page)) {
             return static::buildUrlList($page_next);
         }
     }
@@ -138,8 +138,22 @@ class Actu extends AcidModule {
      */
     public static function buildUrlListPrev($page=1,$nb_elts_per_page=null) {
         if ($page>1) {
-            return static::buildUrlList($page-1);
+            $page_prev = $page -1;
+            if (static::validatePageList($page_prev,$nb_elts_per_page)) {
+                return static::buildUrlList($page_prev);
+            }
         }
+    }
+
+    /**
+     * Retourne true si la page est valide
+     * @param int $page
+     * @param null $nb_elts_per_page
+     * @return bool
+     */
+    public static function validatePageList($page=1,$nb_elts_per_page=null) {
+        $nb_elts_per_page = $nb_elts_per_page===null ? static::$_pagination : $nb_elts_per_page;
+        return AcidPagination::getPage($page,static::getCount(),$nb_elts_per_page) == $page;
     }
 
     /**
@@ -177,14 +191,14 @@ class Actu extends AcidModule {
 	/**
 	 * Retourne la dernière actualité sous forme d'objet
 	 * @param number $limit
-	 * @return multitype:Actu |NULL
+	 * @return multitype:News |NULL
 	 */
 	public static function getLast($limit=1) {
 
-		if ($elts = Acid::mod('Actu')->dbList(array(array('active','=','1')),array('adate'=>'DESC'),$limit)) {
+		if ($elts = Acid::mod('News')->dbList(array(array('active','=','1')),array('adate'=>'DESC'),$limit)) {
 			$return = array();
 			foreach ($elts as $elt) {
-				$a = new Actu($elt);
+				$a = new News($elt);
 				$return[]= $a;
 			}
 
@@ -200,16 +214,16 @@ class Actu extends AcidModule {
 	 */
 	public function getNext() {
 		$filter = array(array('active','=','1'),array('adate','>',$this->get('adate')));
-		$filter_like = array(array('active','=','1'),array('adate','=',$this->get('adate')),array('id_actu','>',$this->getId()));
-		$order = array('adate'=>'ASC','id_actu'=>'ASC');
-		if (Actu::dbCount($filter_like)) {
-			$elts = Actu::dbList($filter_like,$order,1);
+		$filter_like = array(array('active','=','1'),array('adate','=',$this->get('adate')),array('id_news','>',$this->getId()));
+		$order = array('adate'=>'ASC','id_news'=>'ASC');
+		if (News::dbCount($filter_like)) {
+			$elts = News::dbList($filter_like,$order,1);
 		}else{
-			$elts = Actu::dbList($filter,$order,1);
+			$elts = News::dbList($filter,$order,1);
 		}
 
 		if ($elts) {
-			return new Actu($elts[0]);
+			return new News($elts[0]);
 		}
 	}
 
@@ -219,16 +233,16 @@ class Actu extends AcidModule {
 	 */
 	public function getPrev() {
 		$filter = array(array('active','=','1'),array('adate','<',$this->get('adate')));
-		$filter_like = array(array('active','=','1'),array('adate','=',$this->get('adate')),array('id_actu','<',$this->getId()));
-		$order = array('adate'=>'DESC','id_actu'=>'DESC');
-		if (Actu::dbCount($filter_like)) {
-			$elts = Actu::dbList($filter_like,$order,1);
+		$filter_like = array(array('active','=','1'),array('adate','=',$this->get('adate')),array('id_news','<',$this->getId()));
+		$order = array('adate'=>'DESC','id_news'=>'DESC');
+		if (News::dbCount($filter_like)) {
+			$elts = News::dbList($filter_like,$order,1);
 		}else{
-			$elts = Actu::dbList($filter,$order,1);
+			$elts = News::dbList($filter,$order,1);
 		}
 
 		if ($elts) {
-			return new Actu($elts[0]);
+			return new News($elts[0]);
 		}
 	}
 
@@ -240,7 +254,7 @@ class Actu extends AcidModule {
 	 */
 	public function printAdminConfigure($do='default',$conf=array()) {
 
-		$this->config['admin']['list']['keys'] = array('id_actu','src',$this->langKey('title'),$this->langKey('head'),$this->langKey('content'),'adate','active');
+		$this->config['admin']['list']['keys'] = array('id_news','src',$this->langKey('title'),$this->langKey('head'),$this->langKey('content'),'adate','active');
 		$this->config['admin']['list']['order'] = array('adate'=>'DESC');
 
 		return parent::printAdminConfigure($do,$conf);
@@ -327,7 +341,7 @@ class Actu extends AcidModule {
 		$limit = ($nb_elts_per_page*($page-1)).','.$nb_elts_per_page;
 		$elts = static::getElts(null,null,$limit);
 
-		$link_function = array('func'=>'Actu::buildUrlList','args'=>array('__PAGE__'));
+		$link_function = array('func'=>'News::buildUrlList','args'=>array('__PAGE__'));
 		$pagination = AcidPagination::getNav($page,$count,$nb_elts_per_page,'tools/pagination.tpl',array('link_func'=>$link_function));
 
 		$v = array(
@@ -336,7 +350,7 @@ class Actu extends AcidModule {
 				'pagination' => $pagination
 		);
 
-		return Acid::tpl('pages/actu-list.tpl',$v,Acid::mod('Actu'));
+		return Acid::tpl('pages/news-list.tpl',$v,Acid::mod('News'));
 
 	}
 
@@ -344,12 +358,12 @@ class Actu extends AcidModule {
 	 * Retourne une actualité sous forme HTML
 	 * @return string
 	 */
-	public function printActu() {
+	public function printNews() {
 
 		$v = array( 'next'=>$this->getNext(),'prev'=>$this->getPrev() );
 
 
-		return Acid::tpl('pages/actu.tpl',$v,$this);
+		return Acid::tpl('pages/news.tpl',$v,$this);
 
 	}
 

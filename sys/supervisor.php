@@ -26,8 +26,13 @@ if (Acid::get('sentry:url')) {
             $error_handler->registerErrorHandler(true, $sentry_report_level);
             $error_handler->registerShutdownFunction();
 
-            $client->user_context(User::curUser()->getVals());
-            $client->extra_context(array('php_version'=>phpversion(),'session'=>AcidSession::getInstance()->data));
+            if (Acid::get('session:enable')) {
+                $client->user_context(User::curUser()->getVals());
+                $client->extra_context(array('php_version' => phpversion(), 'session' => AcidSession::getInstance()->data));
+            }else{
+                $client->user_context(array('session disabled'));
+                $client->extra_context(array('php_version' => phpversion(), 'session' => array()));
+            }
 
     } catch (Exception $e) {
         trigger_error(

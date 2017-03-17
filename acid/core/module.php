@@ -2062,7 +2062,7 @@ abstract class AcidModuleCore {
 
 	/**
 	* Permet de récupérer un $do de ce module qui aurait été transmis en $_POST.
-	* Ex : Pour le module Actu, vérifie la présence de "actu_do"
+	* Ex : Pour le module News, vérifie la présence de "news_do"
 	*
 	* @return La valeur du $do en question s'il existe, FALSE sinon.
 	*/
@@ -2072,7 +2072,7 @@ abstract class AcidModuleCore {
 
 	/**
 	* Permet de récupérer un $do de ce module qui aurait été transmis en $_GET.
-	* Ex : Pour le module Actu, vérifie la présence de "actu_do"
+	* Ex : Pour le module News, recupère la valeur de "news_do"
 	*
 	* @return La valeur du $do en question s'il existe, FALSE sinon.
 	*/
@@ -2082,7 +2082,7 @@ abstract class AcidModuleCore {
 
 	/**
 	* Permet de récupérer un $do de ce module qui aurait été transmis en $vals.
-	* Ex : Pour le module Actu, vérifie la présence de "actu_do"
+	* Ex : Pour le module News, récupère le contenu de "news_do"
 	* @param array $vals tableau à inspecter
 	*
 	* @return La valeur du $do en question s'il existe, FALSE sinon.
@@ -2406,6 +2406,11 @@ abstract class AcidModuleCore {
 	 */
 	public function restGet($config=array()) {
 		if (!empty($this->config['rest']['active'])) {
+            if (isset($this->vars['active'])) {
+                if ( (!$this->get('active')) && (empty($config['force_view'])) ) {
+                    return false;
+                }
+            }
 			return $this->getVals();
 		}else{
 			AcidUrl::error403();
@@ -2418,7 +2423,8 @@ abstract class AcidModuleCore {
 	 */
 	public function restList($config=array()) {
 		if (!empty($this->config['rest']['active'])) {
-			$filter = isset($config['filter']) ?  $config['filter'] : array();
+            $def_filter = isset($this->vars['active']) ? array(array('active','=',1)) : array();
+			$filter = isset($config['filter']) ?  $config['filter'] : $def_filter;
 			$order = isset($config['order']) ?  $config['order'] : array();
 			$limit = isset($config['limit']) ?  $config['limit'] : array();
 			$count =  isset($config['count']) ?  $config['count'] :false;

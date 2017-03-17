@@ -1,6 +1,6 @@
-#ACTU
-ALTER TABLE `acid_actu` 
-ADD `title_fr` VARCHAR( 100 ) NOT NULL AFTER `id_actu` ,
+#NEWS
+ALTER TABLE `acid_news`
+ADD `title_fr` VARCHAR( 100 ) NOT NULL AFTER `id_news` ,
 ADD `head_fr` TEXT NOT NULL AFTER `title_fr` ,
 ADD `content_fr` LONGTEXT NOT NULL AFTER `head_fr` ,
 ADD `seo_title_fr` VARCHAR( 100 ) NOT NULL AFTER `content_fr` ,
@@ -33,7 +33,7 @@ ADD `seo_keys_it` VARCHAR( 255 ) NOT NULL AFTER `seo_desc_it`  ;
 
 COMMIT; 
 
-UPDATE `acid_actu`  SET 
+UPDATE `acid_news`  SET
 `head_fr`=`head`, 
 `head_en`=`head`, 
 `head_es`=`head`, 
@@ -67,7 +67,7 @@ UPDATE `acid_actu`  SET
 
 COMMIT;
 
-ALTER TABLE `acid_actu`
+ALTER TABLE `acid_news`
   DROP `title`,
   DROP `head`,
   DROP `content`,

@@ -15,15 +15,15 @@
  */
 
 /**
- * Régénère les fichiers liés au module Photos
+ * Régénère les fichiers liés au module Actualités
  */
 
 $opt = getopt('c::');
 if (isset($opt['c'])) {
 
 	$acid_custom_log = '[SCRIPT]';
-	include pathinfo(__FILE__,PATHINFO_DIRNAME ).'/../glue.php';	
-	Photo::regenAll();
+    include_once pathinfo(__FILE__,PATHINFO_DIRNAME ).'/../../glue.php';
+	News::regenAll();
 
 }else{
 	echo "Pour effectuer l'opération, merci d'ajouter l'argument -c  à la commande actuelle." . "\n"  ;
