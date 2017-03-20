@@ -421,7 +421,7 @@ class SiteConfig extends AcidModule {
                     $class = 'lang ' . $l;
                 }
 
-                $form->addTextarea(Page::build()->getLabel($k), self::getCurrent()->modTrad('home_' . $k), self::getCurrent()->getConf('home_' . $k), 120, 20,array('class'=>$class),'','',array('class'=>$class));
+                $form->addTextarea(Page::build()->getLabel($k), 'home_' . $k, self::getCurrent()->getConf('home_' . $k), 120, 20,array('class'=>$class),'','',array('class'=>$class));
             }
         }
 
