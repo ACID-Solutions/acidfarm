@@ -185,7 +185,7 @@ class News extends AcidModule {
             $order = array('adate'=>'DESC');
         }
 
-        return static::dbList($filter,array('adate'=>'DESC'),$limit);
+        return static::dbList($filter,$order,$limit);
     }
 
 	/**
