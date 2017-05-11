@@ -3946,7 +3946,7 @@ abstract class AcidModuleCore {
 		$tpl = isset($conf['tpl']['pagination']) ? $conf['tpl']['pagination'] : $def_tpl;
 
 		$ll = 	isset($this->admin_nav['ll']) ? $this->admin_nav['ll'] :(
-		isset($this->config['admin']['list']['limit']) ? $this->config['admin']['list']['limit'] : 10
+		isset($this->config['admin']['list']['limit']) ? $this->config['admin']['list']['limit'] : 25
 		);
 
 		$page = isset($this->admin_nav['lp']) ? $this->admin_nav['lp'] : 1;

@@ -200,6 +200,12 @@
 }
 .generic_nb_elts_form {
   float:right; /*margin-right:14px;*/
+
+  input[type=text] {
+    @include border-box();
+    width:30px;
+    text-align: center;
+  }
 }
 .generic_elts_footer{
   padding-top:12px;

@@ -1,0 +1,294 @@
+$blanc:#FFFFFF;
+$noir:#000000;
+
+@media screen and (max-width:1000px) {
+
+    body {
+
+        background:$noir;
+
+        &, #header, #footer, .content_display, .admin_tab{
+            min-width:0px;
+            max-width:100%;
+            float:none;
+            position:relative;
+            margin:0px;
+            @include border-box();
+        }
+
+        &, #site {
+            max-width: none;
+            width: auto;
+            height: auto;
+        }
+
+        #site{
+            background:$blanc;
+        }
+
+        #content{
+            margin:0px;
+            width:100%;
+            max-width:100%;
+            @include border-box();
+
+            &, .admin_form {
+
+                .form_value {
+                    padding-left:15px;
+
+                    input, textarea {
+                        width:100%;
+                    }
+                }
+
+                input, textarea {
+                    max-width:100%;
+                    @include border-box();
+
+                }
+
+                textarea {
+                    padding:3px;
+                }
+
+                input[type="text"], input[type="password"] {
+                    height: 40px;
+                    line-height: 40px;
+                    padding:3px;
+                }
+
+                input[type="submit"], input[type="button"], input[type="image"] {
+                    height: 40px;
+                    background: #000;
+                    line-height: 25px;
+
+                    &:hover {
+                        background: rgba(#000, 0.9);
+                    }
+                }
+            }
+
+            .content_menu{
+                height:auto;
+
+                > .nav {
+                    min-height:30px;
+                }
+            }
+
+            .table-responsive{
+                max-width:100%;
+                overflow-x:auto;
+                padding:30px 0px;
+                @include border-box();
+
+                td, th {
+                    padding:15px;
+                }
+            }
+
+            .generic_nb_elts{
+
+                > div {
+                    margin:10px auto;
+                }
+            }
+        }
+
+        #admin_site {
+            height:auto;
+            min-height:0px;
+        }
+
+        #admin_site_body{
+            padding:15px;
+        }
+
+        #bodystate {
+
+            & + #site {
+
+            }
+
+            &:checked + #site {
+                display:table;
+
+                #admin_site {
+
+                    #header, + #footer, &, #admin_site_body, .table-responsive, .generic_elts_list table {
+                        min-width: 1000px;
+                        max-width: none;
+                        width: 100%;
+                        @include border-box();
+                        overflow-x: unset;
+                        display: table;
+                    }
+
+                    .table-responsive {
+
+                    }
+
+                    .form_value {
+                        input, textarea {
+                            width: inherit;
+
+                        }
+                    }
+                }
+
+                #menuenlarge{
+                    background:#CCC;
+                    color:#FFF;
+                }
+            }
+        }
+
+        #menustate {
+
+            & + #admin_site {
+                #menu {
+                    display: none;
+                }
+            }
+
+            &:checked +  #admin_site {
+
+                #menu {
+                    display: block;
+                }
+
+                #menuburger{
+                    background:#CCC;
+
+                    hr {
+                        background:#FFF;
+                    }
+                }
+            }
+        }
+
+        #header_content{
+            background:none;
+        }
+
+        #menu_bg {
+
+            #menuburger, #menuenlarge{
+                display:block;
+                display:inline-block;
+                vertical-align: middle;
+                width:40px;
+                height:40px;
+                border:1px solid #AAA;
+                padding:8px 5px;
+                margin:10px;
+                cursor:pointer;
+                @include border-box();
+                text-align:center;
+                color:#AAA;
+
+                hr {
+                    background:#AAA;
+                    margin:5px auto;
+                }
+            }
+
+            #menuenlarge{
+                line-height:25px;
+            }
+
+            &, #menu {
+                float: none;
+                display: block;
+                position: relative;
+                width: auto;
+            }
+
+            #menu {
+                padding:10px;
+                margin:0px 10px;
+                min-width:30%;
+                max-width:80%;
+                width:auto;
+                background:#FFF;
+                position:absolute;
+                left:0px;
+                z-index:500;
+
+                #menu_head{
+                    display: none;
+                }
+
+                #menu_body {
+
+                    > li {
+                        display:block;
+                        max-width:none;
+
+                        &.unclickable {
+                            display:none;
+                        }
+
+                        .child_menu {
+                            padding:0px;
+                            &:before{
+                                content:attr(data-category);
+                                padding:10px 0px;
+                                font-weight: bold;
+                            }
+                        }
+
+                        li{
+                            margin:0px;
+                            font-size:15px;
+
+                            .puce{
+                                margin-top:13px;
+                                margin-left:0px;
+                            }
+
+                            a {
+                                padding:10px 15px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        #corps{
+            margin-left:0px;
+            font-size:17px;
+
+        }
+
+        .generic_elts_list{
+            background:none;
+            padding-top:5px;
+
+            th, td {
+                font-size:17px;
+            }
+        }
+
+        .generic_elts_footer{
+            background:none;
+            padding-bottom:5px;
+        }
+
+        .table-board{
+            &, td {
+                display: block;
+
+                table {
+                    display:table;
+
+                    td {
+                        display:table-cell;
+                    }
+                }
+            }
+        }
+    }
+}

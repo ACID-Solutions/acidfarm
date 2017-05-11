@@ -1,3 +1,6 @@
+<label id="menuburger" for="menustate"><hr /><hr /><hr /></label>
+<label id="menuenlarge" for="bodystate">&lt;=&gt;</label>
+
 <div id="menu">
 	<div id="menu_head"></div>
 	<ul id="menu_body">
@@ -79,7 +82,7 @@
 					if ($submenu) {
 						echo '<li class="separator light"></li>';
 						echo '<li class="submenu">';
-					    echo '<ul class="child_menu" >';
+					    echo '<ul class="child_menu" data-category="'.htmlspecialchars($catconfig['label']).'">';
 						echo $submenu;
 			            echo '</ul>';
 		            	echo '</li>';
