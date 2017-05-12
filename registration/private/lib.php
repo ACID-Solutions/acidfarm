@@ -22,7 +22,7 @@ class AcidRegistration {
 	/**
 	 * @var string url vers la plateforme d'enregistrement
 	 */
-	public static $url = 'http://platform.acidfarm.net/';
+	public static $url = 'https://platform.acidfarm.net/';
 
 	/**
 	 * @var string dossier de version de l'api
