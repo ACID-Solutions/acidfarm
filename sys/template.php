@@ -137,22 +137,23 @@ class MyTemplate extends AcidTemplate {
 
 			if (isset($GLOBALS['acid']['tinymce']['popup'])) {
 				//$this->addJS(Acid::get('url:folder').'js/tiny_mce/tiny_mce_popup.js');
-				$this->addJS(Acid::get('url:folder').'js/tiny_mce_417/tiny_mce_popup.js');
+				$this->addJS(Acid::get('url:folder').'js/tiny_mce/461/tiny_mce_popup.js');
 			}
 
-			//$this->addJS(Acid::get('url:folder').'js/tiny_mce/tiny_mce.js');
-			$this->addJS(Acid::get('url:folder').'js/tiny_mce_417/tinymce.min.js',false);
-			if (file_exists(SITE_PATH.'js/tiny_mce_417/langs/'.Acid::get('lang:current').'.js')){
-				$this->addJS(Acid::get('url:folder').'js/tiny_mce_417/langs/'.Acid::get('lang:current').'.js',false);
+			//$this->addJS(Acid::get('url:folder').'js/tiny_mce/351/tiny_mce.js');
+			$this->addJS(Acid::get('url:folder').'js/tiny_mce/461/tinymce.min.js',false);
+
+			if (file_exists(SITE_PATH.'js/tiny_mce/461/langs/'.Acid::get('lang:current').'.js')){
+				$this->addJS(Acid::get('url:folder').'js/tiny_mce/461/langs/'.Acid::get('lang:current').'.js',false);
 			}
 
 			$ids = isset($GLOBALS['acid']['tinymce']['ids']) ? $GLOBALS['acid']['tinymce']['ids'] : array();
 			//$tpl = isset($GLOBALS['acid']['tinymce']['tpl']) ? $GLOBALS['acid']['tinymce']['tpl'] : 'tools/deprecated/tiny-mce.tpl';
-			$tpl = isset($GLOBALS['acid']['tinymce']['tpl']) ? $GLOBALS['acid']['tinymce']['tpl'] : 'tools/tiny-mce-417.tpl';
+
+			$tpl = isset($GLOBALS['acid']['tinymce']['tpl']) ? $GLOBALS['acid']['tinymce']['tpl'] : 'tools/tiny-mce.tpl';
 			$my_js = Acid::tpl($tpl,array('ids'=>$ids),$this);
 
 			$this->add( $my_js . "\n" );
-
 		}
 
 	}
@@ -307,7 +308,6 @@ class MyTemplate extends AcidTemplate {
 // 		$this->plupload();
 
 // 		$this->dependencies();
-
 
 // 		$this->output =	$this->jsVars() .
 // 		'' . $this->getDialog() . "\n" .
