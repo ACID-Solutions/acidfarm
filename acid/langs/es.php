@@ -331,7 +331,7 @@ $lang['trad']['mail_footer_staff_generation'] = 'El correo electrónico enviado 
 //Levels
 $lang['lvl']['visitor']   = 'Visitante';
 $lang['lvl']['robot']     = 'Robot';
-$lang['lvl']['unvalid']   = 'Inválido';
+$lang['lvl']['invalid']   = 'Inválido';
 $lang['lvl']['registred'] = 'Grabado';
 $lang['lvl']['member']    = 'Miembro';
 $lang['lvl']['vip']       = 'VIP';

@@ -62,11 +62,19 @@ img{
   }
 }
 
-.clear{position:relative; height:0px; clear:both;}
+.clear{
+  position:relative;
+  height:0px;
+  clear:both;
+}
 
-.first{margin-top:0px;}
+.first{
+  margin-top:0px;
+}
 
-.without_margin{margin:0px;}
+.without_margin{
+  margin:0px;
+}
 
 
 @each $tag in h1, h2, h3, h4 {

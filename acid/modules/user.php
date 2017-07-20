@@ -125,7 +125,7 @@ abstract class AcidUser extends AcidModule {
 	 * Teste si les droits de l'utilisateur courant son supérieurs ou égaux à $level sinon
 	 *
 	 * @param int $level
-	 * cf : ( $GLOBALS['acid']['lvl']['visitor'], $GLOBALS['acid']['lvl']['robot'], $GLOBALS['acid']['lvl']['unvalid'], $GLOBALS['acid']['lvl']['registred'], $GLOBALS['acid']['lvl']['member'], $GLOBALS['acid']['lvl']['vip'], $GLOBALS['acid']['lvl']['modo'], $GLOBALS['acid']['lvl']['admin'], $GLOBALS['acid']['lvl']['dev'] )
+	 * cf : ( $GLOBALS['acid']['lvl']['visitor'], $GLOBALS['acid']['lvl']['robot'], $GLOBALS['acid']['lvl']['invalid'], $GLOBALS['acid']['lvl']['registered'], $GLOBALS['acid']['lvl']['member'], $GLOBALS['acid']['lvl']['vip'], $GLOBALS['acid']['lvl']['modo'], $GLOBALS['acid']['lvl']['admin'], $GLOBALS['acid']['lvl']['dev'] )
 	 *
 	 * @return bool
 	 */
@@ -1042,7 +1042,7 @@ abstract class AcidUser extends AcidModule {
 	 * @return int
 	 */
 	public static function getLevelBeforeActivation() {
-		return Acid::get('lvl:unvalid');
+		return Acid::get('lvl:invalid');
 	}
 
 	/**
@@ -1522,7 +1522,7 @@ abstract class AcidUser extends AcidModule {
 
 		if (!empty($forms)) return $forms;
 
-		//if ($unvalid = self::printEmailValidation()) return $unvalid;
+		//if ($invalid = self::printEmailValidation()) return $invalid;
 
 		if (User::curLevel(User::getLevelNextActivation())) {
 			return User::userPage();

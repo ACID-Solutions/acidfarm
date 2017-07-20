@@ -273,7 +273,7 @@ class User extends AcidUser {
 	 * Retourne le niveau d'un utilisateur après sont activation
 	 */
 	public static function getLevelNextActivation() {
-	    return $GLOBALS['acid']['lvl']['registred'];
+	    return $GLOBALS['acid']['lvl']['registered'];
 	}
 
 	/**

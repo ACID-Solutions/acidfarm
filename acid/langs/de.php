@@ -126,7 +126,7 @@ $lang['trad']['user_valid_mail_success']            = 'Ihre Adresse wurde bestä
 
 $lang['trad']['user_welcom']          				= 'Guten Tag __USER__, ';
 $lang['trad']['user_new_user']                      = 'Neuer Benutzer';
-$lang['trad']['user_new_user_registred']            = 'Ein neuer Benutzer hat sich auf __SITE__ registriert: __NAME__';
+$lang['trad']['user_new_user_registered']            = 'Ein neuer Benutzer hat sich auf __SITE__ registriert: __NAME__';
 $lang['trad']['user_new_user_print_infos']  		= 'Hier sind Ihre Login-Daten zu halten:';
 $lang['trad']['user_new_user_register_asked']  		= 'Sie melden Sie sich an __SITE__';
 $lang['trad']['user_new_user_validation_asked']  	= 'Sie fragte den Link zu Ihrer E-Mail-__SITE__ bestätigen.';
@@ -332,8 +332,8 @@ $lang['trad']['mail_footer_staff_generation'] = 'E-Mail geschickt __LINK__.';
 //Levels
 $lang['lvl']['visitor']   = 'Besucher';
 $lang['lvl']['robot']     = 'Roboter';
-$lang['lvl']['unvalid']   = 'Ungültig';
-$lang['lvl']['registred'] = 'Aufgezeichnet';
+$lang['lvl']['invalid']   = 'Ungültig';
+$lang['lvl']['registered'] = 'Aufgezeichnet';
 $lang['lvl']['member']    = 'Mitglied';
 $lang['lvl']['vip']       = 'VIP';
 $lang['lvl']['modo']      = 'Moderator';

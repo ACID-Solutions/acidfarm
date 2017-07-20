@@ -126,7 +126,7 @@ $lang['trad']['user_valid_mail_success']            = 'Votre adresse e-mail est 
 
 $lang['trad']['user_welcom']          				= 'Bonjour __USER__, ';
 $lang['trad']['user_new_user']                      = 'Nouvel Utilisateur';
-$lang['trad']['user_new_user_registred']            = 'Un nouvel utilisateur s\'est inscrit sur __SITE__ : __NAME__';
+$lang['trad']['user_new_user_registered']            = 'Un nouvel utilisateur s\'est inscrit sur __SITE__ : __NAME__';
 $lang['trad']['user_new_user_print_infos']  		= 'Voici vos identifiants de connexion à conserver :';
 $lang['trad']['user_new_user_register_asked']  		= 'Vous venez de vous inscrire sur __SITE__';
 $lang['trad']['user_new_user_validation_asked']  	= 'Vous avez demandé le lien pour valider votre email sur __SITE__.';
@@ -332,8 +332,8 @@ $lang['trad']['mail_footer_staff_generation'] = 'Email envoyé par __LINK__.';
 //Levels
 $lang['lvl']['visitor']   = 'Visiteur';
 $lang['lvl']['robot']     = 'Robot';
-$lang['lvl']['unvalid']   = 'Invalide';
-$lang['lvl']['registred'] = 'Enregistré';
+$lang['lvl']['invalid']   = 'Invalide';
+$lang['lvl']['registered'] = 'Enregistré';
 $lang['lvl']['member']    = 'Membre';
 $lang['lvl']['vip']       = 'VIP';
 $lang['lvl']['modo']      = 'Modérateur';

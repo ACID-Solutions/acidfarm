@@ -331,7 +331,7 @@ $lang['trad']['mail_footer_staff_generation'] = 'Email send from __LINK__.';
 //Levels
 $lang['lvl']['visitor']   = 'Visitor';
 $lang['lvl']['robot']     = 'Robot';
-$lang['lvl']['unvalid']   = 'Unvalid';
+$lang['lvl']['invalid']   = 'Unvalid';
 $lang['lvl']['registred'] = 'Registred';
 $lang['lvl']['member']    = 'Member';
 $lang['lvl']['vip']       = 'VIP';
