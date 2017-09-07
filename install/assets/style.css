@@ -1,0 +1,46 @@
+
+html, body {
+    background-color: #9D9FA0;
+    font-family: monospace;
+}
+
+.corpus {
+    display: table;
+    margin: auto;
+    padding: 50px;
+    background-color: #EFEFEF;
+    border: 1px solid #CCCCCC;
+}
+
+.corpus .block {
+    padding: 15px 0px;
+}
+
+.corpus .block div {
+    margin-bottom: 5px;
+}
+
+.corpus h2 {
+    margin: 0px;
+    margin-bottom: 5px;
+    padding-bottom: 5px;
+    border: 0px solid #000000;
+    border-bottom-width: 1px;
+}
+
+.corpus .btn {
+    margin: auto;
+    display: block;
+    cursor: pointer;
+    width: 150px;
+    padding: 10px;
+    border: 1px solid #FFFFFF;
+    background-color: #2A2A2A;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+.corpus .btn:hover {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}

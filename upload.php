@@ -43,7 +43,7 @@ Acid::log('UPLOAD','User instance for uploading file is '.User::curUser()->getId
  * @param string $msg le message
  */
 function logAndDie($msg) {
-	Acid::log('PLUPLOAD',$msg);
+	Acid::log('UPLOAD',$msg);
 	die($msg);
 }
 

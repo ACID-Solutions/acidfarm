@@ -145,7 +145,7 @@ $acid['cookie']['dyndomain']	= true;						 // Si true, autorise le cookie sur un
 $acid['session']['enable']      = isset($acid['session']['enable']) ?
 								  $acid['session']['enable'] : true;  // Enable/Disable session
 $acid['session']['name']        = 'session';                           // Cookie name
-$acid['session']['table']       = $acid['db']['prefix'] . 'session';   // Cookie name
+$acid['session']['table']       = $acid['db']['prefix'] . 'session';   // Session's table name
 $acid['session']['expire']      = 14440;                               // Expire date in seconds
 $acid['session']['secure']      = false;                               // HTTPS only
 $acid['session']['httponly']    = true;                                // Only HTTP, no javascript

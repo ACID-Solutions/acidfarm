@@ -167,7 +167,7 @@ class AcidTemplate {
 
 					if (in_array($base_extension,$available_ext)) {
 						$base_url = AcidFs::removeExtension($url);
-						$base_tag = Acid::get('versioning:tag') ? Acid::get('versioning:way') : '-__VERSION__';
+						$base_tag = Acid::get('versioning:tag') ? Acid::get('versioning:tag') : '-__VERSION__';
 						$base_url_new = $base_url.str_replace('__VERSION__',$version,$base_tag).'.'.$base_extension;
 
 						return $base_url_new;
