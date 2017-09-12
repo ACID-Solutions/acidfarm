@@ -209,6 +209,11 @@ abstract class AcidUser extends AcidModule {
 				}
 			}
 		}
+        
+        Acid::log(
+        	'info',
+			'session used : '.AcidSession::getInstance()->id.'; user used : '.static::curUser()->getId()
+		);
 
 		//$GLOBALS['user'] = $my_user;
 	}
