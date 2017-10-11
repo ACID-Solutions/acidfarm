@@ -247,7 +247,7 @@ class AcidTemplate {
 	 */
 	public static function sassUrl($what) {
 		if (Acid::get('sass:enable')) {
-			if (Acid::get('sass:mode')=='dev') {
+			if (in_array(Acid::get('sass:mode'), array('dev','debug'))) {
 				return Acid::get('url:css').'sass.php/sass/'.$what.'.scss';
 			}
 		}

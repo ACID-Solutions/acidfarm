@@ -149,7 +149,7 @@ echo get_sf_line_for_string_array("acid:css:dynamic:files", array(), true , "['p
 //Css using php sass
 echo get_sf_label_line('Css using php sass');
 echo get_sf_line_for_bool("acid:sass:enable", true, false, 'generate a css file referring to php file');
-echo get_sf_line_for_string("acid:sass:mode", $is_dev ? 'debug' : 'default', false , 'debug (always), default (if not exists)');
+echo get_sf_line_for_string("acid:sass:mode", $is_dev ? 'dev' : 'default', false , 'dev (always), default (if not exists)');
 
 //Versioning
 echo get_sf_label_line('Resources versioning');

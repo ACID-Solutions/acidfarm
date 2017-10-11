@@ -106,10 +106,9 @@ $acid['theme'] = empty($acid['server_theme']) ?  $acid['def_theme'] : $acid['ser
 //--sass
 $acid['sass']['path']['compiled'] = 'compiled/';
 
-$acid['sass']['used'] =  !isset($acid['sass']['used']) ?  false : $acid['sass']['used'];
 
 if (!isset($acid['sass']['enable'])) {
-	$acid['sass']['enable'] = $acid['sass']['used'];
+	$acid['sass']['enable'] = false;
 }
 
 //--upload

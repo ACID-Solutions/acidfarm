@@ -14,7 +14,7 @@
  * @link      http://www.acidfarm.net
  */
 
-if (Acid::get('sass:used')) {
+if (Acid::get('sass:enable')) {
     $this->addCSS($this->sassUrl('admin'));
     $this->addCSS($this->sassUrl('dialog'));
 }else{

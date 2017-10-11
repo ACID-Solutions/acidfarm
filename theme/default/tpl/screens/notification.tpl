@@ -3,7 +3,7 @@ $ident = Lib::getIn('ident',$v,time());
 $comp = strtoupper($ident);
 ?>
 
-<div id="dialog_notification_<?php echo $ident; ?>" class="dialog_notification"  >
+<div id="dialog_notification_<?php echo $ident; ?>" class="dialog_notification bottom"  >
 	<div class="dialog_notification_content">
 		<?php echo Lib::getIn('content',$v); ?>
 		<div class="clear"></div>

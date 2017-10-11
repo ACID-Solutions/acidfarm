@@ -46,7 +46,8 @@ function configTinyMceCssFiles(target) {
 		return $(target).attr('data-tinymce-css-file');
 	}
 
-	return "<?php echo Acid::get('sass:used') ? AcidTemplate::sassUrl('tiny-mce') : Acid::themeUrl('css/tiny-mce.css'); ?>";
+	return "<?php echo Acid::get('sass:enable') ? AcidTemplate::sassUrl('tiny-mce') : Acid::themeUrl('css/tiny-mce
+	.css'); ?>";
 }
 
 function configTinyMceCssStyle(target) {
