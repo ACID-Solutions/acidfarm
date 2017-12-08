@@ -25,6 +25,7 @@
 
 # acifarm htaccess
 /.htaccess
+/.nginx.sample
 /rest/.htaccess
 
 #sass / compiler

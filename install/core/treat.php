@@ -3,6 +3,7 @@
 $base_dir = realpath(INSTALL_PATH . '../') . '/';
 $config_path = $base_dir . 'sys/server.php';
 $htaccess_path = $base_dir . '.htaccess';
+$nginx_path = $base_dir . '.nginx.sample';
 
 if (!is_writable($base_dir)) {
     print_error_and_exit('Write access denied in <b>' . dirname($base_dir) . '</b>. Folder must be writable.');
@@ -25,6 +26,14 @@ $htaccess_file = '';
 include INSTALL_PATH . 'core/generator/htaccess.php';
 $h = fopen($htaccess_path, 'w');
 $ec = fwrite($h, $htaccess_file);
+fclose($h);
+
+#Create nginx sample
+$nginx_file = '';
+
+include INSTALL_PATH . 'core/generator/nginx.php';
+$h = fopen($nginx_path, 'w');
+$ec = fwrite($h, $nginx_file);
 fclose($h);
 
 #Init database
