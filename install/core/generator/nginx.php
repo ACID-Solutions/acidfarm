@@ -42,7 +42,27 @@ server {
                 try_files \$uri \$uri/ {$nginx_folder}index.php?acid_nav=\$uri&\$args;
         }
         
-
+        #Deny access to protected folders
+        location {$nginx_folder}acid/ {
+            deny  all;
+        }
+        
+        location {$nginx_folder}sys/ {
+            deny  all;
+        }
+        
+        location {$nginx_folder}logs/ {
+            deny  all;
+        }
+        
+        location {$nginx_folder}install/core/ {
+            deny  all;
+        }
+        
+        location {$nginx_folder}registration/private/ {
+            deny  all;
+        }
+        
         #PHP files and on the fly sass
         location ~ \.(php|scss)$ {
                 include snippets/fastcgi-php.conf;
