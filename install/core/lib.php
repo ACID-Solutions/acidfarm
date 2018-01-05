@@ -111,8 +111,8 @@ function print_error_and_exit($error, $flag_title = 'Error')
         include INSTALL_PATH . 'core/template/head.php';
         echo '<div class="corpus"><div class="block"><h3>' . $flag_title . '</h3>' . $error . '</div></div>';
         include INSTALL_PATH . 'core/template/foot.php';
-        exit();
     }
+    exit();
 }
 
 /**
