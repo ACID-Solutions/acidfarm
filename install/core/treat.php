@@ -79,9 +79,9 @@ if (!empty($action['database:init'])) {
     $ressource->exec("SET CHARACTER SET UTF8");
     $ressource->exec($requete);
     
-    if (!empty($action['multilingual'])) {
+    if (!empty($action['lang:multilingual'])) {
         $ressource->exec('COMMIT;');
-        $requeteml = file_get_contents($dbml_path);
+        $requeteml = file_get_contents($db_ml_path);
         $requeteml = str_replace('`acid_', '`' . $dbpref, $requeteml);
         $ressource->exec($requeteml);
     }

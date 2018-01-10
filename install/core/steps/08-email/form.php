@@ -57,8 +57,8 @@
                 '&mail_username=' + document.getElementsByName('email:smtp:user')[0].value +
                 '&mail_password=' + document.getElementsByName('email:smtp:pass')[0].value +
                 '&mail_secure=' + document.getElementsByName('email:smtp:secure')[0].value +
-                '&mail_to=' + document.getElementsByName('email:testfrom')[0].value +
-                '&mail_from=' + document.getElementsByName('email:testto')[0].value;
+                '&mail_to=' + document.getElementsByName('email:testto')[0].value +
+                '&mail_from=' + document.getElementsByName('email:testfrom')[0].value;
             
             http.open('POST', url, true);
             

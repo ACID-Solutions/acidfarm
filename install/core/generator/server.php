@@ -3,7 +3,7 @@
 $admin_name = empty($action['site:admin:email']) ? $action['user:name'] : $action['site:admin:name'];
 $admin_mail = empty($action['site:admin:email']) ? $action['user:email'] : $action['site:admin:email'];
 
-$use_smtp = $action['email:method'];
+$use_smtp = (get_in_tab('email:method',$action,'') == 'smtp') ;
 $custom_lang = !empty($action['lang:custom']);
 $custom_lang_available = !empty($action['lang:available']) ? $action['lang:available'] : array($action['lang:default']);
 $custom_lang_available = is_array($custom_lang_available) ? $custom_lang_available : explode(';', $custom_lang_available);
@@ -20,45 +20,45 @@ echo get_sf_start();
 
 //Site Profile
 echo get_sf_label_line('Site Profile');
-echo get_sf_line_for_string("acid:site:name", $action['site:name']);
-echo get_sf_line_for_string("acid:site:email", $action['site:email']);
+echo get_sf_line_for_string("acid:site:name", get_in_tab('site:name',$action));
+echo get_sf_line_for_string("acid:site:email", get_in_tab('site:email',$action));
 echo get_sf_line_skip();
 echo get_sf_line_for_string("acid:admin:name", $admin_name);
 echo get_sf_line_for_string("acid:admin:email", $admin_mail);
 
 //Site Salt
 echo get_sf_label_line('Site Salt');
-echo get_sf_line_for_string("acid:hash:salt", $action['site:salt']);
+echo get_sf_line_for_string("acid:hash:salt",  get_in_tab('site:salt',$action));
 
 //Site Url
 echo get_sf_label_line('Site Url');
-echo get_sf_line_for_string("acid:url:scheme", $action['site:scheme']);
-echo get_sf_line_for_string("acid:url:domain", $action['site:domain']);
-echo get_sf_line_for_string("acid:url:folder", $action['site:folder']);
+echo get_sf_line_for_string("acid:url:scheme", get_in_tab('site:scheme',$action));
+echo get_sf_line_for_string("acid:url:domain", get_in_tab('site:domain',$action));
+echo get_sf_line_for_string("acid:url:folder", get_in_tab('site:folder',$action));
 echo get_sf_line("acid:url:system", get_sf_concat_variables(array('acid:url:scheme', 'acid:url:domain', 'acid:url:folder')));
 echo get_sf_line("acid:url:system_lang", get_sf_variable('acid:url:system'));
 echo get_sf_line("acid:url:folder_lang", get_sf_variable('acid:url:folder'));
 
 //Database
 echo get_sf_label_line('Database');
-echo get_sf_line_for_string("acid:db:type", $action['database:type']);
-echo get_sf_line_for_string("acid:db:host", $action['database:host']);
-echo get_sf_line_for_string("acid:db:port", $action['database:port']);
-echo get_sf_line_for_string("acid:db:user", $action['database:username']);
-echo get_sf_line_for_string("acid:db:pass", $action['database:password']);
-echo get_sf_line_for_string("acid:db:base", $action['database:database']);
-echo get_sf_line_for_string("acid:db:prefix", $action['database:prefix']);
+echo get_sf_line_for_string("acid:db:type", get_in_tab('database:type',$action));
+echo get_sf_line_for_string("acid:db:host", get_in_tab('database:host',$action));
+echo get_sf_line_for_string("acid:db:port", get_in_tab('database:port',$action));
+echo get_sf_line_for_string("acid:db:user", get_in_tab('database:username',$action));
+echo get_sf_line_for_string("acid:db:pass", get_in_tab('database:password',$action));
+echo get_sf_line_for_string("acid:db:base", get_in_tab('database:database',$action));
+echo get_sf_line_for_string("acid:db:prefix", get_in_tab('database:prefix',$action));
 
 //Emails
 echo get_sf_label_line('Mail server');
-echo get_sf_line_for_string("acid:email:method", $action['email:method']);
+echo get_sf_line_for_string("acid:email:method", get_in_tab('email:method',$action));
 echo get_sf_label_line('SMTP Configuration');
-echo get_sf_line_for_string("acid:email:smtp:host", $action['email:smtp:host'], !$use_smtp);
-echo get_sf_line_for_string("acid:email:smtp:user", $action['email:smtp:user'], !$use_smtp);
-echo get_sf_line_for_string("acid:email:smtp:pass", $action['email:smtp:pass'], !$use_smtp);
-echo get_sf_line_for_string("acid:email:smtp:port", $action['email:smtp:port'], !$use_smtp);
-echo get_sf_line_for_string("acid:email:smtp:secure", $action['email:smtp:secure'], !$use_smtp);
-echo get_sf_line_for_bool("acid:email:smtp:debug", $action['email:smtp:debug'], !$use_smtp);
+echo get_sf_line_for_string("acid:email:smtp:host", get_in_tab('email:smtp:host',$action), !$use_smtp);
+echo get_sf_line_for_string("acid:email:smtp:user", get_in_tab('email:smtp:user',$action), !$use_smtp);
+echo get_sf_line_for_string("acid:email:smtp:pass", get_in_tab('email:smtp:pass',$action), !$use_smtp);
+echo get_sf_line_for_string("acid:email:smtp:port", get_in_tab('email:smtp:port',$action), !$use_smtp);
+echo get_sf_line_for_string("acid:email:smtp:secure", get_in_tab('email:smtp:secure',$action), !$use_smtp);
+echo get_sf_line_for_bool("acid:email:smtp:debug", get_in_tab('email:smtp:debug',$action), !$use_smtp);
 
 //Allow deploy for security patches
 echo get_sf_label_line('Allow deploy for security patches (unsafe)');
@@ -105,12 +105,12 @@ echo get_sf_line("acid:error_report:prod", 'E_ALL & ~E_STRICT', (!$is_prod));
 echo get_sf_label_line('Use custom language configuration');
 echo get_sf_line_for_bool("acid:lang:use_server", $custom_lang, !$custom_lang);
 echo get_sf_line_for_bool("acid:lang:use_nav_0", (count($custom_lang_available) > 1), !$custom_lang);
-echo get_sf_line_for_string("acid:lang:default", $action['lang:default'], !$custom_lang);
+echo get_sf_line_for_string("acid:lang:default", get_in_tab('lang:default',$action), !$custom_lang);
 echo get_sf_line_for_string_array("acid:lang:available", $custom_lang_available, !$custom_lang);
 
 //Theme
 echo get_sf_label_line('Use custom theme');
-echo get_sf_line_for_string("acid:server_theme", $action['theme:selection'], !$action['theme:selection']);
+echo get_sf_line_for_string("acid:server_theme", get_in_tab('theme:selection',$action), !get_in_tab('theme:selection',$action));
 
 //Sessions
 echo get_sf_label_line('Sessions');

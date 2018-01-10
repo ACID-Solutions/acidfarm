@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', 'On');
+
 @ini_set('AddDefaultCharset', 'utf-8');
 
 define('INSTALL_PATH', realpath(__DIR__.'/..').'/');

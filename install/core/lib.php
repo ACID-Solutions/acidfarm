@@ -221,6 +221,7 @@ function form_from_input($input, $inputs)
         $is_password = !empty($config['password']);
         $is_bool = !empty($config['bool']);
         $is_multi = !empty($config['multi']);
+        $has_already_label = false;
         $field = '';
         
         if (!empty($config['values'])) {
@@ -415,6 +416,22 @@ function get_sf_line_skip()
     return "\n";
 }
 
+
+/**
+ * Retourne la valeur du tableau associée à la clé en entrée
+ * Return la valeur par défaut si non défini
+ *
+ * @param      $key
+ * @param      $tab
+ * @param null $def
+ *
+ * @return null
+ */
+function get_in_tab($key,$tab,$def=null)
+{
+    return isset($tab[$key]) ? $tab[$key] : $def;
+}
+
 /**
  *  Génération aléatoire de mot de passe
  *
@@ -494,13 +511,13 @@ function checkDataBase($db_type, $db_host, $db_port, $db_base, $db_user, $db_pas
 
 function checkEmail($from, $to, $mail_method, $mailhost, $mailport, $mailuser, $mailpass, $mailsecure)
 {
-    require INSTALL_PATH . '../acid/externals/PHPMailer_v5.2.13/PHPMailerAutoload.php';
+    require INSTALL_PATH . '../acid/externals/PHPMailer/PHPMailerAutoload.php';
     
     $subject = "Test email using php";
     $body = "This is a test email message.";
     if ($mail_method == 'smtp') {
         try {
-            $mail = new PHPMailer();
+            $mail = new \PHPMailer\PHPMailer\PHPMailer();
             $mail->set('exceptions', true);
             
             $mail->IsSMTP();

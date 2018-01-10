@@ -16,7 +16,6 @@
  */
 
 
-
 /**
  * Outil AcidMail, Gestionnaire Mail
  * @package   Acidfarm\Tool
@@ -39,17 +38,17 @@ class AcidMail {
 	 * @return bool
 	 */
 	public static function send($from_name,$from_email,$to_email,$subject,$body,$is_html=false,$attached=array(),$stream=array(),$functions=array()) {
-	    Acid::load(Acid::get('externals:phpmailer:path:phpmailer'));
-	    Acid::load(Acid::get('externals:phpmailer:path:smtp'));
+        Acid::load(Acid::get('externals:phpmailer:path:autoload'));
 
 	    try {
 
 	    	Acid::log('MAIL',json_encode(array('from_name'=>$from_name,'from_email'=>$from_email,'to_email'=>$to_email,'subject'=>$subject)));
 
-			$mail = new PHPMailer();
+			$mail = new \PHPMailer\PHPMailer\PHPMailer();
 			$mail->set('exceptions', true);
-
+   
 			if ( Acid::get('email:method') === 'smtp') {
+			  
 			    $mail->IsSMTP();									// set mailer to use SMTP
 			    $mail->Host = Acid::get('email:smtp:host');  		// specify main and backup server
 			    if (Acid::exists('email:smtp:port')) {
@@ -69,7 +68,9 @@ class AcidMail {
                 if (Acid::get('email:smtp:debug')) {
                     $mail->SMTPDebug = 1;
                 }
-			}
+			}else{
+                $mail->isMail();
+            }
 
 			$mail->From = $from_email;
 			$mail->FromName = utf8_decode($from_name);
@@ -133,9 +134,9 @@ class AcidMail {
 			}
 
 			$mail->Send();
-
+   
 		} catch (phpmailerException $e) {
-			Acid::log('mail','AcidMail::send - error : ' . $e->getMessage());
+			Acid::log('mail','AcidMail::send - error : ' . json_encode($e->getMessage()));
 	      	return false;
 	    }
 

@@ -119,11 +119,8 @@ $GLOBALS['sess'] = !isset($GLOBALS['sess']) ? [] : $GLOBALS['sess'];
 spl_autoload_register('AcidAutoLoader');
 
 // Externals
-$acid['externals']['phpmailer']['path']['dir'] = 'PHPMailer_v5.2.13';
-$acid['externals']['phpmailer']['path']['phpmailer'] =
-    'externals/' . $acid['externals']['phpmailer']['path']['dir'] . '/class.phpmailer.php';
-$acid['externals']['phpmailer']['path']['smtp'] =
-    'externals/' . $acid['externals']['phpmailer']['path']['dir'] . '/class.smtp.php';
+$acid['externals']['phpmailer']['path']['dir'] = 'PHPMailer';
+$acid['externals']['phpmailer']['path']['autoload'] = 'externals/' . $acid['externals']['phpmailer']['path']['dir'] .'/PHPMailerAutoload.php';
 
 $acid['externals']['sass']['path']['dir'] = 'SassPHP_v0.0.12';
 $acid['externals']['sass']['path']['lib'] = 'externals/' . $acid['externals']['sass']['path']['dir'] . '/scss.inc.php';
