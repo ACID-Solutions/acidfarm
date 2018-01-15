@@ -70,6 +70,12 @@ class AcidBrowser {
 	 * @var unknown_type
 	 */
 	protected $js = "";
+	
+    /**
+     * Nombre d'éléments par page
+     * @var int
+     */
+	public $pagination = 50;
 
 	const UNAUTHORIZED_PATH = '`(^\.\./)|(^\.\.$)|(/\.\./)|(\.\.$)`';
 	const UNAUTHORIZED_NAME = '`[\\\\/:*?"<>|]`';
@@ -461,13 +467,14 @@ class AcidBrowser {
 	 * Retourne le contenu d'un dossier sous forme d'un tableau.
 	 *
 	 * @param string $path Chemin du dossier.
-	 *
+     *
 	 * @return array
 	 */
 	protected function getContent($path) {
 		$files_list = array();
         if ($resultpath = scandir($path)) {
             natcasesort($resultpath) ;
+            
             foreach ($resultpath as $file){
 				if ($file != "." && $file != "..") {
 					$file_to_list = array();
@@ -489,7 +496,8 @@ class AcidBrowser {
 
 	/**
 	 * Retourne les éléments du repertoire courant du navigateur.
-	 *
+	 * @param mixed $page numéro de page courante ou false si pas de pagination
+     *
 	 * @return array (array : dir , array : link , array : file)
 	 */
 	protected function getDirElements() {
@@ -498,7 +506,7 @@ class AcidBrowser {
 		$links = array();
 
 		$elts = $this->getContent($this->base_path.$this->cur_path);
-
+        
 		foreach ($elts as $file) {
 			switch ($file['type']) {
 				case 'dir'	:
@@ -737,15 +745,74 @@ class AcidBrowser {
 	 * Retourne le contenu du repertoire $path depuis le navigateur.
 	 *
 	 * @param string $path Chemin vers le répertoire à afficher.
-	 *
+	 * @param mixed $page numéro de page courante ou false si pas de pagination
+     *
 	 * @return string
 	 */
-	public function printDir($path) {
+	public function printDir($path,$page=false) {
 
 		$this->setCurPath($path);
 
 		list($dirs,$files,$links) = self::getDirElements();
-
+  
+		//si la pagination est active et qu'une page est définie
+        //pour rappel, on affiche d'abord les dossiers, les liens, puis les fichiers
+        if ($page !== false ) {
+            
+            //on récupère le nombre total de chaque type d'éléments
+            $nbdirs = count($dirs);
+            $nblinks = count($links);
+            $nbfiles = count($files);
+            
+            //on récupère le nombre d'élements par page
+            $pagination = $this->pagination;
+            
+            //on calcul l'index du premier élément à afficher
+            $offset = ($page - 1) * $pagination ;
+            
+            //s'il y a des dossiers à afficher
+            if (($pagination > 0) &&  ($offset >= 0) && ($offset<$nbdirs)) {
+                //on récupère les dossiers à afficher
+                $dirs = array_slice($dirs,$offset,$pagination);
+                //si d'autres éléments sont à afficher,
+                // on réduit le nombre d'élements à prendre en fonctions des dossiers affichés
+                $pagination = $pagination - count($dirs);
+            }else{
+                $dirs = [];
+            }
+    
+            //on redéfinit l'offset en enlevant le nombre de dossiers
+            $offset -= $nbdirs;
+            $offset = $offset<0 ? 0 : $offset;
+            
+            //s'il y a des liens à afficher
+            if( ($pagination > 0) && ($offset<$nblinks) ) {
+                //on récupère les liens à afficher
+                $links = array_slice($links,$offset,$pagination);
+                //si d'autres éléments sont à afficher,
+                // on réduit le nombre d'élements à prendre en fonctions des dossiers affichés
+                $pagination = $pagination - count($links);
+            }else{
+                $links = [];
+            }
+    
+            //on redéfinit l'offset en enlevant le nombre de dossiers
+            $offset -= $nblinks;
+            $offset = $offset<0 ? 0 : $offset;
+            
+            //s'il y a des fichiers à afficher
+            if( ($pagination > 0) &&  ($offset >= 0) && ($offset<$nbfiles) ) {
+                //on récupère les liens à afficher
+                $files = array_slice($files,$offset,$pagination);
+                //si d'autres éléments sont à afficher,
+                // on réduit le nombre d'élements à prendre en fonctions des dossiers affichés
+                $pagination = $pagination - count($files);
+            }else{
+                $files = [];
+            }
+            
+        }
+        
 		$params = array(
 						'print_path'=>$this->printPath(), 'new_dir_form'=>$this->printNewDirHiddenForm(),
 						'upload_form' => $this->printUploadForm($this->cur_path), 'remove_form' => $this->printRemoveForm(),

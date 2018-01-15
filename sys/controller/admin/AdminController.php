@@ -222,7 +222,8 @@ class AdminController{
 
     	$plugin = isset($_GET['plugin']) ? $_GET['plugin'] : '';
     	$dir = isset($_GET['fsb_path']) ? $_GET['fsb_path'] : '';
-
+    	$page = isset($_GET['fsb_page']) ? $_GET['fsb_page'] : 1;
+        $page = false;
 
     	if ($plugin=='tinymce') {
     		$GLOBALS['acid']['tinymce']['popup'] = true;
@@ -231,7 +232,7 @@ class AdminController{
 
     	$fb = new AcidBrowser(Acid::get('path:uploads'),false,null,$plugin,null);
 
-    	$content .= Acid::mod('User')->printAdminBody($fb->printDir($dir),null);
+    	$content .= Acid::mod('User')->printAdminBody($fb->printDir($dir,$page),null);
 
     	Conf::addToContent($content);
     }
