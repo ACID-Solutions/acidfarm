@@ -18,9 +18,11 @@
         <li>
             <div><?php echo form_from_input('email:smtp:secure', $inputs); ?></div>
         </li>
+        <?php /*
         <li>
             <div><?php echo form_from_input('email:smtp:debug', $inputs); ?></div>
         </li>
+        */ ?>
     </ul>
     <div>
         <a href="#" onclick="EmailTools.checkEmail(); return false;">Send a test email</a> :

@@ -514,43 +514,44 @@ function checkEmail($from, $to, $mail_method, $mailhost, $mailport, $mailuser, $
     require INSTALL_PATH . '../acid/externals/PHPMailer/PHPMailerAutoload.php';
     
     $subject = "Test email using php";
-    $body = "This is a test email message.";
-    if ($mail_method == 'smtp') {
-        try {
-            $mail = new \PHPMailer\PHPMailer\PHPMailer();
-            $mail->set('exceptions', true);
-            
+    $body = "This is a <b>test</b> email message.";
+ 
+    try {
+        $mail = new \PHPMailer\PHPMailer\PHPMailer();
+        $mail->set('exceptions', true);
+
+        if ($mail_method == 'smtp') {
             $mail->IsSMTP();
             $mail->Host = $mailhost;
             if ($mailport) {
                 $mail->Port = $mailport;
             }
-            
+
             if ($mailuser) {
                 $mail->SMTPAuth = true;
                 $mail->Username = $mailuser;
                 $mail->Password = $mailpass;
             }
-            
+
             if ($mailsecure) {
                 $mail->SMTPSecure = $mailsecure;
             }
-            
+
             $mail->SMTPDebug = 0;
-            
-            $mail->From = $from;
-            $mail->FromName = utf8_decode('Mail Checker');
-            $mail->AddAddress($to);
-            
-            $mail->Subject = utf8_decode(stripslashes($subject));
-            $mail->Body = $body;
-            
-            return $mail->Send();
-        } catch (phpmailerException $e) {
-            return $e->getMessage();
         }
-    } else {
-        return mail($to, $subject, $body, 'From: Mail Checker <' . $from . '>' . "\r\n");
+        
+        $mail->From = $from;
+        $mail->FromName = utf8_decode('Mail Checker');
+        $mail->AddAddress($to);
+        
+        $mail->isHTML(true);
+        $mail->Subject = utf8_decode(stripslashes($subject));
+        $mail->Body = $body;
+        $mail->AltBody = $mail->html2text($body);
+        
+        return $mail->Send();
+    } catch (phpmailerException $e) {
+        return $e->getMessage();
     }
     
     return false;

@@ -48,6 +48,7 @@ $inputs['email:smtp:secure'] = array(
     'desc' => ''
 );
 
+/*
 //Debug
 $inputs['email:smtp:debug'] = array(
     'title' => 'SMTP debug',
@@ -55,3 +56,4 @@ $inputs['email:smtp:debug'] = array(
     'bool' => true,
     'desc' => ''
 );
+*/

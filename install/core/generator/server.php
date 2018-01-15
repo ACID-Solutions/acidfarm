@@ -58,7 +58,7 @@ echo get_sf_line_for_string("acid:email:smtp:user", get_in_tab('email:smtp:user'
 echo get_sf_line_for_string("acid:email:smtp:pass", get_in_tab('email:smtp:pass',$action), !$use_smtp);
 echo get_sf_line_for_string("acid:email:smtp:port", get_in_tab('email:smtp:port',$action), !$use_smtp);
 echo get_sf_line_for_string("acid:email:smtp:secure", get_in_tab('email:smtp:secure',$action), !$use_smtp);
-echo get_sf_line_for_bool("acid:email:smtp:debug", get_in_tab('email:smtp:debug',$action), !$use_smtp);
+echo get_sf_line_for_bool("acid:email:smtp:debug", true, true);
 
 //Allow deploy for security patches
 echo get_sf_label_line('Allow deploy for security patches (unsafe)');
