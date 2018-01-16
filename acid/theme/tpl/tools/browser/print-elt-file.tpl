@@ -1,5 +1,6 @@
 <?php
-$ext = '.'.AcidFs::getExtension($v['attrs']['name']);
+$ext = AcidFs::getExtension($v['attrs']['name']);
+$ext = $ext ? '.'.$ext : $ext;
 $name = AcidVarString::split(basename($v['attrs']['name'],$ext),30,'~');
 $is_img = isset($v['attrs']['ext']) && ($v['attrs']['ext']=== 0);
 ?>

@@ -55,6 +55,8 @@
 
 </div>
 
+<?php echo Acid::tpl('tools/browser/print-dir-pagination.tpl',$v,$o); ?>
+
 <?php echo $v['js']; ?>
 
 <?php echo Acid::tpl('tools/browser/print-dir-stop.tpl',$v,$o); ?>

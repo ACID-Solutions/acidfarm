@@ -33,6 +33,9 @@ class AcidFs
         if (!empty($file_name) && !strpos('.', $file_name)) {
             $strsr = explode('.', $file_name);
             $strs = array_reverse($strsr);
+            if (count($strs)<2) {
+                return '';
+            }
             if ($strs[0] != 'gz') {
                 return strtolower($strs[0]);
             } elseif ($strs[1] == 'tar') {
