@@ -36,17 +36,21 @@
 	<div class="fsb_print row-fluid ">
 
 	<?php
-		foreach ($v['dirs'] as $dir) {
-			echo  $o->printEltDir($dir) . "\n";
-		}
-
-		foreach ($v['links'] as $link) {
-			echo  $o->printEltLink($link,$v['base_path'].$link['name']) . "\n";
-		}
-
-		foreach ($v['files'] as $file) {
-			echo $o->printEltFile($file,$v['base_path'].$file['name']) . "\n";
-		}
+        if ($v['dirs'] || $v['links'] || $v['files']) {
+            foreach ($v['dirs'] as $dir) {
+                echo $o->printEltDir($dir) . "\n";
+            }
+    
+            foreach ($v['links'] as $link) {
+                echo $o->printEltLink($link, $v['base_path'] . $link['name']) . "\n";
+            }
+    
+            foreach ($v['files'] as $file) {
+                echo $o->printEltFile($file, $v['base_path'] . $file['name']) . "\n";
+            }
+        }else{
+            echo Acid::trad('no_content_available');
+        }
 	?>
 
 
