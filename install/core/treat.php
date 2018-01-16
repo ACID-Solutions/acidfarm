@@ -52,16 +52,25 @@ if (!empty($action['database:init'])) {
                 "`email`='" . $action['user:email'] . "', " .
                 "`user_salt`='" . $user_salt . "'" . "WHERE `id_user`='1';";
     
+    
     $configuration = [
-        'email'   => $action['site:email'],
-        'phone'   => $action['coords:phone'],
-        'fax'     => $action['coords:fax'],
-        'contact' => $action['coords:contact'],
-        'city'    => $action['coords:city'],
-        'cp'      => $action['coords:cp'],
-        'website' => $action['site:scheme'] . $action['site:domain'] . $action['site:folder'],
-        'home_content' => ''
+        'email'        => $action['site:email'],
+        'phone'        => $action['coords:phone'],
+        'fax'          => $action['coords:fax'],
+        'contact'      => $action['coords:contact'],
+        'city'         => $action['coords:city'],
+        'cp'           => $action['coords:cp'],
+        'website'      => $action['site:scheme'] . $action['site:domain'] . $action['site:folder'],
+        'home_content' => $initial_home_content
     ];
+    
+    $initial_home_content =
+        '<p><span id="result_box" lang="en"><strong>Welcome to the home page AcidFarm !</strong><br /> Thank you for choosing our solution.</span></p>';
+    $home_content_keys = (!empty($action['lang:multilingual'])) ?
+        ['home_content_fr','home_content_en','home_content_de','home_content_es','home_content_it'] : ['home_content'];
+    foreach ($home_content_keys as $hck) {
+        $configuration[$hck] = $initial_home_content;
+    }
     
     foreach ($configuration as $key => $val) {
         $val = addslashes($val);
@@ -122,4 +131,4 @@ foreach ($path_to_secure as $pts) {
     }
 }
 
-$redirect_to =  $action['site:folder'];
+$redirect_to = $action['site:folder'];
