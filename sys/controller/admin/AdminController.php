@@ -238,9 +238,9 @@ class AdminController
         }
         
         $fb = new AcidBrowser(Acid::get('path:uploads'), false, null, $plugin, null);
-        
+        //$fb->setPagination(50);
         $content .= Acid::mod('User')->printAdminBody(
-            $fb->setPagination(30)->printDir($dir, $page),
+            $fb->printDir($dir, $page),
             null
         );
         
