@@ -546,7 +546,7 @@ class AcidMediatheque {
 	 * @return bool
 	 */
 	protected function fileExtAllowed($file_name) {
-		$ext = AcidFs::getExtension($file_name);
+        $ext = (strpos($file_name,'.')!==false) ? AcidFs::getExtension($file_name) : $file_name;
 		foreach (Acid::get('files:ext') as $id=>$list) {
 			if (in_array($ext,$list)) {
 				return true;

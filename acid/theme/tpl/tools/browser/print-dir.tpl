@@ -56,10 +56,11 @@
 
 		<div class="clear"></div>
 	</div>
-
+    
+    <?php echo Acid::tpl('tools/browser/print-dir-pagination.tpl',$v,$o); ?>
 </div>
 
-<?php echo Acid::tpl('tools/browser/print-dir-pagination.tpl',$v,$o); ?>
+
 
 <?php echo $v['js']; ?>
 

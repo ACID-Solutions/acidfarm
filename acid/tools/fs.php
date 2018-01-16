@@ -33,7 +33,7 @@ class AcidFs
         if (!empty($file_name) && !strpos('.', $file_name)) {
             $strsr = explode('.', $file_name);
             $strs = array_reverse($strsr);
-            if (count($strs)<2) {
+            if (count($strsr) < 2) {
                 return '';
             }
             if ($strs[0] != 'gz') {

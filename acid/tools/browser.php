@@ -409,7 +409,7 @@ class AcidBrowser
             Acid::log('BROWSER', json_encode($files));
             $treat_log = [];
             foreach ($files as $kfile => $file) {
-                if ($this->fileExtAllowed(AcidFs::getExtension($file)) && !preg_match(self::UNAUTHORIZED_PATH, $dest)) {
+                if ($this->fileExtAllowed($file) && !preg_match(self::UNAUTHORIZED_PATH, $dest)) {
                     $success = true;
                     $name = isset($names[$kfile]) ? $names[$kfile] : basename($file);
                     $dest_file = $this->base_path . $dest . $name;
@@ -437,6 +437,7 @@ class AcidBrowser
                 $result = $_POST;
                 $result['treatment'] = $treat_log;
                 $result['success'] = !$error;
+                $result['error'] = $error;
                 echo json_encode($result);
                 exit();
             }
@@ -452,7 +453,7 @@ class AcidBrowser
     {
         if (isset($_FILES['fichier'])) {
             $file = $_FILES['fichier'];
-            if ($this->fileExtAllowed(AcidFs::getExtension($file['name']))
+            if ($this->fileExtAllowed($file['name'])
                 && !preg_match(self::UNAUTHORIZED_PATH, $attrs['path'])) {
                 $name = $this->getNameBasedOn($file['name'], $attrs['path'], 'file');
                 $this->fsAdd($file['tmp_name'], $this->base_path . $this->cur_path . $attrs['path'] . $name);
@@ -594,7 +595,8 @@ class AcidBrowser
      */
     protected function fileExtAllowed($file_name)
     {
-        $ext = AcidFs::getExtension($file_name);
+        $ext = (strpos($file_name,'.')!==false) ? AcidFs::getExtension($file_name) : $file_name;
+       
         foreach (Acid::get('files:ext') as $id => $list) {
             if (in_array($ext, $list)) {
                 return true;
