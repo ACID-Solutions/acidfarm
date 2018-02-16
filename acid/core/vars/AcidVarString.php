@@ -30,10 +30,12 @@ class AcidVarString extends AcidVar {
      * @param string $def
      * @param string $regex
      * @param bool $force_def
+     * @param bool $nullable
      */
-    public function __construct($label='AcidVarString',$size=20,$maxlength=255,$def='',$regex=null,$force_def=false) {
-
-        parent::__construct($label,(string)$def,$regex,$force_def);
+    public function __construct($label='AcidVarString',$size=20,$maxlength=255,$def='',$regex=null,$force_def=false, $nullable=false) {
+        
+        $def = ($def !==null) || (!$nullable) ? (string) $def : $def;
+        parent::__construct($label,$def,$regex,$force_def,$nullable);
 
         // Infos sql
         $this->sql['type'] = 'varchar('.((int)$maxlength).')';

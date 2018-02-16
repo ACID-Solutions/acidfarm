@@ -157,6 +157,7 @@ class User extends AcidUser {
 	 */
 	public function postAdd($vals,$dialog=null) {
 		if ($user = parent::postAdd($vals,$dialog)) {
+		 
 			$groups = isset($vals['group']) ? $vals['group'] : array();
 			$user->exeGroup($groups);
 

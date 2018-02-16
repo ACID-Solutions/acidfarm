@@ -20,15 +20,16 @@
  * @package   Acidfarm/Vars
  */
 class AcidVarInt extends AcidVarInteger {
-
+    
     /**
      * Constructeur AcidVarInt
      * @param string $label
      * @param booelan $unsigned
      * @param int $def
+     * @param bool   $nullable
      */
-    public function __construct($label='AcidVarInt',$unsigned=false,$def=0) {
-        parent::__construct($label,$unsigned,20,10,$def,'int');
+    public function __construct($label='AcidVarInt',$unsigned=false,$def=0,$nullable=false) {
+        parent::__construct($label,$unsigned,20,10,$def,'int', $nullable);
     }
 
 }

@@ -886,7 +886,11 @@ abstract class AcidUser extends AcidModule {
 						$the_password = $hashed_password ? $pass : User::getHashedPassword($pass, $comp->get('user_salt'));
 						if ($comp->get('password') == $the_password) {
 							// Vérification de la date de validité du compte (00-00-0000 => illimité)
-							if (($comp->get('date_deactivation') == '0000-00-00 00:00:00') || (strtotime($comp->get('date_deactivation')) > time())) {
+                            if (
+                                in_array($comp->get('date_deactivation'),
+                                    $comp->getVar('date_deactivation')->zeroVals())
+                                || (strtotime($comp->get('date_deactivation')) > time())
+                            ) {
 
 								if ($session_make) {
 									$comp->sessionMake(null, $autolog);
@@ -1209,12 +1213,14 @@ abstract class AcidUser extends AcidModule {
 	 * @return mixed
 	 */
 	public function postAdd ($vals,$dialog=null) {
+		
 		if (isset($vals['level'])) {
 			if ($vals['level'] > User::curLevel()) {
 				$vals['level'] = User::curLevel();
 			}
 		}
 
+		$vals['date_creation'] = $this->getVar('date_creation')->now();
 		return parent::postAdd($vals,$dialog);
 	}
 

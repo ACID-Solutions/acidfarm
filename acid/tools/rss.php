@@ -216,7 +216,7 @@ class AcidRss {
 			' ]]>' .
 		' </description>' . "\n" .
 		$media .
-		' <pubDate>' . $this->getValidDate ( $pubDate, $gmt ) . '</pubDate>' . "\n" .
+        ($pubDate ? (' <pubDate>' . $this->getValidDate ( $pubDate, $gmt ) . '</pubDate>' . "\n") : '') .
 		' <guid isPermaLink="false">' . htmlspecialchars ( $guid ) . '</guid>' . "\n" .
 		' </item>' . "\n\n";
 	}

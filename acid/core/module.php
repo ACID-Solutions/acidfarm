@@ -543,6 +543,21 @@ abstract class AcidModuleCore {
             trigger_error('Acid : ' . htmlspecialchars($key) . ' does not exist', E_USER_WARNING);
         }
     }
+    
+    /**
+     * Retourne l'AcidVar associé à la clé en entrée.
+     *
+     * @param string $key Nom du paramétre.
+     *
+     * @return string
+     */
+    public function getVar($key) {
+        if (isset($this->vars[$key])) {
+            return $this->vars[$key];
+        } else {
+            trigger_error('Acid : ' . htmlspecialchars($key) . ' does not exist', E_USER_WARNING);
+        }
+    }
 
 	/**
 	* Retourne la valeur de l'identifiant de l'objet.
@@ -642,7 +657,8 @@ abstract class AcidModuleCore {
 		$assoc = array();
 		foreach ($this->vars as $key => $var) {
 			if ($key === static::tblId()) {
-				$values .= "'',";
+			 
+				$values .= $var->isNullable() ? "null," : "'',";
 			} else {
 				$values .= ':'.$key . ',';
 				$assoc[':'.$key] = $var->getVal();

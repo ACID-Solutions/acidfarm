@@ -21,7 +21,7 @@
 			    <?php } ?>
             </div>
             <div class="news_list_content">
-	            <div class="news_list_date">Le <?php echo AcidTime::conv($elt['adate']); ?></div>
+	            <div class="news_list_date"><?php echo AcidTime::conv($elt['adate']); ?></div>
 	            <div itemprop="headline" class="news_list_head">
 	                <?php echo $mod->hscTrad('head'); ?>
 	            </div>

@@ -30,9 +30,10 @@ class AcidVarInteger extends AcidVar {
      * @param int $maxlength
      * @param int $def
      * @param string $sql_type
+     * @param bool $nullable
      */
-    public function __construct($label='AcidVarInteger',$unsigned=false,$size=20,$maxlength=10,$def=0,$sql_type='int') {
-        parent::__construct($label,(int)$def,null);
+    public function __construct($label='AcidVarInteger',$unsigned=false,$size=20,$maxlength=10,$def=0,$sql_type='int',$nullable=false) {
+        parent::__construct($label,(int)$def,null, false, $nullable);
 
         $this->sql['type'] = $sql_type.'('.($unsigned?$maxlength:($maxlength+1)).')';
 

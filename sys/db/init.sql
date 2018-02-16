@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `acid_news` (
   `seo_title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `seo_desc` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `seo_keys` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `adate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `adate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `active` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
   `src` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `cache_time` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
@@ -59,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `acid_page` (
   `id_page_category` int(10) unsigned NOT NULL,
   `title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `ident` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `adate` datetime NOT NULL,
+  `adate` datetime NULL,
   `content` text COLLATE utf8_unicode_ci NOT NULL,
   `seo_title` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `seo_desc` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
@@ -144,10 +144,10 @@ CREATE TABLE IF NOT EXISTS `acid_user` (
   `country` VARCHAR( 100 ) COLLATE utf8_unicode_ci NOT NULL ,
   `phone` VARCHAR( 20 ) COLLATE utf8_unicode_ci NOT NULL ,
   `level` tinyint(4) NOT NULL DEFAULT '0',
-  `date_creation` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `date_activation` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `date_deactivation` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `date_connexion` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_creation` datetime NULL DEFAULT NULL,
+  `date_activation` datetime NULL DEFAULT NULL,
+  `date_deactivation` datetime NULL DEFAULT NULL,
+  `date_connexion` datetime NULL DEFAULT NULL,
   `last_lang` varchar(3) COLLATE utf8_unicode_ci NOT NULL,
   `lang` varchar(3) COLLATE utf8_unicode_ci NOT NULL,
   `ip` varchar(19) COLLATE utf8_unicode_ci NOT NULL,
@@ -162,7 +162,7 @@ CREATE TABLE IF NOT EXISTS `acid_user` (
 --
 
 INSERT INTO `acid_user` (`id_user`, `id_group`, `username`, `password`, `email`, `image_0`, `level`, `date_creation`, `date_activation`, `date_deactivation`, `ip`, `user_salt`) VALUES
-(1, 0, 'admin', 'f8f90f62c3bb8731ae8dc7f63f31925b', 'admin@domain.tld', '', 10, '0000-00-00 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00', '', '');
+(1, 0, 'admin', 'f8f90f62c3bb8731ae8dc7f63f31925b', 'admin@domain.tld', '', 10, null,null,null, '', '');
 
 
 -- --------------------------------------------------------
