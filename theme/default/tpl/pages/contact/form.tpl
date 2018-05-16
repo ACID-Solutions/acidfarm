@@ -43,6 +43,12 @@ $ph = false; 	//Placeholders or Labels
                               name="message" cols="30" rows="2" ><?php echo Contact::getSession('message'); ?></textarea>
     </div>
 
+    <?php if ($captcha = Recaptcha::front()) { ?>
+    <div class="input row" >
+        <?php echo $captcha; ?>
+    </div>
+    <?php } ?>
+
     <div class="clear"></div>
 
     <div class="row">
@@ -53,6 +59,8 @@ $ph = false; 	//Placeholders or Labels
     </div>
 
 </div>
+
+<?php echo Recaptcha::jsLoader(); ?>
 
 <script type="text/javascript">
     <!--

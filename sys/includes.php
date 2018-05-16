@@ -39,6 +39,7 @@ $acid['includes']['Conf'] 		  = 'sys/tools/conf.php';
 $acid['includes']['Ajax'] 	 	  = 'sys/tools/ajax.php';
 $acid['includes']['Rest'] 		  = 'sys/tools/rest.php';
 $acid['includes']['Route'] 	 	  = 'sys/tools/route.php';
+$acid['includes']['Recaptcha']    = 'sys/tools/recaptcha.php';
 
 
 // Admin Config

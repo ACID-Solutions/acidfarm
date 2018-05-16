@@ -208,7 +208,13 @@ class Contact {
 
 		$check_info ='' . "\n" ;
 
-
+		
+		//Recaptcha validation (if defined)
+        if (!Recaptcha::validate()) {
+            AcidDialog::add('info', Acid::trad('contact_post_bad_request'));
+            return false;
+        }
+        
 		// Control succeeded
 		if ( empty($miss)  && empty($mistake) ) {
 
