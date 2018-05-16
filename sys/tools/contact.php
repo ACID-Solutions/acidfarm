@@ -50,7 +50,7 @@ class Contact {
 	 * @return array()
 	 */
 	public static  function formExcludedKeys() {
-		$def_excluded = array('contact_do','module_do','x','y');
+		$def_excluded = array('contact_do','module_do','x','y','g-recaptcha-response');
 		if (Conf::get('contact:shield_key')) {
 			$def_excluded[] = Conf::get('contact:shield_key');
 		}
