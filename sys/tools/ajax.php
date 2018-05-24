@@ -194,6 +194,17 @@ class Ajax {
 		
 		return json_encode($config);
 	}
+    
+    /**
+     * Retourne un tableau de données JSON préformaté par le contexte AJAX
+     * @param array $config
+     * @param null  $success
+     *
+     * @return array
+     */
+    public static function returnJsonData($config=array(),$success=null) {
+	   return static::returnJson('',null,$config,null,$success);
+    }
 	
 	
 }

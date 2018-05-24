@@ -15,6 +15,10 @@
  * @link      http://www.acidfarm.net
  */
 
+//Ciblage des routes à utiliser
+$acid_set_routes = ['web'];
+
+//Chargement du core du site
 require 'sys/start.php';
 
 // Config référencement
@@ -61,45 +65,6 @@ if ($meta_image) {
 
 $searched_key = AcidRouter::searchKey($nav[0]);
 Conf::executeMetaDefault($searched_key);
-
-//Définitions des Routes Controller
-
-//Hooks
-AcidHook::call('routes');
-
-// Page d'actualités avec X Params Facultatif
-AcidRouter::addRoute('news', new AcidRoute('@news',array('controller'=>'NewsController'),1));
-
-//AcidRouter::addRoute('page',new AcidRoute('page/:page_key',array('controller'=>'PageController'),1));
-//AcidRouter::addRoute('allpage',new AcidRoute('@page',array('controller'=>'PageController','action'=>'listAction')));
-
-// Route Contact de base, sans parametre
-AcidRouter::addRoute('contact', new AcidRoute('@contact',array('controller'=>'ContactController')));
-
-// Route Gallery
-AcidRouter::addRoute('gallery', new AcidRoute('@gallery',array('controller'=>'GalleryController')));
-
-// Route Account
-AcidRouter::addRoute('userspace',new AcidRoute('@account',array('controller'=>'UserspaceController'),1));
-
-// Routes d'accès au fichiers dynamics sitemap.xml / robots.txt
-AcidRouter::addRoute('sitemap', new AcidRoute('sitemap.xml',array('controller'=>'SitemapController')));
-AcidRouter::addRoute('robots',new AcidRoute('robots.txt',array('controller'=>'RobotsController','action'=>'index')));
-
-// Routes RSS
-AcidRouter::addRoute('rss',new AcidRoute('@rss',array('controller'=>'RssController','action'=>'index')));
-
-// Route vers la page search
-AcidRouter::addRoute('searchPage', new AcidRoute('@search',array('controller'=>'SearchController'),1));
-
-// Redirections
-//AcidRouter::addRoute('srcRedirect', new AcidRoute('src/:version',array('controller'=>'RedirectController','action'=>'src'),1));
-
-//Par défault : affichage d'une page
-AcidRouter::addRoute('page',new AcidRoute(':page_key',array('controller'=>'PageController'),1));
-
-//Si pas de page définie, affichage de la home
-AcidRouter::addDefaultRoute('index',new AcidRoute('default',array('controller'=>'IndexController','action'=>'index')));
 
 //Lancement du Router
 AcidRouter::after('*',function() { Seo::prepare(); })->run();

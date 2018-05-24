@@ -68,7 +68,12 @@ class AcidRouter implements Acid_Router_Interface{
      * @var array liste des callbacks après dispach
      */
     private $_after          = array();
-
+    
+    /**
+     * @var string get_param_used_as_route
+     */
+    private $_use_get_param          = null;
+    
     /**
      * @var array Paramètres qui seront transmis à toutes les routes
      */
@@ -96,6 +101,7 @@ class AcidRouter implements Acid_Router_Interface{
      */
     public static function run(){
 
+      
         Acid::log('ROUTER', 'START RUN...');
         $_server = $_SERVER["SERVER_NAME"];
         $_uri_total= parse_url($_SERVER["REQUEST_URI"],PHP_URL_PATH);
@@ -124,8 +130,16 @@ class AcidRouter implements Acid_Router_Interface{
             self::getInstance()->_currentLang = '';
         }
 
-        $_uri = substr($_uri_total, (strlen(self::getInstance()->_folder)+strlen(self::getInstance()->_currentLang)));
-        $_uri = ($root_keys)? $formated_path[$indexstep] : $_uri;
+        if (!self::getInstance()->_use_get_param) {
+            $_uri =
+                substr($_uri_total, (strlen(self::getInstance()->_folder) + strlen(self::getInstance()->_currentLang)));
+            $_uri = ($root_keys) ? $formated_path[$indexstep] : $_uri;
+        }else{
+            $get_param_value = isset($_GET[self::getInstance()->_use_get_param]) ?
+                $_GET[self::getInstance()->_use_get_param] : false;
+            $_uri = $get_param_value ? $get_param_value : '/';
+        }
+
         try{
             if(isset(self::getInstance()->_routes)&&count(self::getInstance()->_routes)>0){
                 self::getInstance()->route($_uri);
@@ -394,7 +408,16 @@ class AcidRouter implements Acid_Router_Interface{
      	 $route->setName($name);
          self::getInstance()->_defaultRoute = $route;
      }
-
+    
+    /**
+     * Definit si la route est enregistrée dans un paramêtre GET
+     * @param $name Nom de l'attribut GET
+     */
+    public static function useGetParam($name){
+        self::getInstance()->_use_get_param = $name;
+        return self::getInstance();
+    }
+    
      /**
       * Definit des paramètres
       * @param string $name = nom du parametre

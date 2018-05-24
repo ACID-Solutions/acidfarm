@@ -249,6 +249,13 @@ include (SITE_PATH.'sys/dynamic.php');
 include (Acid::outPath('functions.php'));
 
 
+//Chargement des routes
+if (!empty($acid_set_routes)) {
+    foreach ($acid_set_routes as $route_page) {
+        require SITE_PATH.'routes/'.$route_page.'.php';
+    }
+}
+
 //Si on est pas en mode REST
 if (!$rest_mode) {
 
@@ -257,9 +264,7 @@ if (!$rest_mode) {
 		User::initUser();
 		User::updateInstance();
 	}
-
-	//routage par défaut
-	AcidRouter::addDefaultRoute('index',new AcidRoute('default',array('controller'=>'PageController','action'=>'home')));
+	
 
 	// Traitements des actions formulaires
 	if (!empty($_POST)) {
@@ -284,6 +289,7 @@ if (!$rest_mode) {
 	}
 
 }
+
 
 //FULL STACK
 //Gestion des redirection après le POST pour le mode full stack
