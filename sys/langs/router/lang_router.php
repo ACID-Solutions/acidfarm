@@ -55,6 +55,14 @@ $lang['router']['search'] 	= array(
 								'de'=>array('key'=>'suche','name'=>'Suche')
 							);
 
+$lang['router']['policy'] = array(
+                                'fr' => array('key' => 'polique-sur-les-données', 'name' => 'Politique sur les données'),
+                                'en' => array('key' => 'data-policy', 'name' => 'Data policy'),
+                                'es' => array('key' => 'politica-de-datos', 'name' => 'Política de datos'),
+                                'it' => array('key' => 'politica-dei-dati', 'name' => 'Politica dei dati'),
+                                'de' => array('key' => 'datenpolitik', 'name' => 'Datenpolitik')
+);
+
 $lang['router']['account'] 	= array(
 								'fr'=>array('key'=>'espace-membre','name'=>'Espace Membre'),
 								'en'=>array('key'=>'account','name'=>'Account'),

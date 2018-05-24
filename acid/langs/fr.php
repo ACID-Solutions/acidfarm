@@ -191,10 +191,12 @@ $lang['trad']['previous']                = 'Précédent';
 
 $lang['trad']['no_content_available']	 = 'Aucun contenu disponible';
 
-$lang['trad']['admin_menu_home']         = 'Accueil';
-$lang['trad']['admin_menu_infos']        = 'Mes Infos';
-$lang['trad']['admin_menu_config']       = 'Configuration';
-$lang['trad']['admin_menu_seo']      	 = 'SEO';
+$lang['trad']['admin_menu_home']            = 'Accueil';
+$lang['trad']['admin_menu_infos']           = 'Mes Infos';
+$lang['trad']['admin_menu_config']          = 'Configuration';
+$lang['trad']['admin_menu_script_category'] = 'Catégories de scripts';
+$lang['trad']['admin_menu_script']          = 'Scripts';
+$lang['trad']['admin_menu_seo']      	    = 'SEO';
 
 $lang['trad']['admin_menu_user']       		  	= 'Utilisateurs';
 $lang['trad']['admin_menu_user_group']        	= 'Groupes Utilisateurs';

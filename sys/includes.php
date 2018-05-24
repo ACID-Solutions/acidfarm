@@ -25,6 +25,8 @@ $acid['includes']['Page']         		 = 'sys/modules/page.php';
 $acid['includes']['News']        		 = 'sys/modules/news.php';
 $acid['includes']['PhotoHome']	  		 = 'sys/modules/photo_home.php';
 $acid['includes']['Photo']	  	  		 = 'sys/modules/photo.php';
+$acid['includes']['ScriptCategory']    	 = 'sys/modules/script_category.php';
+$acid['includes']['Script']    	         = 'sys/modules/script.php';
 $acid['includes']['Seo']	  	  		 = 'sys/modules/seo.php';
 $acid['includes']['Menu']	  	  		 = 'sys/modules/menu.php';
 

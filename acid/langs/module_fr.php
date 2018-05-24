@@ -84,6 +84,29 @@ $lang['mod']['photo_home']['src']    = 'Image';
 $lang['mod']['photo_home']['active']  = 'Actif';
 $lang['mod']['photo_home']['cache_time']  = 'Cache Time';
 
+//--script category
+$lang['mod']['script_category']['__NAME__'] = 'Catégories de scripts';
+$lang['mod']['script_category']['id_script_category'] = 'Id';
+$lang['mod']['script_category']['name']	   = 'Nom';
+$lang['mod']['script_category']['description']	   = 'Description';
+$lang['mod']['script_category']['position'] = 'Position';
+$lang['mod']['script_category']['use_cookie']  = 'Utiliser un cookie de catégorie ?';
+$lang['mod']['script_category']['show']  = 'Afficher ?';
+$lang['mod']['script_category']['active']  = 'Actif ?';
+
+//--script
+$lang['mod']['script']['__NAME__'] = 'Scripts';
+$lang['mod']['script']['id_script'] = 'Id';
+$lang['mod']['script']['name']	   = 'Nom';
+$lang['mod']['script']['key']	   = 'Clé';
+$lang['mod']['script']['description']	   = 'Description';
+$lang['mod']['script']['position'] = 'Position';
+$lang['mod']['script']['optionnal']  = 'Utilisation optionnelle ?';
+$lang['mod']['script']['script']  = 'Script';
+$lang['mod']['script']['show']  = 'Afficher ?';
+$lang['mod']['script']['active']  = 'Actif ?';
+
+
 //--contact
 $lang['mod']['contact']['__NAME__'] = 'Contact';
 $lang['mod']['contact']['mail'] = 'Mail';

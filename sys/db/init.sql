@@ -272,3 +272,38 @@ CREATE TABLE IF NOT EXISTS `acid_menu` (
   `active` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
    PRIMARY KEY (`id_menu`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1;
+
+
+
+--
+-- Structure de la table `acid_script_category`
+--
+
+CREATE TABLE IF NOT EXISTS `acid_script_category` (
+  `id_script_category` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `pos` int(11) NOT NULL,
+  `show` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
+  `use_cookie` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
+  `active` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
+   PRIMARY KEY (`id_script_category`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Structure de la table `acid_script`
+--
+
+CREATE TABLE IF NOT EXISTS `acid_script` (
+  `id_script` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_script_category` int(10) unsigned NOT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `key` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `script` text COLLATE utf8_unicode_ci NOT NULL,
+  `pos` int(11) NOT NULL,
+  `optionnal` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
+  `show` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
+  `active` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
+   PRIMARY KEY (`id_script`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
