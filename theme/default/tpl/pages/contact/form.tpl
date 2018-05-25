@@ -55,7 +55,8 @@ $ph = false; 	//Placeholders or Labels
         <?php if (Conf::get('contact:shield')) { ?>
             <noscript><div style="color:red;"><?php echo Acid::trad('contact_please_enable_javascript'); ?></div></noscript>
         <?php } ?>
-        <input class="btn" id="contact_form_submit" type="submit" value="Envoyer" 	/>
+        <input class="btn" id="contact_form_submit" type="submit" value="<?php echo Acid::trad('action_send');  ?>"
+        />
     </div>
 
 </div>

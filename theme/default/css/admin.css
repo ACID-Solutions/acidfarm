@@ -56,10 +56,12 @@ hr {
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
 
-#admin_site input[type=submit], #admin_site input[type=button], #admin_site input[type=image] {
+#admin_site input[type=submit], #admin_site input[type=button], #admin_site input[type=image], #admin_site .admin_btn {
+  padding:0px 8px;
   padding-bottom: 3px;
   cursor: pointer;
   height: 25px;
+  line-height:23px;
   background-image: url('../img/admin/btn_background.png');
   background-repeat: repeat-x;
   background-position: center left;

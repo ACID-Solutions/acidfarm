@@ -617,7 +617,14 @@ abstract class AcidModuleCore {
 			$var->setDef();
 		}
 	}
-
+    
+    /**
+     *  Transforme un tableau de valeur en tableau d'object
+     */
+    public static function arrayToObjects($tab) {
+       return array_map('static::build', $tab);
+    }
+    
 	/**
 	* Initialise la valeur des paramètre de l'objet en fonction des valeurs stockées en base de données
 	* Renvoie true en cas de réussite
@@ -3544,6 +3551,7 @@ abstract class AcidModuleCore {
 	*/
 	public function printAdminList ($conf=array()) {
 
+	 
 		$this->printAdminConfigure('list',$conf);
 
 		//Gestion des filtres additionnels
@@ -3648,9 +3656,34 @@ abstract class AcidModuleCore {
 	*/
 	public function printAdminListBody($content,$infos,$nav,$conf=array()) {
 		//Appel du fichier template
-		$tpl = isset($conf['tpl']['body']) ? $conf['tpl']['body'] : 'admin/admin-body-list.tpl';
-		return	Acid::tpl($tpl,array('infos'=>$infos,'nav'=>$nav,'content'=>$content),$this);
+        $tpl = isset($conf['tpl']['body']) ? $conf['tpl']['body'] : 'admin/admin-body-list.tpl';
+		$head_links = $this->printAdminListHeadBtn($conf);
+		return	Acid::tpl($tpl,array('infos'=>$infos,'nav'=>$nav,'content'=>$content, 'head_links'=>$head_links),$this);
 	}
+    
+    /**
+     * Génère des boutons raccourcis en entete du listing d'administration
+     * @param array $conf
+     *
+     * @return string
+     */
+    public function printAdminListHeadBtn($conf=array()) {
+        if (!empty($this->config['admin']['list']['head_btn'])) {
+            $links = $this->config['admin']['list']['head_btn'];
+        }
+    
+        if (!empty($conf['head_btn'])) {
+            $links = $conf['head_btn'];
+        }
+        
+        if (empty($links)) {
+            return false;
+        }
+    
+        $tpl = isset($conf['tpl']['head_btn']) ? $conf['tpl']['head_btn'] : 'admin/admin-list-head-btn.tpl';
+        return Acid::tpl($tpl,array('links'=>$links),$this);
+    }
+	
 
 	/**
 	 * Retourne des listes de filtrages dans le listing d'administration

@@ -282,6 +282,7 @@ CREATE TABLE IF NOT EXISTS `acid_menu` (
 CREATE TABLE IF NOT EXISTS `acid_script_category` (
   `id_script_category` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `key` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   `description` text COLLATE utf8_unicode_ci NOT NULL,
   `pos` int(11) NOT NULL,
   `show` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
@@ -302,7 +303,7 @@ CREATE TABLE IF NOT EXISTS `acid_script` (
   `description` text COLLATE utf8_unicode_ci NOT NULL,
   `script` text COLLATE utf8_unicode_ci NOT NULL,
   `pos` int(11) NOT NULL,
-  `optionnal` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
+  `optional` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
   `show` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
   `active` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
    PRIMARY KEY (`id_script`)

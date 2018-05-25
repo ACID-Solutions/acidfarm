@@ -34,6 +34,9 @@ AcidRouter::addRoute('gallery', new AcidRoute('@gallery',array('controller'=>'Ga
 // Route Account
 AcidRouter::addRoute('userspace',new AcidRoute('@account',array('controller'=>'UserspaceController'),1));
 
+//Route Politique sur les données
+AcidRouter::addRoute('policy', new AcidRoute('@policy',array('controller'=>'PolicyController')));
+
 // Routes d'accès au fichiers dynamics sitemap.xml / robots.txt
 AcidRouter::addRoute('sitemap', new AcidRoute('sitemap.xml',array('controller'=>'SitemapController')));
 AcidRouter::addRoute('robots',new AcidRoute('robots.txt',array('controller'=>'RobotsController','action'=>'index')));

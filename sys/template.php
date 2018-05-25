@@ -44,7 +44,8 @@ class MyTemplate extends AcidTemplate {
 	 */
 	public function getFooter($v=array()) {
 		$stats =  '<div id="stats_content">'. Acid::executeTpl(SITE_PATH . 'sys/stats/stats.tpl') . '</div>';
-		return Acid::tpl('footer.tpl',$v,$this).$stats;
+		$scripts =  '<div id="scripts_content">'. Acid::tpl('scripts/scripts.tpl') . '</div>';
+		return Acid::tpl('footer.tpl',$v,$this). "\n" .$scripts . "\n" . $stats . "\n" ;
 	}
 
 	/**
@@ -92,16 +93,17 @@ class MyTemplate extends AcidTemplate {
 		return $banner . $popup;
 	}
 
+	public function cookieconsent() {
+        $this->addJS(Acid::get('url:folder').'js/cookieconsent/3.0.3/cookieconsent.min.js');
+        $this->addCSS(Acid::get('url:folder').'js/cookieconsent/3.0.3/cookieconsent.min.css');
+    }
+    
 	/**
 	 * Retourne le corps de la pop-in du template
 	 */
 	public function getCookieWarning() {
-		if (Acid::get('session:enable')) {
-			if (empty($_COOKIE['cookie_warning'])) {
-				AcidCookie::setcookie('cookie_warning',1,(time()+60*60*24*365));
-				return Acid::tpl('screens/notification.tpl',array('ident'=>'cookie','content'=>Acid::trad('cookie_legacy')));
-			}
-		}
+	    $this->cookieconsent();
+        return Acid::tpl('screens/consent.tpl',array());
 	}
 
 	/**

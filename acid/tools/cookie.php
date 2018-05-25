@@ -57,4 +57,15 @@ class AcidCookie {
 		unset($_COOKIE[$name]);
 
 	}
+    
+    /**
+     * Retourne la valeur du cookie, default sinon
+     * @param      $name
+     * @param null $default
+     *
+     * @return null
+     */
+	public static function getValue($name,$default=null) {
+	    return isset($_COOKIE[$name]) ? $_COOKIE[$name] : $default;
+    }
 }

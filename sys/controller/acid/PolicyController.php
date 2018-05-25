@@ -2,7 +2,6 @@
 
 /**
  * AcidFarm - Yet Another Framework
- * 
  * Requires PHP version 5.3
  *
  * @author    ACID-Solutions <contact@acid-solutions.fr>
@@ -17,42 +16,29 @@
 
 /**
  * Contrôleur d'Index
+ *
  * @package   Acidfarm\Controller
  */
-class PolicyController{
-	
-	/**
-	 * Affichage de l'index
-	 */
-    public function index(){
-        Conf::addToAriane(AcidRouter::getName('policy'),Route::buildUrl('policy'));
-    
-        $scriptCategories = ScriptCategory::dbList([['active','=',1]],['pos'=>'ASC']);
-        $page->initVars(array($page->langKey('content')=>SiteConfig::getCurrent()->getConf('home_'.$page->langKey('content'))));
-    
-        $vars = array ();
-    
-        Conf::addToContent(Acid::tpl('pages/home.tpl',$vars,$page));
-        
-    }
-
+class PolicyController
+{
     /**
-     * Affiche la home page
+     * Affichage de l'index
      */
-    public function home(){
-
-       
-
-
-
-        //$page = new Page();
-        //$page->init('home');
-
+    public function index()
+    {
+        Conf::addToAriane(AcidRouter::getName('policy'), Route::buildUrl('policy'));
+        
+        $scriptCategories = ScriptCategory::dbList([['active', '=', 1]], ['pos' => 'ASC']);
+        
         $page = new Page();
-        $page->initVars(array($page->langKey('content')=>SiteConfig::getCurrent()->getConf('home_'.$page->langKey('content'))));
-
-        $vars = array ();
-
-        Conf::addToContent(Acid::tpl('pages/home.tpl',$vars,$page));
+        $page->initVars([
+            $page->langKey('title') => SiteConfig::getCurrent()->getConf('policy_' . $page->langKey('title')),
+            $page->langKey('content') => SiteConfig::getCurrent()->getConf('policy_' . $page->langKey('content'))
+        ]);
+        
+        $vars = ['elts' => ScriptCategory::arrayToObjects($scriptCategories)];
+        
+        
+        Conf::addToContent(Acid::tpl('pages/policy.tpl', $vars, $page));
     }
 }

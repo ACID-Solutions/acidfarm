@@ -189,11 +189,18 @@ $lang['trad']['back']                    = 'Retour';
 $lang['trad']['next']                    = 'Suivant';
 $lang['trad']['previous']                = 'Précédent';
 
+$lang['trad']['action_send']             = 'Envoyer';
+$lang['trad']['action_add']              = 'Ajouter';
+$lang['trad']['action_update']           = 'Modifier';
+$lang['trad']['action_delete']           = 'Supprimer';
+
 $lang['trad']['no_content_available']	 = 'Aucun contenu disponible';
 
 $lang['trad']['admin_menu_home']            = 'Accueil';
 $lang['trad']['admin_menu_infos']           = 'Mes Infos';
 $lang['trad']['admin_menu_config']          = 'Configuration';
+$lang['trad']['admin_menu_policy']          = 'Données';
+$lang['trad']['admin_menu_policy_content']  = 'Politique sur les données';
 $lang['trad']['admin_menu_script_category'] = 'Catégories de scripts';
 $lang['trad']['admin_menu_script']          = 'Scripts';
 $lang['trad']['admin_menu_seo']      	    = 'SEO';
@@ -269,6 +276,12 @@ $lang['trad']['admin_list_btns_label'] = 'Actions';
 $lang['trad']['admin_list_total_elts'] = '__TOTAL__ élément(s) au total, affichage de __NB__ éléments (__START__ à __STOP__)';
 $lang['trad']['admin_list_pagination'] = 'Nombre d\'éléments par page';
 $lang['trad']['admin_list_del_filter'] = 'Supprimer le filtre de recherche';
+
+//--Policy
+$lang['trad']['consent_accept'] = 'Accepter';
+$lang['trad']['consent_deny'] = 'Refuser';
+$lang['trad']['consent_revoque'] = 'Revoquer';
+$lang['trad']['consent_action_send'] = 'Envoyer';
 
 
 //Tools

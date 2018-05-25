@@ -286,6 +286,81 @@ class AdminController
     /**
      * Affichage de la configuration utilisateur
      */
+    public static function policy()
+    {
+        $category_list_link = AcidUrl::build(
+            [ScriptCategory::preKey('do') => 'list'],
+            [Script::preKey('do')]
+        );
+    
+        $script_list_link =  AcidUrl::build(
+            [Script::preKey('do') => 'list'],
+            [ScriptCategory::preKey('do')]
+        );
+    
+        $policy_link =   AcidUrl::build(
+            ['page' => 'policy'],
+            [ScriptCategory::preKey('do'), Script::preKey('do')]
+        );
+    
+        $category_add_link =   AcidUrl::build(
+            [ScriptCategory::preKey('do') => 'add'],
+            []
+        );
+    
+        $script_add_link=AcidUrl::build(
+            [Script::preKey('do') => 'add'],
+            []
+        );
+
+        $onglets = [
+            $policy_link => Acid::trad('admin_menu_policy_content'),
+            $category_list_link => Acid::trad('admin_menu_script_category'),
+            $script_list_link => Acid::trad('admin_menu_script'),
+        ];
+        
+        
+        if (!empty($_GET[ScriptCategory::preKey('do')])) {
+            
+            $do = $_GET[ScriptCategory::preKey('do')];
+            if (in_array($do,['add','update','print'])) {
+                $onglets[$_SERVER['REQUEST_URI']] = Acid::trad('admin_menu_script_category').
+                                                    ' (' . Acid::trad('admin_action_' . $do) . ')';
+            }
+            
+            $content = ScriptCategory::build()->printAdminInterface(
+                [
+                    'onglets'=>$onglets,
+                    'list'=> ['head_btn'=>[$category_add_link=>Acid::trad('admin_onglet_add')]]
+                ]
+            );
+        }elseif (!empty($_GET[Script::preKey('do')])) {
+    
+            $do = $_GET[Script::preKey('do')];
+            if (in_array($do,['add','update','print'])) {
+                $onglets[$_SERVER['REQUEST_URI']] = Acid::trad('admin_menu_script').
+                                                    ' (' . Acid::trad('admin_action_' . $do) . ')';
+            }
+            
+            $content = Script::build()->printAdminInterface(
+                [
+                    'onglets'=>$onglets,
+                    'list'=> ['head_btn'=>[$script_add_link=>Acid::trad('admin_onglet_add')]]
+                ]
+            );
+        }else{
+            $content = User::build()->printAdminBody(SiteConfig::printRemotePolicyForm(), $onglets);
+        }
+        
+        
+     
+        
+        Conf::addToContent($content);
+    }
+    
+    /**
+     * Affichage de la configuration utilisateur
+     */
     public static function home()
     {
         $content = Acid::mod('User')

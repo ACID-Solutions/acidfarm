@@ -1,7 +1,9 @@
 <div class="generic_elts_list_bg">
 	<?php echo $v['nav']; ?>
-	
-	<div class="generic_elts_list">
+
+	<?php echo $v['head_links']; ?>
+    
+    <div class="generic_elts_list">
 		<?php 
 			if ($v['content']) { 
 				echo $v['content'];

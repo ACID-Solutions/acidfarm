@@ -110,13 +110,9 @@ else {
 	AdminController::addMenu('siteconfig','configuration',Acid::trad('admin_menu_config'),$def_level);
 	AdminController::addAccess('siteconfig',$def_level);
     
-    //--catégories de scripts
-    AdminController::addMenu('script_category','configuration',Acid::trad('admin_menu_script_category'),$dev_level);
-    AdminController::addAccess('script_category',$dev_level,'ScriptCategory');
-    
-    //--scripts
-    AdminController::addMenu('script','configuration',Acid::trad('admin_menu_script'),$dev_level);
-    AdminController::addAccess('script',$dev_level,'Script');
+    //--policy
+    AdminController::addMenu('policy','configuration',Acid::trad('admin_menu_policy'),$def_level);
+    AdminController::addAccess('policy',$def_level);
     
 	//--seo
 	AdminController::addMenu('seo','configuration',Acid::trad('admin_menu_seo'),$dev_level);
