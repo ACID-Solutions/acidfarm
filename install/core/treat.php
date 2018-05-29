@@ -86,19 +86,19 @@ if (!empty($action['database:init'])) {
     
     $policy_content['policy_content'] =
     $policy_content['policy_content_fr'] =  <<<EOPOLICY
-Les données personnelles susceptibles d'être collectées dans le cadre des services proposés sur {$website} seront
+<p>Les données personnelles susceptibles d'être collectées dans le cadre des services proposés sur {$website} seront
 traités au moyen de protocoles sécurisés et restreints (à l'exception de ceux recueillis par des tiers) à
-usage interne seulement (sécurité, diagnostic). Ce site utilise des cookies pour son fonctionnement
-et peut l'utiliser à des fins statistiques.
+ un usage interne seulement (sécurité, diagnostic). Ce site utilise des cookies pour son fonctionnement
+et peut l'utiliser à des fins statistiques.</p>
 EOPOLICY;
     
-    foreach (['','_fr','_en','_de','_es','_it'] as $sf) {
+    foreach (['_en','_de','_es','_it'] as $sf) {
         $policy_content['policy_title'.$sf]   =  'Data Policy';
         $policy_content['policy_content'.$sf] =  <<<EOPOLICY
-Personal data that may be collected as part of the services offered on {$website} will be
+<p>Personal data that may be collected as part of the services offered on {$website} will be
 treated under secure and restricted protocols (apart from those collected by third-party
 internal use only (safety, diagnostics). This website uses cookies for its operation
-and can use it for statistical purposes.
+and can use it for statistical purposes.</p>
 EOPOLICY;
     }
     

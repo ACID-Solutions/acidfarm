@@ -145,7 +145,7 @@
             //'type': 'opt-out',
             'type' :  '<?php echo Lib::getIn('consent_type',$v);  ?>',
             'cookie' : {
-                'path' : <?php echo Acid::get('cookie:path');   ?>,
+                'path' : '<?php echo Acid::get('cookie:path');   ?>',
             },
             'content': MyCookiePolicy.myContentConfig(),
 
