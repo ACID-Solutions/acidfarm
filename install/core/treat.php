@@ -77,6 +77,55 @@ if (!empty($action['database:init'])) {
         $requete .= "\n" . "INSERT INTO `" . $dbpref
                     . "config` (`id_config`, `name`, `value`) VALUES (NULL, '$key', '$val');";
     }
+ 
+    //Add policy default content fr + en
+    $website = $action['site:scheme'] . $action['site:domain'] . $action['site:folder'];
+    
+    $policy_content['policy_title']   =
+    $policy_content['policy_title_fr']   ='Politique sur les données';
+    
+    $policy_content['policy_content'] =
+    $policy_content['policy_content_fr'] =  <<<EOPOLICY
+Les données personnelles susceptibles d'être collectées dans le cadre des services proposés sur {$website} seront
+traités au moyen de protocoles sécurisés et restreints (à l'exception de ceux recueillis par des tiers) à
+usage interne seulement (sécurité, diagnostic). Ce site utilise des cookies pour son fonctionnement
+et peut l'utiliser à des fins statistiques.
+EOPOLICY;
+    
+    foreach (['','_fr','_en','_de','_es','_it'] as $sf) {
+        $policy_content['policy_title'.$sf]   =  'Data Policy';
+        $policy_content['policy_content'.$sf] =  <<<EOPOLICY
+Personal data that may be collected as part of the services offered on {$website} will be
+treated under secure and restricted protocols (apart from those collected by third-party
+internal use only (safety, diagnostics). This website uses cookies for its operation
+and can use it for statistical purposes.
+EOPOLICY;
+    }
+    
+    //Add consent policy default content fr + en
+    $policy_content['consent_message_fr'] =  'En poursuivant votre navigation sur ce site sans modifier vos'.
+    '<a target="_blank" aria-label="configure cookies" role="button" tabindex="1"'.
+    'class="cc-link" href="{{href}}#policy_admin">préférences</a>, vous acceptez l\'utilisation des cookies.';
+    $policy_content['consent_dismiss_btn_fr'] =  'J\'ai compris !';
+    $policy_content['consent_learnmore_btn_fr'] =  'En savoir plus';
+    $policy_content['consent_revoke_btn_fr'] =  'Politique sur les données';
+    
+    foreach (['_en','_de','_es','_it'] as $sf) {
+        $policy_content['consent_message'.$sf] = 'By continuing your navigation on this site without modifying your' .
+        '<a target="_blank" aria-label="configure cookies" role="button" tabindex="1"'
+        .
+        'class="cc-link" href="{{href}}#policy_admin">preferences</a>, you accept the use of cookies.';
+    }
+
+    foreach ($policy_content as $pck =>$pckv) {
+        $configuration[$pck] = $pckv;
+    }
+    
+    foreach ($configuration as $key => $val) {
+        $val = addslashes($val);
+        $requete .= "\n" . "INSERT INTO `" . $dbpref
+                    . "config` (`id_config`, `name`, `value`) VALUES (NULL, '$key', '$val');";
+    }
     
     $ressource = new PDO(
         $action['database:type'] . ':host=' . $action['database:host'] . ';port=' . $action['database:port']

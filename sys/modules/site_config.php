@@ -70,6 +70,16 @@ class SiteConfig extends AcidModule
             $policy_content[] = 'policy_' . $k;
         }
         
+        foreach (Acid::get('lang:available') as $l) {
+            $policy_content[] = 'consent_message_' . $l;
+            $policy_content[] = 'consent_dismiss_btn_' . $l;
+            $policy_content[] = 'consent_deny_btn_' . $l;
+            $policy_content[] = 'consent_revoke_btn_' . $l;
+            $policy_content[] = 'consent_learnmore_btn_' . $l;
+            $policy_content[] = 'consent_readmore_link_' . $l;
+        }
+        $policy_content[] = 'consent_type';
+        
         $this->free_mode = $free_mode;
         
         $this->addControl([
@@ -479,8 +489,24 @@ class SiteConfig extends AcidModule
         $form->tableStart();
         $form->addHidden('', Acid::mod('SiteConfig')->preKey('do'), 'remote_update');
         $form->addHidden('', 'module_do', Acid::mod('SiteConfig')->getClass());
+    
+        $consent_keys = [];
+        foreach (Acid::get('lang:available') as $l) {
+            $consent_keys[] = 'consent_message_' . $l;
+            $consent_keys[] = 'consent_dismiss_btn_' . $l;
+            $consent_keys[] = 'consent_deny_btn_' . $l;
+            $consent_keys[] = 'consent_revoke_btn_' . $l;
+            $consent_keys[] = 'consent_learnmore_btn_' . $l;
+            $consent_keys[] = 'consent_readmore_link_' . $l;
+        }
+        $consent_keys[] = 'consent_type';
         
-        $lang_keys = array_merge(Page::build()->langKeyDecline('title'), Page::build()->langKeyDecline('content'));
+        $lang_keys = array_merge(
+            Page::build()->langKeyDecline('title'),
+            Page::build()->langKeyDecline('content'),
+            $consent_keys
+        );
+        
         if ($langs = Acid::get('lang:available')) {
             $have_lang_keys = (count($langs) > 1) || Acid::get('lang:use_nav_0');
             foreach ($lang_keys as $k) {
@@ -490,8 +516,32 @@ class SiteConfig extends AcidModule
                     $l = $l[(count($l) - 1)];
                     $class = 'lang ' . $l;
                 }
-                
-                if (strpos($k, 'content') !== 0) {
+    
+                if (strpos($k, 'consent_') === 0) {
+                    
+                    $label =   static::modTrad(
+                        implode('_',
+                            array_slice(explode('_', $k),0, -1)
+                        )
+                    );
+                    
+                    if (count($langs) > 1) {
+                        $label .=' '.$l;
+                    }
+               
+                    if (strpos($k, 'content_message') !== 0) {
+                        $form->addText(
+                            $label, $k,
+                            self::getCurrent()->getConf($k),
+                            120, 255, ['class' => $class], '', '', ['class' => $class]);
+                    } else {
+                        $form->addTextarea(
+                            $label, $k,
+                            self::getCurrent()->getConf($k),
+                            120, 20, ['class' => $class], '', '', ['class' => $class]);
+                    }
+                    
+                }elseif (strpos($k, 'content') !== 0) {
                     $form->addText(
                         Page::build()->getLabel($k), 'policy_' . $k,
                         self::getCurrent()->getConf('policy_' . $k),
@@ -504,7 +554,14 @@ class SiteConfig extends AcidModule
                 }
             }
         }
-        
+    
+        $form->addSelect(
+            static::modTrad('consent_type'),
+            'consent_type',
+            self::getCurrent()->getConf('consent_type'),
+            [''=>'std','opt-in'=>'opt-in','opt-out'=>'opt-out'],
+            1
+        );
         $form->addSubmit('', Acid::trad('config_btn_validate'));
         $form->tableStop();
         

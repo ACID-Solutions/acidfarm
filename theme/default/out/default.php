@@ -58,9 +58,7 @@ $output .=  <<<OUTPUT
 {$this->getBwin()}
 {$this->getCookieWarning()}
 
-
 {$this->getBody(array('nav_old'=>$nav_old))}
-
 
 OUTPUT;
 

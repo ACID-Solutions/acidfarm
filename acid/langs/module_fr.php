@@ -92,6 +92,7 @@ $lang['mod']['script_category']['key']	   = 'Clé';
 $lang['mod']['script_category']['description']	   = 'Description';
 $lang['mod']['script_category']['position'] = 'Position';
 $lang['mod']['script_category']['use_cookie']  = 'Utiliser un cookie de catégorie ?';
+$lang['mod']['script_category']['default']  = 'Valeur par défaut';
 $lang['mod']['script_category']['show']  = 'Afficher ?';
 $lang['mod']['script_category']['active']  = 'Actif ?';
 
@@ -104,10 +105,10 @@ $lang['mod']['script']['key']	   = 'Clé';
 $lang['mod']['script']['description']	   = 'Description';
 $lang['mod']['script']['position'] = 'Position';
 $lang['mod']['script']['optional']  = 'Utilisation optionnelle ?';
+$lang['mod']['script']['default']  = 'Valeur par défaut';
 $lang['mod']['script']['script']  = 'Script';
 $lang['mod']['script']['show']  = 'Afficher ?';
 $lang['mod']['script']['active']  = 'Actif ?';
-
 
 //--contact
 $lang['mod']['contact']['__NAME__'] = 'Contact';
@@ -135,8 +136,15 @@ $lang['mod']['config']['phone'] 	 = 'Téléphone';
 $lang['mod']['config']['fax']        = 'Fax';
 $lang['mod']['config']['website']    = 'Site Web';
 
-
 $lang['mod']['config']['home_content']    = 'Contenu accueil';
+
+$lang['mod']['config']['consent_message'] = 'Message cookie';
+$lang['mod']['config']['consent_dismiss_btn'] = 'Bouton acceptation cookie';
+$lang['mod']['config']['consent_deny_btn'] = 'Bouton refus cookie';
+$lang['mod']['config']['consent_revoke_btn'] = 'Bouton revocation cookie';
+$lang['mod']['config']['consent_learnmore_btn'] = 'Bouton en savoir plus cookie';
+$lang['mod']['config']['consent_readmore_link'] = 'Lien en savoir plus cookie';
+$lang['mod']['config']['consent_type'] = 'Type de consentement';
 
 //--user
 $lang['mod']['user']['__NAME__'] 		  = 'Utilisateurs';

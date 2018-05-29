@@ -287,6 +287,7 @@ CREATE TABLE IF NOT EXISTS `acid_script_category` (
   `pos` int(11) NOT NULL,
   `show` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
   `use_cookie` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
+  `default` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `active` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
    PRIMARY KEY (`id_script_category`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -304,6 +305,7 @@ CREATE TABLE IF NOT EXISTS `acid_script` (
   `script` text COLLATE utf8_unicode_ci NOT NULL,
   `pos` int(11) NOT NULL,
   `optional` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
+  `default` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `show` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
   `active` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
    PRIMARY KEY (`id_script`)

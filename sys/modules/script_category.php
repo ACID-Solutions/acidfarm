@@ -55,7 +55,9 @@ class ScriptCategory extends AcidModule
         
         $this->vars['pos'] = new AcidVarInt(self::modTrad('position'), true);
         
-        $this->vars['use_cookie'] = new AcidVarBool($this->modTrad('use_cookie'), true);
+        $this->vars['use_cookie'] = new AcidVarBool($this->modTrad('use_cookie'), false);
+        
+        $this->vars['default'] = new AcidVarList(self::modTrad('default'), ['accept','deny'],'deny',false,false);
         
         $this->vars['show'] = new AcidVarBool($this->modTrad('show'), true);
         
@@ -144,7 +146,7 @@ class ScriptCategory extends AcidModule
         $this->config['admin']['list']['keys'] = [
             'id_script_category',
             $this->langKey('name'), $this->langKey('description'),
-            'use_cookie', 'show', 'active', 'pos'
+            'use_cookie', 'default', 'show', 'active', 'pos'
         ];
         $this->config['print']['pos'] =
             ['type' => 'quickchange', 'ajax' => false, 'params' => ['style' => 'width:30px; text-align:center;']];
@@ -200,6 +202,17 @@ class ScriptCategory extends AcidModule
     }
     
     /**
+     * Retourne la valeur associé au cookie
+     *
+     * @return bool
+     */
+    public function value()
+    {
+        return AcidCookie::getValue($this->cookiename(),$this->get('default'));
+    }
+    
+    
+    /**
      * @return string
      */
     public function cookiename()
@@ -226,6 +239,6 @@ class ScriptCategory extends AcidModule
      */
     public function hasConsent()
     {
-        return AcidCookie::getValue($this->cookiename()) == 'accept';
+        return $this->value() == 'accept';
     }
 }

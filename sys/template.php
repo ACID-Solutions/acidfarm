@@ -103,7 +103,21 @@ class MyTemplate extends AcidTemplate {
 	 */
 	public function getCookieWarning() {
 	    $this->cookieconsent();
-        return Acid::tpl('screens/consent.tpl',array());
+	    
+	    $config = SiteConfig::getCurrent();
+	    $vars = [];
+        foreach (Acid::get('lang:available') as $l) {
+            $vars['messages'][$l] = $config->getConf('consent_message_' . $l);
+            $vars['dismiss_btns'][$l] = $config->getConf('consent_dismiss_btn_' . $l);
+            $vars['deny_btns'][$l] = $config->getConf('consent_deny_btn_' . $l);
+            $vars['revoke_btns'][$l] = $config->getConf('consent_revoke_btn_' . $l);
+            $vars['learnmore_btns'][$l] = $config->getConf('consent_learnmore_btn_' . $l);
+            
+            $vars['readmore_links'][$l] = $config->getConf('consent_readmore_link_' . $l) ?
+                $config->getConf('consent_readmore_link_' . $l) : Route::buildUrl('policy');
+        }
+        $vars['consent_type'] = $config->getConf('consent_type');
+        return Acid::tpl('screens/consent.tpl',$vars);
 	}
 
 	/**

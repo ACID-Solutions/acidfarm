@@ -2,48 +2,12 @@
     <!--
     var MyCookiePolicy = {
 
-        messages: {
-            'fr': 'Ce site utilise des cookies pour son fonctionnement et à des fins statistiques.',
-            'en': 'This site uses cookies for its operation and for statistical purposes',
-            'de': 'Diese Seite verwendet Cookies für ihren Betrieb und für statistische Zwecke',
-            'it': 'Questo sito utilizza i cookie per il suo funzionamento e per scopi statistici',
-            'es': 'Este sitio utiliza cookies para su funcionamiento y con fines estadísticos',
-        },
-        deny_messages: {
-            'fr': 'Refuser',
-            'en': 'Decline',
-            'de': 'Verweigern',
-            'it': 'Rifiutare',
-            'es': 'Rechazar',
-        },
-        dismiss_messages: {
-            'fr': 'J\'accepte !',
-            'en': 'Got it!',
-            'de': 'Ich akzeptiere',
-            'it': 'Accetto',
-            'es': 'Acepto',
-        },
-        revoke_messages: {
-            'fr': 'Politique sur les cookies',
-            'en': 'Cookie Policy',
-            'de': 'Ich akzeptiere',
-            'it': 'Cookie Policy',
-            'es': 'Política de cookies',
-        },
-        learnmore_messages: {
-            'fr': 'En savoir plus',
-            'en': 'Learn more',
-            'de': 'Mehr erfahren',
-            'it': 'Per saperne di più',
-            'es': 'Aprende más',
-        },
-        readmore_links: {
-            'fr': '<?php echo Route::buildUrl('policy'); ?>',
-            'en': '<?php echo Route::buildUrl('policy'); ?>',
-            'de': '<?php echo Route::buildUrl('policy'); ?>',
-            'it': '<?php echo Route::buildUrl('policy'); ?>',
-            'es': '<?php echo Route::buildUrl('policy'); ?>',
-        },
+        messages: <?php echo json_encode(Lib::getIn('messages',$v))  ?>,
+        deny_messages:  <?php echo json_encode(Lib::getIn('deny_btns',$v))  ?>,
+        dismiss_messages:  <?php echo json_encode(Lib::getIn('dismiss_btns',$v))  ?>,
+        revoke_messages:  <?php echo json_encode(Lib::getIn('revoke_btns',$v))  ?>,
+        learnmore_messages: <?php echo json_encode(Lib::getIn('learnmore_btns',$v))  ?>,
+        readmore_links: <?php echo json_encode(Lib::getIn('readmore_links',$v))  ?>,
         getCookie(name) {
             var dc = document.cookie;
             var prefix = name + '=';
@@ -84,11 +48,12 @@
             }
         },
         myMessage: function() {
+            
             if (this.messages[this.myLanguage()] != undefined) {
-                return this.messages[this.myLanguage()];
+                return this.messages[this.myLanguage()].replace('{{href}}',this.myReadMore());
             }
-
-            return this.messages['fr'];
+        
+            return this.messages['fr'].replace('{{href}}',this.myReadMore());
         },
         myDismiss: function() {
             if (this.dismiss_messages[this.myLanguage()] != undefined) {
@@ -112,7 +77,11 @@
             else {
                 var msg = this.revoke_messages['fr'];
             }
-
+            
+            if (!msg) {
+               return '<div class="cc-revoke {{classes}}">Cookie Policy</div>';
+            }
+            
             return '<div class="cc-revoke {{classes}}">' + msg + '</div>';
         },
         myLearnMore: function() {
@@ -128,6 +97,31 @@
             }
 
             return this.readmore_links['fr'];
+        },
+        myContentConfig: function() {
+           var json = {};
+           
+           if (MyCookiePolicy.myMessage()) {
+               json['message'] = MyCookiePolicy.myMessage();
+           }
+    
+           if (MyCookiePolicy.myDismiss()) {
+               json['dismiss'] = MyCookiePolicy.myDismiss();
+           }
+    
+           if (MyCookiePolicy.myDeny()) {
+               json['deny'] = MyCookiePolicy.myDeny();
+           }
+    
+           if (MyCookiePolicy.myLearnMore()) {
+               json['link'] = MyCookiePolicy.myLearnMore();
+           }
+    
+           if (MyCookiePolicy.myReadMore()) {
+               json['href'] = MyCookiePolicy.myReadMore();
+           }
+
+           return json;
         },
 
     };
@@ -149,16 +143,11 @@
             'position': 'bottom-left',
             'theme': 'classic',
             //'type': 'opt-out',
+            'type' :  '<?php echo Lib::getIn('consent_type',$v);  ?>',
             'cookie' : {
                 'path' : <?php echo Acid::get('cookie:path');   ?>,
             },
-            'content': {
-                'message': MyCookiePolicy.myMessage(),
-                'dismiss': MyCookiePolicy.myDismiss(),
-                'deny': MyCookiePolicy.myDeny(),
-                'link': MyCookiePolicy.myLearnMore(),
-                'href': MyCookiePolicy.myReadMore(),
-            },
+            'content': MyCookiePolicy.myContentConfig(),
 
             onInitialise: function(status) {
                 var type = this.options.type;
