@@ -207,6 +207,90 @@ ALTER TABLE `acid_photo_home`
 
 COMMIT; 
 
+#SCRIPT CATEGORY
+
+ALTER TABLE `acid_script_category`
+ADD `description_fr` VARCHAR( 100 ) NOT NULL AFTER `id_script_category` ,
+ADD `description_en` VARCHAR( 100 ) NOT NULL AFTER `description_fr` ,
+ADD `description_es` VARCHAR( 100 ) NOT NULL AFTER `description_en` ,
+ADD `description_de` VARCHAR( 100 ) NOT NULL AFTER `description_es` ,
+ADD `description_it` VARCHAR( 100 ) NOT NULL AFTER `description_de` ;
+
+ALTER TABLE `acid_script_category`
+ADD `name_fr` VARCHAR( 100 ) NOT NULL AFTER `id_script_category` ,
+ADD `name_en` VARCHAR( 100 ) NOT NULL AFTER `name_fr` ,
+ADD `name_es` VARCHAR( 100 ) NOT NULL AFTER `name_en` ,
+ADD `name_de` VARCHAR( 100 ) NOT NULL AFTER `name_es` ,
+ADD `name_it` VARCHAR( 100 ) NOT NULL AFTER `name_de` ;
+
+COMMIT;
+
+UPDATE `acid_script_category`  SET
+`description_fr`=`description`,
+`description_en`=`description`,
+`description_es`=`description`,
+`description_de`=`description`,
+`description_it`=`description`;
+
+UPDATE `acid_script_category`  SET
+`name_fr`=`name`,
+`name_en`=`name`,
+`name_es`=`name`,
+`name_de`=`name`,
+`name_it`=`name`;
+
+COMMIT;
+
+ALTER TABLE `acid_script_category`
+  DROP `description`;
+
+ALTER TABLE `acid_script_category`
+  DROP `name`;
+
+COMMIT;
+
+#SCRIPT
+
+ALTER TABLE `acid_script`
+ADD `description_fr` VARCHAR( 100 ) NOT NULL AFTER `id_script_category` ,
+ADD `description_en` VARCHAR( 100 ) NOT NULL AFTER `description_fr` ,
+ADD `description_es` VARCHAR( 100 ) NOT NULL AFTER `description_en` ,
+ADD `description_de` VARCHAR( 100 ) NOT NULL AFTER `description_es` ,
+ADD `description_it` VARCHAR( 100 ) NOT NULL AFTER `description_de` ;
+
+ALTER TABLE `acid_script`
+ADD `name_fr` VARCHAR( 100 ) NOT NULL AFTER `id_script_category` ,
+ADD `name_en` VARCHAR( 100 ) NOT NULL AFTER `name_fr` ,
+ADD `name_es` VARCHAR( 100 ) NOT NULL AFTER `name_en` ,
+ADD `name_de` VARCHAR( 100 ) NOT NULL AFTER `name_es` ,
+ADD `name_it` VARCHAR( 100 ) NOT NULL AFTER `name_de` ;
+
+COMMIT;
+
+UPDATE `acid_script`  SET
+`description_fr`=`description`,
+`description_en`=`description`,
+`description_es`=`description`,
+`description_de`=`description`,
+`description_it`=`description`;
+
+UPDATE `acid_script`  SET
+`name_fr`=`name`,
+`name_en`=`name`,
+`name_es`=`name`,
+`name_de`=`name`,
+`name_it`=`name`;
+
+COMMIT;
+
+ALTER TABLE `acid_script`
+  DROP `description`;
+
+ALTER TABLE `acid_script`
+  DROP `name`;
+
+COMMIT;
+
 #SEO
 ALTER TABLE `acid_seo` 
 ADD `seo_title_fr` VARCHAR( 100 ) NOT NULL AFTER `url` ,
