@@ -56,10 +56,11 @@ $output .=  <<<OUTPUT
 
 {$this->getDialog()}
 {$this->getBwin()}
-{$this->getCookieWarning()}
 
 {$this->getBody(array('nav_old'=>$nav_old))}
 
+{$this->getCookieWarning()}
+{$this->getScripts()}
 OUTPUT;
 
 

@@ -43,10 +43,17 @@ class MyTemplate extends AcidTemplate {
 	 * Retourne le footer du template
 	 */
 	public function getFooter($v=array()) {
-		$stats =  '<div id="stats_content">'. Acid::executeTpl(SITE_PATH . 'sys/stats/stats.tpl') . '</div>';
-		$scripts =  '<div id="scripts_content">'. Acid::tpl('scripts/scripts.tpl') . '</div>';
-		return Acid::tpl('footer.tpl',$v,$this). "\n" .$scripts . "\n" . $stats . "\n" ;
+		return Acid::tpl('footer.tpl',$v,$this) ;
 	}
+    
+    /**
+     * Retourne les scripts de fin de page
+     */
+    public function getScripts($v=array()) {
+        $stats =  '<div id="stats_content">'. Acid::executeTpl(SITE_PATH . 'sys/stats/stats.tpl') . '</div>';
+        $scripts =  '<div id="scripts_content">'. Acid::tpl('scripts/scripts.tpl', $v) . '</div>';
+        return $scripts . "\n" . $stats . "\n" ;
+    }
 
 	/**
 	 * Retourne le footer du template
