@@ -4228,7 +4228,12 @@ abstract class AcidModuleCore {
 		}
 
 		$form = new AcidForm('post',$action_page);
-		$form->setFormParams(array('class'=>$this::TBL_NAME.' '.$this->preKey($do).' admin_form'));
+		$form->setFormParams(
+		    array(
+		        'class'=>$this::TBL_NAME.' '.$this->preKey($do).' admin_form',
+                'autocomplete'=>'false'
+            )
+        );
 
 		$form->addHidden('',$this->preKey('do'),$do);
 		$form->addHidden('','module_do',$this->getClass());
