@@ -12,6 +12,7 @@
 /sys/branch.txt
 /sys/update/cur_version.txt
 /sys/update/*/cur_version.txt
+/sys/update/*/.done
 
 #registration
 /registration/private/maintenance.json

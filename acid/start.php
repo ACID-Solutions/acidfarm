@@ -120,7 +120,8 @@ spl_autoload_register('AcidAutoLoader');
 
 // Externals
 $acid['externals']['phpmailer']['path']['dir'] = 'PHPMailer';
-$acid['externals']['phpmailer']['path']['autoload'] = 'externals/' . $acid['externals']['phpmailer']['path']['dir'] .'/PHPMailerAutoload.php';
+$acid['externals']['phpmailer']['path']['autoload'] =
+    'externals/' . $acid['externals']['phpmailer']['path']['dir'] . '/PHPMailerAutoload.php';
 
 $acid['externals']['sass']['path']['dir'] = 'SassPHP_v0.0.12';
 $acid['externals']['sass']['path']['lib'] = 'externals/' . $acid['externals']['sass']['path']['dir'] . '/scss.inc.php';
@@ -212,6 +213,9 @@ foreach ($acid['upgrade']['types'] as $type) {
 
 if ($acid_system_updaters) {
     foreach ($acid_system_updaters as $updater) {
+        if (Acid::get('upgrade:check')) {
+            $updater->testUpgrade();
+        }
         $updater->launchUpgrade();
     }
 }

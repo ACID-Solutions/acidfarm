@@ -202,6 +202,7 @@ $acid['upgrade']['path']['content']			= SITE_PATH.'sys/update/.content/';
 $acid['upgrade']['db']['sample_prefix']		= array('acid_','af_');
 
 $acid['upgrade']['mode']			= 'off'; // dev / prod / off
+$acid['upgrade']['check']			= true;
 $acid['upgrade']['excluded']			= array('files'=>array(),'folders'=>array('.svn'),'dotfiles'=>false);
 
 //PHP error logs
