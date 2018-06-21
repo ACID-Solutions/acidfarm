@@ -8,7 +8,7 @@
         revoke_messages:  <?php echo json_encode(Lib::getIn('revoke_btns', $v))  ?>,
         learnmore_messages: <?php echo json_encode(Lib::getIn('learnmore_btns', $v))  ?>,
         readmore_links: <?php echo json_encode(Lib::getIn('readmore_links', $v))  ?>,
-        getCookie(name) {
+        getCookie : function(name) {
             var dc = document.cookie;
             var prefix = name + '=';
             var begin = dc.indexOf('; ' + prefix);
