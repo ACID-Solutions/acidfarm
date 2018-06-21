@@ -1,19 +1,19 @@
 @import '/sass/config';
 //@import '/sass/bootstrap';
 
-$blanc:#FFFFFF;
-$noir:#1C1C1C;
-$vert1:#96c11f;
-$vert2:#3f570a;
-$gris1:#C0C0C0;
-$gris2:#7a7a7a;
+$white:#FFFFFF;
+$black:#1C1C1C;
+$green1:#96c11f;
+$green2:#3f570a;
+$grey1:#C0C0C0;
+$grey2:#7a7a7a;
 
-$bgcolor:$gris1;
-$sitecolor:$noir;
-$fontcolor:$noir;
-$titlecolor:$noir;
-$linkcolor:$vert2;
-$linkhovercolor:$gris2;
+$bgcolor:$grey1;
+$sitecolor:$black;
+$fontcolor:$black;
+$titlecolor:$black;
+$linkcolor:$green2;
+$linkhovercolor:$grey2;
 
 $site_width:1000px;
 $content_padding:20px;
@@ -124,7 +124,7 @@ hr{
 
 input, textarea{
   padding:5px;
-  border:1px solid $gris1;
+  border:1px solid $grey1;
   margin-bottom:2px;
   height:25px;
 
@@ -154,7 +154,7 @@ textarea{
   min-width:100%;  
   background-color:$sitecolor; 
   text-align:center; 
-  color:$blanc;
+  color:$white;
   
   #header_content{
     width:$content_width;  
@@ -182,8 +182,8 @@ textarea{
       width:$content_width;  
       padding:20px $content_padding;   
       margin:auto;
-      border:1px solid $noir; 
-      background-color:$blanc;   
+      border:1px solid $black; 
+      background-color:$white;   
       min-height:100px;
     }
     
@@ -198,7 +198,7 @@ textarea{
   min-width:100%; 
   background-color:$sitecolor; 
   text-align:center; 
-  color:$blanc;
+  color:$white;
   
   #footer_content{
    width:$content_width;  
@@ -207,7 +207,7 @@ textarea{
    margin:0px auto;
     
    a{
-      color:$vert1;
+      color:$green1;
       
       &:hover{
         color:$linkhovercolor;
@@ -248,7 +248,7 @@ textarea{
       li{
         &:nth-child(n+1){
           &:before{
-            color:$blanc; 
+            color:$white; 
             padding-left:8px; 
             padding-right:8px; 
             content: "";
@@ -256,7 +256,7 @@ textarea{
         }
         &:first-child{
           &:before{
-            color:$blanc;  
+            color:$white;  
             content: "";
             padding:0px;
           } 
@@ -267,7 +267,7 @@ textarea{
   
   .menu{
     &, a{
-      color:$blanc;
+      color:$white;
       
       &:hover{
          color:$linkhovercolor;
@@ -276,7 +276,7 @@ textarea{
     
     &.selected {
       &, a{
-        color:$vert1;
+        color:$green1;
       }  
     }
   }
@@ -287,7 +287,7 @@ textarea{
 //-----ARIANE-----
 
 #ariane{ 
-  background-color:rgba($noir,0.2); 
+  background-color:rgba($black,0.2); 
   height:20px; 
   line-height:20px; 
   font-size:11px; 
@@ -301,7 +301,7 @@ textarea{
     color:$sitecolor;
     
     &:hover{
-      color:$gris2;
+      color:$grey2;
     }
   }
 }
@@ -314,7 +314,7 @@ textarea{
   text-align:center; 
   padding-top:15px; 
   margin-top:15px;  
-  border:0px solid $noir; 
+  border:0px solid $black; 
   border-top-width:1px;  
 }
 
@@ -473,7 +473,7 @@ $wall_elt_width:$wall_width/4;
     position:relative; 
     width:$wall_elt_width; 
     height:$wall_elt_width; 
-    background-color:$blanc;
+    background-color:$white;
     .wall_elt_overlay{
       display:none;
       position:absolute; 
@@ -481,7 +481,7 @@ $wall_elt_width:$wall_width/4;
       left:0px;
       right:0px;
       bottom:0px;
-      background-color:rgba($noir,0.8);
+      background-color:rgba($black,0.8);
     }
    
     &:hover .wall_elt_overlay{
@@ -493,7 +493,7 @@ $wall_elt_width:$wall_width/4;
          height:100%;
          width:100%;
          vertical-align:middle;
-         color:$blanc;
+         color:$white;
          font-weight:bold;
       }    
     }
