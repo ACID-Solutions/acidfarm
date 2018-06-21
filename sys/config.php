@@ -63,7 +63,7 @@ if (file_exists(SITE_PATH.'sys/branch.txt')) {
 
 if (empty($acid['cookie']['use_server'])) {
 
-	$acid['cookie']['path']      = $acid['url']['folder']; //$acid['url']['folder']; // Dossier pour lequel le cookie est accessible (TODO : voir pour focer le logout à la racine du site)
+	$acid['cookie']['path']      = $acid['url']['folder']; // Dossier pour lequel le cookie est accessible (TODO : voir pour focer le logout à la racine du site)
 	$acid['cookie']['domain']	 = $acid['url']['domain']; // Domaine pour lequel le cookie est accessible
 	$acid['cookie']['dyndomain'] = true;	// Si true, autorise le cookie sur un domaine à la volée
 
@@ -147,80 +147,3 @@ $acidconf['keys']['reserved']=$acidconf['site_keys'];
 $acidconf['admin_preview']['varname'] = 'admin_preview';
 $acidconf['admin_preview']['mods'] = array('News','Page');
 $acid['url']['params']['allowed'][] = $acidconf['admin_preview']['varname'];
-
-// SEO
-//************************************************************************************//
-
-//--keywords
-
-/**
- * Configuration des meta keywords de base
- */
-
-//$acidconf['meta']['keywords']['fr']['default']		= array('exemple', 'de', 'mots-clé');
-//$acidconf['meta']['keywords']['fr']['default']		= array();
-//$acidconf['meta']['keywords']['en']['default']		= array();
-//$acidconf['meta']['keywords']['es']['default']		= array();
-//$acidconf['meta']['keywords']['de']['default']		= array();
-//$acidconf['meta']['keywords']['it']['default']		= array();
-
-
-//--description
-
-/**
- * Configuration des meta description de base
- */
-
-//$acidconf['meta']['description']['fr']['default']		= "exemple de metadesc";
-//$acidconf['meta']['description']['fr']['default']		= "";
-//$acidconf['meta']['description']['en']['default']		= "";
-//$acidconf['meta']['description']['es']['default']		= "";
-//$acidconf['meta']['description']['de']['default']		= "";
-//$acidconf['meta']['description']['it']['default']		= "";
-
-//--image
-
-/**
- * Configuration des meta image de base
- */
-
-//$acidconf['meta']['image']['fr']['default']		= "/ascreen.jpg";
-//$acidconf['meta']['image']['fr']['default']		= "";
-//$acidconf['meta']['image']['en']['default']		= "";
-//$acidconf['meta']['image']['es']['default']		= "";
-//$acidconf['meta']['image']['de']['default']		= "";
-//$acidconf['meta']['image']['it']['default']		= "";
-
-//--title
-
-/**
- * Configuration des meta title de base
- */
-
-//$acidconf['meta']['title']['fr']['default']		= 'exemple';
-
-$acidconf['meta']['title']['fr']		= array(
-		'news'=>"Actualités",
-		'contact'=>"Contact",
-		'search'=>"Recherche",
-);
-$acidconf['meta']['title']['en']		= array(
-		'news'=>"News",
-		'contact'=>"Contact",
-		'search'=>"Search",
-);
-$acidconf['meta']['title']['es']		= array(
-		'news'=>"Noticias",
-		'contact'=>"Contacto",
-		'search'=>"Búsqueda",
-);
-$acidconf['meta']['title']['de']		= array(
-		'news'=>"Aktualitäten",
-		'contact'=>"Kontakt",
-		'search'=>"Suche",
-);
-$acidconf['meta']['title']['it']		= array(
-		'news'=>"Notizie",
-		'contact'=>"Contatto",
-		'search'=>"Ricerca",
-);

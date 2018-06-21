@@ -15,6 +15,9 @@
  * @link      http://www.acidfarm.net
  */
 
+// SEO
+require SITE_PATH.'sys/seo.php';
+
 //Définition du thème css par défaut
 $acid['css']['theme'] = 'style';
 $acid['css']['dialog'] = 'dialog';
