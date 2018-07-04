@@ -1,43 +1,42 @@
-
 // Generic Elts
 
-.generic_elts_list_actions{
-  text-align:center;
+.generic_elts_list_actions {
+  text-align: center;
 }
 
-.generic_elt_admin{
-  padding-top:17px;
-  background-image:url('#{$basepath}/img/admin/corps_top_shadow.png');
-  background-repeat:no-repeat;
+.generic_elt_admin {
+  padding-top: 17px;
+  background-image: url('#{$basepath}/img/admin/corps_top_shadow.png');
+  background-repeat: no-repeat;
   background-position: center top;
 
-  .generic_elts_footer{
-    margin-top:10px;
+  .generic_elts_footer {
+    margin-top: 10px;
   }
 
-  hr{
-    margin:0px;
-    margin-bottom:10px;
+  hr {
+    margin: 0px;
+    margin-bottom: 10px;
   }
 }
 
-.generic_elt_print{
+.generic_elt_print {
 
-  table{
-    border-collapse:collapse;
+  table {
+    border-collapse: collapse;
   }
 
-  th , td {
-    text-align:left;
-    padding:5px 10px;
-    border:0px solid #000000;
+  th, td {
+    text-align: left;
+    padding: 5px 10px;
+    border: 0px solid #000000;
   }
 
   th {
-    min-width:100px;
+    min-width: 100px;
   }
 
-  .even_line{
+  .even_line {
     //background-color:#E6E6E6;
   }
 
@@ -45,123 +44,128 @@
 
 // Head Filters
 
-.admin_list_head_filter{
-  padding:10px 0px;
-  line-height:20px;
-  border:0px solid #CCCCCC;
-  border-top-width:1px;
+.admin_list_head_filter {
+  padding: 10px 0px;
+  line-height: 20px;
+  border: 0px solid #CCCCCC;
+  border-top-width: 1px;
 
-  a.selected{
-    font-weight:bold;
+  a.selected {
+    font-weight: bold;
   }
 
-  a{
-    padding:2px;
-    margin-right:5px;
-    margin-bottom:5px;
-    border:1px solid #CCCCCC;
+  a {
+    padding: 2px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    border: 1px solid #CCCCCC;
   }
 
-  .admin_list_head_filter_title + a:before{
-    content:"";
-    padding:0px 5px;
-    font-weight:normal;
+  .admin_list_head_filter_title + a:before {
+    content: "";
+    padding: 0px 5px;
+    font-weight: normal;
   }
 
-  a:first-child:before{
-    content:"";
-    padding:0px;
+  a:first-child:before {
+    content: "";
+    padding: 0px;
   }
 
 }
 
-.admin_list_head_btn{
-  text-align:right;
+.admin_list_head_btn {
+  text-align: right;
 
   a {
-    margin-left:15px;
+    margin-left: 15px;
   }
 }
 
 // Tableau des modules
 
-.generic_elts_list_bg{
-  padding:14px;
+.generic_elts_list_bg {
+  padding: 14px;
 }
 
-.generic_elts_list{
-  margin:0px;
-  margin-bottom:0px;
+.generic_elts_list {
+  margin: 0px;
+  margin-bottom: 0px;
   /*min-height: 400px;*/
   /*padding-top:17px; */
-  background-image:url('#{$basepath}/img/admin/corps_top_shadow.png');
-  background-position:top center;
-  background-repeat:no-repeat;
-  padding-top:17px;
+  background-image: url('#{$basepath}/img/admin/corps_top_shadow.png');
+  background-position: top center;
+  background-repeat: no-repeat;
+  padding-top: 17px;
 
   table {
     border-collapse: collapse;
     border-spacing: 0px;
-    min-width:600px;
-    width:100%;
+    min-width: 600px;
+    width: 100%;
   }
 
   th {
-    border:0;
-    color:#000000;
-    padding:2px 5px;
-    text-align:left;
-    line-height:30px;
-    font-size:13px;
-    font-weight:800;
-    border-top:1px solid #999999;
-    border-bottom:1px solid #999999;
-    text-align:center;
-    padding-left:10px;
-    background-color:#FFFFFF;
+    border: 0;
+    color: #000000;
+    padding: 2px 5px;
+    text-align: left;
+    line-height: 30px;
+    font-size: 13px;
+    font-weight: 800;
+    border-top: 1px solid #999999;
+    border-bottom: 1px solid #999999;
+    text-align: center;
+    padding-left: 10px;
+    background-color: #FFFFFF;
 
     a {
-      color:#000000;
-      display:block;
-      text-align:left;
+      color: #000000;
+      display: block;
+      text-align: left;
 
       img {
-        border:1px solid #68676B;
+        border: 1px solid #68676B;
 
         &:hover {
-          border:1px solid #000000;
+          border: 1px solid #000000;
         }
       }
 
       &:hover {
-        color:#999999;
+        color: #999999;
       }
     }
 
-    &.head_std_actions{
-      text-align:center;
+    &.head_std_actions {
+      text-align: center;
     }
   }
 
   tr.odd_line {
-    background-color:#FFFFFF;
+    background-color: #FFFFFF;
   }
 
   tr.even_line {
-    background-color:#E6E6E6;
+    background-color: #E6E6E6;
   }
 
   tr:hover,
   tr.even_line:hover,
-  tr.odd_line:hover{
+  tr.odd_line:hover {
     background-color: #D9D9D9;
   }
 
   td {
-    padding:5px 5px;
+    padding: 5px 5px;
     text-align: left;
-    font-size:8pt;
-    max-width:300px;
+    font-size: 8pt;
+    max-width: 300px;
+  }
+
+  input {
+    max-width: 100%;
+    display: inline-block;
   }
 }
 
@@ -173,14 +177,14 @@
   }
 
   a:hover img {
-    border:0px;
+    border: 0px;
   }
 
   form {
-    &,  div{
-      display:inline;
-      margin:0px;
-      padding:0px;
+    &, div {
+      display: inline;
+      margin: 0px;
+      padding: 0px;
     }
   }
 }
@@ -195,42 +199,44 @@
 }
 
 .generic_nav_pages {
-  margin:10px;
+  margin: 10px;
 }
 
 .generic_nb_elts {
-  text-align:left;
-  margin:0 0 20px 0;
+  text-align: left;
+  margin: 0 0 20px 0;
 }
 
 .generic_nb_elts_infos {
-  float:left; /*margin-left:14px;*/
+  float: left; /*margin-left:14px;*/
 }
+
 .generic_nb_elts_form {
-  float:right; /*margin-right:14px;*/
+  float: right; /*margin-right:14px;*/
 
   input[type=text] {
     @include border-box();
-    width:30px;
+    width: 30px;
     text-align: center;
   }
 }
-.generic_elts_footer{
-  padding-top:12px;
-  min-height:17px;
-  background-image:url('#{$basepath}/img/admin/corps_bottom_shadow.png');
-  background-position:top center;
-  background-repeat:no-repeat;
-  border-top:1px solid #999999;
-  color:#999999;
-  margin-bottom:0px;
+
+.generic_elts_footer {
+  padding-top: 12px;
+  min-height: 17px;
+  background-image: url('#{$basepath}/img/admin/corps_bottom_shadow.png');
+  background-position: top center;
+  background-repeat: no-repeat;
+  border-top: 1px solid #999999;
+  color: #999999;
+  margin-bottom: 0px;
 }
 
-.generic_elts_empty{
-  display:block;
-  padding:15px 5px;
-  margin:0px;
-  border:0px solid #999999;
-  border-top-width:1px;
-  text-align:center;
+.generic_elts_empty {
+  display: block;
+  padding: 15px 5px;
+  margin: 0px;
+  border: 0px solid #999999;
+  border-top-width: 1px;
+  text-align: center;
 }

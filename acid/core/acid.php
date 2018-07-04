@@ -528,7 +528,27 @@ class Acid {
 			}
 		}
 	}
-
+    
+    /**
+     *  Ajoute plusieurs éléments dans une variable de configuration
+     *
+     * @param array $key
+     * @param array $values
+     * @param string $array nom de la variable globale qui sera utilisée/altérée en tant que tableau
+     *
+     */
+    public static function setMany($key,$values,$array=null) {
+       if (!is_array($values)) {
+           $values= [$values];
+       }
+       
+       if ($values) {
+           foreach ($values as $k => $v) {
+               static::set($key.':'.$k,$v,$array);
+           }
+       }
+    }
+    
 	/**
 	 *  Efface une variable de configuration
 	 *

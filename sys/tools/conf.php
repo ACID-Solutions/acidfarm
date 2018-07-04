@@ -41,7 +41,15 @@ class Conf {
 	public static function set($key,$value) {
 		return  Acid::set($key,$value,'acidconf');
 	}
-
+    
+    /**
+     * Définit plusieurs variables de configuration
+     * @param string $key acheminement vers la variable - exemple : 'macat:mavariable' pour $acidconf['macat']['mavariable']
+     * @param array $value valeur
+     */
+    public static function setMany($key,$values) {
+        return  Acid::setMany($key,$values,'acidconf');
+    }
 
 	/**
 	 * Teste l'existence d'une variable de configuration

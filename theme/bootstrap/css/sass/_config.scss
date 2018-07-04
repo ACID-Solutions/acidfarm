@@ -1,4 +1,5 @@
 @import '/sass/_dynamic/environement';
+@import '/sass/fonts/config';
 
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;
