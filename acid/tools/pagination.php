@@ -174,7 +174,13 @@ class AcidPagination
 							'start_page'			=> $start,
 							'navigation_max_pages'	=> $navigation_max_pages,
 							'link_func'				=> $link_func,
-							'config'				=> $config
+							'config'				=> $config,
+                            'params'               => [
+                                'page'             => $page,
+                                'nb_elts'          => $nb_elts,
+                                'nb_elts_per_page' => $nb_elts_page,
+                                'tpl'              => $tpl
+                            ]
 						);
 						
 				$output .=  Acid::tpl($tpl,$vars);

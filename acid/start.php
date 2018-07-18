@@ -182,6 +182,17 @@ function unserialize_handler($errno, $errstr)
     return false;
 }
 
+if (!function_exists('dd')) {
+    function dd()
+    {
+        $args = func_get_args();
+        echo '<pre style="font-size:12px; border: 1px solid #000; margin:15px; padding: 30px;">';
+        call_user_func_array('var_dump', $args);
+        echo '</pre>';
+        die();
+    }
+}
+
 require ACID_PATH . 'core/acid.php';
 
 Acid::log('START', '--------------------------');

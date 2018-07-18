@@ -40,9 +40,9 @@ $output .= $this->getDialog() ;
 
 //conteneur du site
 $output .=  <<<OUTPUT
-<div id="site" class="admin">
+
 {$this->output}
-</div>
+
 
 OUTPUT;
 

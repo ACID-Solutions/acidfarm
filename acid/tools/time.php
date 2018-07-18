@@ -203,8 +203,8 @@ class AcidTime {
 				return date($to,$new_time);
 			break;
 		}
-
-		return $res > 0 ? $res : 0;
+        
+        return date($to,$time);
 	}
 }
 
