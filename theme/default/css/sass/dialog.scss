@@ -290,3 +290,23 @@ $color2:#AAAAAA;
     font-size:8pt;
   }
 }
+
+#dialog_banner_info{
+  position:fixed;
+  top:5px;
+  right:5px;
+  padding:15px 30px;
+  font-size: 25px;
+  text-align: center;
+  background: rgba($white,0.95);
+  border:1px solid $black;
+  z-index:999;
+  cursor:pointer;
+  @include border-left-radius(30px);
+  @include border-top-radius(30px);
+  display:none;
+
+  &:before {
+    content:"i";
+  }
+}

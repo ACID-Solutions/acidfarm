@@ -12,7 +12,8 @@
 		</div> 
 	</div> 
 	
-</div> 
+</div>
+<div id="dialog_banner_info" onclick="slideDownDialogBanner();"></div>
  
 <script type="text/javascript"> 
 <!-- 
@@ -26,16 +27,8 @@
  			$('#dialog_banner_toggle').addClass('opened');
  			$('#dialog_banner_toggle').removeClass('closed');
 
- 			$('#dialog_banner_box').css('right', dialogBannerConfig['right']);
-			$('#dialog_banner_box').css('position', dialogBannerConfig['position']);
-			$('#dialog_banner_box').css('top', dialogBannerConfig['top']);
-			$('#dialog_banner_box').css('background', dialogBannerConfig['background']);
-			$('#dialog_banner_box').height(dialogBannerConfig['height']);
-			$('#dialog_banner_box').width(dialogBannerConfig['width']);
-			$('#dialog_banner_box').css('border', dialogBannerConfig['border']);
-			$('#dialog_banner_titre').show();
-			$('#dialog_banner_content').show();
-
+            $('#dialog_banner').show();
+            $('#dialog_banner_info').hide();
 
 			//slideDialogBanner(true);
  		}
@@ -46,25 +39,9 @@
 
 			$('#dialog_banner_toggle').removeClass('opened');
 			$('#dialog_banner_toggle').addClass('closed');
-
-			dialogBannerConfig['right'] = $('#dialog_banner_box').css('right');
-			dialogBannerConfig['position'] = $('#dialog_banner_box').css('position');
-			dialogBannerConfig['top'] = $('#dialog_banner_box').css('top');
-			dialogBannerConfig['background'] = $('#dialog_banner_box').css('background');
-			dialogBannerConfig['height'] = $('#dialog_banner_box').height();
-			dialogBannerConfig['width'] = $('#dialog_banner_box').width();
-			dialogBannerConfig['border'] = $('#dialog_banner_box').css('border');
-
-			$('#dialog_banner_box').css('right', '0px');
-			$('#dialog_banner_box').css('position', 'absolute');
-			$('#dialog_banner_box').css('top', '0px');
-			$('#dialog_banner_box').height(50);
-			$('#dialog_banner_box').width(50);
-			$('#dialog_banner_box').css('background', 'transparent');
-			$('#dialog_banner_box').css('border', '0px');
-			$('#dialog_banner_titre').hide();
-			$('#dialog_banner_content').hide();
-			
+            
+            $('#dialog_banner').hide();
+            $('#dialog_banner_info').show();
 
 			//slideDialogBanner(false);
 		}
@@ -78,8 +55,7 @@
 		$('#dialog_banner').hide();
 	}  
 
-	$('#dialog_banner_box').bind("mouseenter",  function() { slideDownDialogBanner(); } );
-	//$('#dialog_banner_box').bind("mouseleave", function() { setTimeout(slideUpDialogBanner(),100); });
+
 	
 	$(window).bind("load", function() { setTimeout(slideUpDialogBanner,3000 ); });
 
