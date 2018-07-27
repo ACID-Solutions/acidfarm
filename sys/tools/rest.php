@@ -78,11 +78,11 @@ class Rest {
 	 * @param $realm
 	 * @param $nonce
 	 * @param $session_id
-	 * @param array|string|null $datas
+	 * @param array|string|null $data
 	 */
-	public static function requireLogin($realm,$nonce,$session_id,$datas=null) {
+	public static function requireLogin($realm,$nonce,$session_id,$data=null) {
 		self::headerAuth($realm,$nonce,$session_id);
-		self::status401($datas);
+		self::status401($data);
 	}
 
 	/**
@@ -91,22 +91,22 @@ class Rest {
 	 * @param $realm
 	 * @param $nonce
 	 */
-	public static function digestLogin($datas=array()) {
+	public static function digestLogin($data=array()) {
 
 		$user = new User();
 
-		if ($what = Rest::searchLoginType($datas['username'])) {
+		if ($what = Rest::searchLoginType($data['username'])) {
 
-			$user->dbInitSearch(array($what=>$datas['username']));
-			Acid::log('LOG',$what.'=>'.$datas['username']);
+			$user->dbInitSearch(array($what=>$data['username']));
+			Acid::log('LOG',$what.'=>'.$data['username']);
 
 
 			$hash1 = md5($user->get($what).':'.Acid::get('rest:realm').':'.$user->get('password'));
-			$hash2 = md5($_SERVER['REQUEST_METHOD'].':'.$datas['uri']);
-			$require = md5($hash1.':'.$datas['nonce'].':'.$datas['nc'].':'.$datas['cnonce'].':'.$datas['qop'].':'.$hash2);
-			Acid::log('DEBUG','comparing responses from server '.$require.' with request '.$datas['response']);
+			$hash2 = md5($_SERVER['REQUEST_METHOD'].':'.$data['uri']);
+			$require = md5($hash1.':'.$data['nonce'].':'.$data['nc'].':'.$data['cnonce'].':'.$data['qop'].':'.$hash2);
+			Acid::log('DEBUG','comparing responses from server '.$require.' with request '.$data['response']);
 
-			if ($require == $datas['response'] ) {
+			if ($require == $data['response'] ) {
 				return $user;
 			}
 
@@ -146,24 +146,24 @@ class Rest {
 	 */
 	public static function authentification() {
 		if ($digest = self::getDigest()) {
-			if ($datas = self::parseHttpDigest($digest)) {
+			if ($data = self::parseHttpDigest($digest)) {
 
-				Acid::log('DEBUG','digest found '.json_encode($datas));
+				Acid::log('DEBUG','digest found '.json_encode($data));
 
-				$restcookie = array(Acid::get('session:name')=>$datas['opaque']);
+				$restcookie = array(Acid::get('session:name')=>$data['opaque']);
 				$session = AcidSession::getInstance($restcookie,false);
 
-				if (!empty($datas['username'])) {
+				if (!empty($data['username'])) {
 
 					if (!AcidSession::get('auth_digest')) {
-						AcidSession::set(array('auth_time'=>time(),'auth_digest'=>$datas));
+						AcidSession::set(array('auth_time'=>time(),'auth_digest'=>$data));
 					}
 
-					if ($authuser = self::digestLogin($datas)) {
+					if ($authuser = self::digestLogin($data)) {
 						$authuser->sessionMake(null,false,false);
 						AcidSession::getInstance()->id_user = $authuser->getId();
 
-						AcidSession::set(array('digest'=>$datas));
+						AcidSession::set(array('digest'=>$data));
 
 					}else{
 						self::requireLogin(Acid::get('rest:realm'),Acid::get('rest:nonce'),$session->id);
@@ -187,16 +187,16 @@ class Rest {
 	/**
 	 * Reponse HTTP
 	 *
-	 * @param array|string $datas
+	 * @param array|string $data
 	 * @param number $status
 	 */
-	public static function response($datas=null,$status=200) {
-		$ct = (is_array($datas) || is_object($datas)) ? 'json' : 'text';
+	public static function response($data=null,$status=200) {
+		$ct = (is_array($data) || is_object($data)) ? 'json' : 'text';
 		http_response_code($status);
 		header( $_SERVER['SERVER_PROTOCOL'] . ' ' .http_response_code() );
 		header('Content-type: text/'.$ct.'; charset=UTF-8');
-		if ($datas) {
-			echo ($ct=='json') ? json_encode($datas) : $datas;
+		if ($data) {
+			echo ($ct=='json') ? json_encode($data) : $data;
 		}
 
 		if (AcidSession::instanceExists()) {
@@ -213,83 +213,83 @@ class Rest {
 	/**
 	 * Reponse 400 Bad Request
 	 *
-	 * @param string $datas
+	 * @param string $data
 	 */
-	public static function status400($datas=null) {
-		self::response($datas,400);
+	public static function status400($data=null) {
+		self::response($data,400);
 	}
 
 	/**
 	 * Reponse 401 Unauthorized
 	 *
-	 * @param string $datas
+	 * @param string $data
 	 */
-	public static function status401($datas=null) {
-		self::response($datas,401);
+	public static function status401($data=null) {
+		self::response($data,401);
 	}
 
 	/**
 	 * Reponse 403 - Forbidden
 	 *
-	 * @param string $datas
+	 * @param string $data
 	 */
-	public static function status403($datas=null) {
-		self::response($datas,403);
+	public static function status403($data=null) {
+		self::response($data,403);
 	}
 
 
 	/**
 	 * Reponse 404 Not Found
 	 *
-	 * @param string $datas
+	 * @param string $data
 	 */
-	public static function status404($datas=null) {
-		self::response($datas,404);
+	public static function status404($data=null) {
+		self::response($data,404);
 	}
 
 	/**
 	 * Reponse 200 OK
 	 *
-	 * @param string $datas
+	 * @param string $data
 	 */
-	public static function status200($datas=null) {
-		self::response($datas,200);
+	public static function status200($data=null) {
+		self::response($data,200);
 	}
 
 	/**
 	 * Reponse 201 Created
 	 *
-	 * @param string $datas
+	 * @param string $data
 	 */
-	public static function status201($datas=null) {
-		self::response($datas,201);
+	public static function status201($data=null) {
+		self::response($data,201);
 	}
 
 	/**
 	 * Reponse 202
 	 *
-	 * @param string $datas
+	 * @param string $data
 	 */
-	public static function status202($datas=null) {
-		self::response($datas,202);
+	public static function status202($data=null) {
+		self::response($data,202);
 	}
 
 	/**
 	 * Reponse 204 No Content
 	 *
-	 * @param string $datas
+	 * @param string $data
 	 */
-	public static function status204($datas=null) {
-		self::response($datas,204);
+	public static function status204($data=null) {
+		self::response($data,204);
 	}
 
 	/**
 	 * Reponse 500 Internal Error
 	 *
-	 * @param string $datas
+	 * @param string $data
 	 */
-	public static function status500($datas=null) {
-		self::response($datas,500);
+	public static function status500($data=null) {
+		self::response($data,500);
 	}
 
 

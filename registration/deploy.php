@@ -22,7 +22,7 @@ include pathinfo(__FILE__,PATHINFO_DIRNAME ).'/../sys/glue.php';
 $maintenancefile = AcidRegistration::file();
 
 //si on est enregistré
-if (AcidRegistration::datas('allowed')) {
+if (AcidRegistration::data('allowed')) {
 
     //Si le mode deploy est actif
 	if (Acid::get('deploy:allowed')) {
@@ -32,7 +32,7 @@ if (AcidRegistration::datas('allowed')) {
 			$deploy = $_POST;
 			$token = urldecode(isset($deploy['token']) ? $deploy['token'] : '');
 			$deploy_salt = urldecode(isset($deploy['deploy_salt']) ? $deploy['deploy_salt'] : '');
-			$config = AcidRegistration::datas();
+			$config = AcidRegistration::data();
 
             $result = array();
 

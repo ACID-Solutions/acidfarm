@@ -90,16 +90,16 @@ class Ajax {
 	 * Ajoute des données au contexte AJAX
 	 * @param mixed $vals les données
 	 */
-	public static function setDatas($vals) {
-		Acid::set('ajax:datas',$vals);
+	public static function setData($vals) {
+		Acid::set('ajax:data',$vals);
 	}
 	
 	/**
 	 * Retourne les données du contexte AJAX
 	 * @return mixed
 	 */
-	public static function getDatas() {
-		return Acid::exists('ajax:datas') ?  Acid::get('ajax:datas') : array();
+	public static function getData() {
+		return Acid::exists('ajax:data') ?  Acid::get('ajax:data') : array();
 	}
 	
 	
@@ -184,7 +184,7 @@ class Ajax {
 		$config['js'] = isset($config['js']) ?  $config['js']. "\n" . $js : $js; 
 		
 		$config['success'] = $success ? $success :  (isset($config['success']) ?  $config['success'] : self::getSuccess());
-		$config['datas'] = (isset($config['datas']) ?  $config['datas'] : self::getDatas());
+		$config['data'] = (isset($config['data']) ?  $config['data'] : self::getData());
 		
 		$config['title'] = $title;
 		

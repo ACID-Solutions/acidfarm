@@ -57,14 +57,14 @@ class Recaptcha
      *
      * @return bool
      */
-    public static function validate($datas=null) {
-        $datas = $datas===null ? $_POST : $datas;
+    public static function validate($data=null) {
+        $data = $data===null ? $_POST : $data;
         if (static::isEnabled()) {
 
             $url = 'https://www.google.com/recaptcha/api/siteverify';
             $fields = array(
                 'secret' => static::privatekey(),
-                'response' => urlencode(Lib::getIn('g-recaptcha-response',$datas,'')),
+                'response' => urlencode(Lib::getIn('g-recaptcha-response',$data,'')),
                 'remoteip' => urlencode(Lib::getIn('REMOTE_ADDR',$_SERVER,''))
             );
     

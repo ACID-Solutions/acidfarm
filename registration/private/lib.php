@@ -58,7 +58,7 @@ class AcidRegistration {
 	/**
 	 * @var null propriétés
 	 */
-	public static $_datas = null;
+	public static $_data = null;
 
 	/**
 	 * Retourne une propriété ou toutes les propriétés de l'objet
@@ -66,17 +66,17 @@ class AcidRegistration {
 	 * @param null $def
 	 * @return null
 	 */
-	public static function datas($key=null,$def=null) {
-		if (static::$_datas===null) {
+	public static function data($key=null,$def=null) {
+		if (static::$_data===null) {
 
-			static::$_datas = array();
+			static::$_data = array();
 
 			if (file_exists(static::file())) {
-				static::$_datas = json_decode(file_get_contents(static::file()),true);
-                if (!empty(static::$_datas['need_confirmation'])) {
-                    if (static::$_datas['need_confirmation'] < (time()-300)) {
+				static::$_data = json_decode(file_get_contents(static::file()),true);
+                if (!empty(static::$_data['need_confirmation'])) {
+                    if (static::$_data['need_confirmation'] < (time()-300)) {
                         unlink(static::file());
-                        static::$_datas = array();
+                        static::$_data = array();
                     }
                 }
 
@@ -84,10 +84,10 @@ class AcidRegistration {
 		}
 
 		if ($key!==null) {
-			return isset(static::$_datas[$key]) ? static::$_datas[$key] : $def;
+			return isset(static::$_data[$key]) ? static::$_data[$key] : $def;
 		}
 
-		return static::$_datas;
+		return static::$_data;
 	}
 
 	/**
@@ -107,7 +107,7 @@ class AcidRegistration {
 	 * @return string
 	 */
 	public static function infoUrl() {
-		return static::url().'rest/'.static::$api_version.'/information/'.static::datas('id_client').'/'.static::datas('public').'/'.static::realversion();
+		return static::url().'rest/'.static::$api_version.'/information/'.static::data('id_client').'/'.static::data('public').'/'.static::realversion();
 	}
 
 	/**
@@ -117,7 +117,7 @@ class AcidRegistration {
 	 */
 	public static function dlUrl($version=null) {
 		$version = $version===null ? static::realversion() : $version;
-		return static::url().'rest/'.static::$api_version.'/download/'.static::datas('id_client').'/'.static::datas('public').'/'.$version;
+		return static::url().'rest/'.static::$api_version.'/download/'.static::data('id_client').'/'.static::data('public').'/'.$version;
 	}
 
 	/**
@@ -187,7 +187,7 @@ class AcidRegistration {
 	 * @return null
 	 */
 	public static function version() {
-		return static::datas('version');
+		return static::data('version');
 	}
 
 	/**
@@ -220,7 +220,7 @@ class AcidRegistration {
 	 */
     public static function executeConfirmation($vals=null) {
         Acid::log('REGISTRATION','Confirmation asked...');
-        if (AcidRegistration::datas('need_confirmation')) {
+        if (AcidRegistration::data('need_confirmation')) {
             $return = $vals === null ? $_POST : $vals;
             $return['allowed'] = true;
             $return['need_confirmation'] = false;

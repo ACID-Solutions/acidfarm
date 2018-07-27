@@ -2560,7 +2560,7 @@ abstract class AcidModuleCore
      */
     public function treatAjax($res, $vals = null, $config = [])
     {
-        $vals = ($vals === null) ? (Acid::get('ajax:tmp_datas') ? Acid::get('ajax:tmp_datas') : $_POST) : $vals;
+        $vals = ($vals === null) ? (Acid::get('ajax:tmp_data') ? Acid::get('ajax:tmp_data') : $_POST) : $vals;
         $custom_js = (Acid::get('ajax:tmp_js') ? Acid::get('ajax:tmp_js') : '');
         
         if (!empty($vals[Acid::get('post:ajax:key')])) {
@@ -2572,7 +2572,7 @@ abstract class AcidModuleCore
             //config
             $config['dialog'] = $dialog;
             $config['obj'] = $res ? $res->getPublicVals() : [];
-            $config['datas'] = isset($vals['datas']) ? $vals['datas'] : [];
+            $config['data'] = isset($vals['data']) ? $vals['data'] : [];
             $config['success'] = !empty($res);
             $config['content'] = isset($config['content']) ? $config['content'] : '';
             $config['js'] = isset($config['js']) ? $config['js'] : $custom_js;

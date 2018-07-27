@@ -44,7 +44,7 @@ if (!file_exists(AcidRegistration::file())) {
 }else{
 
 
-	if (AcidRegistration::datas('need_confirmation')) {
+	if (AcidRegistration::data('need_confirmation')) {
 
 		Acid::log('REGISTRATION','need_confirmation...');
 		if (!empty($_POST['registration_confirmation'])) {
@@ -53,13 +53,13 @@ if (!file_exists(AcidRegistration::file())) {
 		}
 	}
 
-	if (AcidRegistration::datas('allowed')) {
+	if (AcidRegistration::data('allowed')) {
 
-		$public = AcidRegistration::datas('public');
-		$version = AcidRegistration::datas('version');
+		$public = AcidRegistration::data('public');
+		$version = AcidRegistration::data('version');
 		$real_version = AcidRegistration::realversion();
-		$client_id = AcidRegistration::datas('id_client');
-		$url = AcidRegistration::datas('url');
+		$client_id = AcidRegistration::data('id_client');
+		$url = AcidRegistration::data('url');
 
 		$maintenanceinfo = AcidRegistration::infoUrl();
 		$downloadinfo = AcidRegistration::dlUrl('');
