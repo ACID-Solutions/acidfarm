@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `acid_news` (
   `seo_keys` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `adate` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `active` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
+  `rss` enum('0','1') COLLATE utf8_unicode_ci NOT NULL,
   `src` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `cache_time` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id_news`)
@@ -45,8 +46,8 @@ CREATE TABLE IF NOT EXISTS `acid_news` (
 -- Contenu de la table `af_news`
 --
 
-INSERT INTO `acid_news` (`id_news`, `title`, `head`, `content`, `seo_title`, `seo_desc`, `seo_keys`, `adate`, `active`,`src`,`cache_time`) VALUES
-(1, 'AcidFarm is working', 'Here my news head.', '<p>Here my news content.</p>', '','','', NOW(), '1','','');
+INSERT INTO `acid_news` (`id_news`, `title`, `head`, `content`, `seo_title`, `seo_desc`, `seo_keys`, `adate`, `active`, `rss`,`src`,`cache_time`) VALUES
+(1, 'AcidFarm is working', 'Here my news head.', '<p>Here my news content.</p>', '','','', NOW(), '1','0','','');
 
 -- --------------------------------------------------------
 

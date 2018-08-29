@@ -271,6 +271,10 @@ class SiteConfig extends AcidModule
      */
     public function printAdminInterface($conf = [])
     {
+        if (!$this->getUserAccess('update')) {
+            return $this->printAdminBody(Acid::trad('admin_no_permission'), null);
+        }
+        
         return $this->printAdminBody($this->printAdminUpdateForm(), null);
     }
     
@@ -341,9 +345,8 @@ class SiteConfig extends AcidModule
     public function exePost()
     {
         $do = $_POST[self::preKey('do')];
-        $acl = $this->getACL($do);
-        
-        if (User::curLevel($acl)) {
+      
+        if ($this->getUserAccess($do)) {
             switch ($do) {
                 case 'update' :
                     return $this->postUpdate($_POST);
@@ -449,6 +452,10 @@ class SiteConfig extends AcidModule
      */
     public static function printRemoteHomeForm()
     {
+        if (!static::getCurrent()->getUserAccess('home')) {
+            return Acid::trad('admin_no_permission');
+        }
+        
         $form = new AcidForm('post', '');
         $form->tableStart();
         $form->addHidden('', Acid::mod('SiteConfig')->preKey('do'), 'remote_update');
@@ -485,6 +492,10 @@ class SiteConfig extends AcidModule
      */
     public static function printRemotePolicyForm()
     {
+        if (!static::getCurrent()->getUserAccess('policy')) {
+            return Acid::trad('admin_no_permission');
+        }
+        
         $form = new AcidForm('post', '');
         $form->tableStart();
         $form->addHidden('', Acid::mod('SiteConfig')->preKey('do'), 'remote_update');
@@ -575,7 +586,12 @@ class SiteConfig extends AcidModule
      */
     public function printRemoteForm()
     {
+
         /*
+        if (!static::getCurrent()->getUserAccess('remote')) {
+            return Acid::trad('admin_no_permission');
+        }
+        
         $form = new AcidForm('post','');
         $form->tableStart();
         $form->addHidden('',Acid::mod('SiteConfig')->preKey('do'),'remote_update');
