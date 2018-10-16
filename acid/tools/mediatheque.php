@@ -130,10 +130,11 @@ class AcidMediatheque {
 	 * @param string|null $path
 	 * @return string
 	 */
-	public function buildUrl($path=null) {
+	public function buildUrl($path=null,$without=[]) {
 		$path = (substr($path,-1)!=='/') ? ($path.'/') : $path;
 		$path = ($path!=='/') ? $path : '';
-		return $this->use_router ? (Acid::get('url:folder_lang'). AcidRouter::getKey($this->router_key) .'/' . $path ) : (AcidUrl::build(array('fsb_path'=>rawurlencode($path))));
+		return $this->use_router ? (Acid::get('url:folder_lang'). AcidRouter::getKey($this->router_key) .'/' . $path
+        ) : (AcidUrl::build(array('fsb_path'=>rawurlencode($path)),$without));
 	}
 
 	/**
@@ -693,7 +694,7 @@ class AcidMediatheque {
 	 * @return string
 	 */
 	public function printEltDir($attrs) {
-		$link = $this->buildUrl($attrs['path']);
+		$link = $this->buildUrl($attrs['path'],['fsb_page']);
 		return Acid::tpl($this->tpl_path.'print-elt-dir.tpl',array('img_path'=>$this->img,'attrs'=>$attrs,'link'=>$link,'key'=>$this->key,'cur_path'=>$this->cur_path),$this);
 	}
 

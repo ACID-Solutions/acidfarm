@@ -741,7 +741,7 @@ class AcidBrowser
      */
     public function printEltDir($attrs)
     {
-        $link = AcidUrl::build(['fsb_path' => rawurlencode($attrs['path'] . '/')]);
+        $link = AcidUrl::build(['fsb_path' => rawurlencode($attrs['path'] . '/')],['fsb_page']);
         
         return Acid::tpl('tools/browser/print-elt-dir.tpl', [
             'img_path' => $this->img, 'attrs' => $attrs, 'link' => $link, 'key' => $this->key,
