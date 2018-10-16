@@ -23,9 +23,7 @@ class Script extends AcidModule
 {
     const TBL_NAME = 'script';
     const TBL_PRIMARY = 'id_script';
-    
     private $_category = null;
-    
     public static $_cookie_prefix = 'acid_consent_';
     
     /**
@@ -61,7 +59,10 @@ class Script extends AcidModule
         
         $this->vars['script'] = new AcidVarText(self::modTrad('script'), 80, 10);
         
-        $this->vars['default'] = new AcidVarList(self::modTrad('default'), ['accept','deny'],'deny',false,false);
+        $this->vars['default'] = new AcidVarList(self::modTrad('default'), ['accept', 'deny'], 'deny', false, false);
+        
+        $this->vars['template'] = new AcidVarList(self::modTrad('template'), ['head', 'start', 'stop'], 'stop',
+            false, false);
         
         $this->vars['pos'] = new AcidVarInt(self::modTrad('position'), true);
         
@@ -87,17 +88,23 @@ class Script extends AcidModule
      */
     public function printAdminConfigure($do = 'default', $conf = [])
     {
-    
-        $this->config['admin']['list']['mods'] = ['ScriptCategory'=>['id_script_category']];
-        $this->config['admin']['list']['order'] = [ScriptCategory::dbPref('pos') => 'ASC'];
+        $this->config['admin']['list']['mods'] = ['ScriptCategory' => ['id_script_category']];
+        $this->config['admin']['list']['order'] = [
+            Script::dbPref('template') => 'ASC',
+            ScriptCategory::dbPref('pos') => 'ASC',
+            Script::dbPref('pos') => 'ASC'
+        ];
         $this->config['admin']['list']['keys'] = [
-            'id_script',
+            'id_script', 'template',
             ScriptCategory::dbPref('name'),
             $this->langKey('name'), $this->langKey('description'),
-            'optional', 'default', 'show', 'active', 'pos'
+            'optional',  'default', 'show', 'active', 'pos'
         ];
         $this->config['print']['pos'] =
             ['type' => 'quickchange', 'ajax' => false, 'params' => ['style' => 'width:30px; text-align:center;']];
+        
+        $this->config['print']['template'] =
+            ['type' => 'quickchange', 'ajax' => false, 'params' => ['style' => 'text-align:center;']];
         
         $this->config['print']['active'] = ['type' => 'toggle', 'ajax' => true];
         $this->config['print']['optional'] = ['type' => 'toggle', 'ajax' => true];
@@ -159,7 +166,7 @@ class Script extends AcidModule
      */
     public function cookiename()
     {
-        return static::$_cookie_prefix.AcidUrl::normalize($this->get('key'));
+        return static::$_cookie_prefix . AcidUrl::normalize($this->get('key'));
     }
     
     /**
@@ -183,7 +190,7 @@ class Script extends AcidModule
             AcidCookie::unsetcookie($this->cookiename());
         }
         
-        AcidCookie::setcookie($this->cookiename(), $value, time()+(365 * 24 * 60 * 60));
+        AcidCookie::setcookie($this->cookiename(), $value, time() + (365 * 24 * 60 * 60));
     }
     
     /**
@@ -193,7 +200,7 @@ class Script extends AcidModule
      */
     public function value()
     {
-        return AcidCookie::getValue($this->cookiename(),$this->get('default'));
+        return AcidCookie::getValue($this->cookiename(), $this->get('default'));
     }
     
     /**
@@ -212,7 +219,35 @@ class Script extends AcidModule
         return $this->value() == 'accept';
     }
     
-    public static function getAll() {
-        return static::arrayToObjects(static::dbList([['active','=',1]],['pos'=>'ASC']));
+    public static function getAll($template = null)
+    {
+        $filters = [['active', '=', 1]];
+        if ($template) {
+            $filters[] = ['template', '=', $template];
+        }
+        
+        return static::arrayToObjects(static::dbList($filters, ['pos' => 'ASC']));
+    }
+    
+    public static function printTemplate($template=null)
+    {
+       $content = '';
+       if ($elts = static::getAll($template)) {
+           foreach ($elts as $script) {
+               $content .= '<!--'.$script->hscTrad('name').'-->' . "\n";
+               if ($script->hasConsent()) {
+                   $content .= $script->get('script');
+               }else{
+                   $content .= '<!--'."\n".
+                               $script->category()->cookiename().' : '.
+                               htmlspecialchars(AcidCookie::getValue($script->category()->cookiename())) . "\n" .
+                               $script->cookiename(). ' : '.
+                               htmlspecialchars(AcidCookie::getValue($script->cookiename())) . "\n" .
+                               '-->' . "\n";
+               }
+           }
+       }
+       
+       return $content;
     }
 }

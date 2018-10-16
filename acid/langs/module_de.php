@@ -106,6 +106,7 @@ $lang['mod']['script']['description'] = 'Beschreibung';
 $lang['mod']['script']['position'] = 'Position';
 $lang['mod']['script']['optionnal'] = 'Optionale Verwendung?';
 $lang['mod']['script']['default'] = 'Standardwert';
+$lang['mod']['script']['template']  = 'Sektor';
 $lang['mod']['script']['script'] = 'Skripte';
 $lang['mod']['script']['show'] = 'Anzeigen';
 $lang['mod']['script']['active'] = 'Aktiv';

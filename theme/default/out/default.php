@@ -53,7 +53,7 @@ if ($body_class) {
 // $this->addInHead('<meta name="viewport" content="width=device-width, initial-scale=1">');
 
 $output .=  <<<OUTPUT
-
+{$this->getScriptsStart()}
 {$this->getDialog()}
 {$this->getBwin()}
 

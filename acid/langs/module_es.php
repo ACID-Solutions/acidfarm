@@ -106,6 +106,7 @@ $lang['mod']['script']['description'] = 'Descripción';
 $lang['mod']['script']['position'] = 'Posición';
 $lang['mod']['script']['optional'] = 'Use una cookie de categoría';
 $lang['mod']['script']['default'] = 'Valor predeterminado';
+$lang['mod']['script']['template']  = 'Sector';
 $lang['mod']['script']['script'] = 'Guiones';
 $lang['mod']['script']['show'] = 'Mostrar';
 $lang['mod']['script']['active'] = 'Activo';

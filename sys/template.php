@@ -47,11 +47,20 @@ class MyTemplate extends AcidTemplate {
 	}
     
     /**
+     * Retourne les scripts de haut de page
+     */
+    public function getScriptsStart($v=array()) {
+        $this->addInHead(Script::printTemplate('head'));
+        $scripts =  '<div id="scripts_content_top">'. "\n" . Acid::tpl('scripts/scripts-start.tpl', $v) . '</div>';
+        return $scripts . "\n"  ;
+    }
+    
+    /**
      * Retourne les scripts de fin de page
      */
     public function getScripts($v=array()) {
         $stats =  '<div id="stats_content">'. Acid::executeTpl(SITE_PATH . 'sys/stats/stats.tpl') . '</div>';
-        $scripts =  '<div id="scripts_content">'. Acid::tpl('scripts/scripts.tpl', $v) . '</div>';
+        $scripts =  '<div id="scripts_content">' ."\n" . Acid::tpl('scripts/scripts-stop.tpl', $v) . '</div>';
         return $scripts . "\n" . $stats . "\n" ;
     }
 
