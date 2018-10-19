@@ -109,7 +109,7 @@ class AcidMail
             $mail->Body = $my_body;
             
             if ($is_html) {
-                $mail->AltBody = $mail->html2text($mail->AltBody); //fix isHTMl(true) && isMail() issues
+                $mail->AltBody = $mail->html2text($mail->Body); //fix isHTMl(true) && isMail() issues
             }
             
             foreach ($attached as $name => $elt) {
