@@ -450,7 +450,9 @@ section {
   #block_gmap{ 
     @include border-box();
     height:300px; 
-    width:100%; 
+    width:100%;
+    overflow:hidden;
+    position:relative;
   }
   #contact_form{
     input, textarea{

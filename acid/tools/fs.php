@@ -21,6 +21,40 @@
  */
 class AcidFs
 {
+
+    /**
+     * Convertit un chemin vers une image en image html faisant en base64
+     * @param        $file_name
+     * @param string $alt
+     * @param array  $params
+     *
+     * @return string
+     */
+    public static function base64Image($file_name,$alt='',$params=[]) {
+        
+        try {
+            if ($content = @file_get_contents($file_name)) {
+                
+                $imgData = base64_encode($content);
+                
+                $src = 'data: ' . mime_content_type($file_name) . ';base64,' . $imgData;
+                
+                if (!isset($params['alt'])) {
+                    $params['alt'] =  $alt;
+                }
+                
+                return '<img src="' . $src . '" ' . implode(' ', array_map(
+                        function ($k, $v) { return $k . '="' . htmlspecialchars($v) . '"'; },
+                        array_keys($params), $params
+                    )) . ' >';
+            }
+            
+            return $alt;
+        }catch (Exception $e) {
+            return $alt;
+        }
+    }
+    
     /**
      * Retourne l'extension du fichier en entrée ou false en cas d'échec.
      *

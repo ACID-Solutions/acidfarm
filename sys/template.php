@@ -108,7 +108,10 @@ class MyTemplate extends AcidTemplate {
 
 		return $banner . $popup;
 	}
-
+    
+    /**
+     * Charge les ressources de consentement des cookies
+     */
 	public function cookieconsent() {
         $this->addJS(Acid::get('url:folder').'js/cookieconsent/3.0.3/cookieconsent.min.js');
         $this->addCSS(Acid::get('url:folder').'js/cookieconsent/3.0.3/cookieconsent.min.css');
