@@ -26,38 +26,38 @@ class Conf {
 
 	/**
 	 * Retourne une variable de configuration
-	 * @param string $key acheminement vers la variable  - exemple : 'macat:mavariable' pour $acidconf['macat']['mavariable']
+	 * @param string $key acheminement vers la variable  - exemple : 'macat:mavariable' pour $acid['conf']['macat']['mavariable']
 	 * @return mixed
 	 */
 	public static function get($key) {
-		return  Acid::get($key,'acidconf');
+		return  Acid::get('conf:'.$key,'acid');
 	}
 
 	/**
 	 * Définit une variable de configuration
-	 * @param string $key acheminement vers la variable - exemple : 'macat:mavariable' pour $acidconf['macat']['mavariable']
+	 * @param string $key acheminement vers la variable - exemple : 'macat:mavariable' pour $acid['conf']['macat']['mavariable']
 	 * @param mixed $value valeur
 	 */
 	public static function set($key,$value) {
-		return  Acid::set($key,$value,'acidconf');
+		return  Acid::set('conf:'.$key,$value,'acid');
 	}
     
     /**
      * Définit plusieurs variables de configuration
-     * @param string $key acheminement vers la variable - exemple : 'macat:mavariable' pour $acidconf['macat']['mavariable']
+     * @param string $key acheminement vers la variable - exemple : 'macat:mavariable' pour $acid['conf']['macat']['mavariable']
      * @param array $value valeur
      */
     public static function setMany($key,$values) {
-        return  Acid::setMany($key,$values,'acidconf');
+        return  Acid::setMany('conf:'.$key,$values,'acid');
     }
 
 	/**
 	 * Teste l'existence d'une variable de configuration
-	 * @param string $key acheminement vers la variable - exemple : 'macat:mavariable' pour $acidconf['macat']['mavariable']
+	 * @param string $key acheminement vers la variable - exemple : 'macat:mavariable' pour $acid['conf']['macat']['mavariable']
 	 * @return bool
 	 */
 	public static function exists($key) {
-		return Acid::exists($key,'acidconf');
+		return Acid::exists('conf:'.$key,'acid');
 	}
 
 	/**
@@ -73,28 +73,28 @@ class Conf {
 
 	/**
 	 * Teste l'existence et l'état vrai d'une variable de configuration
-	 * @param string $key acheminement vers la variable - exemple : 'macat:mavariable' pour $acidconf['macat']['mavariable']
+	 * @param string $key acheminement vers la variable - exemple : 'macat:mavariable' pour $acid['conf']['macat']['mavariable']
 	 * @return bool
 	 */
 	public static function isEmpty($key) {
-		return Acid::isEmpty($key,'acidconf');
+		return Acid::isEmpty('conf:'.$key,'acid');
 	}
 
 	/**
 	 * Efface une variable de configuration
-	 * @param string $key acheminement vers la variable - exemple : 'macat:mavariable' pour $acidconf['macat']['mavariable']
+	 * @param string $key acheminement vers la variable - exemple : 'macat:mavariable' pour $acid['conf']['macat']['mavariable']
 	 */
 	public static function kill($key) {
-		return Acid::kill($key,'acidconf');
+		return Acid::kill('conf:'.$key,'acid');
 	}
 
 	/**
 	 * Ajoute $value à une variable de configuration
-	 * @param string $key acheminement vers la variable - exemple : 'macat:mavariable' pour $acidconf['macat']['mavariable']
+	 * @param string $key acheminement vers la variable - exemple : 'macat:mavariable' pour $acid['conf']['macat']['mavariable']
 	 * @param mixed $value valeur à ajouter
 	 */
 	public static function add($key,$value) {
-		return  Acid::add($key,$value,'acidconf');
+		return  Acid::add('conf:'.$key,$value,'acid');
 	}
 
 

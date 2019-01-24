@@ -184,8 +184,8 @@ echo get_sf_line("acid:title:right", "' - '." . get_sf_variable('acid:site:name'
 
 //Recaptcha
 echo get_sf_label_line('Recaptcha');
-echo get_sf_line("acidconf:recaptcha:site_key", "", true, 'Google Recaptcha api key');
-echo get_sf_line("acidconf:recaptcha:secret", "", true, 'Google Recaptcha api secret');
+echo get_sf_line("acid:conf:recaptcha:site_key", "", true, 'Google Recaptcha api key');
+echo get_sf_line("acid:conf:recaptcha:secret", "", true, 'Google Recaptcha api secret');
 
 echo get_sf_stop();
 $server_file = ob_get_clean();

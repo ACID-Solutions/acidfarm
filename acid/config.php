@@ -334,4 +334,6 @@ $acid['sass']['enable'] = false;
 $acid['sass']['path']['compiled'] = '';
 $acid['sass']['mode'] = 'dev';
 
+$acid['conf'] = isset($acid['conf']) ? $acid['conf'] : [];
+$acidconf = &$acid['conf']; //$acidconf alias for backward compatibility
 ?>

@@ -89,11 +89,11 @@ $acid['lang']['current']      	= $acid['lang']['default'];
 $acid['permission_active']		=  empty($permission_active) ? false : true;
 
 //--keys
-$acidconf['root_keys'] = array('sitemap.xml','robots.txt','rss');
-$acidconf['site_keys'] = array('news','gallery','search','contact','policy');
+$acid['conf']['root_keys'] = array('sitemap.xml','robots.txt','rss');
+$acid['conf']['site_keys'] = array('news','gallery','search','contact','policy');
 
 //--access
-$acidconf['lvl']['seo'] = $acid['lvl']['dev'] ;
+$acid['conf']['lvl']['seo'] = $acid['lvl']['dev'] ;
 
 //--thème
 $acid['def_theme'] = 'default';
@@ -119,31 +119,31 @@ if (!isset($acid['sass']['enable'])) {
 //}
 
 //--pages
-$acidconf['page']['categories'] = array(0=>'page_standard',1=>'page_special'); //traduit dans /sys/dynamic.php
+$acid['conf']['page']['categories'] = array(0=>'page_standard',1=>'page_special'); //traduit dans /sys/dynamic.php
 
-$acidconf['page']['autoident'] = true;
-$acidconf['page']['special'] = array('home');
+$acid['conf']['page']['autoident'] = true;
+$acid['conf']['page']['special'] = array('home');
 
 //--photos
-$acidconf['photo']['limit'] = null;
-$acidconf['photo_home']['limit'] = null;
+$acid['conf']['photo']['limit'] = null;
+$acid['conf']['photo_home']['limit'] = null;
 
 //--contact
-$acidconf['contact']['shield'] = true;
-$acidconf['contact']['shield_key'] = 'form_who_i_am';
-$acidconf['contact']['shield_val'] = 'human';
-$acidconf['contact']['shield_time'] = 1500;
+$acid['conf']['contact']['shield'] = true;
+$acid['conf']['contact']['shield_key'] = 'form_who_i_am';
+$acid['conf']['contact']['shield_val'] = 'human';
+$acid['conf']['contact']['shield_time'] = 1500;
 
 // PAGE CONTROLLER
 //************************************************************************************//
 
 //--page reserved by dev
-$acidconf['admin_pages'] = array();
+$acid['conf']['admin_pages'] = array();
 
 //--reserved keys
-$acidconf['keys']['reserved']=$acidconf['site_keys'];
+$acid['conf']['keys']['reserved']=$acid['conf']['site_keys'];
 
 //--admin preview
-$acidconf['admin_preview']['varname'] = 'admin_preview';
-$acidconf['admin_preview']['mods'] = array('News','Page');
-$acid['url']['params']['allowed'][] = $acidconf['admin_preview']['varname'];
+$acid['conf']['admin_preview']['varname'] = 'admin_preview';
+$acid['conf']['admin_preview']['mods'] = array('News','Page');
+$acid['url']['params']['allowed'][] = $acid['conf']['admin_preview']['varname'];
