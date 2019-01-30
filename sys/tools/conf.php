@@ -97,8 +97,7 @@ class Conf {
 		return  Acid::add('conf:'.$key,$value,'acid');
 	}
 
-
-
+	
 	// Metas
 	//page title
 
