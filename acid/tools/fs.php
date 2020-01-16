@@ -408,30 +408,8 @@ class AcidFs
                                   . '"', E_USER_ERROR);
                     break;
             }
-            
-            // convert to grayscale
-            for ($y = 0; $y < $img_h; $y++) {
-                for ($x = 0; $x < $img_w; $x++) {
-                    $rgb = imagecolorat($img_source, $x, $y);
-                    $red = ($rgb >> 16) & 0xFF;
-                    $green = ($rgb >> 8) & 0xFF;
-                    $blue = $rgb & 0xFF;
-                    
-                    $gray = round(.299 * $red + .587 * $green + .114 * $blue);
-                    
-                    // shift gray level to the left
-                    $grayR = $gray << 16;   // R: red
-                    $grayG = $gray << 8;    // G: green
-                    $grayB = $gray;         // B: blue
-                    
-                    // OR operation to compute gray value
-                    $grayColor = $grayR | $grayG | $grayB;
-                    
-                    // set the pixel color
-                    imagesetpixel($img_source, $x, $y, $grayColor);
-                    imagecolorallocate($img_source, $gray, $gray, $gray);
-                }
-            }
+
+            imagefilter($img_source, IMG_FILTER_GRAYSCALE);
             
             // copy pixel values to new file buffer
             $dst_source = ImageCreateTrueColor($img_w, $img_h);
