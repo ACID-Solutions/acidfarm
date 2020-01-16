@@ -48,6 +48,9 @@ switch ($contact_lang) {
 		$GLOBALS['lang']['trad']['contact_post_mail_head']		= 'Un message a été envoyé depuis le formulaire __SITE__.';
 		$GLOBALS['lang']['trad']['contact_post_mail_user_wants']= 'Cet utilisateur souhaite : ';
 		$GLOBALS['lang']['trad']['contact_post_mail_msg_sent']	= 'Un message a été laissé : ';
+		
+		$GLOBALS['lang']['trad']['contact_post_rgpd_notice']	= 'Consentement sur l\'utilisation des données';
+		
 	break;
 
 	default :
@@ -81,6 +84,8 @@ switch ($contact_lang) {
 		$GLOBALS['lang']['trad']['contact_post_mail_head']		= 'A message was sent by the form __SITE__.';
 		$GLOBALS['lang']['trad']['contact_post_mail_user_wants']= 'This user wants:';
 		$GLOBALS['lang']['trad']['contact_post_mail_msg_sent']= 'A message was sent:';
+    
+        $GLOBALS['lang']['trad']['contact_post_rgpd_notice']	= 'Data policy consentment';
 
 	break;
 

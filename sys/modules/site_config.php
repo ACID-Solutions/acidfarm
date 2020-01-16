@@ -80,6 +80,10 @@ class SiteConfig extends AcidModule
         }
         $policy_content[] = 'consent_type';
         
+        foreach (Acid::get('lang:available') as $l) {
+            $policy_content[] = 'rgpd_notice_'.$l;
+        }
+        
         $this->free_mode = $free_mode;
         
         $this->addControl([
@@ -566,6 +570,16 @@ class SiteConfig extends AcidModule
             }
         }
     
+        foreach (Acid::get('lang:available') as $l) {
+            $class = 'lang ' . $l;
+            $form->addTextarea(
+                static::modTrad('rgpd_notice').' '.$l,
+                'rgpd_notice_'.$l,
+                self::getCurrent()->getConf('rgpd_notice_'.$l),
+                120, 5,
+                ['data-tinymce-body-class'=>'rgpd_notice','class' => $class],'','',['class'=>$class]);
+        }
+        
         $form->addSelect(
             static::modTrad('consent_type'),
             'consent_type',

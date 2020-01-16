@@ -460,6 +460,20 @@ section {
       width:100%;
     }
   }
+  #contact_rgpd_notice{
+    display:table;
+    vertical-align: middle;
+    cursor:pointer;
+
+    > * {
+      display:table-cell;
+      vertical-align: middle;
+
+      &:first-child {
+        padding-right:10px;
+      }
+    }
+  }
 }
 
 

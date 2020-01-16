@@ -987,6 +987,26 @@ abstract class AcidModuleCore
     }
     
     /**
+     * Génère un tableau d'ordre en fonction du tableau
+     *
+     * @param array  $tab
+     * @param string $way
+     * @param bool   $add_quote
+     */
+    public static function dbGenerateOrderByField($tab, $way = 'ASC', $add_quote = true)
+    {
+        if ($add_quote) {
+            $tab = array_reduce($tab, function ($agg, $value) {
+                $agg[] = '"' . addslashes($value) . '"';
+                
+                return $agg;
+            }, []);
+        }
+        
+        return [[$tab, $way, !$add_quote]];
+    }
+    
+    /**
      * Génère une portion de code SQL (portion ORDER BY) en fonction des paramêtres en entrée
      *
      * @param mixed $order [SQL CODE | array('field1'=>'ASC|DESC','field2'=>'ASC|DESC')]
@@ -1014,7 +1034,8 @@ abstract class AcidModuleCore
                     }
                     
                     $akey = $add_aquote ? "`" . $key . "`" : $key;
-                    $order_string .= " FIELD(" . addslashes($akey) . "," . addslashes(implode(',', $val[0])) . ") "
+                    $order_string .= " FIELD(" . addslashes($akey) . "," .
+                                     addslashes(implode(',', $val[0])) . ") "
                                      . $way . ", ";
                 } else {
                     if (is_bool($val)) {

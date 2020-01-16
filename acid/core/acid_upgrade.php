@@ -27,7 +27,7 @@
  *    Tous dossier désignant une version supérieure à celle du cur_version.txt, et une version inferieure à celle du
  *    last_version.txt seront alors parcourus. Pour ceux-ci, on traitera les fichiers .sql, .php et .sh par ordre
  *    alphabétique. Les fichiers SQL seront éxécutés avec remplacement des préfixes (ex : acid_[ma-table] sera remplacé
- *    en machine_[ma-table] Les fichiers PHP seront éxécutés avec un accès aux variables globales $acid et $acidconf
+ *    en machine_[ma-table] Les fichiers PHP seront éxécutés avec un accès aux variables globales $acid et $acid['conf']
  *    Les fichiers SH interdiront laccès au site en invitant l'administrateur à effectuerune mise à jour manuelle En
  *    mode dev, l'utilisateur du site sera invité à procéder à une mise à jour. En prod, la mise à jourse fera
  *    automatiquement Exemple de mise en place d'un système d'upgrade pour votre site :

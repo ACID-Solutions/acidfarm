@@ -69,4 +69,5 @@ Conf::executeMetaDefault($searched_key);
 //Lancement du Router
 AcidRouter::after('*',function() { Seo::prepare(); })->run();
 
+
 require 'sys/stop.php';
