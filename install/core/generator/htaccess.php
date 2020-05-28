@@ -31,6 +31,7 @@ HTACC;
 $htaccess_file = <<< HTACC
 # Charset
 AddDefaultCharset UTF-8
+Options -Indexes
 
 $htaccessOVH
 
