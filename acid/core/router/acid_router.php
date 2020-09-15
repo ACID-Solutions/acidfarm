@@ -121,7 +121,7 @@ class AcidRouter implements Acid_Router_Interface{
             	self::getInstance()->_currentLang = $formated_path[0];
             }
 
-            if(isset($formated_path[$indexstep]) && in_array($formated_path[$indexstep], Acid::get('root_keys','acidconf'))){
+            if(isset($formated_path[$indexstep]) && in_array($formated_path[$indexstep], Acid::get('conf:root_keys'))){
                 self::getInstance()->_currentLang = '';
                 $root_keys = true;
             }

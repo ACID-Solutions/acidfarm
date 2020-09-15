@@ -56,9 +56,9 @@ $acid['url']['ajax'] = Acid::get('url:folder') . 'ajax.php';
 $acid['url']['upload'] = Acid::get('url:folder') . 'upload.php';
 
 //Url des pages
-$acidconf['url']['admin'] = Acid::get('url:folder') . 'siteadmin.php';
-$acidconf['url']['sitemap'] = Acid::get('url:folder') . 'sitemap.xml';
-$acidconf['url']['robots'] = Acid::get('url:folder') . 'robots.txt';
+$acid['conf']['url']['admin'] = Acid::get('url:folder') . 'siteadmin.php';
+$acid['conf']['url']['sitemap'] = Acid::get('url:folder') . 'sitemap.xml';
+$acid['conf']['url']['robots'] = Acid::get('url:folder') . 'robots.txt';
 
 //configuration du site
 $acid['user']['page'] = Acid::get('url:folder_lang') . AcidRouter::getKey('account');
@@ -78,8 +78,8 @@ foreach ($acid['user']['levels'] as $lvl => $value) {
 }
 
 //traduction des catégories de pages
-foreach ($acidconf['page']['categories'] as $key => $tradvalue) {
-    $acidconf['page']['categories'][$key] = Acid::trad($tradvalue);
+foreach ($acid['conf']['page']['categories'] as $key => $tradvalue) {
+    $acid['conf']['page']['categories'][$key] = Acid::trad($tradvalue);
 }
 
 

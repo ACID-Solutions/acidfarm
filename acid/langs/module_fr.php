@@ -77,7 +77,7 @@ $lang['mod']['photo']['cache_time']  = 'Cache Time';
 
 //--photo home
 $lang['mod']['photo_home']['__NAME__'] = 'Photos accueil';
-$lang['mod']['photo_home']['id_photo'] = 'Id';
+$lang['mod']['photo_home']['id_photo_home'] = 'Id';
 $lang['mod']['photo_home']['name']	   = 'Nom';
 $lang['mod']['photo_home']['position'] = 'Position';
 $lang['mod']['photo_home']['src']    = 'Image';
@@ -146,6 +146,8 @@ $lang['mod']['config']['consent_revoke_btn'] = 'Bouton revocation cookie';
 $lang['mod']['config']['consent_learnmore_btn'] = 'Bouton en savoir plus cookie';
 $lang['mod']['config']['consent_readmore_link'] = 'Lien en savoir plus cookie';
 $lang['mod']['config']['consent_type'] = 'Type de consentement';
+
+$lang['mod']['config']['rgpd_notice'] = 'Consentement RGPD';
 
 //--user
 $lang['mod']['user']['__NAME__'] 		  = 'Utilisateurs';
