@@ -207,7 +207,7 @@ class AcidRouter implements Acid_Router_Interface{
      public static function route($request){
         try {
 
-        	if(strlen($request) && $request{0}==="/"){
+        	if(strlen($request) && $request[0]==="/"){
                 $request = substr($request, 1);
             }
 
@@ -474,10 +474,10 @@ class AcidRouter implements Acid_Router_Interface{
          $params = self::getInstance()->_currentRoute->getParams();
          if(array_key_exists($id, $url)){
             $value = $url[$id];
-             if($value{0}===':'){
+             if($value[0]===':'){
                  return $params[substr($value,1)];
              }
-             if($value{0}==='@'){
+             if($value[0]==='@'){
                  return $params[substr($value,1)];
              }
              return $value;
@@ -618,7 +618,7 @@ class AcidRouter implements Acid_Router_Interface{
 
         	if($no_slash){
            		$try_patch = strrev($path);
-            	if($try_patch{0}=="/"){
+            	if($try_patch[0]=="/"){
             		$path = substr($path, 0,strlen($path)-1);
            		}
            	}
@@ -677,7 +677,7 @@ class AcidRouter implements Acid_Router_Interface{
      public static function searchKey($value,$current=null){
          $current = (!empty($current))?$current:Acid::get('lang:current');
          if ($value) {
-	         if($value{0}==='@'){
+	         if($value[0]==='@'){
 	             return substr($value, 1);
 	         }
 	         if($value!==''){

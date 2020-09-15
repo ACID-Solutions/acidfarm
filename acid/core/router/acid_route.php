@@ -235,12 +235,12 @@ class AcidRoute
                 }
                 
                 // is a var
-                if ($this->_partitional_URI[$key]{0} === ':') {
+                if ($this->_partitional_URI[$key][0] === ':') {
                     $this->params[substr($this->_partitional_URI[$key], 1)] = $value;
                     continue;
                 }
                 // IS A TRANSLATE
-                if ($this->_partitional_URI[$key]{0} === '@') {
+                if ($this->_partitional_URI[$key][0] === '@') {
                     if ($this->proceedToTranslate($key, $value)) {
                         continue;
                     }
@@ -426,7 +426,7 @@ class AcidRoute
             $lang = ((AcidRouter::getCurrentLang() !== '') && (AcidRouter::getCurrentLang() !== null)) ?
                 AcidRouter::getCurrentLang() : Acid::get('lang:current');
             foreach ($this->_partitional_URI as $key => $value) {
-                if ($value{0} === ':') {
+                if ($value[0] === ':') {
                     if (array_key_exists(substr($value, 1), $this->params)) {
                         $final_url .= $this->params[substr($value, 1)] . AcidRouter::URI_DELIMITER;
                         continue;
@@ -434,7 +434,7 @@ class AcidRoute
                     
                     return false;
                 }
-                if ($value{0} === '@') {
+                if ($value[0] === '@') {
                     if (array_key_exists(substr($value, 1), $langRout)) {
                         if (array_key_exists($lang, $langRout[substr($value, 1)])) {
                             $final_url .= $langRout[substr($value, 1)][$lang]['key'] . AcidRouter::URI_DELIMITER;

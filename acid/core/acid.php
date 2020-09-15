@@ -152,7 +152,7 @@ class Acid {
 				static $uniq_code = null;
 				if ($uniq_code === null) {
 					$chars = '0123456789ABCDEF';
-					$uniq_code = $chars{rand(0,15)}.$chars{rand(0,15)}.$chars{rand(0,15)}.$chars{rand(0,15)};
+					$uniq_code = $chars[rand(0,15)].$chars[rand(0,15)].$chars[rand(0,15)].$chars[rand(0,15)];
 				}
 
 				static $acid_php_version = null;
