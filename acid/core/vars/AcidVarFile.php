@@ -429,7 +429,7 @@ class AcidVarFile extends AcidVarString {
      */
     public function getForm(&$form,$key,$print=true,$params=array(),$start='',$stop='',$body_attrs=array()) {
         if ($this->getVal()) {
-            $start .= '<a href="'.$this->getUrl().'">'.$this->getFileName().'</a>';
+            $start .= Acid::tpl('core/vars/form/file-preview.tpl',$this->config,$this);
             $stop .= ''.$form->checkbox ($key.'_remove', '1', false,'Supprimer');
         }
 

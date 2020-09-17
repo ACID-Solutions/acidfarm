@@ -462,10 +462,7 @@ class AcidVarImage extends AcidVarFile
     {
         if ($this->getVal()) {
             if (isset($this->config['admin_format']) && isset($this->config['format'][$this->config['admin_format']])) {
-                $start .= '<a href="' . $this->getUrl() . '">' . "\n" .
-                          '	<img src="' . $this->getUrl($this->config['admin_format']) . '" alt="'
-                          . $this->getFileName() . '" />' . "\n" .
-                          '</a>';
+                $start .= Acid::tpl('core/vars/form/img-preview.tpl',$this->config,$this);
                 $stop .= '' . $form->checkbox($key . '_remove', '1', false, 'Supprimer');
                 
                 $bstart = '<div class="src_container">';
